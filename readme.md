@@ -1,4 +1,4 @@
-# Crapo Library
+## Crapo Library
 
 ### What is it?  Take Mono and convert it to C++ and you get a pile of crap.
 ### Well not really in reality anyone who sees this project will say I full of crap.
@@ -10,22 +10,22 @@ I started this to see how hard it would be to a .NET style library written in
 
 Here is a code snippet
 
-#include "pch.h"
+````#include "pch.h"
 
-using namespace System;
+````using namespace System;
 
-void main()
-  {
-  try
-    {
-    using namespace IO;
-    StreamReader sr(L"C:\\perch lake\\HowToRead\\test.cs2.TXT");
-    String line = sr.ReadToEnd();
-    wprintf(L"%s\n", (cstring)line);
-    }
-  catch(Exception& ex)
-    {
-    wprintf(L"The file could not be read:\n");
-    wprintf(L"%s\n", ex.Message());
-    }
-  }
+````void main()
+````  {
+````  try
+````    {
+````    using namespace IO;
+````    StreamReader sr(L"C:\\perch lake\\HowToRead\\test.cs2.TXT");
+````    String line = sr.ReadToEnd();
+````    wprintf(L"%s\n", (cstring)line);
+````    }
+````  catch(Exception& ex)
+````    {
+````    wprintf(L"The file could not be read:\n");
+````    wprintf(L"%s\n", ex.Message());
+````    }
+````  }
