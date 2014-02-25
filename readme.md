@@ -10,27 +10,23 @@ I started this to see how hard it would be to develop a .NET style library writt
 
 Here is a code snippet
 
-`#include "pch.h"`
+        #include "pch.h"
 
-`using namespace System;`
+        using namespace System;`
 
-`void main()`
+        void main()
+            {
+            try
+                {
+                 using namespace IO;
+                 StreamReader sr(L"C:\\perch lake\\HowToRead\\test.cs2.TXT");
+                 String line = sr.ReadToEnd();
+                 wprintf(L"%s\n", (cstring)line);
+                 }
+            catch(Exception& ex)
+                {
+                wprintf(L"The file could not be read:\n");
+                wprintf(L"%s\n", ex.Message());
+                }
+            }
 
-        `{`
-        `try`
-             `{`
-             `using namespace IO;`
-             `StreamReader sr(L"C:\\perch lake\\HowToRead\\test.cs2.TXT");`
-             `String line = sr.ReadToEnd();`
-             `wprintf(L"%s\n", (cstring)line);`
-             `}`
-
-        `catch(Exception& ex)`
-
-            `{`
-            `wprintf(L"The file could not be read:\n");`
-            `wprintf(L"%s\n", ex.Message());`
-            `}
-        `}`
-
- 
