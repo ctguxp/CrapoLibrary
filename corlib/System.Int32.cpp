@@ -10,16 +10,16 @@ namespace System
     :_value()
     {
     }
-  Int32::Int32(int32 const& d)
-    :_value(d)
+  Int32::Int32(int32 const& value)
+    :_value(value)
     {
     }
   Int32::~Int32()
     {
     }
-  Int32& Int32::operator = (int32 const& d)
+  Int32& Int32::operator = (int32 const& value)
     {
-    _value = d;
+    _value = value;
     return *this;
     }
   Int32::operator int32 const& () const
