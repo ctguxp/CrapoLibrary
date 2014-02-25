@@ -44,7 +44,6 @@ const int16 max_lib_buffer_size = 32767;  // Default buffer size
 
 #include <cassert>
 #include <typeinfo>
-#include <type_traits>
 
 #ifdef CRAPOCOREDLL_ENABLED
 #ifdef CRAPOCOREDLL_EXPORTS
