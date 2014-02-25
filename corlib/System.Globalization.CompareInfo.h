@@ -8,7 +8,7 @@ namespace System
   namespace Globalization
     {
     class CultureInfo;
-    class CompareInfo
+    class CRAPOCOREDLL_API CompareInfo
       {
       static const ulong ValidCompareOptions_NoStringSort = (ulong)CompareOptions::None | (ulong)CompareOptions::IgnoreCase | (ulong)CompareOptions::IgnoreNonSpace |
         (ulong)CompareOptions::IgnoreSymbols | (ulong)CompareOptions::IgnoreKanaType | (ulong)CompareOptions::IgnoreWidth | (ulong)CompareOptions::OrdinalIgnoreCase |

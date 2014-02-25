@@ -4,6 +4,7 @@
 #include "System.Text.Decoder.h"
 #include "System.IO.Stream.h"
 
+#pragma warning(disable:4251)
 namespace System
   {
   namespace Text
@@ -12,7 +13,7 @@ namespace System
     }
   namespace IO
     {
-    class StreamReader : public TextReader
+    class CRAPOCOREDLL_API StreamReader : public TextReader
       {
       enum
         {
@@ -47,4 +48,5 @@ namespace System
       };
     }
   }
+#pragma warning(default:4251)
 

@@ -5,7 +5,7 @@ namespace System
   {
   namespace IO
     {
-    class TextReader
+    class CRAPOCOREDLL_API TextReader
       {
       public:
         virtual ~TextReader();

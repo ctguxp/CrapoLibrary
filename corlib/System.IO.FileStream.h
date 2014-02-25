@@ -5,11 +5,12 @@
 #include "System.String.h"
 #include "System.IO.Enums.h"
 
+#pragma warning(disable:4251)
 namespace System
   {
   namespace IO
     {
-    class FileStream : public Stream
+    class CRAPOCOREDLL_API FileStream : public Stream
       {
       private:
         ByteArray  _buf_recycle;
@@ -62,3 +63,4 @@ namespace System
       };
     }
   }
+#pragma warning(default:4251)

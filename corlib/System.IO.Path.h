@@ -11,7 +11,7 @@ namespace System
     class File;
     class Directory;
     class DirectoryInfo;
-    class Path
+    class CRAPOCOREDLL_API Path
       {
       public:
         Path();

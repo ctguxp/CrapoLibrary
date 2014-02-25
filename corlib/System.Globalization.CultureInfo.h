@@ -8,6 +8,7 @@
 #include "System.Globalization.CompareInfo.h"
 #include "System.Globalization.TextInfo.h"
 
+#pragma warning(disable:4251)
 namespace System
   {
   namespace Threading
@@ -16,7 +17,7 @@ namespace System
     }
   namespace Globalization
     {
-    class CultureInfo : public IFormatProvider
+    class CRAPOCOREDLL_API CultureInfo : public IFormatProvider
       {
       enum
         {
@@ -69,3 +70,4 @@ namespace System
     typedef AutoPtr<CultureInfo> GCCultureInfo;
     }
   }
+#pragma warning(default:4251)

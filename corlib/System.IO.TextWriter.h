@@ -4,7 +4,7 @@ namespace System
   {
   namespace IO
     {
-    class TextWriter
+    class CRAPOCOREDLL_API TextWriter
       {
       public:
         ~TextWriter();

@@ -3,7 +3,7 @@
 
 namespace System
   {
-  class Int64
+  class CRAPOCOREDLL_API Int64
     {
     public:
     enum : int64

@@ -7,7 +7,7 @@ namespace System
   {
   namespace IO
     {
-    class Stream
+    class CRAPOCOREDLL_API Stream
       {
       public:
         virtual ~Stream();

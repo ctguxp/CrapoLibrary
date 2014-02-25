@@ -8,7 +8,7 @@ namespace System
   namespace IO
     {
     class FileStream;
-    class File
+    class CRAPOCOREDLL_API File
       {
       public:
         File();

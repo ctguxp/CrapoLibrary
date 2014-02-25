@@ -3,7 +3,7 @@
 
 namespace System
   {
-  class UInt32
+  class CRAPOCOREDLL_API UInt32
     {
     public:
       enum : uint32

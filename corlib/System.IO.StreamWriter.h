@@ -5,7 +5,7 @@
 #include "System.IO.TextWriter.h"
 #include "System.IO.Stream.h"
 
-#pragma warning (disable:4512)
+#pragma warning(disable:4251)
 namespace System
   {
   class String;
@@ -15,7 +15,7 @@ namespace System
     }
   namespace IO
     {
-    class StreamWriter : public TextWriter
+    class CRAPOCOREDLL_API StreamWriter : public TextWriter
       {
       enum
         {
@@ -52,4 +52,4 @@ namespace System
       };
     }
   }
-#pragma warning (default:4512)
+#pragma warning(default:4251)

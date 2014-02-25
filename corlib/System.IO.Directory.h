@@ -9,7 +9,7 @@ namespace System
   namespace IO
     {
     class Path;
-    class Directory
+    class CRAPOCOREDLL_API Directory
       {
       public:
         Directory();

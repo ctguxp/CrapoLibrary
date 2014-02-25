@@ -4,7 +4,7 @@ namespace System
   {
   namespace Collections
     {
-    class HashPrimeNumbers
+    class CRAPOCOREDLL_API HashPrimeNumbers
       {
       public:
         HashPrimeNumbers();
