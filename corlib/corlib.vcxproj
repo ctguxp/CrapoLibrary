@@ -35,6 +35,8 @@
     <ClInclude Include="I18N.Common.ByteEncoding.h" />
     <ClInclude Include="I18N.Common.CrapoEncoding.h" />
     <ClInclude Include="I18N.West.CP1252.h" />
+    <ClInclude Include="System.h" />
+    <ClInclude Include="System.Int64.h" />
     <ClInclude Include="System.IO.DirectoryNotFoundException.h" />
     <ClInclude Include="System.Ownership.h" />
     <ClInclude Include="System.Array.hpp" />
@@ -117,6 +119,7 @@
     <ClInclude Include="System.Threading.InternalThread.h" />
     <ClInclude Include="System.Threading.Thread.h" />
     <ClInclude Include="System.Threading.ThreadState.h" />
+    <ClInclude Include="System.UInt32.h" />
     <ClInclude Include="System.Windows.Locale.h" />
     <ClInclude Include="UnicodeData.h" />
     <ClInclude Include="win32.security_attribute.h" />
@@ -146,6 +149,7 @@
     <ClCompile Include="System.Globalization.NumberFormatInfo.cpp" />
     <ClCompile Include="System.Globalization.TextInfo.cpp" />
     <ClCompile Include="System.Int32.cpp" />
+    <ClCompile Include="System.Int64.cpp" />
     <ClCompile Include="System.IO.CrapoIO.cpp" />
     <ClCompile Include="System.IO.Directory.cpp" />
     <ClCompile Include="System.IO.DirectoryInfo.cpp" />
@@ -195,6 +199,7 @@
     <ClCompile Include="System.Text.UTF8Encoding.cpp" />
     <ClCompile Include="System.Threading.InternalThread.cpp" />
     <ClCompile Include="System.Threading.Thread.cpp" />
+    <ClCompile Include="System.UInt32.cpp" />
     <ClCompile Include="System.Windows.Locale.cpp" />
     <ClCompile Include="win32.security_attribute.cpp" />
     <ClCompile Include="sys.rect.cpp" />
