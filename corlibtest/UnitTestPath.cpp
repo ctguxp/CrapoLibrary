@@ -36,7 +36,7 @@ namespace corlibtest
           Assert::Fail(ex.Message());
           }
         }
-      TEST_METHOD(GetFullPath)
+      /*TEST_METHOD(GetFullPath)
         {
         try
           {
@@ -52,7 +52,7 @@ namespace corlibtest
           {
           Assert::Fail(ex.Message());
           }
-        }
+        }*/
 
       TEST_METHOD(GetTempPath)
         {
