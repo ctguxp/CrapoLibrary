@@ -3,7 +3,7 @@
 
 namespace System
   {
-  
+
   bool BitConverter::IsLittleEndian = BitConverter::AmILittleEndian();
 
   BitConverter::BitConverter()
@@ -12,13 +12,17 @@ namespace System
   BitConverter::~BitConverter()
     {
     }
+  int64 BitConverter::DoubleToInt64Bits(double value)
+    {
+    return *(int64 *) &value;
+    }
   bool BitConverter::AmILittleEndian()
-		{
-			// binary representations of 1.0:
-			// big endian:            3f f0 00 00 00 00 00 00
-			// little endian:         00 00 00 00 00 00 f0 3f
-			double d = 1.0;
-			byte *b = (byte*)&d;
-			return (b [0] == 0);
-		}
+    {
+    // binary representations of 1.0:
+    // big endian:            3f f0 00 00 00 00 00 00
+    // little endian:         00 00 00 00 00 00 f0 3f
+    double d = 1.0;
+    byte *b = (byte*)&d;
+    return (b [0] == 0);
+    }
   }

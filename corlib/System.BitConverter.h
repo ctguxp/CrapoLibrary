@@ -11,6 +11,7 @@ namespace System
     public:
       BitConverter();
       ~BitConverter();
+      static int64 DoubleToInt64Bits(double value);
     private:
       static bool AmILittleEndian();
     };
