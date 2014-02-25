@@ -4,7 +4,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace System;
 
-namespace CrapoCoreLibrary
+namespace corlibtest
 {
 	TEST_CLASS(UnitTestUTF8cpp)
 	{

@@ -28,6 +28,10 @@ namespace System
         String CurrencyGroupSeparator();
         int CurrencyNegativePattern() { return _currencyNegativePattern; }
         int CurrencyPositivePattern() { return _currencyPositivePattern; }
+        String NaNSymbol();
+        String NegativeInfinitySymbol();
+        String PositiveInfinitySymbol();
+        String NumberDecimalSeparator();
       private:
         NumberFormatInfo(int, bool);
         IntArray& RawCurrencyGroupSizes() { return _currencyGroupSizes; }

@@ -34,11 +34,19 @@ namespace System
     static const int UInt32DefPrecision = 10;
     static const int Int16DefPrecision = 5;
     static const int Int32DefPrecision = 10;
+    static const int DoubleBitsExponentShift = 52;
+		static const int DoubleBitsExponentMask = 0x7ff;
+		static const int64 DoubleBitsMantissaMask = 0xfffffffffffff;
+		static const int DecimalBitsScaleMask = 0x1f0000;
+    static const int TenPowersListLength = 19;
+    static const int64 SeventeenDigitsThreshold = 10000000000000000;
 
     public:
       ~NumberFormatter();
       static String NumberToString(int, IFormatProvider*);
+      static String NumberToString(float, IFormatProvider*);
       static String NumberToString(String*, int, IFormatProvider*);
+      static String NumberToString(String* format, float value, IFormatProvider* fp);
       String FormatExponential(int precision, Globalization::NumberFormatInfo* nfi);
       String FormatCurrency(int precision, Globalization::NumberFormatInfo* nfi);
     private:
@@ -54,14 +62,19 @@ namespace System
       int CountTrailingZeros();
       static int CountTrailingZeros(uint32 val);
       String FormatExponential(int precision, Globalization::NumberFormatInfo* nfi, int expDigits);
+      static int64 GetTenPowerOf(int i);
+      String NumberToString(String* format, Globalization::NumberFormatInfo* nfi);
       static NumberFormatter* GetInstance();
       static uint32 FastToDecHex(int val);
       Globalization::NumberFormatInfo* GetNumberFormatInstance(IFormatProvider*);
       String FastIntegerToString (int, IFormatProvider*);
       String FormatGeneral(int precision, Globalization::NumberFormatInfo* nfi);
+      int InitialFloatingPrecision();
       void Init(String*);
       void Init(String*, int, int);
+      void Init(String* format, double value, int defPrecision);
       void InitDecHexDigits(uint32);
+      void InitDecHexDigits(uint64 value);
       void InitHex(ulong);
       int IntegerDigits();
       String IntegerToString(String*, IFormatProvider*);
@@ -79,6 +92,7 @@ namespace System
       bool RoundBits(int shift);
       bool RoundDecimal(int decimals);
       void RoundPos(int pos);
+      static int ScaleOrder(int64 hi);
       static uint32 ToDecHex(int val);
     private:
       uint32       _ind;

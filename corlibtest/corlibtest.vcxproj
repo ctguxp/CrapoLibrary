@@ -180,6 +180,7 @@
     <ClCompile Include="UnitTestCurrentCultureInfo.cpp" />
     <ClCompile Include="UnitTestGenericList.cpp" />
     <ClCompile Include="UnitTestPath.cpp" />
+    <ClCompile Include="UnitTestSingle.cpp" />
     <ClCompile Include="UnitTestStreamReader.cpp" />
     <ClCompile Include="UnitTestStringBuilder.cpp" />
     <ClCompile Include="UnitTestStrings.cpp" />

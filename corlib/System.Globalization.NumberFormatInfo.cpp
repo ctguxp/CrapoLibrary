@@ -144,9 +144,25 @@ namespace System
       {
       _currencySymbol = value;
       }
+    String NumberFormatInfo::NaNSymbol()
+      {
+      return _nanSymbol;
+      }
     String NumberFormatInfo::NegativeSign()
       {
       return _negativeSign;
+      }
+    String NumberFormatInfo::NegativeInfinitySymbol()
+      {
+      return _negativeInfinitySymbol;
+      }
+    String NumberFormatInfo::PositiveInfinitySymbol()
+      {
+      return _positiveInfinitySymbol;
+      }
+    String NumberFormatInfo::NumberDecimalSeparator()
+      {
+      return _numberDecimalSeparator;
       }
     }
   }

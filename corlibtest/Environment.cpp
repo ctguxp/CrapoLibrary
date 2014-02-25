@@ -3,7 +3,7 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace CrapoCoreLibrary
+namespace corlibtest
   {
 	TEST_CLASS(Environment1)
 	  {
