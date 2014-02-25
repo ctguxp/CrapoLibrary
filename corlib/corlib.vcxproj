@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DynamicDebug|Win32">
+      <Configuration>DynamicDebug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DynamicDebug|x64">
+      <Configuration>DynamicDebug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="AutoPtr.h" />
+    <ClInclude Include="CharConversions.h" />
+    <ClInclude Include="CultureInfoEntry.h" />
+    <ClInclude Include="Encodings.h" />
+    <ClInclude Include="I18N.Common.ByteEncoding.h" />
+    <ClInclude Include="I18N.Common.CrapoEncoding.h" />
+    <ClInclude Include="I18N.West.CP1252.h" />
+    <ClInclude Include="System.IO.DirectoryNotFoundException.h" />
+    <ClInclude Include="System.Ownership.h" />
+    <ClInclude Include="System.Array.hpp" />
+    <ClInclude Include="System.BitConverter.h" />
+    <ClInclude Include="System.Buffer.h" />
+    <ClInclude Include="System.Collections.Generic.Dictionary.h" />
+    <ClInclude Include="System.Collections.Generic.Dictionary.hpp" />
+    <ClInclude Include="System.Collections.Generic.EqualityComparer.h" />
+    <ClInclude Include="System.Collections.Generic.IEqualityComparer.h" />
+    <ClInclude Include="System.Collections.Generic.List.hpp" />
+    <ClInclude Include="System.Collections.HashPrimeNumbers.h" />
+    <ClInclude Include="System.Globalization.CompareInfo.h" />
+    <ClInclude Include="System.Globalization.CompareOptions.h" />
+    <ClInclude Include="System.Globalization.TextInfo.h" />
+    <ClInclude Include="System.Globalization.UnicodeCategory.h" />
+    <ClInclude Include="System.IComparable.h" />
+    <ClInclude Include="LocaleStrings.h" />
+    <ClInclude Include="NumberFormatEntry.h" />
+    <ClInclude Include="System.Array.h" />
+    <ClInclude Include="System.Char.h" />
+    <ClInclude Include="System.Convert.h" />
+    <ClInclude Include="System.Environment.h" />
+    <ClInclude Include="System.Exception.h" />
+    <ClInclude Include="System.Globalization.CultureInfo.h" />
+    <ClInclude Include="System.Globalization.NumberFormatInfo.h" />
+    <ClInclude Include="System.IEquatable.h" />
+    <ClInclude Include="System.IFormatProvider.h" />
+    <ClInclude Include="System.Int32.h" />
+    <ClInclude Include="System.IO.CrapoFileType.h" />
+    <ClInclude Include="System.IO.CrapoIO.h" />
+    <ClInclude Include="System.IO.CrapoIOStat.h" />
+    <ClInclude Include="System.IO.Directory.h" />
+    <ClInclude Include="System.IO.DirectoryInfo.h" />
+    <ClInclude Include="System.IO.DriveInfo.h" />
+    <ClInclude Include="System.IO.Enums.h" />
+    <ClInclude Include="System.IO.File.h" />
+    <ClInclude Include="System.IO.FileAttributes.h" />
+    <ClInclude Include="System.IO.FileNotFoundException.h" />
+    <ClInclude Include="System.IO.FileStream.h" />
+    <ClInclude Include="System.IO.FileSystemInfo.h" />
+    <ClInclude Include="System.IO.h" />
+    <ClInclude Include="System.IO.IOException.h" />
+    <ClInclude Include="System.IO.Path.h" />
+    <ClInclude Include="System.IO.SearchPatterns.h" />
+    <ClInclude Include="System.IO.SeekOrigin.h" />
+    <ClInclude Include="System.IO.Stream.h" />
+    <ClInclude Include="System.IO.StreamReader.h" />
+    <ClInclude Include="System.IO.StreamWriter.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="System.IO.TextReader.h" />
+    <ClInclude Include="System.IO.TextWriter.h" />
+    <ClInclude Include="System.Math.h" />
+    <ClInclude Include="System.NumberFormatter.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="System.Object.h" />
+    <ClInclude Include="System.Single.h" />
+    <ClInclude Include="System.String.h" />
+    <ClInclude Include="System.Text.ASCIIEncoding.h" />
+    <ClInclude Include="System.Text.Decoder.h" />
+    <ClInclude Include="System.Text.DecoderFallback.h" />
+    <ClInclude Include="System.Text.DecoderFallbackBuffer.h" />
+    <ClInclude Include="System.Text.DecoderReplacementFallback.h" />
+    <ClInclude Include="System.Text.DecoderReplacementFallbackBuffer.h" />
+    <ClInclude Include="System.Text.EncoderFallback.h" />
+    <ClInclude Include="System.Text.EncoderFallbackBuffer.h" />
+    <ClInclude Include="System.Text.EncoderReplacementFallback.h" />
+    <ClInclude Include="System.Text.EncoderReplacementFallbackBuffer.h" />
+    <ClInclude Include="System.Text.Encoding.h" />
+    <ClInclude Include="System.Text.StringBuilder.h" />
+    <ClInclude Include="System.Text.Unicode.h" />
+    <ClInclude Include="System.Text.UTF8Encoding.h" />
+    <ClInclude Include="System.Threading.InternalThread.h" />
+    <ClInclude Include="System.Threading.Thread.h" />
+    <ClInclude Include="System.Threading.ThreadState.h" />
+    <ClInclude Include="System.Windows.Locale.h" />
+    <ClInclude Include="UnicodeData.h" />
+    <ClInclude Include="win32.security_attribute.h" />
+    <ClInclude Include="sys.rect.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="corlib.h" />
+    <ClInclude Include="sys.list.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="CultureInfoEntry.cpp" />
+    <ClCompile Include="Encodings.cpp" />
+    <ClCompile Include="I18N.Common.ByteEncoding.cpp" />
+    <ClCompile Include="I18N.Common.CrapoEncoding.cpp" />
+    <ClCompile Include="I18N.West.CP1252.cpp" />
+    <ClCompile Include="LocaleStrings.cpp" />
+    <ClCompile Include="System.BitConverter.cpp" />
+    <ClCompile Include="System.Buffer.cpp" />
+    <ClCompile Include="System.Char.cpp" />
+    <ClInclude Include="System.Collections.Generic.List.h" />
+    <ClCompile Include="System.Collections.HashPrimeNumbers.cpp" />
+    <ClCompile Include="System.Convert.cpp" />
+    <ClCompile Include="System.Environment.cpp" />
+    <ClCompile Include="System.Exception.cpp" />
+    <ClCompile Include="System.Globalization.CompareInfo.cpp" />
+    <ClCompile Include="System.Globalization.CultureInfo.cpp" />
+    <ClCompile Include="System.Globalization.NumberFormatInfo.cpp" />
+    <ClCompile Include="System.Globalization.TextInfo.cpp" />
+    <ClCompile Include="System.Int32.cpp" />
+    <ClCompile Include="System.IO.CrapoIO.cpp" />
+    <ClCompile Include="System.IO.Directory.cpp" />
+    <ClCompile Include="System.IO.DirectoryInfo.cpp" />
+    <ClCompile Include="System.IO.DirectoryNotFoundException.cpp" />
+    <ClCompile Include="System.IO.DriveInfo.cpp" />
+    <ClCompile Include="System.IO.File.cpp" />
+    <ClCompile Include="System.IO.FileNotFoundException.cpp" />
+    <ClCompile Include="System.IO.FileStream.cpp" />
+    <ClCompile Include="System.IO.FileSystemInfo.cpp" />
+    <ClCompile Include="System.IO.IOException.cpp" />
+    <ClCompile Include="System.IO.Path.cpp" />
+    <ClCompile Include="System.IO.SearchPatterns.cpp" />
+    <ClCompile Include="System.IO.Stream.cpp" />
+    <ClCompile Include="System.IO.StreamReader.cpp" />
+    <ClCompile Include="System.IO.StreamWriter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="System.IO.TextReader.cpp" />
+    <ClCompile Include="System.IO.TextWriter.cpp" />
+    <ClCompile Include="System.Math.cpp" />
+    <ClCompile Include="System.NumberFormatter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="System.Object.cpp" />
+    <ClCompile Include="System.Ownership.cpp" />
+    <ClCompile Include="System.Single.cpp" />
+    <ClCompile Include="System.String.cpp" />
+    <ClCompile Include="System.Text.ASCIIEncoding.cpp" />
+    <ClCompile Include="System.Text.Decoder.cpp" />
+    <ClCompile Include="System.Text.DecoderFallback.cpp" />
+    <ClCompile Include="System.Text.DecoderFallbackBuffer.cpp" />
+    <ClCompile Include="System.Text.DecoderReplacementFallback.cpp" />
+    <ClCompile Include="System.Text.DecoderReplacementFallbackBuffer.cpp" />
+    <ClCompile Include="System.Text.EncoderFallback.cpp" />
+    <ClCompile Include="System.Text.EncoderFallbackBuffer.cpp" />
+    <ClCompile Include="System.Text.EncoderReplacementFallback.cpp" />
+    <ClCompile Include="System.Text.EncoderReplacementFallbackBuffer.cpp" />
+    <ClCompile Include="System.Text.Encoding.cpp" />
+    <ClCompile Include="System.Text.StringBuilder.cpp" />
+    <ClCompile Include="System.Text.Unicode.cpp" />
+    <ClCompile Include="System.Text.UTF8Encoding.cpp" />
+    <ClCompile Include="System.Threading.InternalThread.cpp" />
+    <ClCompile Include="System.Threading.Thread.cpp" />
+    <ClCompile Include="System.Windows.Locale.cpp" />
+    <ClCompile Include="win32.security_attribute.cpp" />
+    <ClCompile Include="sys.rect.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{30E50231-171A-4E6E-B9D5-082284DD3978}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>corlib</RootNamespace>
+    <ProjectName>corlib</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;CRAPOCOREDLL_ENABLED;CRAPOCOREDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;CRAPOCOREDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

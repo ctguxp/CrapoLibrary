@@ -1,0 +1,519 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{280dc03d-beee-4d1e-8143-f7d31f3a7bc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{efffa553-eb03-4c73-ab32-55bbcfbb4a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System.IO">
+      <UniqueIdentifier>{e3ec59dd-4215-4601-920d-75af0e74d096}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.IO">
+      <UniqueIdentifier>{949feb3b-13dc-41ce-9441-96f8ac8556fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System.Text">
+      <UniqueIdentifier>{394a2e50-8a18-4b0e-9918-d660fa4548ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Text">
+      <UniqueIdentifier>{d55dda6d-965d-4982-b63a-52c3fb919b91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System.Globalization">
+      <UniqueIdentifier>{0f759401-fd11-4636-86f2-79f38380bd6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Globalization">
+      <UniqueIdentifier>{fb543db4-b10f-4ad3-8891-36be936564f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System.Threading">
+      <UniqueIdentifier>{0ff2169e-716d-4786-b30c-73845942ed9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Threading">
+      <UniqueIdentifier>{8ec94aa8-36c2-4fae-ba9f-b002bd6195ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\I18N.Common">
+      <UniqueIdentifier>{554c5966-0155-46f5-bc3e-30f807967782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\I18N.Common">
+      <UniqueIdentifier>{20fbf326-e59b-42e0-83ce-c913605f5449}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\I18N.West">
+      <UniqueIdentifier>{7d0696fc-842f-4e22-bb41-0c050e5e196a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\I18N.West">
+      <UniqueIdentifier>{9b2466e4-bfc4-4dd3-8de4-7c0a1ebc2be5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System.Collections">
+      <UniqueIdentifier>{690c2325-34aa-4282-b79d-71a99fb644ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System.Collections.Generic">
+      <UniqueIdentifier>{43e2189d-960b-491f-b09e-c79c34b8ef96}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="corlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sys.list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sys.rect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="win32.security_attribute.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.Path.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.Directory.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.FileAttributes.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.StringBuilder.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Int32.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoPtr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.NumberFormatter.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Char.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Globalization.NumberFormatInfo.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IFormatProvider.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Threading.Thread.h">
+      <Filter>Header Files\System.Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Threading.InternalThread.h">
+      <Filter>Header Files\System.Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Globalization.CultureInfo.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Exception.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Object.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Array.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Threading.ThreadState.h">
+      <Filter>Header Files\System.Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Math.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.String.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Convert.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.File.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.FileStream.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.StreamWriter.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Environment.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Windows.Locale.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.CrapoIO.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="CultureInfoEntry.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberFormatEntry.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="LocaleStrings.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.DecoderFallback.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.EncoderFallback.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.EncoderFallbackBuffer.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.EncoderReplacementFallbackBuffer.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.EncoderReplacementFallback.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.Encoding.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.ASCIIEncoding.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.UTF8Encoding.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.DecoderReplacementFallback.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.DecoderFallbackBuffer.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.DecoderReplacementFallbackBuffer.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Encodings.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="I18N.Common.ByteEncoding.h">
+      <Filter>Header Files\I18N.Common</Filter>
+    </ClInclude>
+    <ClInclude Include="I18N.Common.CrapoEncoding.h">
+      <Filter>Header Files\I18N.Common</Filter>
+    </ClInclude>
+    <ClInclude Include="I18N.West.CP1252.h">
+      <Filter>Header Files\I18N.West</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.Enums.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.Stream.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IComparable.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Globalization.CompareInfo.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Globalization.CompareOptions.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Globalization.TextInfo.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="CharConversions.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="UnicodeData.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IEquatable.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Globalization.UnicodeCategory.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.CrapoFileType.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.SeekOrigin.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.StreamReader.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.TextReader.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.TextWriter.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Buffer.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.Decoder.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.HashPrimeNumbers.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.Generic.Dictionary.h">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.Generic.EqualityComparer.h">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.Generic.IEqualityComparer.h">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.Generic.Dictionary.hpp">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Array.hpp">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.Unicode.h">
+      <Filter>Header Files\System.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.Generic.List.hpp">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.Generic.List.h">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.DirectoryInfo.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.DriveInfo.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.FileSystemInfo.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.CrapoIOStat.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.BitConverter.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Single.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.IOException.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.SearchPatterns.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Ownership.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.FileNotFoundException.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="System.IO.DirectoryNotFoundException.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sys.rect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win32.security_attribute.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.Path.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.Directory.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.StringBuilder.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.NumberFormatter.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Char.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Globalization.NumberFormatInfo.cpp">
+      <Filter>Source Files\System.Globalization</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Threading.Thread.cpp">
+      <Filter>Source Files\System.Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Threading.InternalThread.cpp">
+      <Filter>Source Files\System.Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Globalization.CultureInfo.cpp">
+      <Filter>Source Files\System.Globalization</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Int32.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Exception.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Object.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Math.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.String.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Convert.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.File.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.FileStream.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Environment.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Windows.Locale.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.CrapoIO.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="CultureInfoEntry.cpp">
+      <Filter>Source Files\System.Globalization</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.DecoderFallback.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.EncoderFallback.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.EncoderFallbackBuffer.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.EncoderReplacementFallbackBuffer.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.EncoderReplacementFallback.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.Encoding.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.ASCIIEncoding.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.UTF8Encoding.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.DecoderReplacementFallback.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.DecoderFallbackBuffer.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.DecoderReplacementFallbackBuffer.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="LocaleStrings.cpp">
+      <Filter>Source Files\System.Globalization</Filter>
+    </ClCompile>
+    <ClCompile Include="Encodings.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="I18N.Common.ByteEncoding.cpp">
+      <Filter>Source Files\I18N.Common</Filter>
+    </ClCompile>
+    <ClCompile Include="I18N.Common.CrapoEncoding.cpp">
+      <Filter>Source Files\I18N.Common</Filter>
+    </ClCompile>
+    <ClCompile Include="I18N.West.CP1252.cpp">
+      <Filter>Source Files\I18N.West</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.Stream.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.StreamWriter.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Globalization.CompareInfo.cpp">
+      <Filter>Source Files\System.Globalization</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Globalization.TextInfo.cpp">
+      <Filter>Source Files\System.Globalization</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.StreamReader.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.TextReader.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Buffer.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.TextWriter.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.Decoder.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Collections.HashPrimeNumbers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.Unicode.cpp">
+      <Filter>Source Files\System.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.FileSystemInfo.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.DriveInfo.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.DirectoryInfo.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Single.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.BitConverter.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.IOException.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.SearchPatterns.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Ownership.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.FileNotFoundException.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.DirectoryNotFoundException.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
