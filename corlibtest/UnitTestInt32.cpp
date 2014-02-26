@@ -6,7 +6,7 @@ using namespace System;
 
 namespace corlibtest
 {
-	TEST_CLASS(Int32Stuff)
+	TEST_CLASS(UnitTestInt32)
 	{
 	public:
 		TEST_CLASS_INITIALIZE(Startup)

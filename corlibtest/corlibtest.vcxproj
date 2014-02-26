@@ -319,7 +319,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Environment.cpp" />
-    <ClCompile Include="Int32.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|Win32'">Create</PrecompiledHeader>
@@ -333,6 +332,7 @@
     <ClCompile Include="UnitTestASCII.cpp" />
     <ClCompile Include="UnitTestCurrentCultureInfo.cpp" />
     <ClCompile Include="UnitTestGenericList.cpp" />
+    <ClCompile Include="UnitTestInt32.cpp" />
     <ClCompile Include="UnitTestPath.cpp" />
     <ClCompile Include="UnitTestSingle.cpp" />
     <ClCompile Include="UnitTestStreamReader.cpp" />
