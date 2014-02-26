@@ -4,7 +4,7 @@
 
 namespace System
   {
-  class Boolean : public Object
+  class CRAPOCOREDLL_API Boolean : public Object
     {
     private:
       bool _value;

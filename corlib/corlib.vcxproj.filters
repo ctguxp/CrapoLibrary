@@ -337,7 +337,7 @@
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="System.Boolean.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -534,7 +534,7 @@
       <Filter>Source Files\System</Filter>
     </ClCompile>
     <ClCompile Include="System.Boolean.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
