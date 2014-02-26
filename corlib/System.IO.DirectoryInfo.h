@@ -6,7 +6,7 @@ namespace System
   {
   namespace IO
     {
-    class DirectoryInfo : public FileSystemInfo
+    class CRAPOCOREDLL_API DirectoryInfo : public FileSystemInfo
       {
       private:
         String _current;

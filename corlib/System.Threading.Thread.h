@@ -4,11 +4,12 @@
 #include "System.Threading.InternalThread.h"
 #include "System.Globalization.CultureInfo.h"
 
+#pragma warning(disable:4251)
 namespace System
   {
   namespace Threading
     {
-    class Thread
+    class CRAPOCOREDLL_API Thread
       {
       public:
         Thread();
@@ -28,3 +29,4 @@ namespace System
       };
     }
   }
+#pragma warning(default:4251)

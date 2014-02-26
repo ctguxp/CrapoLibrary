@@ -6,7 +6,7 @@ namespace System
   {
   namespace IO
     {
-    class FileSystemInfo
+    class CRAPOCOREDLL_API FileSystemInfo
       {
       protected:
         String      _fullPath;

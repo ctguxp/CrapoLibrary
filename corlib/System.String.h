@@ -172,7 +172,7 @@ namespace System
   // Operator append
   String operator+(const String& s1, const String& s2);
   bool operator==(const String& s1, const String& s2);
-  bool operator!=(const String& s1, const String& s2);
+  CRAPOCOREDLL_API bool operator!=(const String& s1, const String& s2);
 
   typedef AutoPtr<String> GCString;
   }

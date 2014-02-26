@@ -9,7 +9,7 @@ namespace System
   {
   namespace Text
     {
-    class StringBuilder : public System::Object
+    class CRAPOCOREDLL_API StringBuilder : public System::Object
       {
       enum
         {
