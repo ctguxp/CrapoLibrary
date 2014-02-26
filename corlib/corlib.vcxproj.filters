@@ -360,6 +360,15 @@
     <ClInclude Include="System.Byte.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="System.Int16.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.UInt16.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.SByte.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -567,6 +576,15 @@
       <Filter>Source Files\System.Security.Cryptography</Filter>
     </ClCompile>
     <ClCompile Include="System.Byte.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Int16.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.UInt16.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.SByte.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>

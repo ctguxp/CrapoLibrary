@@ -46,6 +46,7 @@
     <ClInclude Include="I18N.West.CP1252.h" />
     <ClInclude Include="System.Boolean.h" />
     <ClInclude Include="System.h" />
+    <ClInclude Include="System.Int16.h" />
     <ClInclude Include="System.Int64.h" />
     <ClInclude Include="System.IO.DirectoryNotFoundException.h" />
     <ClInclude Include="System.Ownership.h" />
@@ -110,6 +111,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="System.Object.h" />
+    <ClInclude Include="System.SByte.h" />
     <ClInclude Include="System.Security.Cryptography.Base64Constants.h" />
     <ClInclude Include="System.Security.Cryptography.Base64Helper.h" />
     <ClInclude Include="System.Single.h" />
@@ -131,6 +133,7 @@
     <ClInclude Include="System.Threading.InternalThread.h" />
     <ClInclude Include="System.Threading.Thread.h" />
     <ClInclude Include="System.Threading.ThreadState.h" />
+    <ClInclude Include="System.UInt16.h" />
     <ClInclude Include="System.UInt32.h" />
     <ClInclude Include="System.UInt64.h" />
     <ClInclude Include="System.Windows.Locale.h" />
@@ -163,6 +166,7 @@
     <ClCompile Include="System.Globalization.CultureInfo.cpp" />
     <ClCompile Include="System.Globalization.NumberFormatInfo.cpp" />
     <ClCompile Include="System.Globalization.TextInfo.cpp" />
+    <ClCompile Include="System.Int16.cpp" />
     <ClCompile Include="System.Int32.cpp" />
     <ClCompile Include="System.Int64.cpp" />
     <ClCompile Include="System.IO.CrapoIO.cpp" />
@@ -196,6 +200,7 @@
     </ClCompile>
     <ClCompile Include="System.Object.cpp" />
     <ClCompile Include="System.Ownership.cpp" />
+    <ClCompile Include="System.SByte.cpp" />
     <ClCompile Include="System.Security.Cryptography.Base64Constants.cpp" />
     <ClCompile Include="System.Security.Cryptography.Base64Helper.cpp" />
     <ClCompile Include="System.Single.cpp" />
@@ -216,6 +221,7 @@
     <ClCompile Include="System.Text.UTF8Encoding.cpp" />
     <ClCompile Include="System.Threading.InternalThread.cpp" />
     <ClCompile Include="System.Threading.Thread.cpp" />
+    <ClCompile Include="System.UInt16.cpp" />
     <ClCompile Include="System.UInt32.cpp" />
     <ClCompile Include="System.UInt64.cpp" />
     <ClCompile Include="System.Windows.Locale.cpp" />
