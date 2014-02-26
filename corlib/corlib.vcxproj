@@ -37,6 +37,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="AutoPtr.h" />
+    <ClInclude Include="System.Byte.h" />
     <ClInclude Include="CharConversions.h" />
     <ClInclude Include="CultureInfoEntry.h" />
     <ClInclude Include="Encodings.h" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="System.Byte.cpp" />
     <ClCompile Include="CultureInfoEntry.cpp" />
     <ClCompile Include="Encodings.cpp" />
     <ClCompile Include="I18N.Common.ByteEncoding.cpp" />

@@ -357,6 +357,9 @@
     <ClInclude Include="System.Security.Cryptography.Base64Constants.h">
       <Filter>Header Files\System.Security.Cryptography</Filter>
     </ClInclude>
+    <ClInclude Include="System.Byte.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -562,6 +565,9 @@
     </ClCompile>
     <ClCompile Include="System.Security.Cryptography.Base64Constants.cpp">
       <Filter>Source Files\System.Security.Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Byte.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
