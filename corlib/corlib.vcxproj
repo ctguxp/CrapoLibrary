@@ -129,6 +129,7 @@
     <ClInclude Include="System.Threading.Thread.h" />
     <ClInclude Include="System.Threading.ThreadState.h" />
     <ClInclude Include="System.UInt32.h" />
+    <ClInclude Include="System.UInt64.h" />
     <ClInclude Include="System.Windows.Locale.h" />
     <ClInclude Include="UnicodeData.h" />
     <ClInclude Include="win32.security_attribute.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="System.Threading.InternalThread.cpp" />
     <ClCompile Include="System.Threading.Thread.cpp" />
     <ClCompile Include="System.UInt32.cpp" />
+    <ClCompile Include="System.UInt64.cpp" />
     <ClCompile Include="System.Windows.Locale.cpp" />
     <ClCompile Include="win32.security_attribute.cpp" />
     <ClCompile Include="sys.rect.cpp" />

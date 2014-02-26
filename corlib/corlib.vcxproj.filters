@@ -339,6 +339,9 @@
     <ClInclude Include="System.Boolean.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="System.UInt64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -535,6 +538,9 @@
     </ClCompile>
     <ClCompile Include="System.Boolean.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.UInt64.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

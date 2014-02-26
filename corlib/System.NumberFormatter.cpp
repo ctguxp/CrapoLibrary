@@ -77,6 +77,17 @@ namespace System
     return res;
     }
 
+  String NumberFormatter::NumberToString(uint64 value, IFormatProvider* fp)
+    {
+    if(value >= HundredMillion)
+      return NumberToString(nullptr, value, fp);
+
+    // TODO : NumberFormatter inst = GetInstance (fp);
+    GCNumberFormatter inst(GetInstance());
+    String res = inst->FastIntegerToString((int32)value, fp);
+    return res;
+    }
+
   String NumberFormatter::NumberToString(float value, IFormatProvider* fp)
     {
     // TODO :GCNumberFormatter inst(GetInstance(fp));
@@ -125,13 +136,22 @@ namespace System
     return res;
     }
 
+  String NumberFormatter::NumberToString(String* format, uint64 value, IFormatProvider* fp)
+    {
+    // TODO : NumberFormatter inst = GetInstance (fp);
+    GCNumberFormatter inst(GetInstance());
+    inst->Init(format, value);
+    String res = inst->IntegerToString(format, fp);
+    return res;
+    }
+
   String NumberFormatter::NumberToString(String* format, float value, IFormatProvider* fp)
     {
     // TODO :GCNumberFormatter inst(GetInstance(fp));
     GCNumberFormatter inst(GetInstance());
     inst->Init(format, value, SingleDefPrecision);
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
-    //NumberFormatInfo nfi = inst.GetNumberFormatInstance (fp);
+    // TODO : NumberFormatInfo nfi = inst.GetNumberFormatInstance (fp);
     String res;
     if(inst->_NaN)
       res = nfi->NaNSymbol();
@@ -205,6 +225,21 @@ namespace System
     if(value < 0)
       value = -value;
     InitDecHexDigits((uint64)value);
+    _decPointPos = _digitsLen = DecHexLen ();
+    }
+
+  void NumberFormatter::Init(String* format, uint64 value)
+    {
+    Init (format);
+    _defPrecision = UInt64DefPrecision;
+    _positive = true;
+
+    if(value == 0 || _specifier == L'X') {
+      InitHex((uint64)value);
+      return;
+      }
+
+    InitDecHexDigits (value);
     _decPointPos = _digitsLen = DecHexLen ();
     }
 

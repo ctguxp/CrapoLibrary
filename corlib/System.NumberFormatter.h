@@ -48,10 +48,12 @@ namespace System
       static String NumberToString(int32, IFormatProvider*);
       static String NumberToString(uint32, IFormatProvider*);
       static String NumberToString(int64, IFormatProvider*);
+      static String NumberToString(uint64, IFormatProvider*);
       static String NumberToString(float, IFormatProvider*);
       static String NumberToString(String*, int32, IFormatProvider*);
       static String NumberToString(String*, uint32, IFormatProvider*);
-      static String NumberToString(String* format, int64 value, IFormatProvider* fp);
+      static String NumberToString(String*, int64, IFormatProvider*);
+      static String NumberToString(String*, uint64, IFormatProvider*);
       static String NumberToString(String*, float, IFormatProvider*);
       String FormatExponential(int precision, Globalization::NumberFormatInfo* nfi);
       String FormatCurrency(int precision, Globalization::NumberFormatInfo* nfi);
@@ -78,6 +80,7 @@ namespace System
       int InitialFloatingPrecision();
       void Init(String*);
       void Init(String* format, int64 value);
+      void Init(String* format, uint64 value);
       void Init(String*, int, int);
       void Init(String* format, uint32 value, int defPrecision);
       void Init(String* format, double value, int defPrecision);
