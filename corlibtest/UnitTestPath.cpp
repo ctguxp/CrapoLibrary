@@ -54,7 +54,7 @@ namespace corlibtest
           }
         }*/
 
-      TEST_METHOD(GetTempPath)
+      TEST_METHOD(GetTempPath1)
         {
         try
           {
