@@ -13,6 +13,7 @@ namespace System
   template<class T>
   Array<T>::Array(sizet len = 0)
     :_len(len)
+    ,_base(0)
     ,_ptr(len > 0 ? new T[len] : nullptr)
     {
     }
@@ -24,6 +25,7 @@ namespace System
   template<class T>
   Array<T>::Array(sizet len, T value)
     :_len(len)
+    ,_base(0)
     ,_ptr(len > 0 ? new T[len] : nullptr)
     {
     if(_ptr != nullptr)
@@ -40,6 +42,7 @@ namespace System
   template<class T>
   Array<T>::Array(T* arr, sizet len)
     :_len(len)
+    ,_base(0)
     ,_ptr(len > 0 ? new T[len] : nullptr)
     {
     if(_ptr != nullptr)
@@ -55,6 +58,7 @@ namespace System
   template<class T>
   Array<T>::Array(const Array<T>& arr)
     :_len(arr._len)
+    ,_base(arr._base)
     {
     _ptr = new T[_len];
     for(sizet i = 0; i < _len; ++i)
@@ -94,10 +98,10 @@ namespace System
   template<class T>
   const T& Array<T>::operator[] (sizet idx) const
     {
-    assert(idx < _len);
-    if(idx >= _len)
+    sizet const offset = idx - _base;
+    if(offset >= _len)
       throw ArgumentOutOfRangeException();
-    return _ptr[idx];
+    return _ptr[offset];
     }
   // ------------------------------------------------------------------------
 
@@ -106,15 +110,21 @@ namespace System
   template<class T>
   T& Array<T>::operator[] (sizet idx)
     {
-    assert(idx < _len);
-    if(idx >= _len)
+    sizet const offset = idx - _base;
+    if(offset >= _len)
       throw ArgumentOutOfRangeException();
-    return _ptr[idx];
+    return _ptr[offset];
     }
   // ------------------------------------------------------------------------
 
+  template<class T>
+  void Array<T>::Base(sizet new_base)
+    {
+    _base = new_base;
+    }
+
   // ------------------------------------------------------------------------
-  /// Set Length Propery (Will Grow or Shrink Array depending on new length)
+  /// Set Length Property (Will Grow or Shrink Array depending on new length)
   template<class T>
   void Array<T>::Length(sizet new_len)
     {

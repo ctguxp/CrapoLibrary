@@ -21,6 +21,7 @@ namespace System
     {
     private:
       sizet _len;  // Current length
+      sizet _base;
       T*   _ptr;  // Pointer to array
     public:
       Array(sizet len = 0);
@@ -40,6 +41,8 @@ namespace System
       T* ToPtr() { return _ptr; }
       const T* ToConstPtr() const { return _ptr; }
       
+      sizet Base() const { return _base; }
+      void Base(sizet new_base);
       sizet Length() const { return _len; }
       void Length(sizet new_len);
 
