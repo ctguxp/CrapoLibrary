@@ -109,6 +109,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="System.Object.h" />
+    <ClInclude Include="System.Security.Cryptography.Base64Constants.h" />
+    <ClInclude Include="System.Security.Cryptography.Base64Helper.h" />
     <ClInclude Include="System.Single.h" />
     <ClInclude Include="System.String.h" />
     <ClInclude Include="System.Text.ASCIIEncoding.h" />
@@ -192,6 +194,8 @@
     </ClCompile>
     <ClCompile Include="System.Object.cpp" />
     <ClCompile Include="System.Ownership.cpp" />
+    <ClCompile Include="System.Security.Cryptography.Base64Constants.cpp" />
+    <ClCompile Include="System.Security.Cryptography.Base64Helper.cpp" />
     <ClCompile Include="System.Single.cpp" />
     <ClCompile Include="System.String.cpp" />
     <ClCompile Include="System.Text.ASCIIEncoding.cpp" />

@@ -61,6 +61,15 @@
     <Filter Include="Header Files\System.Collections.Generic">
       <UniqueIdentifier>{43e2189d-960b-491f-b09e-c79c34b8ef96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\System.Security.Cryptography">
+      <UniqueIdentifier>{5b0b5309-28ec-421b-8dec-21384afcb985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Security.Cryptography">
+      <UniqueIdentifier>{c96dfb5b-687c-45e5-9c7f-0e412ac5cbb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Collections">
+      <UniqueIdentifier>{22b7d55a-4645-4186-92c5-2b1e3cec59c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -340,7 +349,13 @@
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="System.UInt64.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Security.Cryptography.Base64Helper.h">
+      <Filter>Header Files\System.Security.Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Security.Cryptography.Base64Constants.h">
+      <Filter>Header Files\System.Security.Cryptography</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -494,9 +509,6 @@
     <ClCompile Include="System.Text.Decoder.cpp">
       <Filter>Source Files\System.Text</Filter>
     </ClCompile>
-    <ClCompile Include="System.Collections.HashPrimeNumbers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="System.Text.Unicode.cpp">
       <Filter>Source Files\System.Text</Filter>
     </ClCompile>
@@ -539,8 +551,17 @@
     <ClCompile Include="System.Boolean.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="System.Collections.HashPrimeNumbers.cpp">
+      <Filter>Source Files\System.Collections</Filter>
+    </ClCompile>
     <ClCompile Include="System.UInt64.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Security.Cryptography.Base64Helper.cpp">
+      <Filter>Source Files\System.Security.Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Security.Cryptography.Base64Constants.cpp">
+      <Filter>Source Files\System.Security.Cryptography</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
