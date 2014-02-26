@@ -9,13 +9,11 @@ namespace System
   class CRAPOCOREDLL_API Convert
     {
     public:
-      // Default constructor
       Convert();
-      // Destructor
       ~Convert();
-      // From base64 string;
-      static System::ByteArray from_base64_string(System::String&);
-      // To base64 string
-      //static System::String to_base64_string(System::ByteArray&);
+      static ByteArray FromBase64CharArray(CharArray& inArray, int offset, int length);
+      static int ToBase64CharArray(ByteArray& inArray, int offsetIn, int length, CharArray& outArray, int offsetOut);
+    private:
+      static ByteArray InternalFromBase64CharArray(CharArray& arr, int offset, int length);
     };
   }
