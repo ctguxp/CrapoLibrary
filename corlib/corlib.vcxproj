@@ -43,6 +43,7 @@
     <ClInclude Include="I18N.Common.ByteEncoding.h" />
     <ClInclude Include="I18N.Common.CrapoEncoding.h" />
     <ClInclude Include="I18N.West.CP1252.h" />
+    <ClInclude Include="System.Boolean.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="System.Int64.h" />
     <ClInclude Include="System.IO.DirectoryNotFoundException.h" />
@@ -145,6 +146,7 @@
     <ClCompile Include="I18N.West.CP1252.cpp" />
     <ClCompile Include="LocaleStrings.cpp" />
     <ClCompile Include="System.BitConverter.cpp" />
+    <ClCompile Include="System.Boolean.cpp" />
     <ClCompile Include="System.Buffer.cpp" />
     <ClCompile Include="System.Char.cpp" />
     <ClInclude Include="System.Collections.Generic.List.h" />
