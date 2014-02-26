@@ -11,6 +11,8 @@ namespace System
     public:
       static const int32 MaxValue = 2147483647;
       static const int32 MinValue = (-2147483647 - 1);
+    private:
+      int32 _value;
     public:
       Int32();
       Int32(int32 const&);
@@ -20,8 +22,6 @@ namespace System
       virtual String ToString() override;
       String ToString(String& format);
       virtual uint32 GetHashCode() override;
-     private:
-      int32 _value;
     };
   }
 

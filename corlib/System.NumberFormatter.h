@@ -34,6 +34,8 @@ namespace System
     static const int UInt32DefPrecision = 10;
     static const int Int16DefPrecision = 5;
     static const int Int32DefPrecision = 10;
+    static const int Int64DefPrecision = 19;
+		static const int UInt64DefPrecision = 20;
     static const int DoubleBitsExponentShift = 52;
 		static const int DoubleBitsExponentMask = 0x7ff;
 		static const int64 DoubleBitsMantissaMask = 0xfffffffffffff;
@@ -43,10 +45,14 @@ namespace System
 
     public:
       ~NumberFormatter();
-      static String NumberToString(int, IFormatProvider*);
+      static String NumberToString(int32, IFormatProvider*);
+      static String NumberToString(uint32, IFormatProvider*);
+      static String NumberToString(int64, IFormatProvider*);
       static String NumberToString(float, IFormatProvider*);
-      static String NumberToString(String*, int, IFormatProvider*);
-      static String NumberToString(String* format, float value, IFormatProvider* fp);
+      static String NumberToString(String*, int32, IFormatProvider*);
+      static String NumberToString(String*, uint32, IFormatProvider*);
+      static String NumberToString(String* format, int64 value, IFormatProvider* fp);
+      static String NumberToString(String*, float, IFormatProvider*);
       String FormatExponential(int precision, Globalization::NumberFormatInfo* nfi);
       String FormatCurrency(int precision, Globalization::NumberFormatInfo* nfi);
     private:
@@ -71,11 +77,13 @@ namespace System
       String FormatGeneral(int precision, Globalization::NumberFormatInfo* nfi);
       int InitialFloatingPrecision();
       void Init(String*);
+      void Init(String* format, int64 value);
       void Init(String*, int, int);
+      void Init(String* format, uint32 value, int defPrecision);
       void Init(String* format, double value, int defPrecision);
       void InitDecHexDigits(uint32);
       void InitDecHexDigits(uint64 value);
-      void InitHex(ulong);
+      void InitHex(uint64);
       int IntegerDigits();
       String IntegerToString(String*, IFormatProvider*);
       bool IsFloatingSource();
