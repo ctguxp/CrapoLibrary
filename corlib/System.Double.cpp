@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "System.Single.h"
+#include "System.Double.h"
 #include "System.NumberFormatter.h"
 #include <float.h>
 #include <math.h>
@@ -8,49 +8,52 @@
 
 namespace System
   {
-  float Single::NaN = NAN;
+  double Double::NaN = NAN;
 
-  Single::Single()
+  const double Double::MaxValue = DBL_MAX;
+  const double Double::MinValue = DBL_MIN;
+
+  Double::Double()
     :_value()
     {
     }
-  Single::Single(float const& value)
+  Double::Double(double const& value)
     :_value(value)
     {
     }
-  Single::~Single()
+  Double::~Double()
     {
     }
-  Single& Single::operator = (float const& value)
+  Double& Double::operator = (double const& value)
     {
     _value = value;
     return *this;
     }
-  Single::operator float const& () const
+  Double::operator double const& () const
     {
     return _value;
     }
-  uint32 Single::GetHashCode()
+  uint32 Double::GetHashCode()
     {
     if(_value == 0)
       return 0;
     int exp;
-    float mantissa = frexp(_value, &exp);
+    double mantissa = frexp(_value, &exp);
     return (uint32)(2 * fabs(mantissa) - 1) * ~0U;
     }
-  String Single::ToString()
+  String Double::ToString()
     {
     return NumberFormatter::NumberToString(_value, nullptr);
     }
-  String Single::ToString(IFormatProvider* provider)
+  String Double::ToString(IFormatProvider* provider)
     {
     return NumberFormatter::NumberToString(_value, provider);
     }
-  String Single::ToString(String format)
+  String Double::ToString(String format)
     {
     return ToString(format, nullptr);
     }
-  String Single::ToString(String format, IFormatProvider* provider)
+  String Double::ToString(String format, IFormatProvider* provider)
     {
     return NumberFormatter::NumberToString(&format, _value, provider);
     }

@@ -107,6 +107,25 @@ namespace System
     return res;
     }
 
+  String NumberFormatter::NumberToString(double value, IFormatProvider* fp)
+		{
+			// TODO :GCNumberFormatter inst(GetInstance(fp));
+      GCNumberFormatter inst(GetInstance());
+			Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
+			inst->Init(nullptr, value, DoubleDefPrecision);
+			String res;
+			if(inst->_NaN)
+				res = nfi->NaNSymbol();
+			else if (inst->_infinity)
+				if(inst->_positive)
+					res = nfi->PositiveInfinitySymbol();
+				else
+					res = nfi->NegativeInfinitySymbol();
+			else
+				res = inst->FormatGeneral(-1, nfi);
+			return res;
+		}
+
   // ------------------------------------------------------------------------
   /// Public Static NumberToString function (Based on Mono)
   String NumberFormatter::NumberToString(String* format, int32 value, IFormatProvider* fp)
@@ -166,6 +185,27 @@ namespace System
       res = inst->NumberToString(format, nfi);
     return res;
     }
+
+  String NumberFormatter::NumberToString(String* format, double value, IFormatProvider* fp)
+		{
+			// TODO :GCNumberFormatter inst(GetInstance(fp));
+      GCNumberFormatter inst(GetInstance());
+			inst->Init(format, value, DoubleDefPrecision);
+			Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
+			String res;
+			if(inst->_NaN)
+				res = nfi->NaNSymbol();
+			else if(inst->_infinity)
+				if(inst->_positive)
+					res = nfi->PositiveInfinitySymbol();
+				else
+					res = nfi->NegativeInfinitySymbol();
+			// TODO : else if (inst._specifier == 'R')
+				//res = inst.FormatRoundtrip (value, nfi);
+			else
+				res = inst->NumberToString(format, nfi);
+			return res;
+		}
 
   // ------------------------------------------------------------------------
   /// Private Static NumberToString function (Based on Mono)

@@ -45,6 +45,7 @@
     <ClInclude Include="I18N.Common.CrapoEncoding.h" />
     <ClInclude Include="I18N.West.CP1252.h" />
     <ClInclude Include="System.Boolean.h" />
+    <ClInclude Include="System.Double.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="System.Int16.h" />
     <ClInclude Include="System.Int64.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="System.Collections.Generic.List.h" />
     <ClCompile Include="System.Collections.HashPrimeNumbers.cpp" />
     <ClCompile Include="System.Convert.cpp" />
+    <ClCompile Include="System.Double.cpp" />
     <ClCompile Include="System.Environment.cpp" />
     <ClCompile Include="System.Exception.cpp" />
     <ClCompile Include="System.Globalization.CompareInfo.cpp" />

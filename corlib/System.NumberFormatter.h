@@ -50,13 +50,15 @@ namespace System
       static String NumberToString(int64, IFormatProvider*);
       static String NumberToString(uint64, IFormatProvider*);
       static String NumberToString(float, IFormatProvider*);
+      static String NumberToString(double, IFormatProvider*);
       static String NumberToString(String*, int32, IFormatProvider*);
       static String NumberToString(String*, uint32, IFormatProvider*);
       static String NumberToString(String*, int64, IFormatProvider*);
       static String NumberToString(String*, uint64, IFormatProvider*);
       static String NumberToString(String*, float, IFormatProvider*);
-      String FormatExponential(int precision, Globalization::NumberFormatInfo* nfi);
-      String FormatCurrency(int precision, Globalization::NumberFormatInfo* nfi);
+      static String NumberToString(String*, double, IFormatProvider*);
+      String FormatExponential(int, Globalization::NumberFormatInfo*);
+      String FormatCurrency(int, Globalization::NumberFormatInfo*);
     private:
       NumberFormatter();
       void Append(cstring s);
