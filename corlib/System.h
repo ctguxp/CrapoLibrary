@@ -3,6 +3,7 @@
 #include "System.Array.h"
 #include "System.Array.hpp"
 #include "System.BitConverter.h"
+#include "System.Boolean.h"
 #include "System.Buffer.h"
 #include "System.Char.h"
 #include "System.Convert.h"
@@ -20,3 +21,4 @@
 #include "System.Single.h"
 #include "System.String.h"
 #include "System.UInt32.h"
+#include "System.UInt64.h"
