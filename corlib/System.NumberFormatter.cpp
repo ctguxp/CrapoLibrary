@@ -224,7 +224,7 @@ namespace System
       return;
       }
 
-    int e = (int)((int64)bits >> DoubleBitsExponentShift);
+    int32 e = (int)((int64)bits >> DoubleBitsExponentShift);
     int64 m = bits & DoubleBitsMantissaMask;
     if(e == DoubleBitsExponentMask) 
       {
@@ -233,7 +233,7 @@ namespace System
       return;
       }
 
-    int expAdjust = 0;
+    int32 expAdjust = 0;
     if(e == 0)
       {
       // We need 'm' to be large enough so we won't lose precision.
@@ -242,7 +242,7 @@ namespace System
       if(scale < DoubleDefPrecision)
         {
         expAdjust = scale - DoubleDefPrecision;
-        m *= (long)GetTenPowerOf (-expAdjust);
+        m *= GetTenPowerOf(-expAdjust);
         }
       }
     else 
@@ -998,7 +998,7 @@ namespace System
     ResetCharBuf(size + 10);
     _ind = size;
     _cbuf[size] = L'\0';
-    ulong val = _val1 | ((uint64)_val2 << 32);
+    uint64 val = _val1 | ((uint64)_val2 << 32);
     while (size > 0)
       {
       _cbuf [--size] = digits [val & 0xf];
@@ -1078,22 +1078,22 @@ namespace System
     }
   // ------------------------------------------------------------------------
 
-  // Translate an unsigned long to hexadecimal digits.
+  // Translate an uint64 to hexadecimal digits.
   void NumberFormatter::InitDecHexDigits(uint64 value)
     {
     if (value >= HundredMillion) {
-      long div1 = (long)(value / HundredMillion);
-      value -= HundredMillion * (ulong)div1;
+      int64 div1 = (int64)(value / HundredMillion);
+      value -= HundredMillion * (uint64)div1;
       if (div1 >= HundredMillion) {
-        int div2 = (int)(div1 / HundredMillion);
-        div1 = div1 - div2 * (long)HundredMillion;
-        _val3 = ToDecHex (div2);
+        int32 div2 = (int32)(div1 / HundredMillion);
+        div1 = div1 - div2 * (int64)HundredMillion;
+        _val3 = ToDecHex(div2);
         }
       if (div1 != 0)
-        _val2 = ToDecHex ((int)(div1));
+        _val2 = ToDecHex((int32)(div1));
       }
-    if (value != 0)
-      _val1 = ToDecHex ((int)value);
+    if(value != 0)
+      _val1 = ToDecHex ((int32)value);
     }
 
   // ------------------------------------------------------------------------
@@ -1211,9 +1211,9 @@ namespace System
     RoundBits(_digitsLen - pos);
     }
 
-  int NumberFormatter::ScaleOrder(int64 hi)
+  int32 NumberFormatter::ScaleOrder(int64 hi)
     {
-    for(int i = TenPowersListLength - 1; i >= 0; i--)
+    for(int32 i = TenPowersListLength - 1; i >= 0; i--)
       if (hi >= GetTenPowerOf(i))
         return i + 1;
     return 1;

@@ -100,7 +100,7 @@ namespace System
       bool RoundBits(int shift);
       bool RoundDecimal(int decimals);
       void RoundPos(int pos);
-      static int ScaleOrder(int64 hi);
+      static int32 ScaleOrder(int64 hi);
       static uint32 ToDecHex(int val);
     private:
       uint32       _ind;
