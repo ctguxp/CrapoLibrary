@@ -20,8 +20,8 @@ namespace System
         StringBuilder(String, int startIndex = 0, int length = 0, int capacity = 0);
         StringBuilder(uint32, uint32 maxCapacity = Int32::MaxValue);
         ~StringBuilder();
-        /*const wchar_t& operator [] (uint32 idx) const;
-        wchar_t& operator [] (uint32 idx);*/
+        const wchar_t& operator [] (uint32 idx) const;
+        wchar_t& operator [] (uint32 idx);
         int Capacity();
         int Length();
         void Length(uint32 value);
@@ -32,11 +32,16 @@ namespace System
         StringBuilder& Append(wchar_t, int);
         StringBuilder& Append(const wchar_t*);
         StringBuilder& Append(System::String);
-        StringBuilder& Append(System::String, int, int) ;
+        StringBuilder& Append(System::String, int, int);
+        StringBuilder& Insert(int index, String value, int count);
+        StringBuilder& Insert(int index, String value);
+        StringBuilder& Insert(int index, wchar_t value);
+        StringBuilder& Remove(int startIndex, int length);
         virtual String ToString() override;
       private:
         void Initialize(String& value, int startIndex, int length, int capacity);
         void InternalEnsureCapacity(uint32); 
+
       private:
         uint32   _length;
         uint32   _maxCapacity;

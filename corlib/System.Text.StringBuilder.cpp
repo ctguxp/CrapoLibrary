@@ -37,23 +37,21 @@ namespace System
       {
       }
 
-    /*const wchar_t& StringBuilder::operator [] (uint32 idx) const
-    {
-    assert(idx < _length);
-    if(idx >= _length)
-    throw System::ArgumentOutOfRangeException();
-    const wchar_t* p = _str.get_buffer();
-    return p[idx];
-    }
+    const wchar_t& StringBuilder::operator[](uint32 idx) const
+      {
+      assert(idx < _length);
+      if(idx >= _length)
+        throw System::ArgumentOutOfRangeException();
+      return _str[idx];
+      }
 
-    wchar_t& StringBuilder::operator [] (uint32 idx)
-    {
-    assert(idx < _length);
-    if(idx >= _length)
-    throw System::ArgumentOutOfRangeException();
-    wchar_t* p = (wchar_t*)_str.get_buffer();
-    return p[idx];
-    }*/
+    wchar_t& StringBuilder::operator[](uint32 idx)
+      {
+      assert(idx < _length);
+      if(idx >= _length)
+        throw System::ArgumentOutOfRangeException();
+      return (wchar_t&)_str[idx];
+      }
 
     int StringBuilder::Capacity()
       {
@@ -97,8 +95,8 @@ namespace System
 
     uint32 StringBuilder::MaxCapacity()
       {
-			return _maxCapacity;
-		  }
+      return _maxCapacity;
+      }
 
     StringBuilder& StringBuilder::Append(wchar_t value, int repeatCount) 
       {
@@ -208,6 +206,76 @@ namespace System
 
       return _str;
       }
+
+    StringBuilder& StringBuilder::Remove(int startIndex, int length)
+      {
+      // re-ordered to avoid possible integer overflow
+      if(startIndex < 0 || length < 0 || startIndex > (int)_length - length)
+        throw ArgumentOutOfRangeException();
+
+      //if(nullptr != _cached_str)
+      //InternalEnsureCapacity (_length);
+
+      // Copy everything after the 'removed' part to the start 
+      // of the removed part and truncate the sLength
+      if(_length - (startIndex + length) > 0)
+        String::CharCopy(_str, startIndex, _str, startIndex + length, _length - (startIndex + length));
+
+      _length -= length;
+
+      return *this;
+      }
+
+    StringBuilder& StringBuilder::Insert(int index, String value) 
+      {
+      if( index > (int)_length || index < 0)
+        throw ArgumentOutOfRangeException();
+
+      if(value.Length() == 0)
+        return *this;
+
+      InternalEnsureCapacity(_length + value.Length());
+
+      // Move everything to the right of the insert point across
+      String::CharCopyReverse(_str, index + value.Length(), _str, index, _length - index);
+
+      // Copy in stuff from the insert buffer
+      String::CharCopy(_str, index, value, 0, value.Length());
+
+      _length += value.Length();
+
+      return *this;
+      }
+
+    StringBuilder& StringBuilder::Insert(int index, wchar_t value) 
+		{
+			if(index > (int)_length || index < 0)
+				throw ArgumentOutOfRangeException(L"index");
+
+			InternalEnsureCapacity(_length + 1);
+			
+			// Move everything to the right of the insert point across
+			String::CharCopyReverse(_str, index + 1, _str, index, _length - index);
+			
+			_str.InternalSetChar(index, value);
+			_length++;
+
+			return *this;
+		}
+
+    StringBuilder& StringBuilder::Insert(int index, String value, int count) 
+      {
+      // LAMESPEC: The spec says to throw an exception if 
+      // count < 0, while MS throws even for count < 1!
+      if( count < 0 )
+        throw ArgumentOutOfRangeException();
+
+      if(value != String::Empty())
+        for(int insertCount = 0; insertCount < count; insertCount++)
+          Insert(index, value);
+
+      return *this;
+      }		
 
     void StringBuilder::InternalEnsureCapacity(uint32 size) 
       {
