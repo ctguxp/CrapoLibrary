@@ -49,7 +49,9 @@ namespace System
         int32    _digitSubstitution;
       public:
         NumberFormatInfo();
+        NumberFormatInfo(const NumberFormatInfo&);
         virtual ~NumberFormatInfo();
+        NumberFormatInfo& operator=(const NumberFormatInfo&);
         virtual Object GetFormat() override;
         static NumberFormatInfo* GetInstance(IFormatProvider*);
         
