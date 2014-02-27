@@ -72,6 +72,12 @@ namespace System
     return Globalization::CultureInfo::CurrentCulture().TextInfo().ToLower(c);
     }
 
+  bool Char::IsDigit(wchar_t c)
+		{
+    using namespace Globalization;
+	  return(CategoryData_v4[c] == (byte)UnicodeCategory::DecimalDigitNumber);
+		}
+
   bool Char::IsLetter(wchar_t c)
     {
     using namespace Globalization;

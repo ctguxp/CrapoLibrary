@@ -24,6 +24,7 @@ namespace System
       static bool IsHighSurrogate(wchar_t);
       static bool IsSurrogate(wchar_t);
       static bool IsWhiteSpace(wchar_t);
+      static bool IsDigit(wchar_t c);
       static bool IsLetter(wchar_t c);
       static wchar_t ToLower(wchar_t c);
       static wchar_t ToUpperInvariant(wchar_t c);
