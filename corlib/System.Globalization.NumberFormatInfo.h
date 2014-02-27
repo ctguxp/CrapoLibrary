@@ -83,15 +83,44 @@ namespace System
         void NumberDecimalDigits(int32);
         String NumberDecimalSeparator();
         void NumberDecimalSeparator(String);
+        String NumberGroupSeparator();
+        void NumberGroupSeparator(String);
+        IntArray NumberGroupSizes();
+        void NumberGroupSizes(IntArray&);
+        int NumberNegativePattern();
+        void NumberNegativePattern(int);
 
+        int PercentDecimalDigits();
+        void PercentDecimalDigits(int value);
+        String PercentDecimalSeparator();
+        void PercentDecimalSeparator(String);
+        String PercentGroupSeparator();
+        void PercentGroupSeparator(String);
+        IntArray PercentGroupSizes();
+        void PercentGroupSizes(IntArray&);
+        int PercentNegativePattern();
+        void PercentNegativePattern(int);
+        int PercentPositivePattern();
+        void PercentPositivePattern(int);
+        String PercentSymbol();
+        void PercentSymbol(String);
+        String PerMilleSymbol();
+        void PerMilleSymbol(String);
         String PositiveInfinitySymbol();
-        
+        void PositiveInfinitySymbol(String);
+        String PositiveSign();
+        void PositiveSign(String);
+
       private:
         NumberFormatInfo(int, bool);
         IntArray& RawCurrencyGroupSizes();
         void RawCurrencyGroupSizes(IntArray&);
-
-      friend NumberFormatter;
+        IntArray& RawNumberGroupSizes();
+        void RawNumberGroupSizes(IntArray&);
+        IntArray& RawPercentGroupSizes();
+        void RawPercentGroupSizes(IntArray&);
+        
+        friend NumberFormatter;
       friend CultureInfo;
       };
 

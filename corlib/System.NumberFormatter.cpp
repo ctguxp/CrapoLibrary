@@ -5,7 +5,6 @@
 #include "NumberFormatEntry.h"
 #include "AutoPtr.h"
 #include "System.h"
-//#include "System.Globalization.NumberFormatInfo.h"
 
 namespace System
   {
@@ -41,6 +40,57 @@ namespace System
     {
     }
   // ------------------------------------------------------------------------
+
+  String NumberFormatter::FormatNumber(int precision, Globalization::NumberFormatInfo* nfi)
+    {
+    precision = (precision >= 0 ? precision : nfi->NumberDecimalDigits());
+    ResetCharBuf(IntegerDigits() * 3 + precision);
+    RoundDecimal(precision);
+
+    if(!_positive) 
+      {
+      switch(nfi->NumberNegativePattern()) 
+        {
+        case 0:
+          Append(L'(');
+          break;
+        case 1:
+          Append((cstring)nfi->NegativeSign());
+          break;
+        case 2:
+          Append((cstring)nfi->NegativeSign());
+          Append(L' ');
+          break;
+        }
+      }
+
+    AppendIntegerStringWithGroupSeparator(nfi->RawNumberGroupSizes(), nfi->NumberGroupSeparator());
+
+    if(precision > 0)
+      {
+      Append((cstring)nfi->NumberDecimalSeparator());
+      AppendDecimalString(precision);
+      }
+
+    if(!_positive) 
+      {
+      switch(nfi->NumberNegativePattern()) 
+        {
+        case 0:
+          Append(L')');
+          break;
+        case 3:
+          Append((cstring)nfi->NegativeSign());
+          break;
+        case 4:
+          Append(L' ');
+          Append((cstring)nfi->NegativeSign());
+          break;
+        }
+      }
+
+    return String(_cbuf.ToConstPtr(), 0, _ind);
+    }
 
   // ------------------------------------------------------------------------
   /// Public Static NumberToString function (Based on Mono)
@@ -108,23 +158,23 @@ namespace System
     }
 
   String NumberFormatter::NumberToString(double value, IFormatProvider* fp)
-		{
-			// TODO :GCNumberFormatter inst(GetInstance(fp));
-      GCNumberFormatter inst(GetInstance());
-			Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
-			inst->Init(nullptr, value, DoubleDefPrecision);
-			String res;
-			if(inst->_NaN)
-				res = nfi->NaNSymbol();
-			else if (inst->_infinity)
-				if(inst->_positive)
-					res = nfi->PositiveInfinitySymbol();
-				else
-					res = nfi->NegativeInfinitySymbol();
-			else
-				res = inst->FormatGeneral(-1, nfi);
-			return res;
-		}
+    {
+    // TODO :GCNumberFormatter inst(GetInstance(fp));
+    GCNumberFormatter inst(GetInstance());
+    Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
+    inst->Init(nullptr, value, DoubleDefPrecision);
+    String res;
+    if(inst->_NaN)
+      res = nfi->NaNSymbol();
+    else if (inst->_infinity)
+      if(inst->_positive)
+        res = nfi->PositiveInfinitySymbol();
+      else
+        res = nfi->NegativeInfinitySymbol();
+    else
+      res = inst->FormatGeneral(-1, nfi);
+    return res;
+    }
 
   // ------------------------------------------------------------------------
   /// Public Static NumberToString function (Based on Mono)
@@ -187,25 +237,25 @@ namespace System
     }
 
   String NumberFormatter::NumberToString(String* format, double value, IFormatProvider* fp)
-		{
-			// TODO :GCNumberFormatter inst(GetInstance(fp));
-      GCNumberFormatter inst(GetInstance());
-			inst->Init(format, value, DoubleDefPrecision);
-			Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
-			String res;
-			if(inst->_NaN)
-				res = nfi->NaNSymbol();
-			else if(inst->_infinity)
-				if(inst->_positive)
-					res = nfi->PositiveInfinitySymbol();
-				else
-					res = nfi->NegativeInfinitySymbol();
-			// TODO : else if (inst._specifier == 'R')
-				//res = inst.FormatRoundtrip (value, nfi);
-			else
-				res = inst->NumberToString(format, nfi);
-			return res;
-		}
+    {
+    // TODO :GCNumberFormatter inst(GetInstance(fp));
+    GCNumberFormatter inst(GetInstance());
+    inst->Init(format, value, DoubleDefPrecision);
+    Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
+    String res;
+    if(inst->_NaN)
+      res = nfi->NaNSymbol();
+    else if(inst->_infinity)
+      if(inst->_positive)
+        res = nfi->PositiveInfinitySymbol();
+      else
+        res = nfi->NegativeInfinitySymbol();
+    // TODO : else if (inst._specifier == 'R')
+    //res = inst.FormatRoundtrip (value, nfi);
+    else
+      res = inst->NumberToString(format, nfi);
+    return res;
+    }
 
   // ------------------------------------------------------------------------
   /// Private Static NumberToString function (Based on Mono)
@@ -274,7 +324,8 @@ namespace System
     _defPrecision = UInt64DefPrecision;
     _positive = true;
 
-    if(value == 0 || _specifier == L'X') {
+    if(value == 0 || _specifier == L'X')
+      {
       InitHex((uint64)value);
       return;
       }
@@ -366,7 +417,7 @@ namespace System
     }
 
 #pragma warning(disable:4715)
-  String NumberFormatter::IntegerToString(String*, IFormatProvider* fp)
+  String NumberFormatter::IntegerToString(String* format, IFormatProvider* fp)
     {
     Globalization::NumberFormatInfo* nfi = GetNumberFormatInstance(fp);
     switch(_specifier) 
@@ -383,55 +434,43 @@ namespace System
         if (_precision <= 0)
           return FormatDecimal(-1, nfi);
         return FormatGeneral(_precision, nfi);
-        //case 'N':
-        //return FormatNumber (_precision, nfi);
+      case 'N':
+        return FormatNumber (_precision, nfi);
         //case 'P':
         //return FormatPercent (_precision, nfi);
       case 'X':
         return FormatHexadecimal(_precision);
-        //default:
-        //if (_isCustomFormat)
-        //return FormatCustom (format, nfi);
-        //throw FormatException ("The specified format '" + format + "' is invalid");
+      default:
+        if(_isCustomFormat)
+          return FormatCustom(format, nfi);
+        throw SystemException(L"The specified format is invalid");
+        //throw FormatException("The specified format '" + format + "' is invalid");
       }
     }
 
-  String NumberFormatter::NumberToString(String*, Globalization::NumberFormatInfo* nfi)
+  String NumberFormatter::NumberToString(String* format, Globalization::NumberFormatInfo* nfi)
     {
-    wchar_t specifier = _specifier;
-    switch (specifier)
+    switch(_specifier)
       {
-      case 'C':
+      case L'C':
         return FormatCurrency(_precision, nfi);
-      case 'D':
-        //IL_24:
-        switch (specifier)
-          {
-          // TODO : case 'N':
-          // return FormatNumber(_precision, nfi);
-          case 'O':
-            //IL_39:
-            if (specifier != 'X')
-              {
-              }
-            // TODO : if (this._isCustomFormat)
-            //{
-            //return this.FormatCustom(format, nfi);
-            //}
-            throw SystemException(L"The specified format is invalid");
-            // TODO : throw new FormatException("The specified format '" + format + "' is invalid");
-            // TODO : case 'P':
-            //return this.FormatPercent(this._precision, nfi);
-          }
-        //goto IL_39;
         // TODO : case 'E':
         //return this.FormatExponential(this._precision, nfi);
         // TODO : case 'F':
         //return this.FormatFixedPoint(this._precision, nfi);
-      case 'G':
+      case L'G':
         return FormatGeneral(_precision, nfi);
+      case L'N':
+        return FormatNumber(_precision, nfi);
+        // TODO : case 'P':
+        //return this.FormatPercent(this._precision, nfi);
+      case L'X' :
+      default:
+        if(_isCustomFormat)
+          return FormatCustom(format, nfi);
+        throw SystemException(L"The specified format is invalid");
+        //throw FormatException("The specified format '" + format + "' is invalid");
       }
-    //goto IL_24;
     }
 
   // ------------------------------------------------------------------------
@@ -575,6 +614,64 @@ namespace System
     }
   // ------------------------------------------------------------------------
 
+  void NumberFormatter::AppendDigits(int start, int end, Text::StringBuilder& sb)
+    {
+    if(start >= end)
+      return;
+
+    int32 i = sb.Length() + (end - start);
+    sb.Length(i);
+
+    end += _offset;
+    start += _offset;
+
+    for (int next = start + 8 - (start & 0x7); ; start = next, next += 8)
+      {
+      uint32 v;
+      if (next == 8)
+        v = _val1;
+      else if (next == 16)
+        v = _val2;
+      else if (next == 24)
+        v = _val3;
+      else if (next == 32)
+        v = _val4;
+      else
+        v = 0;
+      v >>= (start & 0x7) << 2;
+      if (next > end)
+        next = end;
+      sb[--i] = (wchar_t)(L'0' | v & 0xf);
+      switch (next - start) {
+        case 8:
+          sb[--i] = (wchar_t)(L'0' | (v >>= 4) & 0xf);
+          //goto case 7;
+        case 7:
+          sb[--i] = (wchar_t)(L'0' | (v >>= 4) & 0xf);
+          //goto case 6;
+        case 6:
+          sb[--i] = (wchar_t)(L'0' | (v >>= 4) & 0xf);
+          //goto case 5;
+        case 5:
+          sb[--i] = (wchar_t)(L'0' | (v >>= 4) & 0xf);
+          //goto case 4;
+        case 4:
+          sb[--i] = (wchar_t)(L'0' | (v >>= 4) & 0xf);
+          //goto case 3;
+        case 3:
+          sb[--i] = (wchar_t)(L'0' | (v >>= 4) & 0xf);
+          //goto case 2;
+        case 2:
+          sb[--i] = (wchar_t)(L'0' | (v >>= 4) & 0xf);
+          //goto case 1;
+        case 1:
+          if(next == end)
+            return;
+          continue;
+        }
+      }
+    }
+
   void NumberFormatter::AppendDecimalString(int precision)
     {
     AppendDigits(_digitsLen - precision - _decPointPos, _digitsLen - _decPointPos);
@@ -597,7 +694,7 @@ namespace System
     {
     if(IsZeroInteger())
       {
-      Append ('0');
+      Append (L'\0');
       return;
       }
 
@@ -1085,6 +1182,164 @@ namespace System
     }
   // ------------------------------------------------------------------------
 
+  bool NumberFormatter::IsZero()
+    { 
+    return _digitsLen == 0;
+    }
+
+  void NumberFormatter::Multiply10(int count)
+    {
+    if(count <= 0 || _digitsLen == 0)
+      return;
+
+    _decPointPos += count;
+    }
+
+  void NumberFormatter::Divide10(int count)
+    {
+    if(count <= 0 || _digitsLen == 0)
+      return;
+
+    _decPointPos -= count;
+    }
+
+  void NumberFormatter::AppendNonNegativeNumber(Text::StringBuilder& sb, int v)
+    {
+    if(v < 0)
+      throw ArgumentException();
+
+    int i = ScaleOrder(v) - 1;
+    do{
+      int n = v / (int)GetTenPowerOf(i);
+      sb.Append ((wchar_t)('0' | n));
+      v -= (int)GetTenPowerOf(i--) * n;
+      }while (i >= 0);
+    }
+
+  void NumberFormatter::AppendIntegerString(int minLength, Text::StringBuilder& sb)
+    {
+    if(_decPointPos <= 0)
+      {
+      sb.Append(L'0', minLength);
+      return;
+      }
+
+    if(_decPointPos < minLength)
+      sb.Append(L'0', minLength - _decPointPos);
+
+    AppendDigits(_digitsLen - _decPointPos, _digitsLen, sb);
+    }
+
+  int NumberFormatter::DecimalDigits() 
+    {
+    return _digitsLen > _decPointPos ? _digitsLen - _decPointPos : 0;
+    }
+
+  void NumberFormatter::AppendDecimalString(int precision, Text::StringBuilder& sb)
+    {
+    AppendDigits (_digitsLen - precision - _decPointPos, _digitsLen - _decPointPos, sb);
+    }
+
+  bool NumberFormatter::IsZeroOnly(Text::StringBuilder& sb)
+    {
+    for (int i = 0; i < sb.Length(); i++)
+      if(Char::IsDigit(sb[i]) && sb[i] != '0')
+        return false;
+    return true;
+    }
+
+  void NumberFormatter::ZeroTrimEnd(Text::StringBuilder& sb, bool canEmpty)
+    {
+    int len = 0;
+    for(int i = sb.Length() - 1; (canEmpty ? i >= 0 : i > 0); i--)
+      {
+      if(sb [i] != '0')
+        break;
+      len++;
+      }
+
+    if (len > 0)
+      sb.Remove(sb.Length() - len, len);
+    }
+
+  String NumberFormatter::FormatCustom(String* format, Globalization::NumberFormatInfo* nfi)
+    {
+    using namespace Text;
+    bool p = _positive;
+    int offset = 0;
+    int length = 0;
+    CustomInfo::GetActiveSection((*format), p, IsZero(), offset, length);
+    if(length == 0)
+      return _positive ? String::Empty() : nfi->NegativeSign();
+    _positive = p;
+
+    GCCustomInfo info(CustomInfo::Parse((*format), offset, length, nfi));
+    StringBuilder sb_int(info->IntegerDigits * 2);
+    StringBuilder sb_dec(info->DecimalDigits * 2);
+    GCStringBuilder sb_exp(info->UseExponent ? new StringBuilder(info->ExponentDigits * 2) : nullptr);
+
+    int diff = 0;
+    if(info->Percents > 0)
+      Multiply10(2 * info->Percents);
+    if(info->Permilles > 0)
+      Multiply10(3 * info->Permilles);
+    if(info->DividePlaces > 0)
+      Divide10(info->DividePlaces);
+
+    bool expPositive = true;
+    if(info->UseExponent && (info->DecimalDigits > 0 || info->IntegerDigits > 0))
+      {
+      if(!IsZero())
+        {
+        RoundPos(info->DecimalDigits + info->IntegerDigits);
+        diff -= _decPointPos - info->IntegerDigits;
+        _decPointPos = info->IntegerDigits;
+        }
+
+      expPositive = diff <= 0;
+      AppendNonNegativeNumber((*sb_exp.Get()), diff < 0 ? -diff : diff);
+      }
+    else
+      RoundDecimal(info->DecimalDigits);
+
+    if(info->IntegerDigits != 0 || !IsZeroInteger())
+      AppendIntegerString(IntegerDigits(), sb_int);
+
+    AppendDecimalString(DecimalDigits(), sb_dec);
+
+    if(info->UseExponent) 
+      {
+      if (info->DecimalDigits <= 0 && info->IntegerDigits <= 0)
+        _positive = true;
+
+      if(sb_int.Length() < info->IntegerDigits)
+        sb_int.Insert(0, L"0", info->IntegerDigits - sb_int.Length());
+
+      while(sb_exp->Length() < info->ExponentDigits - info->ExponentTailSharpDigits)
+        sb_exp->Insert(0, L'0');
+
+      if(expPositive && !info->ExponentNegativeSignOnly)
+        sb_exp->Insert(0, nfi->PositiveSign());
+      else if (!expPositive)
+        sb_exp->Insert(0, nfi->NegativeSign());
+      }
+    else 
+      {
+      if(sb_int.Length() < info->IntegerDigits - info->IntegerHeadSharpDigits)
+        sb_int.Insert(0, L"0", info->IntegerDigits - info->IntegerHeadSharpDigits - sb_int.Length());
+      if(info->IntegerDigits == info->IntegerHeadSharpDigits && IsZeroOnly(sb_int))
+        sb_int.Remove(0, sb_int.Length());
+      }
+
+    ZeroTrimEnd(sb_dec, true);
+    while(sb_dec.Length() < info->DecimalDigits - info->DecimalTailSharpDigits)
+      sb_dec.Append(L'0');
+    if(sb_dec.Length() > info->DecimalDigits)
+      sb_dec.Remove(info->DecimalDigits, sb_dec.Length() - info->DecimalDigits);
+
+    return info->Format((*format), offset, length, nfi, _positive, sb_int, sb_dec, sb_exp.Release());
+    }
+
   int NumberFormatter::InitialFloatingPrecision()
     {
     if (_specifier == 'R')
@@ -1107,14 +1362,14 @@ namespace System
     _specifierIsUpper = true;
     _precision = -1;
 
-    if (format == nullptr || format->Length() == 0)
+    if(format == nullptr || format->Length() == 0)
       {
       _specifier = 'G';
       return;
       }
 
     wchar_t specifier = *format[0];
-    if (specifier >= L'a' && specifier <= L'z') 
+    if(specifier >= L'a' && specifier <= L'z') 
       {
       specifier = (wchar_t)(specifier - L'a' + L'A');
       _specifierIsUpper = false;
@@ -1122,17 +1377,17 @@ namespace System
     else if (specifier < L'A' || specifier > L'Z') 
       {
       _isCustomFormat = true;
-      _specifier = L'0';
+      _specifier = L'\0';
       return;
       }
     _specifier = specifier;
-    if (format->Length() > 1) 
+    if(format->Length() > 1) 
       {
-      // TODO: _precision = ParsePrecision (format);
+      _precision = ParsePrecision(*format);
       if (_precision == -2)
         { // Is it a custom format?
         _isCustomFormat = true;
-        _specifier = '0';
+        _specifier = L'\0';
         _precision = -1;
         }
       }
@@ -1214,6 +1469,19 @@ namespace System
   int NumberFormatter::IntegerDigits()
     {
     return _decPointPos > 0 ? _decPointPos : 1;
+    }
+
+  int NumberFormatter::ParsePrecision(String& format)
+    {
+    int precision = 0;
+    for(int i = 1; i < format.Length(); i++) 
+      {
+      int val = format[i] - L'0';
+      precision = precision * 10 + val;
+      if(val < 0 || val > 9 || precision > 99)
+        return -2;
+      }
+    return precision;
     } 
 
   // ------------------------------------------------------------------------
@@ -1308,6 +1576,457 @@ namespace System
     return res | FastToDecHex (val);
     }
   // ------------------------------------------------------------------------
+
+  NumberFormatter::CustomInfo::CustomInfo()
+    :UseGroup(false)
+    ,DecimalDigits(0)
+    ,DecimalPointPos(-1)
+    ,DecimalTailSharpDigits(0)
+    ,IntegerDigits(0)
+    ,IntegerHeadSharpDigits(0)
+    ,IntegerHeadPos(0)
+    ,UseExponent(false)
+    ,ExponentDigits(0)
+    ,ExponentTailSharpDigits(0)
+    ,ExponentNegativeSignOnly(true)
+    ,DividePlaces(0)
+    ,Percents(0)
+    ,Permilles(0)
+    {
+    }
+
+  NumberFormatter::CustomInfo::~CustomInfo()
+    {
+    }
+
+  void NumberFormatter::CustomInfo::GetActiveSection(String& format, bool& positive, bool zero, int& offset, int& length)
+    {
+    IntArray lens(3);
+    int index = 0;
+    int lastPos = 0;
+    bool quoted = false;
+
+    for(int i = 0; i < format.Length(); i++) 
+      {
+      wchar_t c = format[i];
+
+      if(c == L'\"' || c == L'\'')
+        {
+        if(i == 0 || format[i - 1] != L'\\')
+          quoted = !quoted;
+
+        continue;
+        }
+
+      if(c == L';' && !quoted && (i == 0 || format[i - 1] != L'\\'))
+        {
+        lens[index++] = i - lastPos;
+        lastPos = i + 1;
+        if(index == 3)
+          break;
+        }
+      }
+
+    if(index == 0)
+      {
+      offset = 0;
+      length = format.Length();
+      return;
+      }
+    if(index == 1) 
+      {
+      if(positive || zero)
+        {
+        offset = 0;
+        length = lens [0];
+        return;
+        }
+      if(lens[0] + 1 < format.Length()) 
+        {
+        positive = true;
+        offset = lens[0] + 1;
+        length = format.Length() - offset;
+        return;
+        }
+      else 
+        {
+        offset = 0;
+        length = lens[0];
+        return;
+        }
+      }
+    if(index == 2)
+      {
+      if(zero)
+        {
+        offset = lens[0] + lens[1] + 2;
+        length = format.Length() - offset;
+        return;
+        }
+      if(positive) 
+        {
+        offset = 0;
+        length = lens [0];
+        return;
+        }
+      if(lens [1] > 0)
+        {
+        positive = true;
+        offset = lens[0] + 1;
+        length = lens[1];
+        return;
+        }
+      else 
+        {
+        offset = 0;
+        length = lens[0];
+        return;
+        }
+      }
+    if(index == 3)
+      {
+      if(zero)
+        {
+        offset = lens[0] + lens[1] + 2;
+        length = lens[2];
+        return;
+        }
+      if(positive) 
+        {
+        offset = 0;
+        length = lens[0];
+        return;
+        }
+      if(lens [1] > 0) 
+        {
+        positive = true;
+        offset = lens[0] + 1;
+        length = lens[1];
+        return;
+        }
+      else 
+        {
+        offset = 0;
+        length = lens[0];
+        return;
+        }
+      }
+    throw new ArgumentException ();
+    }
+
+  NumberFormatter::CustomInfo* NumberFormatter::CustomInfo::Parse(String& format, int offset, int length, Globalization::NumberFormatInfo* /*nfi*/)
+    {
+    wchar_t literal = L'\0';
+    bool integerArea = true;
+    bool decimalArea = false;
+    bool exponentArea = false;
+    bool sharpContinues = true;
+
+    CustomInfo* info = new CustomInfo();
+    int groupSeparatorCounter = 0;
+
+    for(int i = offset; i - offset < length; i++)
+      {
+      wchar_t c = format[i];
+
+      if(c == literal && c != L'\0')
+        {
+        literal = L'\0';
+        continue;
+        }
+      if(literal != L'\0')
+        continue;
+
+      if(exponentArea && (c != '\0' && c != '0' && c != '#'))
+        {
+        exponentArea = false;
+        integerArea = (info->DecimalPointPos < 0);
+        decimalArea = !integerArea;
+        i--;
+        continue;
+        }
+
+      switch(c)
+        {
+        case L'\\':
+          i++;
+          continue;
+        case L'\'':
+        case L'\"':
+          if (c == L'\"' || c == L'\'') 
+            {
+            literal = c;
+            }
+          continue;
+        case L'#':
+          if(sharpContinues && integerArea)
+            info->IntegerHeadSharpDigits++;
+          else if(decimalArea)
+            info->DecimalTailSharpDigits++;
+          else if(exponentArea)
+            info->ExponentTailSharpDigits++;
+
+          // TODO : goto case '0';
+        case L'0':
+          if (c != '#') 
+            {
+            sharpContinues = false;
+            if (decimalArea)
+              info->DecimalTailSharpDigits = 0;
+            else if (exponentArea)
+              info->ExponentTailSharpDigits = 0;
+            }
+          if (info->IntegerHeadPos == -1)
+            info->IntegerHeadPos = i;
+
+          if (integerArea) 
+            {
+            info->IntegerDigits++;
+            if (groupSeparatorCounter > 0)
+              info->UseGroup = true;
+            groupSeparatorCounter = 0;
+            }
+          else if (decimalArea)
+            info->DecimalDigits++;
+          else if (exponentArea)
+            info->ExponentDigits++;
+          break;
+        case L'e':
+        case L'E':
+          if(info->UseExponent)
+            break;
+
+          info->UseExponent = true;
+          integerArea = false;
+          decimalArea = false;
+          exponentArea = true;
+          if (i + 1 - offset < length) 
+            {
+            wchar_t nc = format [i + 1];
+            if (nc == L'+')
+              info->ExponentNegativeSignOnly = false;
+            if(nc == L'+' || nc == L'-')
+              i++;
+            else if (nc != '0' && nc != '#') 
+              {
+              info->UseExponent = false;
+              if(info->DecimalPointPos < 0)
+                integerArea = true;
+              }
+            }
+
+          break;
+        case L'.':
+          integerArea = false;
+          decimalArea = true;
+          exponentArea = false;
+          if(info->DecimalPointPos == -1)
+            info->DecimalPointPos = i;
+          break;
+        case L'%':
+          info->Percents++;
+          break;
+        case L'\u2030':
+          info->Permilles++;
+          break;
+        case L',':
+          if(integerArea && info->IntegerDigits > 0)
+            groupSeparatorCounter++;
+          break;
+        default:
+          break;
+        }
+      }
+
+    if(info->ExponentDigits == 0)
+      info->UseExponent = false;
+    else
+      info->IntegerHeadSharpDigits = 0;
+
+    if(info->DecimalDigits == 0)
+      info->DecimalPointPos = -1;
+
+    info->DividePlaces += groupSeparatorCounter * 3;
+
+    return info;
+    }
+
+  String NumberFormatter::CustomInfo::Format(String& format, int offset, int length, Globalization::NumberFormatInfo* nfi, bool positive, Text::StringBuilder& sb_int, Text::StringBuilder& sb_dec, Text::StringBuilder* sb_exp_released)
+    {
+    using namespace Text;
+    StringBuilder sb;
+    GCStringBuilder sb_exp(sb_exp_released);
+    wchar_t literal = '\0';
+    bool integerArea = true;
+    bool decimalArea = false;
+    int intSharpCounter = 0;
+    int sb_int_index = 0;
+    int sb_dec_index = 0;
+
+    IntArray groups = nfi->RawNumberGroupSizes();
+    String groupSeparator = nfi->NumberGroupSeparator();
+    int intLen = 0, total = 0, groupIndex = 0, counter = 0, groupSize = 0;
+    if(UseGroup && groups.Length() > 0)
+      {
+      intLen = sb_int.Length();
+      for(int i = 0; i < (int)groups.Length(); i++) 
+        {
+        total += groups[i];
+        if(total <= intLen)
+          groupIndex = i;
+        }
+      groupSize = groups[groupIndex];
+      int fraction = intLen > total ? intLen - total : 0;
+      if(groupSize == 0) 
+        {
+        while (groupIndex >= 0 && groups[groupIndex] == 0)
+          groupIndex--;
+
+        groupSize = fraction > 0 ? fraction : groups[groupIndex];
+        }
+      if (fraction == 0)
+        counter = groupSize;
+      else 
+        {
+        groupIndex += fraction / groupSize;
+        counter = fraction % groupSize;
+        if (counter == 0)
+          counter = groupSize;
+        else
+          groupIndex++;
+        }
+      }
+    else
+      UseGroup = false;
+
+    for(int i = offset; i - offset < length; i++)
+      {
+      wchar_t c = format[i];
+
+      if (c == literal && c != '\0') 
+        {
+        literal = '\0';
+        continue;
+        }
+      if (literal != '\0')
+        {
+        sb.Append (c);
+        continue;
+        }
+
+      switch (c)
+        {
+        case '\\':
+          i++;
+          if (i - offset < length)
+            sb.Append (format [i]);
+          continue;
+        case '\'':
+        case '\"':
+          if (c == '\"' || c == '\'')
+            literal = c;
+          continue;
+        case '#':
+          //goto case '0';
+        case '0':
+          if (integerArea)
+            {
+            intSharpCounter++;
+            if (IntegerDigits - intSharpCounter < sb_int.Length() + sb_int_index || c == '0')
+              while (IntegerDigits - intSharpCounter + sb_int_index < sb_int.Length()) 
+                {
+                sb.Append (sb_int [sb_int_index++]);
+                if (UseGroup && --intLen > 0 && --counter == 0) {
+                  sb.Append (groupSeparator);
+                  if (--groupIndex < (int)groups.Length() && groupIndex >= 0)
+                    groupSize = groups [groupIndex];
+                  counter = groupSize;
+                  }
+                }
+              break;
+            }
+          else if (decimalArea)
+            {
+            if(sb_dec_index < sb_dec.Length())
+              sb.Append(sb_dec[sb_dec_index++]);
+            break;
+            }
+
+          sb.Append (c);
+          break;
+        case 'e':
+        case 'E':
+          {
+          if(sb_exp.Get() == nullptr || !UseExponent) 
+            {
+            sb.Append (c);
+            break;
+            }
+
+          bool flag1 = true;
+          bool flag2 = false;
+
+          int q;
+          for(q = i + 1; q - offset < length; q++) 
+            {
+            if (format [q] == '0') {
+              flag2 = true;
+              continue;
+              }
+            if (q == i + 1 && (format [q] == '+' || format [q] == '-'))
+              continue;
+            if (!flag2)
+              flag1 = false;
+            break;
+            }
+
+          if(flag1)
+            {
+            i = q - 1;
+            integerArea = (DecimalPointPos < 0);
+            decimalArea = !integerArea;
+
+            sb.Append (c);
+            sb.Append(sb_exp->ToString());
+            sb_exp.Set(nullptr);
+            }
+          else
+            sb.Append (c);
+          }
+          break;
+        case '.':
+          if (DecimalPointPos == i) 
+            {
+            if (DecimalDigits > 0) 
+              {
+              while (sb_int_index < sb_int.Length())
+                sb.Append (sb_int [sb_int_index++]);
+              }
+            if (sb_dec.Length() > 0)
+              sb.Append(nfi->NumberDecimalSeparator());
+            }
+          integerArea = false;
+          decimalArea = true;
+          break;
+        case ',':
+          break;
+        case '%':
+          sb.Append (nfi->PercentSymbol());
+          break;
+        case '\u2030':
+          sb.Append(nfi->PerMilleSymbol());
+          break;
+        default:
+          sb.Append(c);
+          break;
+        }
+      }
+
+    if (!positive)
+      sb.Insert(0, nfi->NegativeSign());
+
+    return sb.ToString();
+    }
 
   } // namespace System
 

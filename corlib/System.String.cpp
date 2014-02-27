@@ -1249,7 +1249,7 @@ namespace System
       }
 
     if((int)start < format.Length())
-				result->Append(format, start, format.Length() - start);
+      result->Append(format, start, format.Length() - start);
 
     return result;
     }
@@ -1668,6 +1668,25 @@ namespace System
         }
       }
     memcpy4 ((byte*)dest, (byte*)src, count * 2);
+    }
+
+  void String::CharCopyReverse(String& target, int targetIndex, String& source, int sourceIndex, int count)
+		{
+			cstring dest = (cstring)target;
+      cstring src = (cstring)source;
+		 CharCopyReverse((string)dest + targetIndex, (string)src + sourceIndex, count);
+		}
+
+  void String::CharCopyReverse(wchar_t *dest, wchar_t *src, int count)
+    {
+    dest += count;
+    src += count;
+    for(int i = count; i > 0; i--)
+      {
+      dest--;
+      src--;
+      *dest = *src;
+      }	
     }
 
   void String::InternalSetLength(uint32 newLength)

@@ -26,6 +26,12 @@ class AutoPtr
         _ptr = ptr;
         }
       }
+    T* Release()
+      {
+      T* retval = _ptr;
+      _ptr = nullptr;
+      return retval;
+      }
   private:
     bool _isMutable;
     T*   _ptr;

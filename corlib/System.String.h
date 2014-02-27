@@ -155,6 +155,8 @@ namespace System
       static void CharCopy(String&, int, String&, int, int);
       static void CharCopy(wchar_t*, const wchar_t*, int);
       static void CharCopy(String& target, int targetIndex, CharArray& source, int sourceIndex, int count);
+      static void CharCopyReverse(wchar_t *dest, wchar_t *src, int count);
+      static void CharCopyReverse(String& target, int targetIndex, String& source, int sourceIndex, int count);
       static void memcpy(byte *dest, byte *src, int size);
       static void memcpy1(byte *dest, byte *src, int size);
       static void memcpy4(byte*, byte*, int);
@@ -162,7 +164,6 @@ namespace System
 
       // Friend operator append
       friend String operator+(const String&, const String&);
-
       friend System::Text::StringBuilder;
       friend System::Text::UnicodeEncoding;
       friend System::IO::Path;

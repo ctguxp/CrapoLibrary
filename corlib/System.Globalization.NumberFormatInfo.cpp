@@ -122,7 +122,6 @@ namespace System
       }
 
     // Properties
-
     // ------------------------------------------------------------------------
     /// Gets or sets the number of decimal places to use in currency values.
     int32 NumberFormatInfo::CurrencyDecimalDigits()
@@ -351,8 +350,216 @@ namespace System
       }
     // ------------------------------------------------------------------------
 
+    // ------------------------------------------------------------------------
+    /// Gets or sets the string that separates groups of digits to the left of the decimal in numeric values
+    String NumberFormatInfo::NumberGroupSeparator()
+      {
+      return _numberGroupSeparator;
+      }
+    void NumberFormatInfo::NumberGroupSeparator(String value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _numberGroupSeparator = value;
+      }
+    // ------------------------------------------------------------------------
 
+    // ------------------------------------------------------------------------
+    /// Gets or sets the number of digits in each group to the left of the decimal in numeric values.
+    IntArray NumberFormatInfo::NumberGroupSizes()
+      {
+      return RawNumberGroupSizes();
+      }
+    void NumberFormatInfo::NumberGroupSizes(IntArray& value)
+      {
+      RawNumberGroupSizes(value);
+      }
+    // ------------------------------------------------------------------------
 
+    // ------------------------------------------------------------------------
+    /// Gets or sets the format pattern for negative numeric values.
+    int NumberFormatInfo::NumberNegativePattern()
+      {
+      return _numberNegativePattern;
+      }
+    void NumberFormatInfo::NumberNegativePattern(int value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _numberNegativePattern = value;
+      }
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    /// Gets or sets the number of decimal places to use in percent values.
+    int NumberFormatInfo::PercentDecimalDigits()
+      {
+      return _percentDecimalDigits;
+      }
+    void NumberFormatInfo::PercentDecimalDigits(int value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _percentDecimalDigits = value;
+      }
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    /// Gets or sets the string to use as the decimal separator in percent values. 
+    String NumberFormatInfo::PercentDecimalSeparator()
+      {
+      return _percentDecimalSeparator;
+      }
+    void NumberFormatInfo::PercentDecimalSeparator(String value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _percentDecimalSeparator = value;
+      }
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    /// Gets or sets the string that separates groups of digits to the left of the decimal in percent values.
+    String NumberFormatInfo::PercentGroupSeparator()
+      {
+      return _percentGroupSeparator;
+      }
+    void NumberFormatInfo::PercentGroupSeparator(String value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _percentGroupSeparator = value;
+      }
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    /// Gets or sets the number of digits in each group to the left of the decimal in percent values. 
+    IntArray NumberFormatInfo::PercentGroupSizes()
+      {
+      return RawPercentGroupSizes();
+      }
+    void NumberFormatInfo::PercentGroupSizes(IntArray& value)
+      {
+      RawPercentGroupSizes(value);
+      }
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    /// Gets or sets the format pattern for negative percent values.
+    int NumberFormatInfo::PercentNegativePattern()
+      {
+      return _percentNegativePattern;
+      }
+    void NumberFormatInfo::PercentNegativePattern(int value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _percentNegativePattern = value;
+      }
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    /// Gets or sets the format pattern for positive percent values.
+    int NumberFormatInfo::PercentPositivePattern()
+      {
+      return _percentPositivePattern;
+      }
+    void NumberFormatInfo::PercentPositivePattern(int value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _percentPositivePattern = value;
+      }
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    /// Gets or sets the string to use as the percent symbol.
+    String NumberFormatInfo::PercentSymbol()
+      {
+      return _percentSymbol;
+      }
+    void NumberFormatInfo::PercentSymbol(String value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _percentSymbol = value;
+      }
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    /// Gets or sets the string to use as the per mille symbol.
+    String NumberFormatInfo::PerMilleSymbol()
+      {
+      return _perMilleSymbol;
+      }
+    void NumberFormatInfo::PerMilleSymbol(String value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _perMilleSymbol = value;
+      }
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    /// Gets or sets the string that represents positive infinity.
+    String NumberFormatInfo::PositiveInfinitySymbol()
+      {
+      return _positiveInfinitySymbol;
+      }
+    void NumberFormatInfo::PositiveInfinitySymbol(String value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _positiveInfinitySymbol = value;
+      }
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    /// Gets or sets the string that denotes that the associated number is positive.
+    String NumberFormatInfo::PositiveSign()
+      {
+      return _positiveSign;
+      }
+    void NumberFormatInfo::PositiveSign(String value)
+      {
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      _positiveSign = value;
+      }
+    // ------------------------------------------------------------------------
 
 
     NumberFormatInfo* NumberFormatInfo::GetInstance(IFormatProvider* formatProvider)
@@ -367,12 +574,6 @@ namespace System
 
       return CurrentInfo();
       }
-
-    String NumberFormatInfo::PositiveInfinitySymbol()
-      {
-      return _positiveInfinitySymbol;
-      }
-
 
     IntArray& NumberFormatInfo::RawCurrencyGroupSizes()
       { 
@@ -405,7 +606,73 @@ namespace System
         throw ArgumentOutOfRangeException(L"Last element in the array specified is not between 0 and 9");
         }
       _currencyGroupSizes = value;
-      } 
+      }
+
+    IntArray& NumberFormatInfo::RawNumberGroupSizes()
+      { 
+      return _numberGroupSizes;
+      }
+    void NumberFormatInfo::RawNumberGroupSizes(IntArray& value)
+      {
+      if(value.IsNull())
+        throw ArgumentNullException(L"The value specified for the property is a null reference");
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      if(value.Length() == 0)
+        {
+        _numberGroupSizes.Length(0);
+        return;
+        }
+      sizet num = value.Length() - 1;
+      for(sizet i = 0; i < num; i++)
+        {
+        if(value[i] < 1 || value[i] > 9)
+          {
+          throw ArgumentOutOfRangeException(L"One of the elements in the array specified is not between 1 and 9");
+          }
+        }
+      if(value[num] < 0 || value[num] > 9)
+        {
+        throw ArgumentOutOfRangeException(L"Last element in the array specified is not between 0 and 9");
+        }
+      _numberGroupSizes = value;
+      }
+
+    IntArray& NumberFormatInfo::RawPercentGroupSizes()
+      { 
+      return _percentGroupSizes;
+      }
+    void NumberFormatInfo::RawPercentGroupSizes(IntArray& value)
+      {
+      if(value.IsNull())
+        throw ArgumentNullException(L"The value specified for the property is a null reference");
+      if(_isReadOnly)
+        {
+        throw SystemException(L"The current instance is read-only and a set operation was attempted");  
+        // TODO : throw InvalidOperationException("The current instance is read-only and a set operation was attempted");
+        }
+      if(value.Length() == 0)
+        {
+        _percentGroupSizes.Length(0);
+        return;
+        }
+      sizet num = value.Length() - 1;
+      for(sizet i = 0; i < num; i++)
+        {
+        if(value[i] < 1 || value[i] > 9)
+          {
+          throw ArgumentOutOfRangeException(L"One of the elements in the array specified is not between 1 and 9");
+          }
+        }
+      if(value[num] < 0 || value[num] > 9)
+        {
+        throw ArgumentOutOfRangeException(L"Last element in the array specified is not between 0 and 9");
+        }
+      _percentGroupSizes = value;
+      }  
 
     }
   }
