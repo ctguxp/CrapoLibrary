@@ -1,5 +1,5 @@
 #pragma once
-#include "System.Threading.Mutex.h"
+#include "System.Threading.CriticalSection.h"
 
 namespace System
   {
@@ -8,11 +8,11 @@ namespace System
     class Lock
       {
       public:
-        Lock(Mutex&);
+        Lock(CriticalSection&);
         ~Lock();
         Lock& operator=(const Lock&);
       private:
-        Mutex& _mutex;
+        CriticalSection& _mutex;
       };
     }
   }

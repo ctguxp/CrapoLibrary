@@ -5,11 +5,11 @@ namespace System
   namespace Threading
     {
     class Lock;
-    class Mutex
+    class CriticalSection
       {
       public:
-        Mutex();
-        ~Mutex();
+        CriticalSection();
+        ~CriticalSection();
       private:
         void Acquire();
         void Release();

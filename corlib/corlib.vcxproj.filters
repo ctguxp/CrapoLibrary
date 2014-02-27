@@ -375,11 +375,11 @@
     <ClInclude Include="System.Threading.ActiveObject.h">
       <Filter>Header Files\System.Threading</Filter>
     </ClInclude>
-    <ClInclude Include="System.Threading.Mutex.h">
+    <ClInclude Include="System.Threading.Lock.h">
       <Filter>Header Files\System.Threading</Filter>
     </ClInclude>
-    <ClInclude Include="System.Threading.Lock.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="System.Threading.CriticalSection.h">
+      <Filter>Header Files\System.Threading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -605,11 +605,11 @@
     <ClCompile Include="System.Threading.ActiveObject.cpp">
       <Filter>Source Files\System.Threading</Filter>
     </ClCompile>
-    <ClCompile Include="System.Threading.Mutex.cpp">
-      <Filter>Source Files\System.Threading</Filter>
-    </ClCompile>
     <ClCompile Include="System.Threading.Lock.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Threading.CriticalSection.cpp">
+      <Filter>Source Files\System.Threading</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -23,7 +23,7 @@ namespace System
     GCEncoding Encoding::_bigEndianEncoding;
     GCEncoding Encoding::_utf8EncodingWithMarkers;
     GCEncoding Encoding::_utf8EncodingWithoutMarkers;
-    Threading::Mutex Encoding::_lockobj;
+    Threading::CriticalSection Encoding::_lockobj;
 
     // Default constructor
     Encoding::Encoding(int codePage)
