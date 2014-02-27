@@ -5,7 +5,7 @@ namespace System
   namespace Threading
     {
     class Lock;
-    class CriticalSection
+    class CRAPOCOREDLL_API CriticalSection
       {
       public:
         CriticalSection();

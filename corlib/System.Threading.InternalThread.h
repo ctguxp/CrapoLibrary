@@ -8,13 +8,14 @@ namespace System
   namespace Threading
     {
     class Thread;
-    class InternalThread
+    class CRAPOCOREDLL_API InternalThread
       {
       public:
         ~InternalThread();
       protected:
         InternalThread();
         void SystemThreadHandle(HANDLE handle);
+        HANDLE SystemThreadHandle();
       private:
         ulong       _thread_id;
         ThreadState _state;

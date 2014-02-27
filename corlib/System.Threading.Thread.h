@@ -21,6 +21,7 @@ namespace System
         bool IsAlive();
         void Start();
         void Start(Object* parameter);
+        void WaitForDeath();
       private:
         Thread(InternalThread*);
         InternalThread* Internal();

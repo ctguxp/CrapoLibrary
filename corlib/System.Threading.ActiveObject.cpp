@@ -14,11 +14,17 @@ namespace System
     ActiveObject::~ActiveObject()
       {
       }
+    void ActiveObject::Kill()
+      {
+      _isDying = true;
+      FlushThread();
+      _thread.WaitForDeath();
+      }
     uint32 _stdcall ActiveObject::ThreadEntry(void* arg)
       {
-      ActiveObject* obj = reinterpret_cast<ActiveObject*>(arg);
-      obj->InitThread();
-      obj->Run();
+      ActiveObject& obj = reinterpret_cast<ActiveObject&>(arg);
+      obj.InitThread();
+      obj.Run();
       return 0;
       }
     }

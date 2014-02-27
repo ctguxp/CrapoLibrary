@@ -605,10 +605,10 @@
     <ClCompile Include="System.Threading.ActiveObject.cpp">
       <Filter>Source Files\System.Threading</Filter>
     </ClCompile>
-    <ClCompile Include="System.Threading.Lock.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="System.Threading.CriticalSection.cpp">
+      <Filter>Source Files\System.Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Threading.Lock.cpp">
       <Filter>Source Files\System.Threading</Filter>
     </ClCompile>
   </ItemGroup>

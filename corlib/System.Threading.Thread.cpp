@@ -71,6 +71,10 @@ namespace System
       _start_obj = parameter;
       Start();
       }
+    void Thread::WaitForDeath()
+      {
+      ::WaitForSingleObject(_internal_thread->SystemThreadHandle(), 2000);
+      }
     void Thread::Start() 
       {
       // propagate informations from the original thread to the new thread
