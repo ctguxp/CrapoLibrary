@@ -9,6 +9,7 @@
 #include "System.Text.ASCIIEncoding.h"
 #include "System.Text.Unicode.h"
 #include "System.Text.UTF8Encoding.h"
+#include "System.Threading.Lock.h"
 
 #include "I18N.West.CP1252.h"
 
@@ -22,6 +23,7 @@ namespace System
     GCEncoding Encoding::_bigEndianEncoding;
     GCEncoding Encoding::_utf8EncodingWithMarkers;
     GCEncoding Encoding::_utf8EncodingWithoutMarkers;
+    Threading::Mutex Encoding::_lockobj;
 
     // Default constructor
     Encoding::Encoding(int codePage)
@@ -272,51 +274,51 @@ namespace System
 
     Encoding* Encoding::Default()
       {
-      // if (defaultEncoding == null) 
-      //{
-      //lock (lockobj)
-      //{
-      if(_defaultEncoding.Get() == nullptr)
+      if(_defaultEncoding.Get() == nullptr) 
         {
-        // See if the underlying system knows what
-        // code page handler we should be using.
-        int code_page = 1;
+        Threading::Lock lock(_lockobj);
+          {
+          if(_defaultEncoding.Get() == nullptr)
+            {
+            // See if the underlying system knows what
+            // code page handler we should be using.
+            int code_page = 1;
 
-        String code_page_name = InternalCodePage(code_page);
-        try 
-          {
-          if (code_page == -1)
-            _defaultEncoding.Set(GetEncoding(code_page_name));
-          else {
-            // map the codepage from internal to our numbers
-            code_page = code_page & 0x0fffffff;
-            switch (code_page)
+            String code_page_name = InternalCodePage(code_page);
+            try 
               {
-              case 1: code_page = ASCIIEncoding::ASCII_CODE_PAGE; break;
-                //case 2: code_page = UTF7Encoding.UTF7_CODE_PAGE; break;
-              case 3: code_page = UTF8Encoding::UTF8_CODE_PAGE; break;
-                //case 4: code_page = UnicodeEncoding.UNICODE_CODE_PAGE; break;
-                //case 5: code_page = UnicodeEncoding.BIG_UNICODE_CODE_PAGE; break;
-                //case 6: code_page = Latin1Encoding.ISOLATIN_CODE_PAGE; break;
+              if (code_page == -1)
+                _defaultEncoding.Set(GetEncoding(code_page_name));
+              else {
+                // map the codepage from internal to our numbers
+                code_page = code_page & 0x0fffffff;
+                switch (code_page)
+                  {
+                  case 1: code_page = ASCIIEncoding::ASCII_CODE_PAGE; break;
+                    //case 2: code_page = UTF7Encoding.UTF7_CODE_PAGE; break;
+                  case 3: code_page = UTF8Encoding::UTF8_CODE_PAGE; break;
+                  case 4: code_page = UnicodeEncoding::UNICODE_CODE_PAGE; break;
+                  case 5: code_page = UnicodeEncoding::BIG_UNICODE_CODE_PAGE; break;
+                    //case 6: code_page = Latin1Encoding.ISOLATIN_CODE_PAGE; break;
+                  }
+                _defaultEncoding.Set(GetEncoding(code_page));
+                }
+              } 
+            //catch (NotSupportedException) 
+            //{
+            // code_page is not supported on underlying platform
+            //defaultEncoding = UTF8Unmarked;
+            //} 
+            catch(ArgumentException&) 
+              {
+              // code_page_name is not a valid code page, or is 
+              // not supported by underlying OS
+              //defaultEncoding = UTF8Unmarked;
               }
-            _defaultEncoding.Set(GetEncoding(code_page));
+            //defaultEncoding.is_readonly = true;
             }
-          } 
-        //catch (NotSupportedException) 
-        //{
-        // code_page is not supported on underlying platform
-        //defaultEncoding = UTF8Unmarked;
-        //} 
-        catch(ArgumentException&) 
-          {
-          // code_page_name is not a valid code page, or is 
-          // not supported by underlying OS
-          //defaultEncoding = UTF8Unmarked;
           }
-        //defaultEncoding.is_readonly = true;
         }
-      //}
-      //}
       return _defaultEncoding.Get();
       }
 
@@ -434,11 +436,11 @@ namespace System
           //case UTF32Encoding.BIG_UTF32_CODE_PAGE:
           //return BigEndianUTF32;
 
-          //case UnicodeEncoding.UNICODE_CODE_PAGE:
-          //return Unicode;
+        case UnicodeEncoding::UNICODE_CODE_PAGE:
+          return Unicode();
 
-          //case UnicodeEncoding.BIG_UNICODE_CODE_PAGE:
-          //return BigEndianUnicode;
+        case UnicodeEncoding::BIG_UNICODE_CODE_PAGE:
+          return BigEndianUnicode();
 
           //case Latin1Encoding.ISOLATIN_CODE_PAGE:
           //return ISOLatin1;
@@ -488,65 +490,63 @@ namespace System
 
     Encoding* Encoding::BigEndianUnicode()
       {
-      //if (bigEndianEncoding == null) 
-      //{
-      //lock (lockobj) 
-      //{
-      if(Encoding::_bigEndianEncoding.Get() == nullptr) 
+      if(_bigEndianEncoding.Get() == nullptr) 
         {
-        Encoding::_bigEndianEncoding.Set((Encoding*)new UnicodeEncoding (true, true));
+        Threading::Lock lock(_lockobj);
+          {
+          if(Encoding::_bigEndianEncoding.Get() == nullptr) 
+            {
+            Encoding::_bigEndianEncoding.Set((Encoding*)new UnicodeEncoding (true, true));
+            }
+          }
         }
-      //}
-      //}
 
       return _bigEndianEncoding.Get();
       }
 
     Encoding* Encoding::Unicode()
       {
-      //if (unicodeEncoding == null) 
-      //{
-      //lock (lockobj)
-      //{
-      if(Encoding::_unicodeEncoding.Get() == nullptr)
+      if(_unicodeEncoding.Get() == nullptr) 
         {
-        Encoding::_unicodeEncoding.Set((Encoding*)new UnicodeEncoding(false,true));
+        Threading::Lock lock(_lockobj);
+          {
+          if(Encoding::_unicodeEncoding.Get() == nullptr)
+            {
+            Encoding::_unicodeEncoding.Set((Encoding*)new UnicodeEncoding(false,true));
+            }
+          }
         }
-      //}
-      //}
 
       return Encoding::_unicodeEncoding.Get();
       }
 
     Encoding* Encoding::UTF8()
       {
-      //if (Encoding.utf8EncodingWithMarkers == null)
-      //{
-      //object obj = Encoding.lockobj;
-      //lock (obj)
-      //{
-      if(Encoding::_utf8EncodingWithMarkers.Get() == nullptr)
+      if(_utf8EncodingWithMarkers.Get() == nullptr)
         {
-        Encoding::_utf8EncodingWithMarkers.Set((Encoding*)new UTF8Encoding(true));
+        Threading::Lock lock(_lockobj);
+          {
+          if(Encoding::_utf8EncodingWithMarkers.Get() == nullptr)
+            {
+            Encoding::_utf8EncodingWithMarkers.Set((Encoding*)new UTF8Encoding(true));
+            }
+          }
         }
-      //}
-      //}
       return Encoding::_utf8EncodingWithMarkers.Get();
       }
 
     Encoding* Encoding::UTF8Unmarked() 
       {
-      //if (utf8EncodingWithoutMarkers == null) 
-      //{
-      //lock (lockobj)
-      //{
-      if(Encoding::_utf8EncodingWithoutMarkers.Get() == nullptr)
+      if(_utf8EncodingWithoutMarkers.Get() == nullptr) 
         {
-        _utf8EncodingWithoutMarkers.Set(new UTF8Encoding(false, false));
-        //						utf8EncodingWithoutMarkers.is_readonly = true;
+        Threading::Lock lock(_lockobj);
+          {
+          if(Encoding::_utf8EncodingWithoutMarkers.Get() == nullptr)
+            {
+            _utf8EncodingWithoutMarkers.Set(new UTF8Encoding(false, false));
+            }
+          }
         }
-      //}
-      //}
 
       return Encoding::_utf8EncodingWithoutMarkers.Get();
       }

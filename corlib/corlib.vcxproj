@@ -35,6 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System.Threading.ActiveObject.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AutoPtr.h" />
     <ClInclude Include="System.Byte.h" />
@@ -132,6 +133,8 @@
     <ClInclude Include="System.Text.Unicode.h" />
     <ClInclude Include="System.Text.UTF8Encoding.h" />
     <ClInclude Include="System.Threading.InternalThread.h" />
+    <ClInclude Include="System.Threading.Lock.h" />
+    <ClInclude Include="System.Threading.Mutex.h" />
     <ClInclude Include="System.Threading.Thread.h" />
     <ClInclude Include="System.Threading.ThreadState.h" />
     <ClInclude Include="System.UInt16.h" />
@@ -146,6 +149,7 @@
     <ClInclude Include="sys.list.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="System.Threading.ActiveObject.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="System.Byte.cpp" />
     <ClCompile Include="CultureInfoEntry.cpp" />
@@ -222,6 +226,8 @@
     <ClCompile Include="System.Text.Unicode.cpp" />
     <ClCompile Include="System.Text.UTF8Encoding.cpp" />
     <ClCompile Include="System.Threading.InternalThread.cpp" />
+    <ClCompile Include="System.Threading.Lock.cpp" />
+    <ClCompile Include="System.Threading.Mutex.cpp" />
     <ClCompile Include="System.Threading.Thread.cpp" />
     <ClCompile Include="System.UInt16.cpp" />
     <ClCompile Include="System.UInt32.cpp" />

@@ -51,6 +51,8 @@ namespace System
         bool _isThrowException;
         bool _bigEndian;
         bool _byteOrderMark;
+
+      friend Encoding;
       };
     }
   }

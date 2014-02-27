@@ -4,6 +4,7 @@
 #include "AutoPtr.h"
 #include "System.Object.h"
 #include "System.Text.Decoder.h"
+#include "System.Threading.Mutex.h"
 
 #pragma warning(disable:4266)
 namespace System
@@ -98,6 +99,7 @@ namespace System
         Encoding(int codePage = 0);
         static Encoding* UTF8Unmarked();
         static String InternalCodePage(int& code_page);
+        static Threading::Mutex _lockobj;
 
       friend IO::StreamReader;
       };
