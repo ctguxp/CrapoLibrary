@@ -15,6 +15,14 @@ namespace System
       }
     InternalThread::~InternalThread()
       {
+      if(_system_thread_handle != NULL)
+        {
+        ::CloseHandle(_system_thread_handle);
+        }
+      }
+    void InternalThread::SystemThreadHandle(HANDLE handle)
+      {
+      _system_thread_handle = handle;
       }
     }
   } 

@@ -14,6 +14,7 @@ namespace System
         ~InternalThread();
       protected:
         InternalThread();
+        void SystemThreadHandle(HANDLE handle);
       private:
         ulong       _thread_id;
         ThreadState _state;
