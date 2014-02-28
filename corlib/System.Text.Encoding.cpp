@@ -215,8 +215,7 @@ namespace System
       ByteArray ba(count);
       for(int i = 0; i < count; i++)
         ba [i] = bytes[i];
-      //return GetCharCount(ba, 0, count);
-      throw ArgumentException(L"Not Implemented", L"Encoding::GetCharCount");
+      return GetCharCount(ba, 0, count);
       }
 
     CharArray Encoding::GetChars(ByteArray& bytes)
