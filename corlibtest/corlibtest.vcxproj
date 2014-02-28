@@ -339,6 +339,7 @@
     <ClCompile Include="UnitTestStreamReader.cpp" />
     <ClCompile Include="UnitTestStringBuilder.cpp" />
     <ClCompile Include="UnitTestStrings.cpp" />
+    <ClCompile Include="UnitTestUnicode.cpp" />
     <ClCompile Include="UnitTestUTF8cpp.cpp" />
     <ClCompile Include="UnitTestUTF8Encoding.cpp" />
   </ItemGroup>
