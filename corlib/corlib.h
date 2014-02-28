@@ -73,6 +73,7 @@ typedef uint32 uintptr;
 #include "System.Text.Encoding.h"
 #include "System.Text.StringBuilder.h"
 #include "System.Text.UTF8Encoding.h"
+#include "System.Text.Unicode.h"
 
 // System.Threading
 #include "System.Threading.Thread.h"

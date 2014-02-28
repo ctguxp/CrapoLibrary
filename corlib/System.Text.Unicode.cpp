@@ -133,7 +133,7 @@ namespace System
       if(charCount == 0)
         return 0;
 
-      int byteCount = bytes.Length() - byteIndex;
+      int byteCount = (int)bytes.Length() - byteIndex;
       if (bytes.Length() == 0)
         bytes.Length(1);
 
