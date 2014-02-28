@@ -33,6 +33,10 @@ namespace corlibtest
       f1 = L"N1";
       Assert::AreEqual(L"123,456,789.0", myInt.ToString(f1));
 
+      myInt = 96;
+      f1 = L"P2";
+      Assert::AreEqual(L"9,600.00 %", myInt.ToString(f1));
+
       myInt = Int32::MinValue;
       Assert::AreEqual(L"-2147483648", myInt.ToString());
       myInt = Int32::MaxValue;

@@ -90,10 +90,11 @@ namespace System
       String FormatCurrency(int, Globalization::NumberFormatInfo*);
       String FormatNumber(int, Globalization::NumberFormatInfo*);
       String FormatCustom(String* format, Globalization::NumberFormatInfo* nfi);
+      String FormatPercent(int precision, Globalization::NumberFormatInfo* nfi);
     private:
       NumberFormatter();
       void Append(cstring s);
-      void Append(String&);
+      void Append(String);
       void Append(wchar_t c);
       void AppendDigits(int start, int end);
       void AppendDigits(int start, int end, Text::StringBuilder& sb);

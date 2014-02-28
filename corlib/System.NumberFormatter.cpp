@@ -92,6 +92,73 @@ namespace System
     return String(_cbuf.ToConstPtr(), 0, _ind);
     }
 
+  String NumberFormatter::FormatPercent(int precision, Globalization::NumberFormatInfo* nfi)
+    {
+    precision = (precision >= 0 ? precision : nfi->PercentDecimalDigits());
+    Multiply10(2);
+    RoundDecimal (precision);
+    ResetCharBuf(IntegerDigits() * 2 + precision + 16);
+
+    if(_positive)
+      {
+      if(nfi->PercentPositivePattern() == 2)
+        Append(nfi->PercentSymbol());
+      }
+    else 
+      {
+      switch(nfi->PercentNegativePattern())
+        {
+        case 0:
+          Append(nfi->NegativeSign());
+          break;
+        case 1:
+          Append(nfi->NegativeSign());
+          break;
+        case 2:
+          Append(nfi->NegativeSign());
+          Append(nfi->PercentSymbol());
+          break;
+        }
+      }
+
+    AppendIntegerStringWithGroupSeparator(nfi->RawPercentGroupSizes(), nfi->PercentGroupSeparator());
+
+    if(precision > 0)
+      {
+      Append(nfi->PercentDecimalSeparator());
+      AppendDecimalString(precision);
+      }
+
+    if(_positive) 
+      {
+      switch(nfi->PercentPositivePattern())
+        {
+        case 0:
+          Append(L' ');
+          Append(nfi->PercentSymbol());
+          break;
+        case 1:
+          Append(nfi->PercentSymbol());
+          break;
+        }
+      }
+    else 
+      {
+      switch(nfi->PercentNegativePattern()) 
+        {
+        case 0:
+          Append(L' ');
+          Append(nfi->PercentSymbol());
+          break;
+        case 1:
+          Append(nfi->PercentSymbol());
+          break;
+        }
+      }
+
+    return String(_cbuf.ToConstPtr(), 0, _ind);
+    }
+
   // ------------------------------------------------------------------------
   /// Public Static NumberToString function (Based on Mono)
   String NumberFormatter::NumberToString(int32 value, IFormatProvider* fp)
@@ -436,8 +503,8 @@ namespace System
         return FormatGeneral(_precision, nfi);
       case 'N':
         return FormatNumber (_precision, nfi);
-        //case 'P':
-        //return FormatPercent (_precision, nfi);
+      case 'P':
+        return FormatPercent (_precision, nfi);
       case 'X':
         return FormatHexadecimal(_precision);
       default:
@@ -462,8 +529,8 @@ namespace System
         return FormatGeneral(_precision, nfi);
       case L'N':
         return FormatNumber(_precision, nfi);
-        // TODO : case 'P':
-        //return this.FormatPercent(this._precision, nfi);
+      case 'P':
+        return FormatPercent(_precision, nfi);
       case L'X' :
       default:
         if(_isCustomFormat)
@@ -532,7 +599,7 @@ namespace System
 
   // ------------------------------------------------------------------------
   /// Private Append function (Based on Mono)
-  void NumberFormatter::Append(String& s)
+  void NumberFormatter::Append(String s)
     {
     int slen = s.Length();
     if (_ind + slen > _cbuf.Length())
