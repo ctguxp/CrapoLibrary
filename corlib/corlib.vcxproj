@@ -134,7 +134,7 @@
     <ClInclude Include="System.Text.UTF8Encoding.h" />
     <ClInclude Include="System.Threading.InternalThread.h" />
     <ClInclude Include="System.Threading.Lock.h" />
-    <ClInclude Include="System.Threading.Mutex.h" />
+    <ClInclude Include="System.Threading.CriticalSection.h" />
     <ClInclude Include="System.Threading.Thread.h" />
     <ClInclude Include="System.Threading.ThreadState.h" />
     <ClInclude Include="System.UInt16.h" />
@@ -227,7 +227,7 @@
     <ClCompile Include="System.Text.UTF8Encoding.cpp" />
     <ClCompile Include="System.Threading.InternalThread.cpp" />
     <ClCompile Include="System.Threading.Lock.cpp" />
-    <ClCompile Include="System.Threading.Mutex.cpp" />
+    <ClCompile Include="System.Threading.CriticalSection.cpp" />
     <ClCompile Include="System.Threading.Thread.cpp" />
     <ClCompile Include="System.UInt16.cpp" />
     <ClCompile Include="System.UInt32.cpp" />

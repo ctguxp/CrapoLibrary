@@ -33,6 +33,7 @@ namespace System
 
         virtual int GetCharCount(ByteArray&s, int, int) override;
         virtual int GetCharCount(ByteArray&) override;
+        virtual int GetCharCount(byte*, int) override;
 
         virtual int GetChars(ByteArray&, int, int, CharArray&, int) override;
         virtual CharArray GetChars(ByteArray&) override;
@@ -43,8 +44,8 @@ namespace System
         virtual int GetMaxCharCount(int) override;
 
         virtual ByteArray GetPreamble() override;
-        virtual int GetCharCount (byte* bytes, int count) override;
       private:
+        int GetBytesInternal(wchar_t* chars, int charCount, byte* bytes, int byteCount);
         int GetCharsInternal(byte* bytes, int byteCount, string chars, int charCount);
         void CopyChars(byte* src, byte* dest, int count, bool bigEndian);
       private:

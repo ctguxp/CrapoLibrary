@@ -1,23 +1,23 @@
 #include "pch.h"
-#include "System.Threading.Mutex.h"
+#include "System.Threading.CriticalSection.h"
 
 namespace System
   {
   namespace Threading
     {
-    Mutex::Mutex()
+    CriticalSection::CriticalSection()
       {
       ::InitializeCriticalSection(&_critSection);
       }
-    Mutex::~Mutex()
+    CriticalSection::~CriticalSection()
       {
       ::DeleteCriticalSection(&_critSection);
       }
-    void Mutex::Acquire()
+    void CriticalSection::Acquire()
       {
       ::EnterCriticalSection(& _critSection);
       }
-    void Mutex::Release()
+    void CriticalSection::Release()
       {
       ::LeaveCriticalSection(& _critSection);
       }

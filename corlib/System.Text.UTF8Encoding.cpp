@@ -23,11 +23,10 @@ namespace System
       {
       }
 
-#pragma warning(disable:4100)
-
     int UTF8Encoding::GetByteCount(CharArray& chars, int index, int count)
       {
-      throw System::ArgumentException(L"Not Implemented", L"UTF8Encoding::GetByteCount");
+      wchar_t dummy = L'\0';
+      return InternalGetByteCount(chars, index, count, _encoder_fallback, dummy, true);
       }
 
     int UTF8Encoding::GetByteCount(wchar_t* chars, int count)
@@ -933,7 +932,5 @@ namespace System
         buffer->Reset();
         }
       }
-
-#pragma warning(default:4100)
     }
   }

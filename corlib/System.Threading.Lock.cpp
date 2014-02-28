@@ -5,7 +5,7 @@ namespace System
   {
   namespace Threading
     {
-    Lock::Lock(Mutex& mutex)
+    Lock::Lock(CriticalSection& mutex)
       :_mutex(mutex)
       {
       _mutex.Acquire();

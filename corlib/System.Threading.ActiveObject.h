@@ -6,11 +6,12 @@ namespace System
   {
   namespace Threading
     {
-    class ActiveObject : public Object
+    class CRAPOCOREDLL_API ActiveObject : public Object
       {
       public:
         ActiveObject();
         virtual ~ActiveObject();
+        void Kill();
       protected:
         virtual void InitThread () = 0;
         virtual void Run () = 0;

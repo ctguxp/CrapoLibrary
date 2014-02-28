@@ -43,64 +43,164 @@ namespace System
       return retval;
       }
 
-    int UnicodeEncoding::GetByteCount(CharArray&, int, int)
+    int UnicodeEncoding::GetByteCount(CharArray& chars, int index, int count)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetByteCount");
+      if(chars.IsNull())
+        throw ArgumentNullException(L"chars");
+      if(index < 0 || index > (int)chars.Length()) 
+        throw ArgumentOutOfRangeException(L"index", L"ArgRange_Array");
+      if(count < 0 || count > ((int)chars.Length() - index))
+        throw ArgumentOutOfRangeException(L"count", L"ArgRange_Array");
+
+      return count * 2;
       }
 
-    int UnicodeEncoding::GetByteCount(String&)
+    int UnicodeEncoding::GetByteCount(String& s)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetByteCount");
+      return s.Length() * 2;
       }
 
-    int UnicodeEncoding::GetByteCount(CharArray&)
+    int UnicodeEncoding::GetByteCount(CharArray& chars)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetByteCount");
+      return Encoding::GetByteCount(chars);
       }
 
-    int UnicodeEncoding::GetByteCount(wchar_t*, int)
+    int UnicodeEncoding::GetByteCount(wchar_t* chars, int count)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetByteCount");
+      if(chars == nullptr)
+        throw ArgumentNullException(L"chars");
+      if(count < 0)
+        throw ArgumentOutOfRangeException(L"count");
+
+      return count * 2;
       }
 
-    int UnicodeEncoding::GetBytes(System::CharArray&, int, int, System::ByteArray&, int)
+    int UnicodeEncoding::GetBytes(System::CharArray& chars, int charIndex, int charCount, System::ByteArray& bytes, int byteIndex)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetBytes");
+      if(chars.IsNull())
+        {
+        throw ArgumentNullException(L"chars");
+        }
+      if(bytes.IsNull())
+        {
+        throw ArgumentNullException(L"bytes");
+        }
+      if(charIndex < 0 || charIndex > (int)chars.Length())
+        {
+        throw ArgumentOutOfRangeException(L"charIndex", L"ArgRange_Array");
+        }
+      if(charCount < 0 || charCount > ((int)chars.Length() - charIndex))
+        {
+        throw ArgumentOutOfRangeException(L"charCount", L"ArgRange_Array");
+        }
+      if(byteIndex < 0 || byteIndex > (int)bytes.Length()) 
+        {
+        throw ArgumentOutOfRangeException(L"byteIndex", L"ArgRange_Array");
+        }
+
+      if(charCount == 0)
+        return 0;
+
+      int byteCount = (int)bytes.Length() - byteIndex;
+      if(bytes.Length() == 0)
+        bytes.Length(1);
+
+      string charPtr = chars.ToPtr();
+      byte* bytePtr = bytes.ToPtr();
+      return GetBytesInternal(charPtr + charIndex, charCount, bytePtr + byteIndex, byteCount);
       }
 
-    int UnicodeEncoding::GetBytes(System::String&, int, int, System::ByteArray&, int)
+    int UnicodeEncoding::GetBytes(System::String& s, int charIndex, int charCount, ByteArray& bytes, int byteIndex)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetBytes");
+      if(bytes.IsNull())
+        {
+        throw ArgumentNullException(L"bytes");
+        }
+      if(charIndex < 0 || charIndex > (int)s.Length())
+        {
+        throw ArgumentOutOfRangeException(L"charIndex", L"ArgRange_StringIndex");
+        }
+      if(charCount < 0 || charCount > ((int)s.Length() - charIndex))
+        {
+        throw ArgumentOutOfRangeException(L"charCount", L"ArgRange_StringRange");
+        }
+      if (byteIndex < 0 || byteIndex > (int)bytes.Length()) 
+        {
+        throw ArgumentOutOfRangeException(L"byteIndex", L"ArgRange_Array");
+        }
+
+      // For consistency
+      if(charCount == 0)
+        return 0;
+
+      int byteCount = bytes.Length() - byteIndex;
+      if (bytes.Length() == 0)
+        bytes.Length(1);
+
+      cstring charPtr = s;
+      byte* bytePtr = bytes.ToPtr();
+      return GetBytesInternal((string)charPtr + charIndex, charCount, bytePtr + byteIndex, byteCount);
       }
 
-    int UnicodeEncoding::GetBytes(wchar_t*, int, byte*, int)
+    int UnicodeEncoding::GetBytes(wchar_t* chars, int charCount, byte* bytes, int byteCount)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetBytes");
+      if(bytes == nullptr)
+        throw ArgumentNullException(L"bytes");
+      if(chars == nullptr)
+        throw ArgumentNullException(L"chars");
+      if(charCount < 0)
+        throw ArgumentOutOfRangeException(L"charCount");
+      if(byteCount < 0)
+        throw ArgumentOutOfRangeException(L"byteCount");
+
+      return GetBytesInternal(chars, charCount, bytes, byteCount);
       }
 
-    ByteArray UnicodeEncoding::GetBytes(String&)
+    ByteArray UnicodeEncoding::GetBytes(String& s)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetBytes");
+      return Encoding::GetBytes(s);
       }
 
-    ByteArray UnicodeEncoding::GetBytes(CharArray&, int, int)
+    ByteArray UnicodeEncoding::GetBytes(CharArray& chars, int index, int count)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetBytes");
+      return Encoding::GetBytes(chars, index, count);
       }
 
-    ByteArray UnicodeEncoding::GetBytes(CharArray&)
+    ByteArray UnicodeEncoding::GetBytes(CharArray& chars)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetBytes");
+      return Encoding::GetBytes(chars);
       }
 
-    int UnicodeEncoding::GetCharCount(ByteArray&, int, int)
+    int UnicodeEncoding::GetCharCount(ByteArray& bytes, int index, int count)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetCharCount");
+      if(bytes.IsNull())
+        {
+        throw ArgumentNullException(L"bytes");
+        }
+      if(index < 0 || index > (int)bytes.Length()) 
+        {
+        throw ArgumentOutOfRangeException(L"index", L"ArgRange_Array");
+        }
+      if(count < 0 || count > ((int)bytes.Length() - index)) 
+        {
+        throw ArgumentOutOfRangeException(L"count", L"ArgRange_Array");
+        }
+      return count / 2;
       }
 
-    int UnicodeEncoding::GetCharCount(ByteArray&)
+    int UnicodeEncoding::GetCharCount(byte* bytes, int count)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetCharCount");
+      if(bytes == nullptr)
+        throw ArgumentNullException(L"bytes");
+      if (count < 0)
+        throw ArgumentOutOfRangeException(L"count");
+
+      return count / 2;
+      }
+
+    int UnicodeEncoding::GetCharCount(ByteArray& bytes)
+      {
+      return Encoding::GetCharCount(bytes);
       }
 
     int UnicodeEncoding::GetChars(ByteArray& bytes, int byteIndex, int byteCount, CharArray& chars, int charIndex)
@@ -148,9 +248,29 @@ namespace System
       return Encoding::GetChars(bytes, index, count);
       }
 
-    int UnicodeEncoding::GetChars(byte*, int, wchar_t*, int)
+    int UnicodeEncoding::GetChars(byte* bytes, int byteCount, wchar_t* chars, int charCount)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetChars");
+      if(bytes == nullptr)
+        throw ArgumentNullException(L"bytes");
+      if(chars == nullptr)
+        throw ArgumentNullException(L"chars");
+      if(charCount < 0)
+        throw ArgumentOutOfRangeException(L"charCount");
+      if (byteCount < 0)
+        throw ArgumentOutOfRangeException(L"byteCount");
+
+      return GetCharsInternal(bytes, byteCount, chars, charCount);
+      }
+
+    int UnicodeEncoding::GetBytesInternal(wchar_t* chars, int charCount, byte* bytes, int byteCount)
+      {
+      int count = charCount * 2;
+
+      if(byteCount < count)
+        throw ArgumentException(L"Arg_InsufficientSpace");
+
+      CopyChars((byte*)chars, bytes, count, _bigEndian);
+      return count;
       }
 
     int UnicodeEncoding::GetCharsInternal(byte* bytes, int byteCount, string chars, int charCount)
@@ -165,9 +285,11 @@ namespace System
       return count;
       }
 
-    int UnicodeEncoding::GetMaxByteCount(int)
+    int UnicodeEncoding::GetMaxByteCount(int charCount)
       {
-      throw ArgumentException(L"Not Implemented", L"UnicodeEncoding::GetMaxByteCount");
+      if(charCount < 0)
+        throw ArgumentOutOfRangeException(L"charCount", L"ArgRange_NonNegative");
+      return charCount * 2;
       }
 
     int UnicodeEncoding::GetMaxCharCount(int byteCount)
@@ -175,16 +297,6 @@ namespace System
       if(byteCount < 0)
         throw ArgumentOutOfRangeException(L"byteCount", L"ArgRange_NonNegative");
       return byteCount / 2;
-      }
-
-    int UnicodeEncoding::GetCharCount (byte* bytes, int count)
-      {
-      if(bytes == nullptr)
-        throw ArgumentNullException(L"bytes");
-      if(count < 0)
-        throw ArgumentOutOfRangeException(L"count");
-
-      return count / 2;
       }
 
     void UnicodeEncoding::CopyChars(byte* src, byte* dest, int count, bool bigEndian)

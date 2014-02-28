@@ -23,7 +23,7 @@ namespace System
     GCEncoding Encoding::_bigEndianEncoding;
     GCEncoding Encoding::_utf8EncodingWithMarkers;
     GCEncoding Encoding::_utf8EncodingWithoutMarkers;
-    Threading::Mutex Encoding::_lockobj;
+    Threading::CriticalSection Encoding::_lockobj;
 
     // Default constructor
     Encoding::Encoding(int codePage)
@@ -215,8 +215,7 @@ namespace System
       ByteArray ba(count);
       for(int i = 0; i < count; i++)
         ba [i] = bytes[i];
-      //return GetCharCount(ba, 0, count);
-      throw ArgumentException(L"Not Implemented", L"Encoding::GetCharCount");
+      return GetCharCount(ba, 0, count);
       }
 
     CharArray Encoding::GetChars(ByteArray& bytes)

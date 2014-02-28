@@ -24,5 +24,9 @@ namespace System
       {
       _system_thread_handle = handle;
       }
+    HANDLE InternalThread::SystemThreadHandle()
+      {
+      return _system_thread_handle;
+      }
     }
   } 

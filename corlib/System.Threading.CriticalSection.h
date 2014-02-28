@@ -5,11 +5,11 @@ namespace System
   namespace Threading
     {
     class Lock;
-    class Mutex
+    class CRAPOCOREDLL_API CriticalSection
       {
       public:
-        Mutex();
-        ~Mutex();
+        CriticalSection();
+        ~CriticalSection();
       private:
         void Acquire();
         void Release();
