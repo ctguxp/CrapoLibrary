@@ -5,8 +5,8 @@
 
 #define NUM_CULTURE_ENTRIES 283
 
-void * binary_search(const void *key, const void *array, size_t array_length
-                     ,size_t member_size, BinarySearchComparer comparer)
+void* BinarySearch(const void *key, const void *array, size_t array_length
+                  ,size_t member_size, BinarySearchComparer comparer)
   {
   const char *base = (const char*)array;
   size_t lim;
@@ -30,7 +30,7 @@ void * binary_search(const void *key, const void *array, size_t array_length
   return nullptr;
   }
 
-int culture_lcid_locator (const void *a, const void *b)
+int CultureLcidLocator(const void *a, const void *b)
 {
 	const int *lcid = (const int*)a;
 	const CultureInfoEntry *bb = (const CultureInfoEntry *)b;
@@ -38,11 +38,11 @@ int culture_lcid_locator (const void *a, const void *b)
 	return *lcid - bb->lcid;
 }
 
-const CultureInfoEntry* culture_info_entry_from_lcid(int lcid)
+const CultureInfoEntry* CultureInfoEntryFromLCID(int lcid)
 {
 	const CultureInfoEntry *ci;
 
-	ci = (const CultureInfoEntry *)binary_search(&lcid, culture_entries, NUM_CULTURE_ENTRIES, sizeof (CultureInfoEntry), culture_lcid_locator);
+	ci = (const CultureInfoEntry *)BinarySearch(&lcid, culture_entries, NUM_CULTURE_ENTRIES, sizeof (CultureInfoEntry), CultureLcidLocator);
 
 	return ci;
 }

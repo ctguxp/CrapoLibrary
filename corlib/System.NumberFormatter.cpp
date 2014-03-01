@@ -9,6 +9,9 @@
 namespace System
   {
 
+  NumberFormatter* NumberFormatter::_threadNumberFormatter = nullptr;
+  GCNumberFormatter NumberFormatter::_userFormatProvider;
+
   // ------------------------------------------------------------------------
   /// Default constructor
   NumberFormatter::NumberFormatter()
@@ -92,6 +95,73 @@ namespace System
     return String(_cbuf.ToConstPtr(), 0, _ind);
     }
 
+  String NumberFormatter::FormatPercent(int precision, Globalization::NumberFormatInfo* nfi)
+    {
+    precision = (precision >= 0 ? precision : nfi->PercentDecimalDigits());
+    Multiply10(2);
+    RoundDecimal (precision);
+    ResetCharBuf(IntegerDigits() * 2 + precision + 16);
+
+    if(_positive)
+      {
+      if(nfi->PercentPositivePattern() == 2)
+        Append(nfi->PercentSymbol());
+      }
+    else 
+      {
+      switch(nfi->PercentNegativePattern())
+        {
+        case 0:
+          Append(nfi->NegativeSign());
+          break;
+        case 1:
+          Append(nfi->NegativeSign());
+          break;
+        case 2:
+          Append(nfi->NegativeSign());
+          Append(nfi->PercentSymbol());
+          break;
+        }
+      }
+
+    AppendIntegerStringWithGroupSeparator(nfi->RawPercentGroupSizes(), nfi->PercentGroupSeparator());
+
+    if(precision > 0)
+      {
+      Append(nfi->PercentDecimalSeparator());
+      AppendDecimalString(precision);
+      }
+
+    if(_positive) 
+      {
+      switch(nfi->PercentPositivePattern())
+        {
+        case 0:
+          Append(L' ');
+          Append(nfi->PercentSymbol());
+          break;
+        case 1:
+          Append(nfi->PercentSymbol());
+          break;
+        }
+      }
+    else 
+      {
+      switch(nfi->PercentNegativePattern()) 
+        {
+        case 0:
+          Append(L' ');
+          Append(nfi->PercentSymbol());
+          break;
+        case 1:
+          Append(nfi->PercentSymbol());
+          break;
+        }
+      }
+
+    return String(_cbuf.ToConstPtr(), 0, _ind);
+    }
+
   // ------------------------------------------------------------------------
   /// Public Static NumberToString function (Based on Mono)
   String NumberFormatter::NumberToString(int32 value, IFormatProvider* fp)
@@ -99,7 +169,7 @@ namespace System
     if(value >= HundredMillion || value <= -HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     String res = inst->FastIntegerToString(value, fp);
     return res;
     }
@@ -110,8 +180,7 @@ namespace System
     if(value >= HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     String res = inst->FastIntegerToString((int)value, fp);
     return res;
     }
@@ -121,8 +190,7 @@ namespace System
     if(value >= HundredMillion || value <= -HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     String res = inst->FastIntegerToString((int32)value, fp);
     return res;
     }
@@ -132,16 +200,14 @@ namespace System
     if(value >= HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     String res = inst->FastIntegerToString((int32)value, fp);
     return res;
     }
 
   String NumberFormatter::NumberToString(float value, IFormatProvider* fp)
     {
-    // TODO :GCNumberFormatter inst(GetInstance(fp));
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(nullptr, value, SingleDefPrecision);
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     String res;
@@ -159,8 +225,7 @@ namespace System
 
   String NumberFormatter::NumberToString(double value, IFormatProvider* fp)
     {
-    // TODO :GCNumberFormatter inst(GetInstance(fp));
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     inst->Init(nullptr, value, DoubleDefPrecision);
     String res;
@@ -180,7 +245,7 @@ namespace System
   /// Public Static NumberToString function (Based on Mono)
   String NumberFormatter::NumberToString(String* format, int32 value, IFormatProvider* fp)
     {
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init (format, value, UInt32DefPrecision);
     String res = inst->IntegerToString(format, fp);
     return res;
@@ -189,8 +254,7 @@ namespace System
 
   String NumberFormatter::NumberToString(String* format, uint32 value, IFormatProvider* fp)
     {
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(format, value, Int32DefPrecision);
     String res = inst->IntegerToString(format, fp);
     return res;
@@ -198,8 +262,7 @@ namespace System
 
   String NumberFormatter::NumberToString(String* format, int64 value, IFormatProvider* fp)
     {
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(format, value);
     String res = inst->IntegerToString(format, fp);
     return res;
@@ -207,8 +270,7 @@ namespace System
 
   String NumberFormatter::NumberToString(String* format, uint64 value, IFormatProvider* fp)
     {
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(format, value);
     String res = inst->IntegerToString(format, fp);
     return res;
@@ -216,8 +278,7 @@ namespace System
 
   String NumberFormatter::NumberToString(String* format, float value, IFormatProvider* fp)
     {
-    // TODO :GCNumberFormatter inst(GetInstance(fp));
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(format, value, SingleDefPrecision);
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     // TODO : NumberFormatInfo nfi = inst.GetNumberFormatInstance (fp);
@@ -238,8 +299,7 @@ namespace System
 
   String NumberFormatter::NumberToString(String* format, double value, IFormatProvider* fp)
     {
-    // TODO :GCNumberFormatter inst(GetInstance(fp));
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(format, value, DoubleDefPrecision);
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     String res;
@@ -259,8 +319,25 @@ namespace System
 
   // ------------------------------------------------------------------------
   /// Private Static NumberToString function (Based on Mono)
-  NumberFormatter* NumberFormatter::GetInstance()
+  NumberFormatter* NumberFormatter::GetInstance(IFormatProvider* fp)
     {
+    if(fp != nullptr) 
+      {
+      if(_userFormatProvider.Get() == nullptr)
+        {
+        // TODO : Interlocked.CompareExchange(ref userFormatProvider, new NumberFormatter (null), null);
+        _userFormatProvider.Set(new NumberFormatter());
+        }
+
+      return _userFormatProvider.Get();
+      }
+
+    /*NumberFormatter* res = _threadNumberFormatter;
+    threadNumberFormatter = nullptr;
+    if(res == nullptr)
+      return new NumberFormatter (Thread.CurrentThread);
+    res->CurrentCulture(Thread::CurrentThread().CurrentCulture());
+    return res;*/
     return new NumberFormatter();
     }
   // ------------------------------------------------------------------------
@@ -436,8 +513,8 @@ namespace System
         return FormatGeneral(_precision, nfi);
       case 'N':
         return FormatNumber (_precision, nfi);
-        //case 'P':
-        //return FormatPercent (_precision, nfi);
+      case 'P':
+        return FormatPercent (_precision, nfi);
       case 'X':
         return FormatHexadecimal(_precision);
       default:
@@ -462,8 +539,8 @@ namespace System
         return FormatGeneral(_precision, nfi);
       case L'N':
         return FormatNumber(_precision, nfi);
-        // TODO : case 'P':
-        //return this.FormatPercent(this._precision, nfi);
+      case 'P':
+        return FormatPercent(_precision, nfi);
       case L'X' :
       default:
         if(_isCustomFormat)
@@ -532,7 +609,7 @@ namespace System
 
   // ------------------------------------------------------------------------
   /// Private Append function (Based on Mono)
-  void NumberFormatter::Append(String& s)
+  void NumberFormatter::Append(String s)
     {
     int slen = s.Length();
     if (_ind + slen > _cbuf.Length())

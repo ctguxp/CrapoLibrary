@@ -22,5 +22,10 @@ namespace corlibtest
         Assert::AreEqual(L"254.9", (cstring)def, L"ToString(G)");
         }
 
+      TEST_METHOD(Simple)
+        {
+        Single i(0.96f);
+        Assert::AreEqual(L"96.00 %", (cstring)i.ToString(L"P2"));
+        }
     };
   }

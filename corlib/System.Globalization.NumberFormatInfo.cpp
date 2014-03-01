@@ -11,8 +11,8 @@ namespace System
   {
   namespace Globalization
     {
-    NumberFormatInfo::NumberFormatInfo()
-      :_isReadOnly(false)
+    NumberFormatInfo::NumberFormatInfo(bool read_only)
+      :_isReadOnly(read_only)
       ,_decimalFormats()
       ,_currencyFormats()
       ,_percentFormats()
@@ -49,6 +49,91 @@ namespace System
       _numberGroupSizes[0] = 3;
       _percentGroupSizes[0] = 3;
       }
+
+    NumberFormatInfo::NumberFormatInfo(const NumberFormatInfo& nfi)
+      :_isReadOnly(nfi._isReadOnly)
+      ,_decimalFormats(nfi._decimalFormats)
+      ,_currencyFormats(nfi._currencyFormats)
+      ,_percentFormats(nfi._percentFormats)
+      ,_digitPattern(nfi._digitPattern)
+      ,_zeroPatten(nfi._zeroPatten)
+      ,_currencyDecimalDigits(nfi._currencyDecimalDigits)
+      ,_currencyDecimalSeparator(nfi._currencyDecimalSeparator)
+      ,_currencyGroupSeparator(nfi._currencyGroupSeparator)
+      ,_currencyGroupSizes(nfi._currencyGroupSizes.Length())
+      ,_currencyNegativePattern(nfi._currencyNegativePattern)
+      ,_currencyPositivePattern(nfi._currencyPositivePattern)
+      ,_currencySymbol(nfi._currencySymbol)
+      ,_nanSymbol(nfi._nanSymbol)
+      ,_negativeInfinitySymbol(nfi._negativeInfinitySymbol)
+      ,_negativeSign(nfi._negativeSign)
+      ,_numberDecimalDigits(nfi._numberDecimalDigits)
+      ,_numberDecimalSeparator(nfi._numberDecimalSeparator)
+      ,_numberGroupSeparator(nfi._numberGroupSeparator)
+      ,_numberGroupSizes(nfi._numberGroupSizes.Length())
+      ,_numberNegativePattern(nfi._numberNegativePattern)
+      ,_percentDecimalDigits(nfi._percentDecimalDigits)
+      ,_percentDecimalSeparator(nfi._percentDecimalSeparator)
+      ,_percentGroupSeparator(nfi._percentGroupSeparator)
+      ,_percentGroupSizes(nfi._percentGroupSizes.Length())
+      ,_percentNegativePattern(nfi._percentNegativePattern)
+      ,_percentPositivePattern(nfi._percentPositivePattern)
+      ,_percentSymbol(nfi._percentSymbol)
+      ,_perMilleSymbol(nfi._perMilleSymbol)
+      ,_positiveInfinitySymbol(nfi._positiveInfinitySymbol)
+      ,_positiveSign(nfi._positiveSign)
+      ,_digitSubstitution(nfi._digitSubstitution)
+      {
+      _currencyGroupSizes = nfi._currencyGroupSizes;
+      _numberGroupSizes = nfi._numberGroupSizes;
+      _percentGroupSizes = nfi._percentGroupSizes;
+      }
+
+    NumberFormatInfo& NumberFormatInfo::operator=(const NumberFormatInfo& nfi)
+      {
+      if(this == &nfi)
+        return *this;
+
+      _isReadOnly = nfi._isReadOnly;
+      _decimalFormats = nfi._decimalFormats;
+      _currencyFormats = nfi._currencyFormats;
+      _percentFormats = nfi._percentFormats;
+      _digitPattern = nfi._digitPattern;
+      _zeroPatten = nfi._zeroPatten;
+      _currencyDecimalDigits = nfi._currencyDecimalDigits;
+      _currencyDecimalSeparator = nfi._currencyDecimalSeparator;
+      _currencyGroupSeparator = nfi._currencyGroupSeparator;
+      _currencyGroupSizes = nfi._currencyGroupSizes.Length();
+      _currencyNegativePattern = nfi._currencyNegativePattern;
+      _currencyPositivePattern = nfi._currencyPositivePattern;
+      _currencySymbol = nfi._currencySymbol;
+      _nanSymbol = nfi._nanSymbol;
+      _negativeInfinitySymbol = nfi._negativeInfinitySymbol;
+      _negativeSign = nfi._negativeSign;
+      _numberDecimalDigits = nfi._numberDecimalDigits;
+      _numberDecimalSeparator = nfi._numberDecimalSeparator;
+      _numberGroupSeparator = nfi._numberGroupSeparator;
+      _numberGroupSizes = nfi._numberGroupSizes.Length();
+      _numberNegativePattern = nfi._numberNegativePattern;
+      _percentDecimalDigits = nfi._percentDecimalDigits;
+      _percentDecimalSeparator = nfi._percentDecimalSeparator;
+      _percentGroupSeparator = nfi._percentGroupSeparator;
+      _percentGroupSizes = nfi._percentGroupSizes.Length();
+      _percentNegativePattern = nfi._percentNegativePattern;
+      _percentPositivePattern = nfi._percentPositivePattern;
+      _percentSymbol = nfi._percentSymbol;
+      _perMilleSymbol = nfi._perMilleSymbol;
+      _positiveInfinitySymbol = nfi._positiveInfinitySymbol;
+      _positiveSign = nfi._positiveSign;
+      _digitSubstitution = nfi._digitSubstitution;
+
+      _currencyGroupSizes = nfi._currencyGroupSizes;
+      _numberGroupSizes = nfi._numberGroupSizes;
+      _percentGroupSizes = nfi._percentGroupSizes;
+
+      return *this;
+      }
+
     NumberFormatInfo::NumberFormatInfo(int index, bool read_only)
       :_isReadOnly(read_only)
       ,_decimalFormats()
@@ -254,6 +339,13 @@ namespace System
       return nfi;     
       }
     // ------------------------------------------------------------------------
+
+    /// Gets the default read-only NumberFormatInfo that is culture-independent (invariant).
+    NumberFormatInfo* NumberFormatInfo::InvariantInfo()
+      {
+      // This uses invariant info, which is same as in the constructor
+      return new NumberFormatInfo(true);
+      }
 
     // ------------------------------------------------------------------------
     /// Gets a value indicating whether the NumberFormatInfo is read-only.

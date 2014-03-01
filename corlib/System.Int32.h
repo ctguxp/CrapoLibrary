@@ -3,6 +3,7 @@
 #pragma once
 #include "System.Object.h"
 #include "System.String.h"
+#include "System.IFormatProvider.h"
 
 namespace System
   {
@@ -20,7 +21,8 @@ namespace System
       Int32& operator = (int32 const&);
       operator int32 const& () const;
       virtual String ToString() override;
-      String ToString(String& format);
+      String ToString(String format);
+      String ToString(String format, IFormatProvider* provider);
       virtual uint32 GetHashCode() override;
     };
   }

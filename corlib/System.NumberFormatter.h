@@ -24,7 +24,8 @@ namespace System
   static const wchar_t DigitLowerTable [] = { L'0', L'1', L'2', L'3', L'4', L'5', L'6', L'7', L'8', L'9', L'a', L'b', L'c', L'd', L'e', L'f' };
 
   static const wchar_t DigitUpperTable [] = { L'0', L'1', L'2', L'3', L'4', L'5', L'6', L'7', L'8', L'9', L'A', L'B', L'C', L'D', L'E', L'F' };
-
+  class NumberFormatter;
+  typedef AutoPtr<NumberFormatter> GCNumberFormatter;
   class NumberFormatter
     {
     private:
@@ -90,10 +91,11 @@ namespace System
       String FormatCurrency(int, Globalization::NumberFormatInfo*);
       String FormatNumber(int, Globalization::NumberFormatInfo*);
       String FormatCustom(String* format, Globalization::NumberFormatInfo* nfi);
+      String FormatPercent(int precision, Globalization::NumberFormatInfo* nfi);
     private:
       NumberFormatter();
       void Append(cstring s);
-      void Append(String&);
+      void Append(String);
       void Append(wchar_t c);
       void AppendDigits(int start, int end);
       void AppendDigits(int start, int end, Text::StringBuilder& sb);
@@ -107,7 +109,7 @@ namespace System
       String FormatExponential(int precision, Globalization::NumberFormatInfo* nfi, int expDigits);
       static int64 GetTenPowerOf(int i);
       String NumberToString(String* format, Globalization::NumberFormatInfo* nfi);
-      static NumberFormatter* GetInstance();
+      static NumberFormatter* GetInstance(IFormatProvider* fp);
       static uint32 FastToDecHex(int val);
       Globalization::NumberFormatInfo* GetNumberFormatInstance(IFormatProvider*);
       String FastIntegerToString (int, IFormatProvider*);
@@ -168,7 +170,7 @@ namespace System
       uint32 _val3;
       uint32 _val4;
       Globalization::NumberFormatInfo* _nfi;
+      static NumberFormatter* _threadNumberFormatter;
+      static GCNumberFormatter _userFormatProvider;
     };
-
-  typedef AutoPtr<NumberFormatter> GCNumberFormatter;
   }

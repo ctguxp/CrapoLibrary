@@ -11,9 +11,10 @@ namespace System
   namespace Globalization
     {
     CultureInfo::CultureInfo(uint32 culture, bool useUserOverride)
-      :_isReadOnly(false)
+      :_isReadOnly(true)
       ,_cultureID(culture)
       ,_parent_lcid(0)
+      ,_specific_lcid(0)
       ,_datetime_index(0)
       ,_number_index(0)
       ,_default_calendar_type(0)
@@ -23,16 +24,33 @@ namespace System
       ,_name()
       ,_englishname()
       ,_nativename()
+      ,_iso3lang()
+      ,_iso2lang()
+      ,_icu_name()
+      ,_win3lang()
       ,_compareInfo()
       ,_textinfo_data(nullptr)
       ,_constructed(true)
       {
-      Init();
+      if(_cultureID == InvariantCultureId) 
+        {
+        // Short circuit the invariant culture
+        ConstructInvariant();
+        return;
+        }
+
+      if(!ConstructInternalLocaleFromLCID()) 
+        {
+        throw ArgumentException(L"culture");
+        // TODO : throw new CultureNotFoundException ("culture",  String.Format ("Culture ID {0} (0x{0:X4}) is not a " + supported culture.", culture));
+        }
       }
+
     CultureInfo::CultureInfo(uint32 culture, bool useUserOverride, bool readOnly)
       :_isReadOnly(readOnly)
       ,_cultureID(culture)
       ,_parent_lcid(0)
+      ,_specific_lcid(0)
       ,_datetime_index(0)
       ,_number_index(0)
       ,_default_calendar_type(0)
@@ -42,11 +60,26 @@ namespace System
       ,_name()
       ,_englishname()
       ,_nativename()
+      ,_iso3lang()
+      ,_iso2lang()
+      ,_icu_name()
+      ,_win3lang()
       ,_compareInfo()
       ,_textinfo_data(nullptr)
       ,_constructed(true)
       {
-      Init();
+      if(_cultureID == InvariantCultureId) 
+        {
+        // Short circuit the invariant culture
+        ConstructInvariant();
+        return;
+        }
+
+      if(!ConstructInternalLocaleFromLCID()) 
+        {
+        throw ArgumentException(L"culture");
+        // TODO : throw new CultureNotFoundException ("culture",  String.Format ("Culture ID {0} (0x{0:X4}) is not a " + supported culture.", culture));
+        }
       }
 
     CultureInfo::~CultureInfo()
@@ -55,48 +88,30 @@ namespace System
 
     //-------------------------------------------------------------------------
 #pragma warning (disable:4296)
-    void CultureInfo::Init()
-      {
-      if(_cultureID < 0)
-        throw ArgumentOutOfRangeException(L"culture", L"Positive number required.");
-
-      if(_cultureID == InvariantCultureId) 
-        {
-        // Short circuit the invariant culture
-        ConstructInvariant();
-        return;
-        }
-
-      if(!construct_internal_locale_from_lcid()) 
-        {
-        throw ArgumentException(L"culture");
-        // TODO : throw new CultureNotFoundException ("culture",  String.Format ("Culture ID {0} (0x{0:X4}) is not a " + supported culture.", culture));
-        }
-      }
-
     void CultureInfo::ConstructInvariant()
       {
       // NumberFormatInfo defaults to the invariant data
-      // TODO : numInfo=NumberFormatInfo.InvariantInfo;
+      _numInfo.Set(NumberFormatInfo::InvariantInfo());
 
       if(!_isReadOnly)
         {
-        // TODO : numInfo = (NumberFormatInfo) numInfo.Clone ();
+        if(_numInfo.Get() != nullptr)
+          _numInfo.Set( new NumberFormatInfo((*_numInfo.Get())) );
         }
 
       // TODO : textInfo = CreateTextInfo(read_only);
 
       _englishname = L"Invariant Language (Invariant Country)";
       _nativename = _englishname;
-      //iso3lang="IVL";
-      //iso2lang="iv";
-      //win3lang="IVL";
+      _iso3lang = L"IVL";
+      _iso2lang = L"iv";
+      _win3lang = L"IVL";
       // TODO : default_calendar_type = 1 << CalendarTypeBits;
       }
 
-    bool CultureInfo::construct_internal_locale_from_lcid()
+    bool CultureInfo::ConstructInternalLocaleFromLCID()
       {
-      const CultureInfoEntry* ci = culture_info_entry_from_lcid(_cultureID);
+      const CultureInfoEntry* ci = CultureInfoEntryFromLCID(_cultureID);
       if(ci == nullptr)
         return false;
       return construct_culture(ci);
@@ -108,9 +123,9 @@ namespace System
       _name = MakeLocaleString(ci->name);
       _englishname = MakeLocaleString(ci->englishname);
       _nativename = MakeLocaleString(ci->nativename);
-      //MONO_OBJECT_SETREF (this, win3lang, mono_string_new (domain, idx2string (ci->win3lang)));
-      //MONO_OBJECT_SETREF (this, iso3lang, mono_string_new (domain, idx2string (ci->iso3lang)));
-      //MONO_OBJECT_SETREF (this, iso2lang, mono_string_new (domain, idx2string (ci->iso2lang)));
+      _win3lang = MakeLocaleString(ci->win3lang);
+      _iso3lang = MakeLocaleString(ci->iso3lang);
+      _iso2lang = MakeLocaleString(ci->iso2lang);
 
       //// It's null for neutral cultures
       //if (ci->territory > 0)
@@ -155,39 +170,39 @@ namespace System
     NumberFormatInfo* CultureInfo::NumberFormat()
       {
       //if(!_constructed)
-        //TODO : Construct ();
-          // TODO : CheckNeutral ();
-            //if(_numInfo.Get() == nullptr)
-              //{
-                //lock (this)
-                  //{
-                    if(_numInfo.Get() == nullptr)
-                      {
-                      _numInfo.Set(new NumberFormatInfo(_number_index, _isReadOnly));
-                      }
-                    //}
-                    //}
+      //TODO : Construct ();
+      // TODO : CheckNeutral ();
+      //if(_numInfo.Get() == nullptr)
+      //{
+      //lock (this)
+      //{
+      if(_numInfo.Get() == nullptr)
+        {
+        _numInfo.Set(new NumberFormatInfo(_number_index, _isReadOnly));
+        }
+      //}
+      //}
 
-                    return _numInfo.Get();
+      return _numInfo.Get();
       }
 
     CompareInfo& CultureInfo::CompareInfo()
       {
-        //if(_compareInfo==null) 
-          //{
-          //if (!constructed)
-            //Construct ();
+      //if(_compareInfo==null) 
+      //{
+      //if (!constructed)
+      //Construct ();
 
-          //lock (this) 
-            //{
-            if(_compareInfo.Get() == nullptr) 
-              {
-              _compareInfo.Set(new Globalization::CompareInfo(*this));
-              }
-            //}
-          //}
+      //lock (this) 
+      //{
+      if(_compareInfo.Get() == nullptr) 
+        {
+        _compareInfo.Set(new Globalization::CompareInfo(*this));
+        }
+      //}
+      //}
 
-        return (*_compareInfo.Get());
+      return (*_compareInfo.Get());
       }
 
     TextInfo& CultureInfo::TextInfo()

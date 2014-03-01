@@ -19,14 +19,18 @@ namespace System
     {
     class CRAPOCOREDLL_API CultureInfo : public IFormatProvider
       {
-      enum
+      enum : int32
         {
+        NumOptionalCalendars = 5,
+        GregorianTypeMask = 167772215,
+        CalendarTypeBits = 24,
         InvariantCultureId = 0x7F
         };
       private:
         bool               _isReadOnly;
         uint32             _cultureID;
         uint32             _parent_lcid;
+        uint32             _specific_lcid;
         int                _datetime_index;
         int                _number_index;
         int                _default_calendar_type;
@@ -36,6 +40,10 @@ namespace System
         String             _name;
         String             _englishname;
         String             _nativename;
+        String             _iso3lang;
+        String             _iso2lang;
+        String             _icu_name;
+        String             _win3lang;
         GCCompareInfo      _compareInfo;
         void*              _textinfo_data;
         bool               _constructed;
@@ -53,7 +61,7 @@ namespace System
         CultureInfo(uint32 culture, bool useUserOverride, bool readOnly);
         void Init();
         void ConstructInvariant();
-        bool construct_internal_locale_from_lcid();
+        bool ConstructInternalLocaleFromLCID();
         bool construct_culture(const CultureInfoEntry* ci);
         Globalization::TextInfo* CreateTextInfo();
         void construct_number_format();
