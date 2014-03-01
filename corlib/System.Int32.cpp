@@ -30,9 +30,13 @@ namespace System
     {
     return NumberFormatter::NumberToString(_value, nullptr);
     }
-  String Int32::ToString(String& format)
+  String Int32::ToString(String format)
     {
     return NumberFormatter::NumberToString(&format, _value, nullptr);
+    }
+  String Int32::ToString(String format, IFormatProvider* provider)
+    {
+    return NumberFormatter::NumberToString(&format, _value, provider);
     }
   uint32 Int32::GetHashCode()
     {

@@ -48,7 +48,7 @@ namespace System
 		    String   _positiveSign;
         int32    _digitSubstitution;
       public:
-        NumberFormatInfo();
+        NumberFormatInfo(bool read_only = false);
         NumberFormatInfo(const NumberFormatInfo&);
         virtual ~NumberFormatInfo();
         NumberFormatInfo& operator=(const NumberFormatInfo&);
@@ -72,6 +72,7 @@ namespace System
         void CurrencySymbol(String);
 
         static NumberFormatInfo* CurrentInfo();
+        static NumberFormatInfo* InvariantInfo();
         
         bool IsReadOnly();
 

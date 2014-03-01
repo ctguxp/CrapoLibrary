@@ -9,6 +9,9 @@
 namespace System
   {
 
+  NumberFormatter* NumberFormatter::_threadNumberFormatter = nullptr;
+  GCNumberFormatter NumberFormatter::_userFormatProvider;
+
   // ------------------------------------------------------------------------
   /// Default constructor
   NumberFormatter::NumberFormatter()
@@ -166,7 +169,7 @@ namespace System
     if(value >= HundredMillion || value <= -HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     String res = inst->FastIntegerToString(value, fp);
     return res;
     }
@@ -177,8 +180,7 @@ namespace System
     if(value >= HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     String res = inst->FastIntegerToString((int)value, fp);
     return res;
     }
@@ -188,8 +190,7 @@ namespace System
     if(value >= HundredMillion || value <= -HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     String res = inst->FastIntegerToString((int32)value, fp);
     return res;
     }
@@ -199,16 +200,14 @@ namespace System
     if(value >= HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     String res = inst->FastIntegerToString((int32)value, fp);
     return res;
     }
 
   String NumberFormatter::NumberToString(float value, IFormatProvider* fp)
     {
-    // TODO :GCNumberFormatter inst(GetInstance(fp));
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(nullptr, value, SingleDefPrecision);
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     String res;
@@ -226,8 +225,7 @@ namespace System
 
   String NumberFormatter::NumberToString(double value, IFormatProvider* fp)
     {
-    // TODO :GCNumberFormatter inst(GetInstance(fp));
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     inst->Init(nullptr, value, DoubleDefPrecision);
     String res;
@@ -247,7 +245,7 @@ namespace System
   /// Public Static NumberToString function (Based on Mono)
   String NumberFormatter::NumberToString(String* format, int32 value, IFormatProvider* fp)
     {
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init (format, value, UInt32DefPrecision);
     String res = inst->IntegerToString(format, fp);
     return res;
@@ -256,8 +254,7 @@ namespace System
 
   String NumberFormatter::NumberToString(String* format, uint32 value, IFormatProvider* fp)
     {
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(format, value, Int32DefPrecision);
     String res = inst->IntegerToString(format, fp);
     return res;
@@ -265,8 +262,7 @@ namespace System
 
   String NumberFormatter::NumberToString(String* format, int64 value, IFormatProvider* fp)
     {
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(format, value);
     String res = inst->IntegerToString(format, fp);
     return res;
@@ -274,8 +270,7 @@ namespace System
 
   String NumberFormatter::NumberToString(String* format, uint64 value, IFormatProvider* fp)
     {
-    // TODO : NumberFormatter inst = GetInstance (fp);
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(format, value);
     String res = inst->IntegerToString(format, fp);
     return res;
@@ -283,8 +278,7 @@ namespace System
 
   String NumberFormatter::NumberToString(String* format, float value, IFormatProvider* fp)
     {
-    // TODO :GCNumberFormatter inst(GetInstance(fp));
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(format, value, SingleDefPrecision);
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     // TODO : NumberFormatInfo nfi = inst.GetNumberFormatInstance (fp);
@@ -305,8 +299,7 @@ namespace System
 
   String NumberFormatter::NumberToString(String* format, double value, IFormatProvider* fp)
     {
-    // TODO :GCNumberFormatter inst(GetInstance(fp));
-    GCNumberFormatter inst(GetInstance());
+    GCNumberFormatter inst(GetInstance(fp));
     inst->Init(format, value, DoubleDefPrecision);
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     String res;
@@ -326,8 +319,25 @@ namespace System
 
   // ------------------------------------------------------------------------
   /// Private Static NumberToString function (Based on Mono)
-  NumberFormatter* NumberFormatter::GetInstance()
+  NumberFormatter* NumberFormatter::GetInstance(IFormatProvider* fp)
     {
+    if(fp != nullptr) 
+      {
+      if(_userFormatProvider.Get() == nullptr)
+        {
+        // TODO : Interlocked.CompareExchange(ref userFormatProvider, new NumberFormatter (null), null);
+        _userFormatProvider.Set(new NumberFormatter());
+        }
+
+      return _userFormatProvider.Get();
+      }
+
+    /*NumberFormatter* res = _threadNumberFormatter;
+    threadNumberFormatter = nullptr;
+    if(res == nullptr)
+      return new NumberFormatter (Thread.CurrentThread);
+    res->CurrentCulture(Thread::CurrentThread().CurrentCulture());
+    return res;*/
     return new NumberFormatter();
     }
   // ------------------------------------------------------------------------

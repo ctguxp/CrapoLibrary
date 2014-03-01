@@ -10,16 +10,18 @@
 
 typedef int (* BinarySearchComparer) (const void *key, const void *member);
 
-typedef struct {
+struct TextInfoEntry
+  {
   const int ansi;
   const int ebcdic;
   const int mac;
   const int oem;
   const uint8 is_right_to_left;
   const char list_sep;
-  } TextInfoEntry;
+  };
 
-typedef struct {
+struct CultureInfoEntry
+  {
   const int16 lcid;
   const int16 parent_lcid;
   const int16 calendar_type;
@@ -37,7 +39,7 @@ typedef struct {
   const int16 number_format_index;
 
   const TextInfoEntry text_info;
-  } CultureInfoEntry;
+  };
 
 static const CultureInfoEntry culture_entries [] = {
   {0x0001, 0x007F, 768, -1, 37103, 37106, 37113, 37128, 37132, 37103, 0, {0, 0, 37136, 0}, 0, 0, { 1256, 20420, 10004, 720, 1, ';' }},
@@ -325,7 +327,7 @@ static const CultureInfoEntry culture_entries [] = {
   {0x7C68, 0x0068, 257, -1, 51483, 51491, 41658, 41664, 41668, 41655, 0, {0, 0, 0, 0}, 282, 282, { 1252, 37, 10000, 437, 0, ',' }}
   };
 
-const CultureInfoEntry* culture_info_entry_from_lcid(int);
+const CultureInfoEntry* CultureInfoEntryFromLCID(int);
 
 #pragma warning (default:4510)
 #pragma warning (default:4512)
