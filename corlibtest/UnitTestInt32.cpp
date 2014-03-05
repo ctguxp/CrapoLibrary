@@ -29,8 +29,14 @@ namespace corlibtest
       f1 = L"C";
       Assert::AreEqual(L"$437.00", myInt.ToString(f1));
 
-      Globalization::CultureInfo cultInt;
-      Assert::AreEqual(L"$437.00", myInt.ToString(L"C", &cultInt));
+      Globalization::CultureInfo cultInt;  // Invariant Culture
+      Assert::AreEqual(L"¤437.00", myInt.ToString(L"C", &cultInt));
+
+      Globalization::CultureInfo cultIntE(2057); // English - United Kingdom
+      Assert::AreEqual(L"£437.00", myInt.ToString(L"C", &cultIntE));
+
+      Globalization::CultureInfo cultIntES("en-GB");
+      Assert::AreEqual(L"£437.00", myInt.ToString(L"C", &cultIntES));
 
       myInt = 123456789;
       f1 = L"N1";

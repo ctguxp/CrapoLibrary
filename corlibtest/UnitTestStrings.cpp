@@ -9,6 +9,10 @@ namespace corlibtest
   TEST_CLASS(UnitTestStrings)
     {
     public:
+      BEGIN_TEST_CLASS_ATTRIBUTE()
+        TEST_CLASS_ATTRIBUTE(L"Namespace", L"System")
+        END_TEST_CLASS_ATTRIBUTE()
+
       TEST_METHOD(DefaultStringConstructor)
         {
         using namespace System;
