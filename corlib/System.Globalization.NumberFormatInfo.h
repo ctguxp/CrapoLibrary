@@ -12,7 +12,7 @@ namespace System
   namespace Globalization
     {
     class CultureInfo;
-    class NumberFormatInfo : public IFormatProvider
+    class NumberFormatInfo : public Object, public IFormatProvider
       {
       private:
         bool     _isReadOnly;
@@ -52,7 +52,7 @@ namespace System
         NumberFormatInfo(const NumberFormatInfo&);
         virtual ~NumberFormatInfo();
         NumberFormatInfo& operator=(const NumberFormatInfo&);
-        virtual Object GetFormat() override;
+        virtual Object* GetFormat(Object*) override;
         static NumberFormatInfo* GetInstance(IFormatProvider*);
         
         // Properties

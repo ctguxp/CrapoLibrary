@@ -17,7 +17,7 @@ namespace System
     }
   namespace Globalization
     {
-    class CRAPOCOREDLL_API CultureInfo : public IFormatProvider
+    class CRAPOCOREDLL_API CultureInfo : public Object, public IFormatProvider
       {
       enum : int32
         {
@@ -49,9 +49,11 @@ namespace System
         bool               _constructed;
       public:
         CultureInfo(uint32 = InvariantCultureId, bool useUserOverride = true);
+        CultureInfo(String name, bool useUserOverride = true);
         virtual ~CultureInfo();
-        virtual Object GetFormat() override;
+        virtual Object* GetFormat(Object*) override;
         virtual NumberFormatInfo* NumberFormat();
+        bool IsReadOnly();
         static CultureInfo& CurrentCulture();
         virtual String Name();
         virtual int LCID();
@@ -59,10 +61,12 @@ namespace System
         virtual TextInfo& TextInfo();
       private:
         CultureInfo(uint32 culture, bool useUserOverride, bool readOnly);
-        void Init();
+        CultureInfo(String name, bool useUserOverride, bool readOnly);
+        void Ctor(uint32 culture, bool useUserOverride, bool readOnly);
+        void Ctor(String name, bool useUserOverride, bool readOnly);
         void ConstructInvariant();
         bool ConstructInternalLocaleFromLCID();
-        bool construct_culture(const CultureInfoEntry* ci);
+        bool ConstructCulture(const CultureInfoEntry* ci);
         Globalization::TextInfo* CreateTextInfo();
         void construct_number_format();
 

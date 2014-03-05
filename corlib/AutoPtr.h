@@ -1,9 +1,10 @@
 // Perch Lake Computer System
 
 #pragma once
+#include "System.Ownership.h"
 
 template<class T>
-class AutoPtr
+class AutoPtr : public System::Ownership
   {
   public:
     AutoPtr(T* ptr = nullptr, bool isMutable = true)
@@ -13,7 +14,8 @@ class AutoPtr
       }
     ~AutoPtr()
       {
-      delete _ptr;
+      if(IsOwner())
+        delete _ptr;
       }
     T* operator->() { return _ptr; }
     T* Get() { return _ptr; }

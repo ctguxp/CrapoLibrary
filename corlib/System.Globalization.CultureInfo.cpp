@@ -4,90 +4,100 @@
 #include "System.Globalization.CultureInfo.h"
 #include "System.Exception.h"
 #include "System.Threading.Thread.h"
-#include "LocaleStrings.h"
+#include "System.Text.UTF8Encoding.h"
 
 namespace System
   {
   namespace Globalization
     {
     CultureInfo::CultureInfo(uint32 culture, bool useUserOverride)
-      :_isReadOnly(true)
-      ,_cultureID(culture)
-      ,_parent_lcid(0)
-      ,_specific_lcid(0)
-      ,_datetime_index(0)
-      ,_number_index(0)
-      ,_default_calendar_type(0)
-      ,_useUserOverride(useUserOverride)
-      ,_numInfo()
-      ,_textInfo()
-      ,_name()
-      ,_englishname()
-      ,_nativename()
-      ,_iso3lang()
-      ,_iso2lang()
-      ,_icu_name()
-      ,_win3lang()
-      ,_compareInfo()
-      ,_textinfo_data(nullptr)
-      ,_constructed(true)
       {
-      if(_cultureID == InvariantCultureId) 
-        {
-        // Short circuit the invariant culture
-        ConstructInvariant();
-        return;
-        }
+      Ctor(culture, useUserOverride, false);
+      }
 
-      if(!ConstructInternalLocaleFromLCID()) 
-        {
-        throw ArgumentException(L"culture");
-        // TODO : throw new CultureNotFoundException ("culture",  String.Format ("Culture ID {0} (0x{0:X4}) is not a " + supported culture.", culture));
-        }
+    CultureInfo::CultureInfo(String name, bool useUserOverride)
+      {
+      Ctor(name, useUserOverride, false);
       }
 
     CultureInfo::CultureInfo(uint32 culture, bool useUserOverride, bool readOnly)
-      :_isReadOnly(readOnly)
-      ,_cultureID(culture)
-      ,_parent_lcid(0)
-      ,_specific_lcid(0)
-      ,_datetime_index(0)
-      ,_number_index(0)
-      ,_default_calendar_type(0)
-      ,_useUserOverride(useUserOverride)
-      ,_numInfo()
-      ,_textInfo()
-      ,_name()
-      ,_englishname()
-      ,_nativename()
-      ,_iso3lang()
-      ,_iso2lang()
-      ,_icu_name()
-      ,_win3lang()
-      ,_compareInfo()
-      ,_textinfo_data(nullptr)
-      ,_constructed(true)
       {
-      if(_cultureID == InvariantCultureId) 
-        {
-        // Short circuit the invariant culture
-        ConstructInvariant();
-        return;
-        }
+      Ctor(culture, useUserOverride, readOnly);
+      }
 
-      if(!ConstructInternalLocaleFromLCID()) 
-        {
-        throw ArgumentException(L"culture");
-        // TODO : throw new CultureNotFoundException ("culture",  String.Format ("Culture ID {0} (0x{0:X4}) is not a " + supported culture.", culture));
-        }
+    CultureInfo::CultureInfo(String name, bool useUserOverride, bool readOnly)
+      {
+      Ctor(name, useUserOverride, readOnly);
       }
 
     CultureInfo::~CultureInfo()
       {
       }
 
+    void CultureInfo::Ctor(String name, bool useUserOverride, bool readOnly)
+      {
+      _isReadOnly = readOnly;
+      _cultureID = InvariantCultureId;
+      _parent_lcid = 0;
+      _specific_lcid = 0;
+      _datetime_index = 0;
+      _number_index = 0;
+      _default_calendar_type = 0;
+      _useUserOverride = useUserOverride;
+      _textinfo_data = nullptr;
+      _constructed = true;
+
+      if(name.Length() == 0)
+        {
+        // Short circuit the invariant culture
+        ConstructInvariant();
+        return;
+        }
+
+      Text::UTF8Encoding enc;
+      String lw = name.ToLowerInvariant();
+      ByteArray b = enc.GetBytes(lw);
+      const CultureInfoNameEntry*  cine = ConstructFromName((const char*)b.ToConstPtr());
+      if(cine == nullptr)
+        {
+        throw SystemException(L"CreateNotFoundException");
+        // TODO: throw CreateNotFoundException(name);
+        }
+      if(!ConstructCulture(&culture_entries[cine->culture_entry_index]))
+        {
+        throw ArgumentException(L"culture");
+        }
+      }
+
+    void CultureInfo::Ctor(uint32 culture, bool useUserOverride, bool readOnly)
+      {
+      _isReadOnly = readOnly;
+      _cultureID = culture;
+      _parent_lcid = 0;
+      _specific_lcid = 0;
+      _datetime_index = 0;
+      _number_index = 0;
+      _default_calendar_type = 0;
+      _useUserOverride = useUserOverride;
+      _textinfo_data = nullptr;
+      _constructed = true;
+
+      if(_cultureID == InvariantCultureId) 
+        {
+        // Short circuit the invariant culture
+        ConstructInvariant();
+        return;
+        }
+
+      if(!ConstructInternalLocaleFromLCID()) 
+        {
+        throw ArgumentException(L"culture");
+        // TODO : throw new CultureNotFoundException ("culture",  String.Format ("Culture ID {0} (0x{0:X4}) is not a " + supported culture.", culture));
+        }
+      }
+
     //-------------------------------------------------------------------------
-#pragma warning (disable:4296)
+    //#pragma warning (disable:4296)
     void CultureInfo::ConstructInvariant()
       {
       // NumberFormatInfo defaults to the invariant data
@@ -114,10 +124,10 @@ namespace System
       const CultureInfoEntry* ci = CultureInfoEntryFromLCID(_cultureID);
       if(ci == nullptr)
         return false;
-      return construct_culture(ci);
+      return ConstructCulture(ci);
       }
 
-    bool CultureInfo::construct_culture(const CultureInfoEntry *ci)
+    bool CultureInfo::ConstructCulture(const CultureInfoEntry *ci)
       {
       _cultureID = ci->lcid;
       _name = MakeLocaleString(ci->name);
@@ -144,12 +154,16 @@ namespace System
       {
       return new Globalization::TextInfo(this, _cultureID, _textinfo_data, _isReadOnly);
       }
-#pragma warning (default:4296)
+    //#pragma warning (default:4296)
     //-------------------------------------------------------------------------
 
     CultureInfo& CultureInfo::CurrentCulture()
       {
       return Threading::Thread::CurrentThread().CurrentCulture();
+      }
+    bool CultureInfo::IsReadOnly()
+      {
+      return _isReadOnly;
       }
     String CultureInfo::Name()
       {
@@ -159,9 +173,17 @@ namespace System
       {
       return _cultureID;
       }
-    Object CultureInfo::GetFormat()
+    Object* CultureInfo::GetFormat(Object* type)
       {
-      throw SystemException(L"Not Implemented");
+      Object* format = nullptr;
+      NumberFormatInfo nfi;
+
+      if(Object::IsInstance(*type, nfi))
+        format = (Object*)NumberFormat();
+      // TODO: else if ( formatType == typeof(DateTimeFormatInfo) )
+      //format = DateTimeFormat;
+
+      return format;
       }
     CultureInfo* CultureInfo::ConstructCurrentCulture()
       {

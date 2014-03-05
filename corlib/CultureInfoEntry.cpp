@@ -33,9 +33,21 @@ void* BinarySearch(const void *key, const void *array, size_t array_length
 int CultureLcidLocator(const void *a, const void *b)
 {
 	const int *lcid = (const int*)a;
-	const CultureInfoEntry *bb = (const CultureInfoEntry *)b;
+	const CultureInfoEntry *bb = (const CultureInfoEntry*)b;
 
 	return *lcid - bb->lcid;
+}
+
+int CultureNameLocator(const void *a, const void *b)
+{
+	const char* aa = (const char*)a;
+	const CultureInfoNameEntry* bb = (const CultureInfoNameEntry*)b;
+	int ret;
+	
+  const char* cc = idx2string(bb->name);
+	ret = strcmp(aa, cc);
+
+	return ret;
 }
 
 const CultureInfoEntry* CultureInfoEntryFromLCID(int lcid)
@@ -45,4 +57,14 @@ const CultureInfoEntry* CultureInfoEntryFromLCID(int lcid)
 	ci = (const CultureInfoEntry *)BinarySearch(&lcid, culture_entries, NUM_CULTURE_ENTRIES, sizeof (CultureInfoEntry), CultureLcidLocator);
 
 	return ci;
+}
+
+const CultureInfoNameEntry* ConstructFromName(const char* name)
+{
+	const CultureInfoNameEntry* ci;
+	ci = (const CultureInfoNameEntry*)BinarySearch(name, culture_name_entries, NUM_CULTURE_ENTRIES, sizeof(CultureInfoNameEntry), CultureNameLocator);
+  
+  return ci;
+
+	///return construct_culture (this, &culture_entries [ne->culture_entry_index]);
 }

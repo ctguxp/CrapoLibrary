@@ -10,7 +10,7 @@ namespace System
   Ownership::~Ownership()
     {
     }
-  void Ownership::Assert()
+  void Ownership::AssertOwnership()
     {
     _isOwner = true;
     }
@@ -18,7 +18,7 @@ namespace System
     {
     return _isOwner;
     }
-  void Ownership::Rescind()
+  void Ownership::RescindOwnership()
     {
     _isOwner = false;
     }

@@ -90,6 +90,7 @@ namespace System
       CharArray ToCharArray();
       CharArray ToCharArray(uint32, uint32);
       virtual String ToString() override;
+      String ToLowerInvariant();
       String Trim();
       String TrimStart(CharArray&);
       String TrimEnd();

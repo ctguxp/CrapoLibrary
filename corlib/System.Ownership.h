@@ -12,8 +12,8 @@ class CRAPOCOREDLL_API Ownership
     Ownership();
   public:
     ~Ownership();
-    void Assert();
+    void AssertOwnership();
     bool IsOwner();
-    void Rescind();
+    void RescindOwnership();
   };
 }

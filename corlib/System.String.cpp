@@ -330,7 +330,7 @@ namespace System
     {
     ObjectArray temp(1);
     temp.Add(0, *obj);
-    temp.Rescind();	
+    temp.RescindOwnership();	
     Text::GCStringBuilder sb(FormatHelper(nullptr, format, temp));
     return sb->ToString();
     }
@@ -344,7 +344,7 @@ namespace System
     ObjectArray temp(2);
     temp.Add(0, *obj1);
     temp.Add(1, *obj2);
-    temp.Rescind();	
+    temp.RescindOwnership();	
     Text::GCStringBuilder sb(FormatHelper(nullptr, format, temp));
     return sb->ToString();
     }
@@ -356,7 +356,7 @@ namespace System
     temp.Add(0, *obj1);
     temp.Add(1, *obj2);
     temp.Add(2, *obj3);
-    temp.Rescind();	
+    temp.RescindOwnership();	
     Text::GCStringBuilder sb(FormatHelper(nullptr, format, temp));
     return sb->ToString();
     }
@@ -1135,6 +1135,30 @@ namespace System
     }
   // ------------------------------------------------------------------------
 
+  String String::ToLowerInvariant()
+    {
+    if(_length == 0)
+      return Empty();
+
+    String tmp;
+    tmp.InternalSetLength(_length + 1);
+    wchar_t* source = _start_char;
+    const wchar_t* dest = (cstring)tmp;
+      {
+      wchar_t* destPtr = (string)dest;
+      wchar_t* sourcePtr = (wchar_t*)source;
+
+      for(int n = 0; n < (int)_length; n++)
+        {
+        *destPtr = Char::ToLowerInvariant(*sourcePtr);
+        sourcePtr++;
+        destPtr++;
+        }
+      *destPtr = L'\0';
+      }
+    return tmp;
+    }
+
 
 
 
@@ -1671,11 +1695,11 @@ namespace System
     }
 
   void String::CharCopyReverse(String& target, int targetIndex, String& source, int sourceIndex, int count)
-		{
-			cstring dest = (cstring)target;
-      cstring src = (cstring)source;
-		 CharCopyReverse((string)dest + targetIndex, (string)src + sourceIndex, count);
-		}
+    {
+    cstring dest = (cstring)target;
+    cstring src = (cstring)source;
+    CharCopyReverse((string)dest + targetIndex, (string)src + sourceIndex, count);
+    }
 
   void String::CharCopyReverse(wchar_t *dest, wchar_t *src, int count)
     {

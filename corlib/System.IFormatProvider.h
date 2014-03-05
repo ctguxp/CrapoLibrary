@@ -7,6 +7,7 @@ namespace System
   {
   class IFormatProvider
     {
-    virtual Object GetFormat() = 0;
+    public:
+    virtual Object* GetFormat(Object*) = 0;
     };
   }

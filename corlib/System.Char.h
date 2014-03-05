@@ -27,6 +27,7 @@ namespace System
       static bool IsDigit(wchar_t c);
       static bool IsLetter(wchar_t c);
       static wchar_t ToLower(wchar_t c);
+      static wchar_t ToLowerInvariant(wchar_t c);
       static wchar_t ToUpperInvariant(wchar_t c);
       virtual String ToString() override;
       virtual uint32 GetHashCode() override;

@@ -201,7 +201,7 @@ namespace System
     NumberFormatInfo::~NumberFormatInfo()
       {
       }
-    Object NumberFormatInfo::GetFormat()
+    Object* NumberFormatInfo::GetFormat(Object*)
       {
       throw SystemException(L"Not Implemented");
       }
@@ -658,6 +658,9 @@ namespace System
       {
       if(formatProvider != nullptr)
         {
+        NumberFormatInfo type;
+        NumberFormatInfo* nfi = (NumberFormatInfo*)formatProvider->GetFormat(&type);
+        return nfi;
         /* TODO: NumberFormatInfo nfi;
         nfi = (NumberFormatInfo)formatProvider->GetFormat(typeof(NumberFormatInfo));
         if (nfi != null)

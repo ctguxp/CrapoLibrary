@@ -73,10 +73,10 @@ namespace System
     }
 
   bool Char::IsDigit(wchar_t c)
-		{
+    {
     using namespace Globalization;
-	  return(CategoryData_v4[c] == (byte)UnicodeCategory::DecimalDigitNumber);
-		}
+    return(CategoryData_v4[c] == (byte)UnicodeCategory::DecimalDigitNumber);
+    }
 
   bool Char::IsLetter(wchar_t c)
     {
@@ -111,4 +111,14 @@ namespace System
     if(index < 0 || index >= (int)s.Length()) 
       throw ArgumentOutOfRangeException(Locale::GetText(L"The value of index is less than zero, or greater than or equal to the length of s."));
     }
+
+  wchar_t Char::ToLowerInvariant(wchar_t c)
+    {
+    if (c <= ((wchar_t)0x24cf))
+      return (wchar_t)ToLowerDataLow[c];
+    if (c >= ((wchar_t)0xff21))
+      return (wchar_t)ToLowerDataHigh[c - 0xff21];
+    return c;
+    }
+
   }

@@ -9,12 +9,12 @@
 namespace System
   {
 
-  NumberFormatter* NumberFormatter::_threadNumberFormatter = nullptr;
+  GCNumberFormatter NumberFormatter::_threadNumberFormatter;
   GCNumberFormatter NumberFormatter::_userFormatProvider;
 
   // ------------------------------------------------------------------------
   /// Default constructor
-  NumberFormatter::NumberFormatter()
+  NumberFormatter::NumberFormatter(Threading::Thread* current)
     :_ind(0)
     ,_cbuf()
     ,_positive(false)
@@ -34,6 +34,8 @@ namespace System
     ,_val4(0)
     ,_nfi(nullptr)
     {
+    if(current != nullptr)
+      CurrentCulture(current->CurrentCulture());
     }
   // ------------------------------------------------------------------------
 
@@ -43,6 +45,14 @@ namespace System
     {
     }
   // ------------------------------------------------------------------------
+
+  void NumberFormatter::CurrentCulture(Globalization::CultureInfo& value)
+    {
+    if(value.IsReadOnly())
+      _nfi = value.NumberFormat();
+    else
+      _nfi = nullptr;
+    }
 
   String NumberFormatter::FormatNumber(int precision, Globalization::NumberFormatInfo* nfi)
     {
@@ -169,8 +179,9 @@ namespace System
     if(value >= HundredMillion || value <= -HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     String res = inst->FastIntegerToString(value, fp);
+    inst->Release(inst);
     return res;
     }
   // ------------------------------------------------------------------------
@@ -180,8 +191,9 @@ namespace System
     if(value >= HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     String res = inst->FastIntegerToString((int)value, fp);
+    inst->Release(inst);
     return res;
     }
 
@@ -190,8 +202,9 @@ namespace System
     if(value >= HundredMillion || value <= -HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     String res = inst->FastIntegerToString((int32)value, fp);
+    inst->Release(inst);
     return res;
     }
 
@@ -200,14 +213,15 @@ namespace System
     if(value >= HundredMillion)
       return NumberToString(nullptr, value, fp);
 
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     String res = inst->FastIntegerToString((int32)value, fp);
+    inst->Release(inst);
     return res;
     }
 
   String NumberFormatter::NumberToString(float value, IFormatProvider* fp)
     {
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     inst->Init(nullptr, value, SingleDefPrecision);
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     String res;
@@ -220,12 +234,13 @@ namespace System
         res = nfi->NegativeInfinitySymbol();
     else
       res = inst->FormatGeneral(-1, nfi);
+    inst->Release(inst);
     return res;
     }
 
   String NumberFormatter::NumberToString(double value, IFormatProvider* fp)
     {
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     inst->Init(nullptr, value, DoubleDefPrecision);
     String res;
@@ -238,6 +253,7 @@ namespace System
         res = nfi->NegativeInfinitySymbol();
     else
       res = inst->FormatGeneral(-1, nfi);
+    inst->Release(inst);
     return res;
     }
 
@@ -245,43 +261,46 @@ namespace System
   /// Public Static NumberToString function (Based on Mono)
   String NumberFormatter::NumberToString(String* format, int32 value, IFormatProvider* fp)
     {
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     inst->Init (format, value, UInt32DefPrecision);
     String res = inst->IntegerToString(format, fp);
+    inst->Release(inst);
     return res;
     }
   // ------------------------------------------------------------------------
 
   String NumberFormatter::NumberToString(String* format, uint32 value, IFormatProvider* fp)
     {
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     inst->Init(format, value, Int32DefPrecision);
     String res = inst->IntegerToString(format, fp);
+    inst->Release(inst);
     return res;
     }
 
   String NumberFormatter::NumberToString(String* format, int64 value, IFormatProvider* fp)
     {
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     inst->Init(format, value);
     String res = inst->IntegerToString(format, fp);
+    inst->Release(inst);
     return res;
     }
 
   String NumberFormatter::NumberToString(String* format, uint64 value, IFormatProvider* fp)
     {
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     inst->Init(format, value);
     String res = inst->IntegerToString(format, fp);
+    inst->Release(inst);
     return res;
     }
 
   String NumberFormatter::NumberToString(String* format, float value, IFormatProvider* fp)
     {
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     inst->Init(format, value, SingleDefPrecision);
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
-    // TODO : NumberFormatInfo nfi = inst.GetNumberFormatInstance (fp);
     String res;
     if(inst->_NaN)
       res = nfi->NaNSymbol();
@@ -294,12 +313,13 @@ namespace System
     // res = inst->FormatRoundtrip(value, nfi);
     else
       res = inst->NumberToString(format, nfi);
+    inst->Release(inst);
     return res;
     }
 
   String NumberFormatter::NumberToString(String* format, double value, IFormatProvider* fp)
     {
-    GCNumberFormatter inst(GetInstance(fp));
+    NumberFormatter* inst(GetInstance(fp));
     inst->Init(format, value, DoubleDefPrecision);
     Globalization::NumberFormatInfo* nfi = inst->GetNumberFormatInstance(fp);
     String res;
@@ -314,31 +334,30 @@ namespace System
     //res = inst.FormatRoundtrip (value, nfi);
     else
       res = inst->NumberToString(format, nfi);
+    inst->Release(inst);
     return res;
     }
 
   // ------------------------------------------------------------------------
-  /// Private Static NumberToString function (Based on Mono)
+  /// Private Static GetInstance function (Based on Mono)
   NumberFormatter* NumberFormatter::GetInstance(IFormatProvider* fp)
     {
+    using namespace Threading;
     if(fp != nullptr) 
       {
       if(_userFormatProvider.Get() == nullptr)
         {
         // TODO : Interlocked.CompareExchange(ref userFormatProvider, new NumberFormatter (null), null);
-        _userFormatProvider.Set(new NumberFormatter());
+        _userFormatProvider.Set(new NumberFormatter(nullptr));
         }
-
       return _userFormatProvider.Get();
       }
 
-    /*NumberFormatter* res = _threadNumberFormatter;
-    threadNumberFormatter = nullptr;
+    NumberFormatter* res = _threadNumberFormatter.Release();
     if(res == nullptr)
-      return new NumberFormatter (Thread.CurrentThread);
+      return new NumberFormatter(&Thread::CurrentThread());
     res->CurrentCulture(Thread::CurrentThread().CurrentCulture());
-    return res;*/
-    return new NumberFormatter();
+    return res;
     }
   // ------------------------------------------------------------------------
 
@@ -2103,6 +2122,12 @@ namespace System
       sb.Insert(0, nfi->NegativeSign());
 
     return sb.ToString();
+    }
+
+  void NumberFormatter::Release(NumberFormatter* value)
+    {
+    if(this != _userFormatProvider.Get())
+      _threadNumberFormatter.Set(value);
     }
 
   } // namespace System

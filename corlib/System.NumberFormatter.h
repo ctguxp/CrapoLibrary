@@ -7,6 +7,7 @@
 #include "System.IFormatProvider.h"
 #include "System.Globalization.NumberFormatInfo.h"
 #include "System.Text.StringBuilder.h"
+#include "System.Threading.Thread.h"
 
 namespace System
   {
@@ -74,6 +75,7 @@ namespace System
       static const int64 SeventeenDigitsThreshold = 10000000000000000;
 
     public:
+      NumberFormatter(Threading::Thread*);
       ~NumberFormatter();
       static String NumberToString(int32, IFormatProvider*);
       static String NumberToString(uint32, IFormatProvider*);
@@ -92,8 +94,8 @@ namespace System
       String FormatNumber(int, Globalization::NumberFormatInfo*);
       String FormatCustom(String* format, Globalization::NumberFormatInfo* nfi);
       String FormatPercent(int precision, Globalization::NumberFormatInfo* nfi);
+      void CurrentCulture(Globalization::CultureInfo&);
     private:
-      NumberFormatter();
       void Append(cstring s);
       void Append(String);
       void Append(wchar_t c);
@@ -139,6 +141,7 @@ namespace System
       void RemoveTrailingZeros();
       void ResetCharBuf(uint32);
       void Resize(uint32);
+      void Release(NumberFormatter*);
       bool RoundBits(int shift);
       bool RoundDecimal(int decimals);
       void RoundPos(int pos);
@@ -170,7 +173,7 @@ namespace System
       uint32 _val3;
       uint32 _val4;
       Globalization::NumberFormatInfo* _nfi;
-      static NumberFormatter* _threadNumberFormatter;
+      static GCNumberFormatter _threadNumberFormatter;
       static GCNumberFormatter _userFormatProvider;
     };
   }
