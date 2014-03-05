@@ -381,6 +381,9 @@
     <ClInclude Include="System.Threading.CriticalSection.h">
       <Filter>Header Files\System.Threading</Filter>
     </ClInclude>
+    <ClInclude Include="System.TimeSpan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -610,6 +613,9 @@
     </ClCompile>
     <ClCompile Include="System.Threading.Lock.cpp">
       <Filter>Source Files\System.Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="System.TimeSpan.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

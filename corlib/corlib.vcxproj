@@ -137,6 +137,7 @@
     <ClInclude Include="System.Threading.CriticalSection.h" />
     <ClInclude Include="System.Threading.Thread.h" />
     <ClInclude Include="System.Threading.ThreadState.h" />
+    <ClInclude Include="System.TimeSpan.h" />
     <ClInclude Include="System.UInt16.h" />
     <ClInclude Include="System.UInt32.h" />
     <ClInclude Include="System.UInt64.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="System.Threading.Lock.cpp" />
     <ClCompile Include="System.Threading.CriticalSection.cpp" />
     <ClCompile Include="System.Threading.Thread.cpp" />
+    <ClCompile Include="System.TimeSpan.cpp" />
     <ClCompile Include="System.UInt16.cpp" />
     <ClCompile Include="System.UInt32.cpp" />
     <ClCompile Include="System.UInt64.cpp" />
