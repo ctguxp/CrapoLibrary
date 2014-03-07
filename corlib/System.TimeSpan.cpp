@@ -25,8 +25,22 @@ namespace System
     CalculateTicks(days, hours, minutes, seconds, milliseconds, true);
     }
 
+  TimeSpan::TimeSpan(const TimeSpan& ts)
+    :_ticks(ts._ticks)
+    {
+    }
+
   TimeSpan::~TimeSpan()
     {
+    }
+
+  TimeSpan& TimeSpan::operator =(const TimeSpan& ts)
+    {
+    if(this == &ts)
+      return *this;
+
+    _ticks = ts._ticks;
+    return *this;
     }
 
   int32 TimeSpan::Days()

@@ -44,9 +44,11 @@ namespace System
       static GCTimeSpan MinValue;
     public:
       TimeSpan(int64 ticks = 0);
+      TimeSpan(const TimeSpan&);
       TimeSpan(int hours, int minutes, int seconds);
       TimeSpan(int days, int hours, int minutes, int seconds, int milliseconds);
       ~TimeSpan();
+      TimeSpan& operator =(const TimeSpan&);
       int32 Days();
       int32 Hours();
       int32 Milliseconds();
