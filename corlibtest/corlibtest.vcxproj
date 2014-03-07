@@ -332,6 +332,7 @@
     <ClCompile Include="UnitTestASCII.cpp" />
     <ClCompile Include="UnitTestConvert.cpp" />
     <ClCompile Include="UnitTestCurrentCultureInfo.cpp" />
+    <ClCompile Include="UnitTestDouble.cpp" />
     <ClCompile Include="UnitTestGenericList.cpp" />
     <ClCompile Include="UnitTestInt32.cpp" />
     <ClCompile Include="UnitTestPath.cpp" />

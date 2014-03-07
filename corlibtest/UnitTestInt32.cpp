@@ -38,6 +38,12 @@ namespace corlibtest
       Globalization::CultureInfo cultIntES("en-GB");
       Assert::AreEqual(L"£437.00", myInt.ToString(L"C", &cultIntES));
 
+      myInt = 17843;
+      Assert::AreEqual(L"17843.00", myInt.ToString(L"F", &cultInt));
+  
+      myInt = -29541;
+      Assert::AreEqual(L"-29541.000", myInt.ToString(L"F3", &cultInt));
+      
       myInt = 123456789;
       f1 = L"N1";
       Assert::AreEqual(L"123,456,789.0", myInt.ToString(f1));
