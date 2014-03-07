@@ -172,6 +172,29 @@ namespace System
     return String(_cbuf.ToConstPtr(), 0, _ind);
     }
 
+  String NumberFormatter::FormatFixedPoint(int precision, Globalization::NumberFormatInfo* nfi)
+    {
+    if(precision == -1)
+      precision = nfi->NumberDecimalDigits();
+
+    RoundDecimal(precision);
+
+    ResetCharBuf(IntegerDigits() + precision + 2);
+
+    if(!_positive)
+      Append(nfi->NegativeSign());
+
+    AppendIntegerString(IntegerDigits());
+
+    if (precision > 0) 
+      {
+      Append(nfi->NumberDecimalSeparator());
+      AppendDecimalString(precision);
+      }
+
+    return String(_cbuf.ToConstPtr(), 0, _ind);
+    }
+
   // ------------------------------------------------------------------------
   /// Public Static NumberToString function (Based on Mono)
   String NumberFormatter::NumberToString(int32 value, IFormatProvider* fp)
@@ -522,10 +545,10 @@ namespace System
         return FormatCurrency(_precision, nfi);
       case 'D':
         return FormatDecimal(_precision, nfi);
-        //case 'E':
-        //return FormatExponential (_precision, nfi);
-        //case 'F':
-        //return FormatFixedPoint (_precision, nfi);
+      case 'E':
+        return FormatExponential(_precision, nfi);
+      case 'F':
+        return FormatFixedPoint(_precision, nfi);
       case 'G':
         if (_precision <= 0)
           return FormatDecimal(-1, nfi);
@@ -550,10 +573,10 @@ namespace System
       {
       case L'C':
         return FormatCurrency(_precision, nfi);
-        // TODO : case 'E':
-        //return this.FormatExponential(this._precision, nfi);
-        // TODO : case 'F':
-        //return this.FormatFixedPoint(this._precision, nfi);
+      case 'E':
+        return FormatExponential(_precision, nfi);
+      case 'F':
+        return FormatFixedPoint(_precision, nfi);
       case L'G':
         return FormatGeneral(_precision, nfi);
       case L'N':
@@ -648,6 +671,28 @@ namespace System
     {
     String temp(c, 1);
     Append(temp);
+    }
+
+  void NumberFormatter::Append(wchar_t c, int cnt)
+    {
+    if (_ind + cnt > _cbuf.Length())
+      Resize(_ind + cnt + 10);
+    while(cnt-- > 0)
+      _cbuf[_ind++] = c;
+    }
+
+  void NumberFormatter::AppendIntegerString(int minLength)
+    {
+    if(_decPointPos <= 0)
+      {
+      Append(L'0', minLength);
+      return;
+      }
+
+    if(_decPointPos < minLength)
+      Append(L'0', minLength - _decPointPos);
+
+    AppendDigits(_digitsLen - _decPointPos, _digitsLen);
     }
 
   // ------------------------------------------------------------------------
@@ -1181,8 +1226,7 @@ namespace System
     return FormatExponential (precision, nfi, 3);
     }
 
-#pragma warning (disable:4189)
-  String NumberFormatter::FormatExponential(int precision, Globalization::NumberFormatInfo* nfi, int)
+  String NumberFormatter::FormatExponential(int precision, Globalization::NumberFormatInfo* nfi, int expDigits)
     {
     int decDigits = _decPointPos;
     int digits = _digitsLen;
@@ -1194,19 +1238,18 @@ namespace System
     if(!_positive)
       Append((string)(cstring)nfi->NegativeSign());
 
-    //AppendOneDigit(digits - 1);
+    AppendOneDigit(digits - 1);
 
     if(precision > 0)
       {
-      //Append(nfi.NumberDecimalSeparator);
+      Append(nfi->NumberDecimalSeparator());
       AppendDigits (digits - precision - 1, digits - _decPointPos);
       }
 
-    //AppendExponent(nfi, exponent, expDigits);
+    AppendExponent(nfi, exponent, expDigits);
 
     return String(_cbuf.ToConstPtr(), 0, _ind);
     }
-#pragma warning(default:4189)
 
   String NumberFormatter::FormatGeneral(int precision, Globalization::NumberFormatInfo* nfi)
     {
@@ -1310,6 +1353,62 @@ namespace System
       sb.Append ((wchar_t)('0' | n));
       v -= (int)GetTenPowerOf(i--) * n;
       }while (i >= 0);
+    }
+
+  void NumberFormatter::AppendExponent(Globalization::NumberFormatInfo* nfi, int exponent, int minDigits)
+    {
+    if(_specifierIsUpper || _specifier == L'R')
+      Append(L'E');
+    else
+      Append(L'e');
+
+    if(exponent >= 0)
+      Append(nfi->PositiveSign());
+    else 
+      {
+      Append(nfi->NegativeSign());
+      exponent = -exponent;
+      }
+
+    if(exponent == 0)
+      Append(L'0', minDigits);
+    else if(exponent < 10) 
+      {
+      Append(L'0', minDigits - 1);
+      Append((wchar_t)('0' | exponent));
+      }
+    else
+      {
+      uint32 hexDigit = FastToDecHex(exponent);
+      if(exponent >= 100 || minDigits == 3)
+        Append((wchar_t)(L'0' | (hexDigit >> 8)));
+
+      Append((wchar_t)(L'0' | ((hexDigit >> 4) & 0xf)));
+      Append((wchar_t)(L'0' | (hexDigit & 0xf)));
+      }
+    }
+
+  void NumberFormatter::AppendOneDigit(int start)
+    {
+    if(_ind == _cbuf.Length())
+      Resize (_ind + 10);
+
+    start += _offset;
+    uint32 v;
+    if (start < 0)
+      v = 0;
+    else if (start < 8)
+      v = _val1;
+    else if (start < 16)
+      v = _val2;
+    else if (start < 24)
+      v = _val3;
+    else if (start < 32)
+      v = _val4;
+    else
+      v = 0;
+    v >>= (start & 0x7) << 2;
+    _cbuf [_ind++] = (wchar_t)(L'0' | v & 0xf);
     }
 
   void NumberFormatter::AppendIntegerString(int minLength, Text::StringBuilder& sb)

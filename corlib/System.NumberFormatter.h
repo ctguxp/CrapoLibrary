@@ -94,16 +94,21 @@ namespace System
       String FormatNumber(int, Globalization::NumberFormatInfo*);
       String FormatCustom(String* format, Globalization::NumberFormatInfo* nfi);
       String FormatPercent(int precision, Globalization::NumberFormatInfo* nfi);
+      String FormatFixedPoint(int precision, Globalization::NumberFormatInfo* nfi);
       void CurrentCulture(Globalization::CultureInfo&);
     private:
       void Append(cstring s);
       void Append(String);
       void Append(wchar_t c);
+      void Append(wchar_t c, int cnt);
+      void AppendIntegerString(int);
       void AppendDigits(int start, int end);
       void AppendDigits(int start, int end, Text::StringBuilder& sb);
       void AppendDecimalString(int precision);
       void AppendDecimalString(int precision, Text::StringBuilder& sb);
+      void AppendExponent(Globalization::NumberFormatInfo*, int, int);
       void AddOneToDecHex();
+      void AppendOneDigit(int);
       static uint32 AddOneToDecHex(uint32 val);
       void AppendIntegerStringWithGroupSeparator(IntArray& groups, String groupSeparator);
       int CountTrailingZeros();
