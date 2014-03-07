@@ -382,7 +382,7 @@
       <Filter>Header Files\System.Threading</Filter>
     </ClInclude>
     <ClInclude Include="System.TimeSpan.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -615,7 +615,7 @@
       <Filter>Source Files\System.Threading</Filter>
     </ClCompile>
     <ClCompile Include="System.TimeSpan.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
