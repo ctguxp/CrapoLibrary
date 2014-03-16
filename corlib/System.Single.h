@@ -21,8 +21,12 @@ namespace System
       String ToString(IFormatProvider*);
       String ToString(String);
       String ToString(String, IFormatProvider*);
+      static float Parse(String s, IFormatProvider* provider);
     public:
-      static float NaN;
+      static const float NaN;
+      static const float MaxValue;
+      static const float MinValue;
+      static const double MaxValueEpsilon;
     };
   }
 

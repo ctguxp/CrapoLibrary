@@ -1,14 +1,15 @@
 #include "pch.h"
 #include "System.Single.h"
 #include "System.NumberFormatter.h"
-#include <float.h>
-#include <math.h>
-
-#define NAN ((double)0.0/(double)DBL_MIN)
+#include "System.Double.h"
+#include <limits>
 
 namespace System
   {
-  float Single::NaN = NAN;
+  const float Single::NaN = std::numeric_limits<float>::signaling_NaN();
+  const float Single::MaxValue = FLT_MAX;
+  const float Single::MinValue = FLT_MIN;
+  const double Single::MaxValueEpsilon = 3.6147112457961776e29;
 
   Single::Single()
     :_value()
@@ -53,5 +54,15 @@ namespace System
   String Single::ToString(String format, IFormatProvider* provider)
     {
     return NumberFormatter::NumberToString(&format, _value, provider);
+    }
+  float Single::Parse(String s, IFormatProvider* provider)
+    {
+    using namespace Globalization;
+    double parsed_value = Double::Parse(s, (NumberStyles)((intptr)NumberStyles::Float | (intptr)NumberStyles::AllowThousands), provider);
+    if(parsed_value - (double)Single::MaxValue > MaxValueEpsilon && (!Double::IsPositiveInfinity(parsed_value)))
+      //throw OverflowException();
+      throw SystemException(L"Overflow");
+
+    return (float)parsed_value;
     }
   }
