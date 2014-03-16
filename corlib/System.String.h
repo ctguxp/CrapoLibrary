@@ -61,6 +61,7 @@ namespace System
       // Methods
       virtual int CompareTo(String&) override;
       static int Compare(String&, String&);
+      static int CompareOrdinal(String& strA, int indexA, String& strB, int indexB, int length);
       bool Contains(const String&);
       // static String Copy(const String&) [Use Copy Constructor]
       bool EndsWith(String);

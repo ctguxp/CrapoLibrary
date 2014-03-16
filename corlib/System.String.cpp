@@ -246,6 +246,18 @@ namespace System
     }
   // ------------------------------------------------------------------------
 
+  int String::CompareOrdinal(String& strA, int indexA, String& strB, int indexB, int length)
+    {
+    if (indexA > strA.Length() || indexA < 0)
+      throw ArgumentOutOfRangeException(L"indexA");
+    if (indexB > strB.Length() || indexB < 0)
+      throw ArgumentOutOfRangeException(L"indexB");
+    if(length < 0)
+      throw ArgumentOutOfRangeException(L"length");
+
+    return CompareOrdinalUnchecked(strA, indexA, length, strB, indexB, length);
+    }
+
   // ------------------------------------------------------------------------
   /// Returns a value indicating whether a specified substring occurs within this string.
   bool String::Contains(const String& value)
@@ -1156,7 +1168,7 @@ namespace System
         }
       *destPtr = L'\0';
       }
-    return tmp;
+      return tmp;
     }
 
 
