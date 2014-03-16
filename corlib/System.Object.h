@@ -13,6 +13,7 @@ namespace System
       Object();
       virtual ~Object();
       static bool IsInstance(const Object&, const Object&);
+      static bool ReferenceEquals(const Object&, const Object&);
       virtual String ToString();
       virtual uint32 GetHashCode();
     };

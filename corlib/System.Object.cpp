@@ -20,6 +20,10 @@ namespace System
     {
     return (typeid(o1) == typeid(o2));
     }
+  bool Object::ReferenceEquals(const Object& o1, const Object& o2)
+    {
+    return (&o1 == &o2);
+    }
   uint32 Object::GetHashCode()
     {
     return (uint32)typeid(*this).hash_code();
