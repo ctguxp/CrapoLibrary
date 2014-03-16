@@ -7,6 +7,8 @@ namespace System
   class CRAPOCOREDLL_API Math
     {
     public:
+      static const double PI;
+    public:
       Math();
       ~Math();
       static byte Max(byte, byte);
