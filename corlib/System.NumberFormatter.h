@@ -73,9 +73,12 @@ namespace System
       static const int DecimalBitsScaleMask = 0x1f0000;
       static const int TenPowersListLength = 19;
       static const int64 SeventeenDigitsThreshold = 10000000000000000;
+      static const double MinRoundtripVal;
+		  static const double MaxRoundtripVal;
 
     public:
       NumberFormatter(Threading::Thread*);
+      NumberFormatter(const NumberFormatter&);
       ~NumberFormatter();
       static String NumberToString(int32, IFormatProvider*);
       static String NumberToString(uint32, IFormatProvider*);
@@ -121,6 +124,8 @@ namespace System
       Globalization::NumberFormatInfo* GetNumberFormatInstance(IFormatProvider*);
       String FastIntegerToString (int, IFormatProvider*);
       String FormatGeneral(int precision, Globalization::NumberFormatInfo* nfi);
+      String FormatRoundtrip(double origval, Globalization::NumberFormatInfo* nfi);
+      String FormatRoundtrip(float origval, Globalization::NumberFormatInfo* nfi);
       int InitialFloatingPrecision();
       void Init(String*);
       void Init(String* format, int64 value);

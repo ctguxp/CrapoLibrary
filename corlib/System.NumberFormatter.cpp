@@ -12,6 +12,9 @@ namespace System
   GCNumberFormatter NumberFormatter::_threadNumberFormatter;
   GCNumberFormatter NumberFormatter::_userFormatProvider;
 
+  const double NumberFormatter::MinRoundtripVal = -1.79769313486231E+308;
+  const double NumberFormatter::MaxRoundtripVal = 1.79769313486231E+308;
+
   // ------------------------------------------------------------------------
   /// Default constructor
   NumberFormatter::NumberFormatter(Threading::Thread* current)
@@ -38,6 +41,28 @@ namespace System
       CurrentCulture(current->CurrentCulture());
     }
   // ------------------------------------------------------------------------
+
+  NumberFormatter::NumberFormatter(const NumberFormatter& nf)
+    :_ind(nf._ind)
+    ,_cbuf(nf._cbuf)
+    ,_positive(nf._positive)
+    ,_specifier(nf._specifier)
+    ,_precision(nf._precision)
+    ,_defPrecision(nf._defPrecision)
+    ,_offset(nf._offset)
+    ,_digitsLen(nf._digitsLen)
+    ,_NaN(nf._NaN)
+    ,_infinity(nf._infinity)
+    ,_isCustomFormat(nf._isCustomFormat)
+    ,_specifierIsUpper(nf._specifierIsUpper)
+    ,_decPointPos(nf._decPointPos)
+    ,_val1(nf._val1)
+    ,_val2(nf._val2)
+    ,_val3(nf._val3)
+    ,_val4(nf._val4)
+    ,_nfi(nf._nfi)
+    {
+    }
 
   // ------------------------------------------------------------------------
   /// Destructor
@@ -332,8 +357,8 @@ namespace System
         res = nfi->PositiveInfinitySymbol();
       else
         res = nfi->NegativeInfinitySymbol();
-    // TODO else if (inst->_specifier == 'R')
-    // res = inst->FormatRoundtrip(value, nfi);
+    else if(inst->_specifier == L'R')
+      res = inst->FormatRoundtrip(value, nfi);
     else
       res = inst->NumberToString(format, nfi);
     inst->Release(inst);
@@ -353,8 +378,8 @@ namespace System
         res = nfi->PositiveInfinitySymbol();
       else
         res = nfi->NegativeInfinitySymbol();
-    // TODO : else if (inst._specifier == 'R')
-    //res = inst.FormatRoundtrip (value, nfi);
+    else if(inst->_specifier == L'R')
+      res = inst->FormatRoundtrip(value, nfi);
     else
       res = inst->NumberToString(format, nfi);
     inst->Release(inst);
@@ -562,8 +587,9 @@ namespace System
       default:
         if(_isCustomFormat)
           return FormatCustom(format, nfi);
-        throw SystemException(L"The specified format is invalid");
-        //throw FormatException("The specified format '" + format + "' is invalid");
+        String msg = String::Format("The specified format '{0}' is invalid", format);
+        throw SystemException(msg);
+        // TODO : throw FormatException("The specified format '" + format + "' is invalid");
       }
     }
 
@@ -587,8 +613,9 @@ namespace System
       default:
         if(_isCustomFormat)
           return FormatCustom(format, nfi);
-        throw SystemException(L"The specified format is invalid");
-        //throw FormatException("The specified format '" + format + "' is invalid");
+        String msg = String::Format("The specified format '{0}' is invalid", format);
+        throw SystemException(msg);
+        // TODO: throw FormatException("The specified format '" + format + "' is invalid");
       }
     }
 
@@ -625,7 +652,6 @@ namespace System
       _val1 = AddOneToDecHex(_val1);
     }
 
-  // static
   uint32 NumberFormatter::AddOneToDecHex(uint32 val)
     {
     if ((val & 0xffff) == 0x9999)
@@ -1249,6 +1275,28 @@ namespace System
     AppendExponent(nfi, exponent, expDigits);
 
     return String(_cbuf.ToConstPtr(), 0, _ind);
+    }
+
+  String NumberFormatter::FormatRoundtrip(double origval, Globalization::NumberFormatInfo* nfi)
+    {
+    NumberFormatter nfc(*this);
+    if (origval >= MinRoundtripVal && origval <= MaxRoundtripVal)
+      {
+      String shortRep = FormatGeneral(_defPrecision, nfi);
+      if(origval == Double::Parse(shortRep, nfi))
+        return shortRep;
+      }
+    return nfc.FormatGeneral(_defPrecision + 2, nfi);
+    }
+
+  String NumberFormatter::FormatRoundtrip(float origval, Globalization::NumberFormatInfo* nfi)
+    {
+    NumberFormatter nfc(*this);
+    String shortRep = FormatGeneral(_defPrecision, nfi);
+    // Check roundtrip only for "normal" double values.
+    if(origval == Single::Parse(shortRep, nfi))
+      return shortRep;
+    return nfc.FormatGeneral(_defPrecision + 2, nfi);
     }
 
   String NumberFormatter::FormatGeneral(int precision, Globalization::NumberFormatInfo* nfi)
