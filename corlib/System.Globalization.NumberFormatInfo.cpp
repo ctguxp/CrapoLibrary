@@ -201,9 +201,11 @@ namespace System
     NumberFormatInfo::~NumberFormatInfo()
       {
       }
-    Object* NumberFormatInfo::GetFormat(Object*)
+    Object* NumberFormatInfo::GetFormat(Object* obj)
       {
-      throw SystemException(L"Not Implemented");
+      return Object::IsInstance(*this, *obj) ? this : nullptr;
+      //return (formatType == typeof (NumberFormatInfo)) ? this : nullptr;
+      //throw SystemException(L"Not Implemented");
       }
 
     // Properties
