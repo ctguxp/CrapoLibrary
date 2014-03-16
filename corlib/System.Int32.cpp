@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "System.Int32.h"
 #include "System.NumberFormatter.h"
+#include "System.FormatException.h"
 
 namespace System
   {
@@ -41,5 +42,9 @@ namespace System
   uint32 Int32::GetHashCode()
     {
     return (uint32)abs(_value);
+    }
+  Exception Int32::GetFormatException()
+    {
+    return FormatException(L"Input string was not in the correct format");
     }
   }

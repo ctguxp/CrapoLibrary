@@ -7,6 +7,7 @@
 
 namespace System
   {
+  class Exception;
   class CRAPOCOREDLL_API Int32 : public Object
     {
     public:
@@ -24,6 +25,7 @@ namespace System
       String ToString(String format);
       String ToString(String format, IFormatProvider* provider);
       virtual uint32 GetHashCode() override;
+      static Exception GetFormatException();
     };
   }
 
