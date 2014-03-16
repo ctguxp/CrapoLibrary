@@ -46,6 +46,9 @@ namespace System
       sizet Length() const { return _len; }
       void Length(sizet new_len);
 
+      static void Copy(T*, sizet, T*, sizet, sizet);
+      static void Copy(Array<T>&, sizet, Array<T>&, sizet, sizet);
+
     private:
       void Free();
     };
