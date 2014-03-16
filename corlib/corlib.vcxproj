@@ -35,6 +35,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System.FormatException.h" />
+    <ClInclude Include="System.Globalization.NumberStyles.h" />
     <ClInclude Include="System.Threading.ActiveObject.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AutoPtr.h" />
@@ -150,6 +152,7 @@
     <ClInclude Include="sys.list.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="System.FormatException.cpp" />
     <ClCompile Include="System.Threading.ActiveObject.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="System.Byte.cpp" />

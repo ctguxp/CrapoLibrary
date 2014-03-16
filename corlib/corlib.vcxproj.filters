@@ -384,6 +384,12 @@
     <ClInclude Include="System.TimeSpan.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="System.Globalization.NumberStyles.h">
+      <Filter>Header Files\System.Globalization</Filter>
+    </ClInclude>
+    <ClInclude Include="System.FormatException.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -616,6 +622,9 @@
     </ClCompile>
     <ClCompile Include="System.TimeSpan.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.FormatException.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

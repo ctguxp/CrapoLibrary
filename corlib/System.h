@@ -11,6 +11,7 @@
 #include "System.Double.h"
 #include "System.Environment.h"
 #include "System.Exception.h"
+#include "System.FormatException.h"
 #include "System.IComparable.h"
 #include "System.IEquatable.h"
 #include "System.IFormatProvider.h"
