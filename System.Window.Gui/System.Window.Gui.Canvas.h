@@ -18,7 +18,7 @@ namespace System
           HDC _hdc;
         };
 
-      class PaintCanvas : Canvas
+      class PaintCanvas : public Canvas
         {
         public:
           PaintCanvas(HWND /*hwnd*/);
@@ -28,7 +28,7 @@ namespace System
           PAINTSTRUCT _ps;
         };
 
-      class UpdateCanvas : Canvas
+      class UpdateCanvas : public Canvas
         {
         public:
           UpdateCanvas(HWND /*hwnd*/);
