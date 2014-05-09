@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Microsoft.Win32.RegistryKey.h"
-#include "System.Exception.h"
+#include "System.NotImplementedException.h"
 #include "System.Int64.h"
 
 namespace Microsoft
@@ -78,8 +78,7 @@ namespace Microsoft
         }
 
       Int64 h((intptr)hive);
-      //throw NotImplementedException(String::Format(L"Registry hive '{0}' is not implemented.", &h));
-      throw ArgumentException(L"Not Implemented", String::Format(L"Registry hive '{0}' is not implemented.", &h));
+      throw NotImplementedException(String::Format(L"Registry hive '{0}' is not implemented.", &h));
       }
     }
   }
