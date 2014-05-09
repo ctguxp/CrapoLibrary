@@ -35,6 +35,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Microsoft.Win32.h" />
+    <ClInclude Include="Microsoft.Win32.RegistryHive.h" />
+    <ClInclude Include="Microsoft.Win32.RegistryKey.h" />
+    <ClInclude Include="System.Collections.Hashtable.h" />
+    <ClInclude Include="System.Collections.IDictonary.h" />
     <ClInclude Include="System.FormatException.h" />
     <ClInclude Include="System.Globalization.NumberStyles.h" />
     <ClInclude Include="System.Threading.ActiveObject.h" />
@@ -152,6 +157,8 @@
     <ClInclude Include="sys.list.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Microsoft.Win32.RegistryKey.cpp" />
+    <ClCompile Include="System.Collections.Hashtable.cpp" />
     <ClCompile Include="System.FormatException.cpp" />
     <ClCompile Include="System.Threading.ActiveObject.cpp" />
     <ClCompile Include="Application.cpp" />

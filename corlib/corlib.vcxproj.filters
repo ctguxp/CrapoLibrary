@@ -70,6 +70,12 @@
     <Filter Include="Source Files\System.Collections">
       <UniqueIdentifier>{22b7d55a-4645-4186-92c5-2b1e3cec59c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Microsoft.Win32">
+      <UniqueIdentifier>{6b2da526-3f01-421d-92b2-a9dbebccca27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Microsoft.Win32">
+      <UniqueIdentifier>{e06b565a-8034-4e2f-8fbf-e1df9264fd86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -390,6 +396,21 @@
     <ClInclude Include="System.FormatException.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="System.Collections.Hashtable.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.IDictonary.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Microsoft.Win32.RegistryKey.h">
+      <Filter>Header Files\Microsoft.Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Microsoft.Win32.RegistryHive.h">
+      <Filter>Header Files\Microsoft.Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Microsoft.Win32.h">
+      <Filter>Header Files\Microsoft.Win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -625,6 +646,12 @@
     </ClCompile>
     <ClCompile Include="System.FormatException.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Collections.Hashtable.cpp">
+      <Filter>Source Files\System.Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Microsoft.Win32.RegistryKey.cpp">
+      <Filter>Source Files\Microsoft.Win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

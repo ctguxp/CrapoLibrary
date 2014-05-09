@@ -60,6 +60,8 @@ typedef uint32 uintptr;
 #include "System.Globalization.CultureInfo.h"
 #include "System.Globalization.NumberFormatInfo.h"
 
+#include "System.Collections.Hashtable.h"
+#include "System.Collections.IDictonary.h"
 #include "System.Collections.Generic.List.hpp"
 
 // System.IO namespace
@@ -77,5 +79,7 @@ typedef uint32 uintptr;
 
 // System.Threading
 #include "System.Threading.Thread.h"
+
+#include "Microsoft.Win32.h"
 
 #include "win32.security_attribute.h"
