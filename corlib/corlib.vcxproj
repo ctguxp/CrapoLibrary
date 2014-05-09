@@ -42,6 +42,8 @@
     <ClInclude Include="System.Collections.IDictonary.h" />
     <ClInclude Include="System.FormatException.h" />
     <ClInclude Include="System.Globalization.NumberStyles.h" />
+    <ClInclude Include="System.NotImplementedException.h" />
+    <ClInclude Include="System.OutOfMemoryException.h" />
     <ClInclude Include="System.Threading.ActiveObject.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AutoPtr.h" />
@@ -160,6 +162,8 @@
     <ClCompile Include="Microsoft.Win32.RegistryKey.cpp" />
     <ClCompile Include="System.Collections.Hashtable.cpp" />
     <ClCompile Include="System.FormatException.cpp" />
+    <ClCompile Include="System.NotImplementedException.cpp" />
+    <ClCompile Include="System.OutOfMemoryException.cpp" />
     <ClCompile Include="System.Threading.ActiveObject.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="System.Byte.cpp" />

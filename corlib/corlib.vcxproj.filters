@@ -411,6 +411,12 @@
     <ClInclude Include="Microsoft.Win32.h">
       <Filter>Header Files\Microsoft.Win32</Filter>
     </ClInclude>
+    <ClInclude Include="System.NotImplementedException.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.OutOfMemoryException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -644,14 +650,20 @@
     <ClCompile Include="System.TimeSpan.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="System.FormatException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="System.Collections.Hashtable.cpp">
       <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
     <ClCompile Include="Microsoft.Win32.RegistryKey.cpp">
       <Filter>Source Files\Microsoft.Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="System.NotImplementedException.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.FormatException.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.OutOfMemoryException.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
