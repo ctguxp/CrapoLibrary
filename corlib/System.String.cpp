@@ -258,6 +258,77 @@ namespace System
     return CompareOrdinalUnchecked(strA, indexA, length, strB, indexB, length);
     }
 
+  String String::Concat(String str0, String str1, String str2)
+    {
+    if(str0.Length() == 0)
+      {
+      if(str1.Length() == 0)
+        {
+        if (str2.Length() == 0)
+          return Empty();
+        return str2;
+        } 
+      else 
+        {
+        if(str2.Length() == 0)
+          return str1;
+        }
+      str0 = Empty();
+      } 
+    else 
+      {
+      if(str1.Length() == 0)
+        {
+        if(str2.Length() == 0)
+          return str0;
+        else
+          str1 = Empty();
+        } 
+      else
+        {
+        if(str2.Length() == 0)
+          str2 = Empty();
+        }
+      }
+
+    int nlen = str0.Length() + str1.Length();
+    if (nlen < 0)
+      //throw OutOfMemoryException ();
+      throw SystemException(L"Out of Memory");
+    nlen += str2.Length();
+    if (nlen < 0)
+      // TODO throw new OutOfMemoryException ();
+      throw SystemException(L"Out of Memory");
+    String tmp = InternalAllocateStr(nlen + 1);
+
+    if(str0.Length() != 0) 
+      {
+      wchar_t* dest = tmp._start_char;
+      wchar_t* src = str0._start_char;
+        {
+        CharCopy(dest, src, str0.Length());
+        }
+      }
+    if(str1.Length() != 0) {
+      wchar_t* dest = tmp._start_char;
+      wchar_t* src = str1._start_char;
+        {
+        CharCopy(dest + str0.Length(), src, str1.Length());
+        }
+      }
+    if(str2.Length() != 0) 
+      {
+      wchar_t* dest = tmp._start_char;
+      wchar_t* src = str2._start_char;
+        {
+        CharCopy (dest + str0.Length() + str1.Length(), src, str2.Length());
+        }
+      }
+
+    tmp.check_null();
+    return tmp;
+    }
+
   // ------------------------------------------------------------------------
   /// Returns a value indicating whether a specified substring occurs within this string.
   bool String::Contains(const String& value)

@@ -34,7 +34,7 @@ namespace System
   class CRAPOCOREDLL_API String : public Object, public IComparable<String>, public IEquatable<String>
     {
     private:
-      uint32     _length;
+      uint32   _length;
       wchar_t* _buffer;
       wchar_t* _start_char;
     public:
@@ -62,6 +62,7 @@ namespace System
       virtual int CompareTo(String&) override;
       static int Compare(String&, String&);
       static int CompareOrdinal(String& strA, int indexA, String& strB, int indexB, int length);
+      static String Concat(String str0, String str1, String str2);
       bool Contains(const String&);
       // static String Copy(const String&) [Use Copy Constructor]
       bool EndsWith(String);
