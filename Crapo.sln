@@ -9,8 +9,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "corlibtest", "corlibtest\co
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System", "System\System.vcxproj", "{633152D1-6793-4DD8-9083-F22F24D13D6D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{30E50231-171A-4E6E-B9D5-082284DD3978} = {30E50231-171A-4E6E-B9D5-082284DD3978}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SystemTest", "SystemTest\SystemTest.vcxproj", "{AFB0FDA5-9BD4-443D-859E-02B0B30C3E7F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{30E50231-171A-4E6E-B9D5-082284DD3978} = {30E50231-171A-4E6E-B9D5-082284DD3978}
+		{633152D1-6793-4DD8-9083-F22F24D13D6D} = {633152D1-6793-4DD8-9083-F22F24D13D6D}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System.Window.Gui", "System.Window.Gui\System.Window.Gui.vcxproj", "{263CB0B5-DD4B-4D1E-84F9-832C06C153B3}"
 	ProjectSection(ProjectDependencies) = postProject
