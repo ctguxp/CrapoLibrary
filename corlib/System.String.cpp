@@ -4,7 +4,7 @@
 #include "System.String.h"
 #include "System.Char.h"
 #include "System.Text.StringBuilder.h"
-#include "System.Exception.h"
+#include "System.OutOfMemoryException.h"
 #include "System.Text.UTF8Encoding.h"
 #include "System.Int32.h"
 #include "System.Math.h"
@@ -293,12 +293,10 @@ namespace System
 
     int nlen = str0.Length() + str1.Length();
     if (nlen < 0)
-      //throw OutOfMemoryException ();
-      throw SystemException(L"Out of Memory");
+      throw OutOfMemoryException ();
     nlen += str2.Length();
     if (nlen < 0)
-      // TODO throw new OutOfMemoryException ();
-      throw SystemException(L"Out of Memory");
+      throw new OutOfMemoryException ();
     String tmp = InternalAllocateStr(nlen + 1);
 
     if(str0.Length() != 0) 
