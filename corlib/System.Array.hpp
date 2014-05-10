@@ -40,7 +40,7 @@ namespace System
   /// This constructor takes in a pointer to an array and its length
   /// This could be considered unsafe if used unwisely
   template<class T>
-  Array<T>::Array(T* arr, sizet len)
+  Array<T>::Array(const T* arr, sizet len)
     :_len(len)
     ,_base(0)
     ,_ptr(len > 0 ? new T[len] : nullptr)

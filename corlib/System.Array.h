@@ -25,8 +25,8 @@ namespace System
       T*   _ptr;  // Pointer to array
     public:
       Array(sizet len = 0);
+      Array(const T*, sizet);
       Array(sizet, T);
-      Array(T*, sizet);
       Array(const Array<T>& arr);
 
       // Destructor
