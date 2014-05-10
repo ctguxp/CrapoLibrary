@@ -334,6 +334,7 @@
     <ClCompile Include="UnitTestCurrentCultureInfo.cpp" />
     <ClCompile Include="UnitTestDouble.cpp" />
     <ClCompile Include="UnitTestGenericList.cpp" />
+    <ClCompile Include="UnitTestHashTable.cpp" />
     <ClCompile Include="UnitTestInt32.cpp" />
     <ClCompile Include="UnitTestPath.cpp" />
     <ClCompile Include="UnitTestSingle.cpp" />
