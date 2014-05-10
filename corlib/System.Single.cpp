@@ -38,6 +38,11 @@ namespace System
     int exp;
     float mantissa = frexp(_value, &exp);
     return (uint32)(2 * fabs(mantissa) - 1) * ~0U;
+    } 
+  bool Single::IsNaN(float f)
+    {
+    int status = _isnan(f);
+    return status == 0 ? false : true;
     }
   String Single::ToString()
     {

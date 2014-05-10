@@ -17,6 +17,7 @@ namespace System
       Single& operator = (float const&);
       operator float const& () const;
       virtual uint32 GetHashCode() override;
+      static bool IsNaN(float);
       virtual String ToString() override;
       String ToString(IFormatProvider*);
       String ToString(String);
