@@ -38,8 +38,13 @@
     <ClInclude Include="Microsoft.Win32.h" />
     <ClInclude Include="Microsoft.Win32.RegistryHive.h" />
     <ClInclude Include="Microsoft.Win32.RegistryKey.h" />
+    <ClInclude Include="System.Collections.h" />
     <ClInclude Include="System.Collections.Hashtable.h" />
+    <ClInclude Include="System.Collections.ICollection.h" />
+    <ClInclude Include="System.Collections.IComparer.h" />
     <ClInclude Include="System.Collections.IDictonary.h" />
+    <ClInclude Include="System.Collections.IEqualityComparer.h" />
+    <ClInclude Include="System.Collections.IHashCodeProvider.h" />
     <ClInclude Include="System.FormatException.h" />
     <ClInclude Include="System.Globalization.NumberStyles.h" />
     <ClInclude Include="System.NotImplementedException.h" />

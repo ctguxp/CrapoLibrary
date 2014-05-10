@@ -415,7 +415,22 @@
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="System.OutOfMemoryException.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.IHashCodeProvider.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.IComparer.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.ICollection.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.IEqualityComparer.h">
+      <Filter>Header Files\System.Collections</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -663,7 +678,7 @@
       <Filter>Source Files\System</Filter>
     </ClCompile>
     <ClCompile Include="System.OutOfMemoryException.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
