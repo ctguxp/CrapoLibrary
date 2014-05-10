@@ -344,6 +344,13 @@ namespace System
     }
   // ------------------------------------------------------------------------
 
+  bool String::Equals(Object* obj)
+    {
+    String temp = obj->ToString();
+    return Equals(*this, temp);
+    }
+
+
   // ------------------------------------------------------------------------
   /// Determines whether this instance and another specified String object have the same value.
   bool String::Equals(String other)

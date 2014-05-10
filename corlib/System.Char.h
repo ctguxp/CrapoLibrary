@@ -19,6 +19,7 @@ namespace System
       ~Char();
       Char& operator = (wchar_t const&);
       operator wchar_t const& () const;
+      virtual bool Equals(Object* obj) override;
       virtual bool Equals(Char) override;
       static bool IsLowSurrogate(wchar_t);
       static bool IsHighSurrogate(wchar_t);

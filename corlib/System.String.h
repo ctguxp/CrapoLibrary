@@ -66,6 +66,7 @@ namespace System
       bool Contains(const String&);
       // static String Copy(const String&) [Use Copy Constructor]
       bool EndsWith(String);
+      virtual bool Equals(Object* obj) override;
       virtual bool Equals(String) override;
       static bool Equals(const String& a, const String& b);
       static String Format(String, Object*);

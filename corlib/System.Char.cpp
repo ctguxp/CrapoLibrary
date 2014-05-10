@@ -36,6 +36,13 @@ namespace System
     return _datum;
     }
 
+  bool Char::Equals(Object* obj)
+    {
+    Char* arg = dynamic_cast<Char*>(obj);
+    Char& data = *arg;
+    return _datum == data._datum;
+    }
+
   bool Char::Equals(Char other)
     {
     return _datum == other._datum;
