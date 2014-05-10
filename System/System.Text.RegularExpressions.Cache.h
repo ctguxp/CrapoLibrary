@@ -12,7 +12,8 @@ namespace System
           FactoryCache(int /*capicity*/);
           ~FactoryCache();
         private:
-          int _capicity;
+          int _capacity;
+          Collections::Hashtable _factories;
         };
       }
     }

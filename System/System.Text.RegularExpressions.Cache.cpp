@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "System.Text.RegularExpressions.FactoryCache.h"
+#include "System.Text.RegularExpressions.Cache.h"
 
 namespace System
   {
@@ -8,7 +8,8 @@ namespace System
     namespace RegularExpressions
       {
       FactoryCache::FactoryCache(int capacity)
-        :_capicity(capacity)
+        :_capacity(capacity)
+        ,_factories(capacity)
         {
         }
 

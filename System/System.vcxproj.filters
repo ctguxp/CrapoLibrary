@@ -27,18 +27,18 @@
     <ClInclude Include="System.Text.RegularExpressions.IMachineFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="System.Text.RegularExpressions.FactoryCache.h">
+    <ClInclude Include="System.Text.RegularExpressions.Cache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="System.Text.RegularExpressions.Regex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="System.Text.RegularExpressions.FactoryCache.cpp">
+    <ClCompile Include="System.Text.RegularExpressions.Cache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Regex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

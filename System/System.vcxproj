@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="System.Text.RegularExpressions.FactoryCache.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Cache.h" />
     <ClInclude Include="System.Text.RegularExpressions.IMachineFactory.h" />
     <ClInclude Include="System.Text.RegularExpressions.RegexOptions.h" />
     <ClInclude Include="pch.h" />
@@ -52,7 +52,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="System.Text.RegularExpressions.FactoryCache.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Cache.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Regex.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
