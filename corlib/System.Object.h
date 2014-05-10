@@ -16,6 +16,7 @@ namespace System
       static bool ReferenceEquals(const Object&, const Object&);
       virtual String ToString();
       virtual uint32 GetHashCode();
+      virtual bool Equals(Object* obj);
     };
 
   class CRAPOCOREDLL_API ObjectArray : public Ownership

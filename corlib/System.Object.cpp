@@ -38,6 +38,11 @@ namespace System
     return String(buffer.ToConstPtr());
     }
 
+  bool Object::Equals(Object* obj)
+    {
+    return this == obj;
+    }
+
   ObjectArray::ObjectArray(uint32 len)
     :_array(len)
     {
