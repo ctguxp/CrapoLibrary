@@ -46,8 +46,10 @@ namespace System
       int i = 0;
       for(;i < _table.Length(); ++i)
         {
-        delete _table[i].key;
-        delete _table[i].value;
+        if(_table[i].key != nullptr)
+          delete _table[i].key;
+        if(_table[i].value != nullptr)
+          delete _table[i].value;
         }
       }
 
@@ -74,6 +76,25 @@ namespace System
     void Hashtable::Add(Object* key, Object* value)
       {
       PutImpl(key, value, false);
+      }
+
+    bool Hashtable::Contains(Object* key)
+      {
+      return(Find(key) >= 0);
+      }
+
+    void Hashtable::Clear()
+      {
+      for(int i = 0; i < _table.Length(); i++)
+        {
+        delete _table[i].key;
+        _table[i].key = nullptr;
+        delete _table[i].value;
+        _table[i].value = nullptr;
+        _hashes.Length(0);
+        }
+      _inUse = 0;
+      _modificationCount++;
       }
 
     Object* Hashtable::Get(Object* key)
@@ -109,6 +130,21 @@ namespace System
         }
 
       return nullptr;
+      }
+
+    void Hashtable::Remove(Object* key)
+      {
+      int i = Find (key);
+      if (i >= 0)
+        {
+        int h = _hashes[i];
+        h &= CHAIN_MARKER;
+        _hashes[i] = h;
+        _table[i].key = (h != 0) ? &Removed : nullptr;
+        _table[i].value = nullptr;
+        --_inUse;
+        ++_modificationCount;
+        }
       }
 
     void Hashtable::Init(int capacity, float loadFactor)
@@ -289,6 +325,40 @@ namespace System
         return item->Equals(key);
 
       return _comparerRef->Compare(item, key) == 0;
+      }
+
+    int Hashtable::Find(Object* key)
+      {
+      if(key == nullptr)
+        throw ArgumentNullException(L"key", L"null key");
+
+      uint32 size = (uint32)_table.Length();
+      int h = GetHash(key) & Int32::MaxValue;
+      uint32 indx = (uint32)h;
+      uint32 step = (uint32)((h >> 5)+1) % (size-1)+1;
+
+
+      for(uint32 i = size; i > 0; i--)
+        {
+        indx %= size;
+        Slot entry = _table[indx];
+        int hashMix = _hashes[indx];
+        Object* k = entry.key;
+        if(k == nullptr)
+          break;
+
+        if(k == key || ((hashMix & Int32::MaxValue) == h
+          && KeyEquals(key, k)))
+          {
+          return (int)indx;
+          }
+
+        if((hashMix & CHAIN_MARKER) == 0)
+          break;
+
+        indx += step;
+        }
+      return -1;
       }
     }
   }

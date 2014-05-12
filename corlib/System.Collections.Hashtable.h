@@ -44,13 +44,17 @@ namespace System
         virtual bool IsFixedSize() override;
         virtual bool IsReadOnly() override;
         virtual void Add(Object* key, Object* value) override;
+        virtual bool Contains(Object* key) override;
+        virtual void Clear() override;
         Object* Get(Object* key);
+        virtual void Remove(Object* key) override;
       protected:
         virtual int GetHash(Object* key);
         virtual bool KeyEquals(Object* item, Object* key);
       private:
         void Init(int, float);
         void AdjustThreshold();
+        int Find(Object* key);
         void Rehash();
         void SetTable(Array<Slot>& table, IntArray& hashes);
         void PutImpl(Object* key, Object* value, bool overwrite);
