@@ -6,8 +6,9 @@ namespace System
     {
     namespace RegularExpressions
       {
-      class IMachineFactory
+      class IMachineFactory : public Object
         {
+        public:
         virtual Collections::IDictionary* Mapping() = 0;
         virtual void Mapping(Collections::IDictionary*) = 0;
         virtual int GroupCount() = 0;
