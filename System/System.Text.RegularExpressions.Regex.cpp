@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "System.Text.RegularExpressions.Regex.h"
+#include "System.Text.RegularExpressions.Syntax.Parser.h"
+#include "System.Text.RegularExpressions.Syntax.RegularExpression.h"
 
 namespace System
   {
@@ -7,19 +9,31 @@ namespace System
     {
     namespace RegularExpressions
       {
+
+      FactoryCache Regex::cache(15);      
+
       Regex::Regex()
-        :_pattern()
+        :_groupCount(0)
+        ,_gap(0)
+        ,_pattern()
         ,_roptions(RegexOptions::None)
         ,_machineFactory(nullptr)
+        ,_mapping(nullptr)
+        ,_groupNames()
         {
         }
 
       Regex::Regex(String pattern, RegexOptions options)
-        :_pattern(pattern)
+        :_groupCount(0)
+        ,_gap(0)
+        ,_pattern(pattern)
         ,_roptions(options)
         ,_machineFactory(nullptr)
+        ,_mapping(nullptr)
+        ,_groupNames()
         {
         ValidateOptions(options);
+        Init();
         }
 
       Regex::~Regex()
@@ -52,7 +66,60 @@ namespace System
 
       void Regex::Init()
         {
-        
+        _machineFactory = cache.Lookup(_pattern, _roptions);
+
+        if(_machineFactory == nullptr)
+          {
+          InitNewRegex();
+          } 
+        else
+          {
+          _groupCount = _machineFactory->GroupCount();
+          _gap = _machineFactory->Gap();
+          _mapping = _machineFactory->Mapping();
+          _groupNames = _machineFactory->NamesMapping();
+          }
+        }
+
+      void Regex::InitNewRegex() 
+        {
+        _machineFactory = CreateMachineFactory(_pattern, _roptions);
+        cache.Add(_pattern, _roptions, _machineFactory);
+        _groupCount = _machineFactory->GroupCount();
+        _gap = _machineFactory->Gap();
+        _mapping = _machineFactory->Mapping();
+        _groupNames = _machineFactory->NamesMapping();
+        }
+
+      IMachineFactory* Regex::CreateMachineFactory(String pattern, RegexOptions options)
+        {
+        using namespace Syntax;
+        Parser parser;
+        RegularExpression* regularExpression = parser.ParseRegularExpression(pattern, options);
+        return nullptr;
+        /*ICompiler* compiler;
+        if(!Regex.old_rx)
+          {
+          if ((options & RegexOptions::Compiled) != RegexOptions::None)
+            {
+            compiler = new CILCompiler();
+            }
+          else
+            {
+            compiler = new RxCompiler();
+            }
+          }
+        else
+          {
+          compiler = new PatternCompiler();
+          }
+        regularExpression.Compile(compiler, (options & RegexOptions.RightToLeft) != RegexOptions.None);
+        IMachineFactory* machineFactory = compiler.GetMachineFactory();
+        Hashtable hashtable = new Hashtable();
+        machineFactory.Gap = parser.GetMapping(hashtable);
+        machineFactory.Mapping = hashtable;
+        machineFactory.NamesMapping = Regex.GetGroupNamesArray(machineFactory.GroupCount, machineFactory.Mapping);
+        return machineFactory;*/
         }
 
       }
