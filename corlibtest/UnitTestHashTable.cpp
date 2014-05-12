@@ -14,7 +14,7 @@ namespace corlibtest
     public:
       TEST_METHOD(TestCtor2)
         {
-          using namespace Collections;
+        using namespace Collections;
 
           {
           bool errorThrown = false;
@@ -38,7 +38,7 @@ namespace corlibtest
             {
             h1.Add(new String(keys[i]), new Char(values[i]));
             }
-          
+
           for(i = 0; i < 4; ++i)
             {
             String key(keys[i]);
@@ -47,6 +47,19 @@ namespace corlibtest
             Assert::AreEqual<wchar_t>(values[i], (*val));
             }
           }
+        }
+
+      TEST_METHOD(TestClear)
+        {
+        using namespace Collections;
+        Hashtable h;
+        Assert::AreEqual<int32>(0, h.Count(), L"new table - count zero");
+        int max = 100;
+        for(int i = 1; i < max; i++)
+          h.Add(new Int32(i), new Int32(i));
+        Assert::IsTrue(h.Count() > 0, L"table - don't gots stuff");
+        h.Clear();
+        Assert::AreEqual<int32>(0, h.Count(), L"Table should be cleared");
         }
     };
   }
