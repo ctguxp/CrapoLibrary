@@ -13,22 +13,40 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\System.Text.RegularExpressions">
+      <UniqueIdentifier>{2699f5dc-a4bd-48ea-9952-687ba60833ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Text.RegularExpressions">
+      <UniqueIdentifier>{8faa998b-bd81-4edf-a148-c321aa2573d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System.Text.RegularExpressions.Syntax">
+      <UniqueIdentifier>{d96b184b-d051-4671-a41d-13c6e6007ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Text.RegularExpressions.Syntax">
+      <UniqueIdentifier>{744852cd-54cb-4238-943a-622a7545a01b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="System.Text.RegularExpressions.Regex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="System.Text.RegularExpressions.RegexOptions.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="System.Text.RegularExpressions.Cache.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
     <ClInclude Include="System.Text.RegularExpressions.IMachineFactory.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
-    <ClInclude Include="System.Text.RegularExpressions.Cache.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="System.Text.RegularExpressions.Regex.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.RegexOptions.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Parser.h">
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.RegularExpression.h">
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -36,10 +54,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Cache.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Regex.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Parser.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.RegularExpression.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

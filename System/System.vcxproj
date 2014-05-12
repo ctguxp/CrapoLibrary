@@ -35,11 +35,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.RegularExpression.h" />
     <ClInclude Include="System.Text.RegularExpressions.Cache.h" />
     <ClInclude Include="System.Text.RegularExpressions.IMachineFactory.h" />
     <ClInclude Include="System.Text.RegularExpressions.RegexOptions.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="System.Text.RegularExpressions.Regex.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Parser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -52,8 +54,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.RegularExpression.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Cache.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Regex.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Parser.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{633152D1-6793-4DD8-9083-F22F24D13D6D}</ProjectGuid>
