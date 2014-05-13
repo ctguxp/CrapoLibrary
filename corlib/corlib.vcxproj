@@ -49,6 +49,7 @@
     <ClInclude Include="System.Collections.IHashCodeProvider.h" />
     <ClInclude Include="System.FormatException.h" />
     <ClInclude Include="System.Globalization.NumberStyles.h" />
+    <ClInclude Include="System.IO.BinaryReader.h" />
     <ClInclude Include="System.NotImplementedException.h" />
     <ClInclude Include="System.OutOfMemoryException.h" />
     <ClInclude Include="System.Threading.ActiveObject.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="System.Collections.ArrayList.cpp" />
     <ClCompile Include="System.Collections.Hashtable.cpp" />
     <ClCompile Include="System.FormatException.cpp" />
+    <ClCompile Include="System.IO.BinaryReader.cpp" />
     <ClCompile Include="System.NotImplementedException.cpp" />
     <ClCompile Include="System.OutOfMemoryException.cpp" />
     <ClCompile Include="System.Threading.ActiveObject.cpp" />

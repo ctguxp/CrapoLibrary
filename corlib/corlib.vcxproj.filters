@@ -396,6 +396,9 @@
     <ClInclude Include="System.FormatException.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="System.IO.BinaryReader.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
     <ClInclude Include="System.Collections.Hashtable.h">
       <Filter>Header Files\System.Collections</Filter>
     </ClInclude>
@@ -682,6 +685,9 @@
     </ClCompile>
     <ClCompile Include="System.FormatException.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.BinaryReader.cpp">
+      <Filter>Source Files\System.IO</Filter>
     </ClCompile>
     <ClCompile Include="System.OutOfMemoryException.cpp">
       <Filter>Source Files\System</Filter>
