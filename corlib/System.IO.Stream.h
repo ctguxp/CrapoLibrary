@@ -21,8 +21,10 @@ namespace System
         virtual void Close();
         virtual void Flush() = 0;
         virtual int Read(ByteArray& buffer, int offset, int count) = 0;
+        virtual int ReadByte();
         virtual void SetLength(uintptr) = 0;
         virtual void Write(ByteArray&, int, int) = 0;
+        virtual void WriteByte(byte /*value*/);
       protected:
         Stream();
       };
