@@ -100,9 +100,9 @@ namespace System
         int l = ret.Length();
 
         if(l >= 2 && DirectorySeparatorChar() == '\\' && ret [l - 1] == VolumeSeparatorChar())
-          return ret + DirectorySeparatorChar();
+          return ret + String(DirectorySeparatorChar());
         else if(l == 1 && DirectorySeparatorChar() == '\\' && path.Length() >= 2 && path[nLast] == VolumeSeparatorChar())
-          return ret + VolumeSeparatorChar();
+          return ret + String(VolumeSeparatorChar());
         else
           {
           //
@@ -240,7 +240,7 @@ namespace System
 
       String p = get_temp_path ();
       if(p.Length() > 0 && p [p.Length() - 1] != DirectorySeparatorChar())
-        return p + DirectorySeparatorChar();
+        return p + String(DirectorySeparatorChar());
 
       return p;
       }
