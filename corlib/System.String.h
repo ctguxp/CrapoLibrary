@@ -40,6 +40,7 @@ namespace System
     public:
       // Constructors
       String(const wchar_t* = nullptr);
+      String(wchar_t);
       String(const wchar_t*, uint32, uint32);
       String(sbyte*);
       String(sbyte*, uint32, uint32);

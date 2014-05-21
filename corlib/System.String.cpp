@@ -34,6 +34,15 @@ namespace System
     }
   // ------------------------------------------------------------------------
 
+  String::String(wchar_t c)
+    :_length(1)
+    ,_buffer(new wchar_t[_length + 1])
+    ,_start_char(_buffer)
+    {
+    _buffer[0] = c;
+    _buffer[_length] = L'\0';
+    }
+
   // ------------------------------------------------------------------------
   /// Initializes a new instance of the String class to the value indicated by a specified pointer to an array of Unicode characters, a starting character position within that array, and a length.
   String::String(const wchar_t* s, uint32 startIndex, uint32 length)
