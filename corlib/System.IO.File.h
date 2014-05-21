@@ -20,6 +20,7 @@ namespace System
         static void Delete(String& path);
         static bool Exists(String& path);
         static FileStream* OpenRead(String path);
+        static FileStream* OpenWrite(String path);
       };
     }
   }

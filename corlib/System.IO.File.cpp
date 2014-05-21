@@ -73,5 +73,10 @@ namespace System
       {
       return new FileStream(path, FileMode::Open, FileAccess::Read, FileShare::Read);
       }
+
+    FileStream* File::OpenWrite(String path)
+      {
+      return new FileStream(path, FileMode::OpenOrCreate, FileAccess::Write, FileShare::None);
+      }
     }
   }
