@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "System.Collections.ArrayList.h"
+#include "System.Array.hpp"
 
 namespace System
   {
