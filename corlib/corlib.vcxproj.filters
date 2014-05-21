@@ -441,6 +441,9 @@
     <ClInclude Include="System.Collections.IList.h">
       <Filter>Header Files\System.Collections</Filter>
     </ClInclude>
+    <ClInclude Include="System.Collections.CollectionBase.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
     <ClInclude Include="System.IO.BinaryWriter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -696,6 +699,9 @@
       <Filter>Source Files\System</Filter>
     </ClCompile>
     <ClCompile Include="System.Collections.ArrayList.cpp">
+      <Filter>Source Files\System.Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Collections.CollectionBase.cpp">
       <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
     <ClCompile Include="System.IO.BinaryWriter.cpp">

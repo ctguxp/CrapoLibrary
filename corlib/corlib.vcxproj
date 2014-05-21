@@ -35,6 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System.Collections.CollectionBase.h" />
     <ClInclude Include="System.Collections.IList.h" />
     <ClInclude Include="Microsoft.Win32.h" />
     <ClInclude Include="Microsoft.Win32.RegistryHive.h" />
@@ -170,6 +171,7 @@
   <ItemGroup>
     <ClCompile Include="Microsoft.Win32.RegistryKey.cpp" />
     <ClCompile Include="System.Collections.ArrayList.cpp" />
+    <ClCompile Include="System.Collections.CollectionBase.cpp" />
     <ClCompile Include="System.Collections.Hashtable.cpp" />
     <ClCompile Include="System.FormatException.cpp" />
     <ClCompile Include="System.IO.BinaryReader.cpp" />
