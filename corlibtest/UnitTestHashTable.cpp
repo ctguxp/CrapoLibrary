@@ -53,13 +53,13 @@ namespace corlibtest
         {
         using namespace Collections;
         Hashtable h;
-        Assert::AreEqual<int32>(0, h.Count(), L"new table - count zero");
+        Assert::AreEqual<sizet>(0, h.Count(), L"new table - count zero");
         int max = 100;
         for(int i = 1; i < max; i++)
           h.Add(new Int32(i), new Int32(i));
         Assert::IsTrue(h.Count() > 0, L"table - don't gots stuff");
         h.Clear();
-        Assert::AreEqual<int32>(0, h.Count(), L"Table should be cleared");
+        Assert::AreEqual<sizet>(0, h.Count(), L"Table should be cleared");
         }
     };
   }
