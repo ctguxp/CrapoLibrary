@@ -76,6 +76,12 @@
     <Filter Include="Source Files\Microsoft.Win32">
       <UniqueIdentifier>{e06b565a-8034-4e2f-8fbf-e1df9264fd86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Crapo.Security">
+      <UniqueIdentifier>{b68c79c2-c730-480a-97a7-542f7efc1def}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Crapo.Security">
+      <UniqueIdentifier>{b2bc129d-c6f8-49af-b721-58f0e4c8a51b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -445,7 +451,10 @@
       <Filter>Header Files\System.Collections</Filter>
     </ClInclude>
     <ClInclude Include="System.IO.BinaryWriter.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Crapo.Security.BitConverterLE.h">
+      <Filter>Header Files\Crapo.Security</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -705,7 +714,10 @@
       <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
     <ClCompile Include="System.IO.BinaryWriter.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Crapo.Security.BitConverterLE.cpp">
+      <Filter>Source Files\Crapo.Security</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

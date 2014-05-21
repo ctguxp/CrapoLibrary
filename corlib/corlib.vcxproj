@@ -35,6 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Crapo.Security.BitConverterLE.h" />
     <ClInclude Include="System.Collections.CollectionBase.h" />
     <ClInclude Include="System.Collections.IList.h" />
     <ClInclude Include="Microsoft.Win32.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="sys.list.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Crapo.Security.BitConverterLE.cpp" />
     <ClCompile Include="Microsoft.Win32.RegistryKey.cpp" />
     <ClCompile Include="System.Collections.ArrayList.cpp" />
     <ClCompile Include="System.Collections.CollectionBase.cpp" />
