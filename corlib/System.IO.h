@@ -1,5 +1,7 @@
 #pragma once
 
+#include "System.IO.BinaryReader.h"
+#include "System.IO.BinaryWriter.h"
 #include "System.IO.CrapoFileType.h"
 #include "System.IO.CrapoIO.h"
 #include "System.IO.CrapoIOStat.h"
