@@ -10,16 +10,19 @@ namespace System
       {
       public:
         ArrayList();
+        ArrayList(sizet capacity);
         virtual ~ArrayList();
         // From ICollection
-        virtual int Count() override;
+        virtual sizet Count() override;
         virtual bool IsSynchronized() override;
         // From IList
         virtual void Clear() override;
       private:
-        int            _size;
-        int            _version;
-        Array<Object*> _items;
+        void Free();
+      private:
+        sizet           _size;
+        int             _version;
+        Array<Object*>  _items;
       };
     }
   }
