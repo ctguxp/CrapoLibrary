@@ -183,7 +183,7 @@ namespace System
       if(key == nullptr)
         throw ArgumentNullException(L"key", L"null key");
 
-      if(_inUse >= _threshold) 
+      if(_inUse >= (sizet)_threshold) 
         Rehash();
 
       uint32 size = (uint32)_table.Length();
