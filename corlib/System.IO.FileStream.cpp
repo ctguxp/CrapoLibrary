@@ -411,7 +411,7 @@ namespace System
 
     int FileStream::ReadInternal(ByteArray& dest, int offset, int count)
       {
-      int n = ReadSegment (dest, offset, count);
+      int n = ReadSegment(dest, offset, count);
       if (n == count) 
         {
         return count;

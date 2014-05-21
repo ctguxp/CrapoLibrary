@@ -43,8 +43,7 @@ namespace System
 
     Hashtable::~Hashtable()
       {
-      int i = 0;
-      for(;i < _table.Length(); ++i)
+      for(sizet i = 0; i < _table.Length(); ++i)
         {
         if(_table[i].key != nullptr)
           delete _table[i].key;
@@ -85,7 +84,7 @@ namespace System
 
     void Hashtable::Clear()
       {
-      for(int i = 0; i < _table.Length(); i++)
+      for(sizet i = 0; i < _table.Length(); i++)
         {
         delete _table[i].key;
         _table[i].key = nullptr;
