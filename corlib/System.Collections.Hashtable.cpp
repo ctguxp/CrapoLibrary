@@ -11,7 +11,7 @@ namespace System
     {
     Hashtable::KeyMarker Hashtable::Removed;
 
-    Hashtable::Hashtable(int capacity, float loadFactor, IHashCodeProvider* hcp, IComparer* comparer)
+    Hashtable::Hashtable(sizet capacity, float loadFactor, IHashCodeProvider* hcp, IComparer* comparer)
       :_inUse(0)
       ,_modificationCount(0)
       ,_loadFactor()
@@ -52,7 +52,7 @@ namespace System
         }
       }
 
-    int Hashtable::Count()
+    sizet Hashtable::Count()
       {
       return _inUse;
       }
@@ -146,10 +146,8 @@ namespace System
         }
       }
 
-    void Hashtable::Init(int capacity, float loadFactor)
+    void Hashtable::Init(sizet capacity, float loadFactor)
       {
-      if(capacity < 0)
-        throw ArgumentOutOfRangeException(L"capacity", L"negative capacity");
       if(loadFactor < 0.1 || loadFactor > 1 || Single::IsNaN(loadFactor))
         throw ArgumentOutOfRangeException(L"loadFactor", L"load factor");
       if(capacity == 0)

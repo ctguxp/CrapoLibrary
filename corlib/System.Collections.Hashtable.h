@@ -34,11 +34,11 @@ namespace System
       protected:
         static KeyMarker Removed;
       public:
-        Hashtable(int capacity = 0, float loadFactor = 1, IHashCodeProvider* hcp = nullptr, IComparer* comparer = nullptr);
+        Hashtable(sizet capacity = 0, float loadFactor = 1, IHashCodeProvider* hcp = nullptr, IComparer* comparer = nullptr);
         Hashtable(IDictionary* d, float loadFactor = 1, IHashCodeProvider* hcp = nullptr, IComparer* comparer = nullptr);
         virtual ~Hashtable();
         // From ICollection
-        virtual int Count() override;
+        virtual sizet Count() override;
         virtual bool IsSynchronized() override;
         // From IDictionary
         virtual bool IsFixedSize() override;
@@ -52,14 +52,14 @@ namespace System
         virtual int GetHash(Object* key);
         virtual bool KeyEquals(Object* item, Object* key);
       private:
-        void Init(int, float);
+        void Init(sizet, float);
         void AdjustThreshold();
         int Find(Object* key);
         void Rehash();
         void SetTable(Array<Slot>& table, IntArray& hashes);
         void PutImpl(Object* key, Object* value, bool overwrite);
       private:
-        int                _inUse;
+        sizet              _inUse;
         int                _modificationCount;
         float              _loadFactor;
         int                _threshold;
