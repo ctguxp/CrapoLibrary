@@ -42,7 +42,7 @@ namespace corlibtest
         {
         using namespace Text;
         // check ctor that specifies the capacity & maxCapacity
-        StringBuilder sb(444, 1234);
+        StringBuilder sb((uint32)444, (uint32)1234);
         Assert::AreEqual((cstring)String::Empty(), (cstring)sb.ToString());
         Assert::AreEqual<sizet>(0, sb.Length());
         Assert::AreEqual<sizet>(444, sb.Capacity());
@@ -55,7 +55,7 @@ namespace corlibtest
         // check for exception in ctor that specifies the capacity & maxCapacity
         try 
           {
-          StringBuilder sb(9999, 15);
+          StringBuilder sb((uint32)9999, (uint32)15);
           }
         catch(ArgumentOutOfRangeException) 
           {
