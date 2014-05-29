@@ -66,6 +66,8 @@ typedef uint32 uintptr;
 // System.IO namespace
 #include "System.IO.h"
 
+#include "System.Runtime.InteropServices.DllImport.h"
+
 #include "System.Text.ASCIIEncoding.h"
 //#include "System.Text.DecoderFallback.h"
 //#include "systext.decoder_fallback_buffer.h"

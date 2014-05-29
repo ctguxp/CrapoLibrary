@@ -82,6 +82,12 @@
     <Filter Include="Source Files\Crapo.Security">
       <UniqueIdentifier>{b2bc129d-c6f8-49af-b721-58f0e4c8a51b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\System.Runtime.InteropServices">
+      <UniqueIdentifier>{2a4c62ae-74d4-4103-80a0-ab34093bb2fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Runtime.InteropServices">
+      <UniqueIdentifier>{16fe65e6-8e90-4e1b-b9f7-96f27e7bd47e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -456,6 +462,9 @@
     <ClInclude Include="Crapo.Security.BitConverterLE.h">
       <Filter>Header Files\Crapo.Security</Filter>
     </ClInclude>
+    <ClInclude Include="System.Runtime.InteropServices.DllImport.h">
+      <Filter>Header Files\System.Runtime.InteropServices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -718,6 +727,9 @@
     </ClCompile>
     <ClCompile Include="Crapo.Security.BitConverterLE.cpp">
       <Filter>Source Files\Crapo.Security</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Runtime.InteropServices.DllImport.cpp">
+      <Filter>Source Files\System.Runtime.InteropServices</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
