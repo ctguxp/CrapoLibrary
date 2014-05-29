@@ -1,4 +1,10 @@
 #pragma once
 
 #include <corlib.h>
-#include <gdiplus.h>
+
+struct IDirectDrawSurface7;
+
+#include <gdiplusmem.h>
+#include <gdiplusenums.h>
+#include <gdiplustypes.h>
+#include <gdiplusinit.h>

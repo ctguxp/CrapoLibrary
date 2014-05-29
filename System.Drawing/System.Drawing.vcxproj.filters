@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\System.Drawing.Imaging">
+      <UniqueIdentifier>{76035bea-17b8-487e-b118-fe80f588700e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Drawing.Imaging">
+      <UniqueIdentifier>{ac3ba3c0-897c-4559-bbc3-6a5f4515c347}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -24,12 +30,36 @@
     <ClInclude Include="System.Drawing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="System.Drawing.Graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Drawing.Pen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Drawing.Color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Drawing.Imaging.ColorAdjustType.h">
+      <Filter>Header Files\System.Drawing.Imaging</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Drawing.GraphicsUnit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System.Drawing.GDIPlus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Drawing.Graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Drawing.Pen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Drawing.Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

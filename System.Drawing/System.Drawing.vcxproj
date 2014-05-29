@@ -36,8 +36,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="System.Drawing.Color.h" />
     <ClInclude Include="System.Drawing.GDIPlus.h" />
+    <ClInclude Include="System.Drawing.Graphics.h" />
+    <ClInclude Include="System.Drawing.GraphicsUnit.h" />
     <ClInclude Include="System.Drawing.h" />
+    <ClInclude Include="System.Drawing.Imaging.ColorAdjustType.h" />
+    <ClInclude Include="System.Drawing.Pen.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -50,7 +55,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="System.Drawing.Color.cpp" />
     <ClCompile Include="System.Drawing.GDIPlus.cpp" />
+    <ClCompile Include="System.Drawing.Graphics.cpp" />
+    <ClCompile Include="System.Drawing.Pen.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E39DEE33-BB11-4C9B-B5E7-46D9768F6BCC}</ProjectGuid>
