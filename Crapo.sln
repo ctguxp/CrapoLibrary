@@ -29,6 +29,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System.Drawing", "System.Dr
 		{30E50231-171A-4E6E-B9D5-082284DD3978} = {30E50231-171A-4E6E-B9D5-082284DD3978}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System.ServiceProcess", "System.ServiceProcess\System.ServiceProcess.vcxproj", "{DD8C8090-0000-4781-A77B-C80F1371ADEC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{30E50231-171A-4E6E-B9D5-082284DD3978} = {30E50231-171A-4E6E-B9D5-082284DD3978}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -137,6 +142,22 @@ Global
 		{E39DEE33-BB11-4C9B-B5E7-46D9768F6BCC}.Release|Win32.Build.0 = Release|Win32
 		{E39DEE33-BB11-4C9B-B5E7-46D9768F6BCC}.Release|x64.ActiveCfg = Release|x64
 		{E39DEE33-BB11-4C9B-B5E7-46D9768F6BCC}.Release|x64.Build.0 = Release|x64
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.Debug|Win32.Build.0 = Debug|Win32
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.Debug|x64.ActiveCfg = Debug|x64
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.Debug|x64.Build.0 = Debug|x64
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.DynamicDebug|Win32.ActiveCfg = DynamicDebug|Win32
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.DynamicDebug|Win32.Build.0 = DynamicDebug|Win32
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.DynamicDebug|x64.ActiveCfg = DynamicDebug|x64
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.DynamicDebug|x64.Build.0 = DynamicDebug|x64
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.DynamicRelease|Win32.ActiveCfg = DynamicRelease|Win32
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.DynamicRelease|Win32.Build.0 = DynamicRelease|Win32
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.DynamicRelease|x64.ActiveCfg = DynamicRelease|x64
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.DynamicRelease|x64.Build.0 = DynamicRelease|x64
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.Release|Win32.ActiveCfg = Release|Win32
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.Release|Win32.Build.0 = Release|Win32
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.Release|x64.ActiveCfg = Release|x64
+		{DD8C8090-0000-4781-A77B-C80F1371ADEC}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
