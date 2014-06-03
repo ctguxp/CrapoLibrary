@@ -465,6 +465,15 @@
     <ClInclude Include="System.Runtime.InteropServices.DllImport.h">
       <Filter>Header Files\System.Runtime.InteropServices</Filter>
     </ClInclude>
+    <ClInclude Include="System.Version.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.OperatingSystem.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.PlatformID.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -730,6 +739,12 @@
     </ClCompile>
     <ClCompile Include="System.Runtime.InteropServices.DllImport.cpp">
       <Filter>Source Files\System.Runtime.InteropServices</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Version.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.OperatingSystem.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

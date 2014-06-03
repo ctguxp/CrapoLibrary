@@ -54,7 +54,9 @@
     <ClInclude Include="System.IO.BinaryReader.h" />
     <ClInclude Include="System.IO.BinaryWriter.h" />
     <ClInclude Include="System.NotImplementedException.h" />
+    <ClInclude Include="System.OperatingSystem.h" />
     <ClInclude Include="System.OutOfMemoryException.h" />
+    <ClInclude Include="System.PlatformID.h" />
     <ClInclude Include="System.Runtime.InteropServices.DllImport.h" />
     <ClInclude Include="System.Threading.ActiveObject.h" />
     <ClInclude Include="Application.h" />
@@ -162,6 +164,7 @@
     <ClInclude Include="System.UInt16.h" />
     <ClInclude Include="System.UInt32.h" />
     <ClInclude Include="System.UInt64.h" />
+    <ClInclude Include="System.Version.h" />
     <ClInclude Include="System.Windows.Locale.h" />
     <ClInclude Include="UnicodeData.h" />
     <ClInclude Include="win32.security_attribute.h" />
@@ -180,6 +183,7 @@
     <ClCompile Include="System.IO.BinaryReader.cpp" />
     <ClCompile Include="System.IO.BinaryWriter.cpp" />
     <ClCompile Include="System.NotImplementedException.cpp" />
+    <ClCompile Include="System.OperatingSystem.cpp" />
     <ClCompile Include="System.OutOfMemoryException.cpp" />
     <ClCompile Include="System.Runtime.InteropServices.DllImport.cpp" />
     <ClCompile Include="System.Threading.ActiveObject.cpp" />
@@ -266,6 +270,7 @@
     <ClCompile Include="System.UInt16.cpp" />
     <ClCompile Include="System.UInt32.cpp" />
     <ClCompile Include="System.UInt64.cpp" />
+    <ClCompile Include="System.Version.cpp" />
     <ClCompile Include="System.Windows.Locale.cpp" />
     <ClCompile Include="win32.security_attribute.cpp" />
     <ClCompile Include="sys.rect.cpp" />
