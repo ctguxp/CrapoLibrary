@@ -26,6 +26,10 @@ namespace System
       String ToString(String format, IFormatProvider* provider);
       virtual uint32 GetHashCode() override;
       static Exception GetFormatException();
+      static int Parse(String s); 
+    private:
+      static bool Parse(String s, bool tryParse, int& result, Exception& exc);
+      static bool ProcessTrailingWhitespace(bool tryParse, String s, int position, Exception& exc);
     };
   }
 
