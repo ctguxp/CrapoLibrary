@@ -108,7 +108,7 @@ namespace System
       // lock must be held by the caller
       void FactoryCache::Cleanup()
         {
-        while(_factories.Count() >= _capacity && _capacity > 0)
+        while((int)_factories.Count() >= _capacity && _capacity > 0)
           {
           Object* victim = _mruList.Evict();
           if(victim != nullptr)
