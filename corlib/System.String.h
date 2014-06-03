@@ -29,6 +29,7 @@ namespace System
     class CultureInfo;
     class CompareInfo;
     }
+  class Int32;
   class String;
   typedef Array<String> StringArray;
   class CRAPOCOREDLL_API String : public Object, public IComparable<String>, public IEquatable<String>
@@ -169,6 +170,7 @@ namespace System
 
       // Friend operator append
       friend String operator+(const String&, const String&);
+      friend System::Int32;
       friend System::Text::StringBuilder;
       friend System::Text::UnicodeEncoding;
       friend System::IO::Path;
