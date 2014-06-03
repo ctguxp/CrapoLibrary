@@ -51,6 +51,10 @@ namespace System
     {
     return (cstring)_message;
     }
+  void Exception::Message(cstring message)
+    {
+    _message = message;
+    }
   // Get InnerException property
   Exception* Exception::InnerException()
     {

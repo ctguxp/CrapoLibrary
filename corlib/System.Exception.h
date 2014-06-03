@@ -20,6 +20,7 @@ namespace System
       Exception& operator = (const Exception&);
       // Get Message property
       virtual cstring Message();
+      virtual void Message(cstring message);
       // Get InnerException property
       Exception* InnerException();
     protected:
