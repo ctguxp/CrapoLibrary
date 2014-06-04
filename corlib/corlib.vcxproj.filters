@@ -474,6 +474,21 @@
     <ClInclude Include="System.PlatformID.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="System.Threading.WaitHandle.h">
+      <Filter>Header Files\System.Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Threading.EventWaitHandle.h">
+      <Filter>Header Files\System.Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Threading.ManualResetEvent.h">
+      <Filter>Header Files\System.Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Threading.EventResetMode.h">
+      <Filter>Header Files\System.Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Threading.h">
+      <Filter>Header Files\System.Threading</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -745,6 +760,15 @@
     </ClCompile>
     <ClCompile Include="System.OperatingSystem.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Threading.WaitHandle.cpp">
+      <Filter>Source Files\System.Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Threading.EventWaitHandle.cpp">
+      <Filter>Source Files\System.Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Threading.ManualResetEvent.cpp">
+      <Filter>Source Files\System.Threading</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -79,7 +79,7 @@ typedef uint32 uintptr;
 #include "System.Text.Unicode.h"
 
 // System.Threading
-#include "System.Threading.Thread.h"
+#include "System.Threading.h"
 
 #include "Microsoft.Win32.h"
 
