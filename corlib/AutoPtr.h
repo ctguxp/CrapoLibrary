@@ -19,6 +19,7 @@ class AutoPtr : public System::Ownership
       }
     T* operator->() { return _ptr; }
     T* Get() { return _ptr; }
+    const T* Get() const { return _ptr; }
     void Set(T* ptr = nullptr)
       {
       if(_isMutable)
