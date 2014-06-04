@@ -37,6 +37,7 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="System.ServiceProcess.ServiceBase.h" />
+    <ClInclude Include="System.ServiceProcess.ServiceControllerStatus.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
