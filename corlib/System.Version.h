@@ -18,7 +18,7 @@ namespace System
       ~Version();
       Version& operator=(const Version& version);
     private:
-      void CheckedSet(int defined, int major, int minor, int build, int revision);
+      void CheckedSet(sizet defined, int major, int minor, int build, int revision);
     private:
       int _major;
       int _minor;

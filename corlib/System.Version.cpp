@@ -37,7 +37,7 @@ namespace System
     CharArray delim(1);
     delim[0] = L'.';
     StringArray vals = version.Split(delim);
-    int n = vals.Length();
+    sizet n = vals.Length();
 
     if(n < 2 || n > 4)
       {
@@ -77,7 +77,7 @@ namespace System
 
     return *this;
     }
-  void Version::CheckedSet(int defined, int major, int minor, int build, int revision)
+  void Version::CheckedSet(sizet defined, int major, int minor, int build, int revision)
     {
     // defined should be 2, 3 or 4
 
