@@ -24,12 +24,36 @@
     <ClInclude Include="System.ServiceProcess.ServiceControllerStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="System.ServiceProcess.ServiceController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.ServiceProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.ServiceProcess.ServiceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.ServiceProcess.ServiceInstaller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.ServiceProcess.ServiceStartMode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System.ServiceProcess.ServiceBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.ServiceProcess.ServiceController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.ServiceProcess.ServiceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.ServiceProcess.ServiceInstaller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

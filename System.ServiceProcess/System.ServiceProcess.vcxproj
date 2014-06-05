@@ -36,8 +36,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="System.ServiceProcess.h" />
     <ClInclude Include="System.ServiceProcess.ServiceBase.h" />
+    <ClInclude Include="System.ServiceProcess.ServiceController.h" />
     <ClInclude Include="System.ServiceProcess.ServiceControllerStatus.h" />
+    <ClInclude Include="System.ServiceProcess.ServiceInstaller.h" />
+    <ClInclude Include="System.ServiceProcess.ServiceManager.h" />
+    <ClInclude Include="System.ServiceProcess.ServiceStartMode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -51,6 +56,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="System.ServiceProcess.ServiceBase.cpp" />
+    <ClCompile Include="System.ServiceProcess.ServiceController.cpp" />
+    <ClCompile Include="System.ServiceProcess.ServiceInstaller.cpp" />
+    <ClCompile Include="System.ServiceProcess.ServiceManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DD8C8090-0000-4781-A77B-C80F1371ADEC}</ProjectGuid>
