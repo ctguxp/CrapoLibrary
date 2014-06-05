@@ -15,6 +15,8 @@ namespace System
       ,_can_handle_power_event()
       ,_can_handle_session_change_event()
       ,_can_shutdown()
+      ,_exitCode(0)
+      ,_checkPoint(1)
       ,_service_handle(NULL)
       ,_stop_event()
       ,_service_name()
@@ -28,6 +30,8 @@ namespace System
       ,_can_handle_power_event(sb._can_handle_power_event)
       ,_can_handle_session_change_event(sb._can_handle_session_change_event)
       ,_can_shutdown(sb._can_shutdown)
+      ,_exitCode(sb._exitCode)
+      ,_checkPoint(sb._checkPoint)
       ,_service_handle(sb._service_handle)
       ,_stop_event()
       ,_service_name(sb._service_name)
@@ -49,6 +53,8 @@ namespace System
       _can_handle_power_event = sb._can_handle_power_event;
       _can_handle_session_change_event = sb._can_handle_session_change_event;
       _can_shutdown = sb._can_shutdown;
+      _exitCode = sb._exitCode;
+      _checkPoint = sb._checkPoint;
       _service_handle = sb._service_handle;
       _stop_event.Set((Threading::ManualResetEvent*)sb._stop_event.Get());
       _service_name = sb._service_name;
@@ -85,6 +91,22 @@ namespace System
           throw SystemException(L"Cannot modify this property after the service has started.");
       _can_pause_and_continue = value;
       }
+    int ServiceBase::ExitCode()
+      {
+      return _exitCode;
+      }
+    void ServiceBase::ExitCode(int value)
+      {
+      _exitCode = value;
+      }
+    uint32 ServiceBase::CheckPoint()
+      {
+      return _checkPoint;
+      }
+    void ServiceBase::CheckPoint(uint32 value)
+      {
+      _checkPoint = value;
+      }
     String& ServiceBase::ServiceName()
       {
       return _service_name;
@@ -107,7 +129,10 @@ namespace System
     void ServiceBase::Stop()
       {
       if(_stop_event.Get() != nullptr)
+        {
+        //::OutputDebugString(L"CRAPO Stop SetEvent\r\n");
         _stop_event->Set();
+        }
       else
         OnStop();
       }
@@ -116,6 +141,7 @@ namespace System
       }
     void ServiceBase::OnStop()
       {
+      ::OutputDebugString(L"CRAPO OnStop\r\n");
       }
     void ServiceBase::OnPause()
       {
@@ -147,6 +173,7 @@ namespace System
       {
       // handler needs to last until the service stops
       _service_handle = ::RegisterServiceCtrlHandlerEx(_service_name, (LPHANDLER_FUNCTION_EX)Win32HandlerFn, this);
+      //::OutputDebugString(L"CRAPO RegisterServiceCtrlHandlerEx\r\n");
 
       if(_service_handle != NULL)
         {
@@ -162,10 +189,14 @@ namespace System
           }
 
         OnStart(args);
+        //::OutputDebugString(L"CRAPO OnStart\r\n");
 
         SetStatus(ServiceControllerStatus::Running);
+        //::OutputDebugString(L"CRAPO Running\r\n");
 
+        //::OutputDebugString(L"CRAPO Wait Start\r\n");
         _stop_event->WaitOne();
+        //::OutputDebugString(L"CRAPO Wait End\r\n");
 
         SetStatus(ServiceControllerStatus::StopPending);
 
@@ -197,40 +228,45 @@ namespace System
       }
     int WINAPI ServiceBase::Win32HandlerFn(DWORD control, DWORD eventType, LPVOID eventData, LPVOID context)
       {
-      ServiceBase& obj = reinterpret_cast<ServiceBase&>(context);
+      ServiceBase* obj = reinterpret_cast<ServiceBase*>(context);
+      if(obj == nullptr)
+        {
+        //::OutputDebugString(L"CRAPO Bad Pointer\r\n");
+        }
       switch(control)
         {
         case SERVICE_CONTROL_STOP:
-          if(obj._can_stop)
+          if((*obj)._can_stop)
             {
-            obj.Stop();
+            //::OutputDebugString(L"CRAPO Handler Stop\r\n");
+            (*obj).Stop();
             return NO_ERROR;
             }
           break;
         case SERVICE_CONTROL_PAUSE:
-          if(obj._can_pause_and_continue)
+          if((*obj)._can_pause_and_continue)
             {
-            obj.SetStatus(ServiceControllerStatus::PausePending);
-            obj.OnPause();
-            obj.SetStatus(ServiceControllerStatus::Paused);
+            (*obj).SetStatus(ServiceControllerStatus::PausePending);
+            (*obj).OnPause();
+            (*obj).SetStatus(ServiceControllerStatus::Paused);
             return NO_ERROR;
             }
           break;
         case SERVICE_CONTROL_CONTINUE:
-          if(obj._can_pause_and_continue)
+          if((*obj)._can_pause_and_continue)
             {
-            obj.SetStatus(ServiceControllerStatus::ContinuePending);
-            obj.OnContinue();
-            obj.SetStatus(ServiceControllerStatus::Running);
+            (*obj).SetStatus(ServiceControllerStatus::ContinuePending);
+            (*obj).OnContinue();
+            (*obj).SetStatus(ServiceControllerStatus::Running);
             return NO_ERROR;
             }
           break;
         case SERVICE_CONTROL_INTERROGATE:
           return NO_ERROR;
         case SERVICE_CONTROL_SHUTDOWN:
-          if(obj._can_shutdown)
+          if((*obj)._can_shutdown)
             {
-            obj.OnShutdown();
+            (*obj).OnShutdown();
             return NO_ERROR;
             }
           break;
@@ -248,10 +284,13 @@ namespace System
     void ServiceBase::Win32NotifyStatus(ServiceBase& service, ServiceControllerStatus status)
       {
       SERVICE_STATUS service_status;
+      ZeroMemory(&service_status, sizeof(SERVICE_STATUS));
 
       service_status.dwServiceType = share_process ? SERVICE_WIN32_SHARE_PROCESS : SERVICE_WIN32_OWN_PROCESS;
 
       service_status.dwCurrentState = (int)status;
+      service_status.dwWin32ExitCode = service.ExitCode();
+      service_status.dwWaitHint = 5000;
 
       if(status != ServiceControllerStatus::StartPending)
         {
@@ -271,9 +310,13 @@ namespace System
           service_status.dwControlsAccepted |= SERVICE_ACCEPT_SHUTDOWN;
         }
 
-      //service_status.dwWin32ExitCode = service.ExitCode;
-      service_status.dwWin32ExitCode = NO_ERROR;
-      service_status.dwWaitHint = 5000;
+      if(status == ServiceControllerStatus::Running || status == ServiceControllerStatus::Stopped)
+        service_status.dwCheckPoint = 0;
+      else
+        {
+        service_status.dwCheckPoint = service.CheckPoint();
+        service.CheckPoint(service.CheckPoint() + 1);
+        }
 
       ::SetServiceStatus(service._service_handle, &service_status);
       }

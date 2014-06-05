@@ -19,6 +19,10 @@ namespace System
         void CanStop(bool value);
         bool CanPauseAndContinue();
         void CanPauseAndContinue(bool value);
+        int ExitCode();
+        void ExitCode(int value);
+        uint32 CheckPoint();
+        void CheckPoint(uint32 value);
         String& ServiceName();
         void ServiceName(String value);
         static void Run(ServiceBase& service);
@@ -46,6 +50,8 @@ namespace System
         bool                          _can_handle_power_event;
         bool                          _can_handle_session_change_event;
         bool                          _can_shutdown;
+        int                           _exitCode;
+        uint32                        _checkPoint;
         SERVICE_STATUS_HANDLE         _service_handle;
         LPSERVICE_MAIN_FUNCTION       _service_main;
         Threading::GCManualResetEvent _stop_event;
