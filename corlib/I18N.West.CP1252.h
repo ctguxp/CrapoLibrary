@@ -7,7 +7,7 @@ namespace I18N
   {
   namespace West
     {
-    class CP1252 : public Common::ByteEncoding
+    class CRAPOCOREDLL_API CP1252 : public Common::ByteEncoding
       {
       private:
         static wchar_t ToChars[256];

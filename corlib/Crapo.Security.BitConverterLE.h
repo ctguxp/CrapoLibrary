@@ -7,7 +7,7 @@ namespace Crapo
   {
   namespace Security
     {
-    class BitConverterLE
+    class CRAPOCOREDLL_API BitConverterLE
       {
       public:
         BitConverterLE();

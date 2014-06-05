@@ -10,7 +10,9 @@ namespace System
   {
   class CRAPOCOREDLL_API Environment
     {
+#pragma warning(disable:4251)
     static GCOperatingSystem _os;
+#pragma warning(default:4251)
     public:
       Environment();
       ~Environment();

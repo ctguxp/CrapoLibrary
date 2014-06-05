@@ -3,7 +3,7 @@
 
 namespace System
   {
-  class Version
+  class CRAPOCOREDLL_API Version
     {
     enum
       {

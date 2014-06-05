@@ -10,7 +10,7 @@ namespace I18N
   {
   namespace Common
     {
-    class CrapoEncoding : public Text::Encoding
+    class CRAPOCOREDLL_API CrapoEncoding : public Text::Encoding
       {
       private:
         int _win_code_page;

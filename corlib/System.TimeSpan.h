@@ -6,7 +6,7 @@ namespace System
   {
   class TimeSpan;
   typedef AutoPtr<TimeSpan> GCTimeSpan;
-  class TimeSpan : public Object
+  class CRAPOCOREDLL_API TimeSpan : public Object
     {
     private:
       enum class ParseError
@@ -40,8 +40,10 @@ namespace System
     private:
       int64 _ticks;
     public:
+#pragma warning(disable:4251)
       static GCTimeSpan MaxValue;
       static GCTimeSpan MinValue;
+#pragma warning(default:4251)
     public:
       TimeSpan(int64 ticks = 0);
       TimeSpan(const TimeSpan&);

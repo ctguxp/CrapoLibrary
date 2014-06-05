@@ -3,7 +3,7 @@
 
 namespace System
   {
-  class FormatException : public SystemException
+  class CRAPOCOREDLL_API FormatException : public SystemException
     {
     public:
       FormatException(cstring message = nullptr);

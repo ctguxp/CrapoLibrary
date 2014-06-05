@@ -23,9 +23,13 @@ namespace System
         void Write7BitEncodedInt(int32 /*value*/);
       private:
         bool             _leaveOpen;
+#pragma warning(disable:4251)
         ByteArray        _buffer;
+#pragma warning(default:4251)
         Stream*          _stream;
+#pragma warning(disable:4251)
         Text::GCEncoding _encoding;
+#pragma warning(default:4251)
       };
     }
   }

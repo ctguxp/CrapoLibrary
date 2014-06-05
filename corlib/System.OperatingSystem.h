@@ -5,7 +5,7 @@
 
 namespace System
   {
-  class OperatingSystem
+  class CRAPOCOREDLL_API OperatingSystem
     {
     public:
       OperatingSystem(PlatformID /*platform*/, Version /*version*/);

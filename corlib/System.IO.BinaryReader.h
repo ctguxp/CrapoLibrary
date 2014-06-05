@@ -3,6 +3,7 @@
 #include "System.Text.Encoding.h"
 #include "System.String.h"
 
+
 namespace System
   {
   namespace IO
@@ -28,9 +29,13 @@ namespace System
         int Read7BitEncodedInt();
       private:
         bool             _leaveOpen;
+#pragma warning(disable:4251)
         ByteArray        _buffer;
+#pragma warning(default:4251)
         Stream*          _stream;
+#pragma warning(disable:4251)
         Text::GCEncoding _encoding;
+#pragma warning(default:4251)
       };
     }
   }

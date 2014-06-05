@@ -8,7 +8,7 @@ namespace Microsoft
   {
   namespace Win32
     {
-    class RegistryKey
+    class CRAPOCOREDLL_API RegistryKey
       {
       private:
         enum

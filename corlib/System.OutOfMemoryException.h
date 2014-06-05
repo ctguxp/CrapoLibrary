@@ -3,7 +3,7 @@
 
 namespace System
   {
-  class OutOfMemoryException : public SystemException
+  class CRAPOCOREDLL_API OutOfMemoryException : public SystemException
     {
     public:
       OutOfMemoryException(cstring = nullptr);

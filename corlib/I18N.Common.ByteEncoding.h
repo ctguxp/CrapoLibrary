@@ -9,10 +9,12 @@ namespace I18N
   {
   namespace Common
     {
-    class ByteEncoding : public CrapoEncoding
+    class CRAPOCOREDLL_API ByteEncoding : public CrapoEncoding
       {
       protected:
+#pragma warning(disable:4251)
         CharArray _toChars;
+#pragma warning(default:4251)
         String    _encodingName;
 	      String    _bodyName;
 	      String    _headerName;
