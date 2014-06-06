@@ -21,7 +21,7 @@ namespace System
                 }
               virtual bool Equals (T x, T y)
                 {
-                return x.Equals(y);
+                return x.Equals(&y);
                 }
             };
         public:
