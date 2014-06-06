@@ -1,4 +1,5 @@
 #pragma once
+#include "System.Text.RegualarExpressions.ICompiler.h"
 
 namespace System
   {
@@ -13,6 +14,7 @@ namespace System
           public:
             RegularExpression();
             ~RegularExpression();
+            //virtual void Compile(ICompiler* cmp, bool reverse) override;
           };
         }
       }

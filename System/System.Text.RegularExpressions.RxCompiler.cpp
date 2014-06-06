@@ -119,6 +119,59 @@ namespace System
             }
           }
         }
+      void RxCompiler::EmitOpen(int gid)
+        {
+        if(gid > 65535)
+          {
+          //throw NotSupportedException();
+          throw SystemException(L"Not Supported");
+          }
+        Emit(RxOp::OpenGroup);
+        Emit((uint16)gid);
+        }
+      void RxCompiler::EmitClose(int gid)
+        {
+        if(gid > 65535)
+          {
+          //throw NotSupportedException();
+          throw SystemException(L"Not Supported");
+          }
+        Emit(RxOp::CloseGroup);
+        Emit((uint16)gid);
+        }
+      void RxCompiler::EmitBalance()
+        {
+        Emit(RxOp::Balance);
+        }
+      void RxCompiler::EmitReference(int gid, bool ignore, bool reverse)
+        {
+        if(gid > 65535)
+          {
+          //throw NotSupportedException();
+          throw SystemException(L"Not Supported");
+          }
+        EmitOpIgnoreReverse(RxOp::Reference, ignore, reverse);
+        Emit((uint16)gid);
+        }
+      void RxCompiler::EmitInfo(int32 count, int32 min, int32 max)
+        {
+        Emit(RxOp::Info);
+        if(count > 65535)
+          {
+          //throw NotSupportedException();
+          throw SystemException(L"Not Supported");
+          }
+        Emit((uint16)count);
+        Emit(min);
+        Emit(max);
+        }
+      void RxCompiler::EmitBranchEnd()
+        {
+        }
+      void RxCompiler::EmitAlternationEnd()
+        {
+        }
+
 
       // Virtual functions
       void RxCompiler::EmitOp(RxOp op, bool negate, bool ignore, bool reverse)
@@ -165,6 +218,15 @@ namespace System
         _program[_curpos] = (byte)val;
         _program[_curpos + 1] = (byte)(val >> 8);
         _curpos += 2;
+        }
+      void RxCompiler::Emit(int32 val)
+        {
+        MakeRoom(4);
+        _program[_curpos] = (byte)val;
+        _program[_curpos + 1] = (byte)(val >> 8);
+        _program[_curpos + 2] = (byte)(val >> 16);
+        _program[_curpos + 3] = (byte)(val >> 24);
+        _curpos += 4;
         }
       void RxCompiler::Emit(RxOp opcode)
         {

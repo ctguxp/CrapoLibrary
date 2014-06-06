@@ -60,6 +60,12 @@
     <ClInclude Include="System.Text.RegularExpressions.RxOp.h">
       <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Expression.h">
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.CompositeExpression.h">
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -82,6 +88,12 @@
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.RxCompiler.cpp">
       <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Expression.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.CompositeExpression.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
