@@ -255,6 +255,8 @@ namespace System
     }
   // ------------------------------------------------------------------------
 
+  // ------------------------------------------------------------------------
+  /// Compares substrings of two specified String objects by evaluating the numeric values of the corresponding Char objects in each substring.
   int String::CompareOrdinal(String& strA, int indexA, String& strB, int indexB, int length)
     {
     if (indexA > strA.Length() || indexA < 0)
@@ -266,7 +268,10 @@ namespace System
 
     return CompareOrdinalUnchecked(strA, indexA, length, strB, indexB, length);
     }
+  // ------------------------------------------------------------------------
 
+  // ------------------------------------------------------------------------
+  /// Concatenates three specified instances of String.
   String String::Concat(String str0, String str1, String str2)
     {
     if(str0.Length() == 0)
@@ -335,6 +340,7 @@ namespace System
     tmp.check_null();
     return tmp;
     }
+  // ------------------------------------------------------------------------
 
   // ------------------------------------------------------------------------
   /// Returns a value indicating whether a specified substring occurs within this string.
@@ -775,6 +781,28 @@ namespace System
     CharArray tmp((wchar_t*)_start_char + startIndex, length);
     return tmp;
     }
+  // ------------------------------------------------------------------------
+
+  // ------------------------------------------------------------------------
+  /// Returns a copy of this string converted to lowercase.
+  String String::ToLower()
+    {
+    return ToLower(&Globalization::CultureInfo::CurrentCulture());
+    }
+  // ------------------------------------------------------------------------
+
+  // ------------------------------------------------------------------------
+  /// Returns a copy of this string converted to lowercase, using the casing rules of the specified culture.
+  String String::ToLower(Globalization::CultureInfo* culture)
+		{
+			if(culture == nullptr)
+				throw ArgumentNullException(L"culture");
+
+			if(culture->LCID() == 0x007F) // Invariant
+				return ToLowerInvariant();
+
+			return culture->TextInfo().ToLower(*this);
+		}
   // ------------------------------------------------------------------------
 
   // ------------------------------------------------------------------------

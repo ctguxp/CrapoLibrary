@@ -28,6 +28,7 @@ namespace System
     {
     class CultureInfo;
     class CompareInfo;
+    class TextInfo;
     }
   class Int32;
   class String;
@@ -95,6 +96,8 @@ namespace System
       CharArray ToCharArray();
       CharArray ToCharArray(uint32, uint32);
       virtual String ToString() override;
+      String ToLower();
+      String ToLower(Globalization::CultureInfo* culture);
       String ToLowerInvariant();
       String Trim();
       String TrimStart(CharArray&);
@@ -175,6 +178,7 @@ namespace System
       friend System::Text::UnicodeEncoding;
       friend System::IO::Path;
       friend System::Globalization::CompareInfo;
+      friend System::Globalization::TextInfo;
     };
 
   // Operator append
