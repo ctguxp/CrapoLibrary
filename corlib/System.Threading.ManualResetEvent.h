@@ -6,7 +6,7 @@ namespace System
   {
   namespace Threading
     {
-    class ManualResetEvent : public EventWaitHandle
+    class CRAPOCOREDLL_API ManualResetEvent : public EventWaitHandle
       {
       public:
         ManualResetEvent(bool initialState);

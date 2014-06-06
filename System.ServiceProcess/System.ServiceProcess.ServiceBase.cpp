@@ -169,7 +169,7 @@ namespace System
       //else
       //Console.Error.WriteLine("Use mono-service to start service processes");
       }
-    VOID WINAPI ServiceBase::ServiceMainCallback(DWORD argCount, LPWSTR* argPointer)
+    void ServiceBase::ServiceMainCallback(DWORD argCount, LPWSTR* argPointer)
       {
       // handler needs to last until the service stops
       _service_handle = ::RegisterServiceCtrlHandlerEx(_service_name, (LPHANDLER_FUNCTION_EX)Win32HandlerFn, this);

@@ -6,7 +6,7 @@ namespace System
   {
   namespace Collections
     {
-    class ArrayList : public IList
+    class CRAPOCOREDLL_API ArrayList : public IList
       {
       public:
         ArrayList();
@@ -22,7 +22,9 @@ namespace System
       private:
         sizet           _size;
         int             _version;
+#pragma warning(disable:4251)
         Array<Object*>  _items;
+#pragma warning(default:4251)
       };
     }
   }

@@ -9,7 +9,7 @@ namespace System
   {
   namespace Collections
     {
-    class Hashtable : public IDictionary
+    class CRAPOCOREDLL_API Hashtable : public IDictionary
       {
       enum
         {
@@ -26,7 +26,7 @@ namespace System
           Object* key;
           Object* value;
           };
-        class KeyMarker : public Object
+        class CRAPOCOREDLL_API KeyMarker : public Object
           {
           public:
             KeyMarker(){}
@@ -66,8 +66,10 @@ namespace System
         IHashCodeProvider* _hcpRef;
         IComparer*         _comparerRef;
         IEqualityComparer* _equalityComparer;
+#pragma warning(disable:4251)
         Array<Slot>        _table;
         IntArray           _hashes;
+#pragma warning(default:4251)
       };
     }
   }

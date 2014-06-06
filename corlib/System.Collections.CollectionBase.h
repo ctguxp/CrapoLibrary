@@ -6,7 +6,7 @@ namespace System
   {
   namespace Collections
     {
-    class CollectionBase : public IList
+    class CRAPOCOREDLL_API CollectionBase : public IList
       {
       public:
         virtual ~CollectionBase();

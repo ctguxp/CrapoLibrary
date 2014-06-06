@@ -6,7 +6,7 @@ namespace System
   {
   namespace Threading
     {
-    class EventWaitHandle : public WaitHandle
+    class CRAPOCOREDLL_API EventWaitHandle : public WaitHandle
       {
       public:
         EventWaitHandle(bool /*initialState*/, EventResetMode /*mode*/, String* name = nullptr);

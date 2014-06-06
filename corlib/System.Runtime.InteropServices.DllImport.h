@@ -7,7 +7,7 @@ namespace System
     {
     namespace InteropServices
       {
-      class DllImport
+      class CRAPOCOREDLL_API DllImport
         {
         public:
           DllImport(String dllName);

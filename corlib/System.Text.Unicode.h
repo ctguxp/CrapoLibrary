@@ -6,7 +6,7 @@ namespace System
   {
   namespace Text
     {
-    class UnicodeEncoding : public Encoding
+    class CRAPOCOREDLL_API UnicodeEncoding : public Encoding
       {
       enum
         {
