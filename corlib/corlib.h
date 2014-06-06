@@ -61,7 +61,7 @@ typedef uint32 uintptr;
 #include "System.Globalization.NumberFormatInfo.h"
 
 #include "System.Collections.h"
-#include "System.Collections.Generic.List.hpp"
+#include "System.Collections.Generic.h"
 
 // System.IO namespace
 #include "System.IO.h"

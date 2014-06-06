@@ -489,6 +489,9 @@
     <ClInclude Include="System.Threading.h">
       <Filter>Header Files\System.Threading</Filter>
     </ClInclude>
+    <ClInclude Include="System.Collections.Generic.h">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
