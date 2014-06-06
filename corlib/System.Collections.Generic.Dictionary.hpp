@@ -36,8 +36,8 @@ namespace System
       template<class TKey, class TValue>
       int Dictionary<TKey, TValue>::Count()
         {
-			  return _count;
-		    }
+        return _count;
+        }
 
 
       template<class TKey, class TValue>
@@ -99,7 +99,7 @@ namespace System
         //	 Hashtable is automatically increased
         //	 to the smallest prime number that is larger
         //	 than twice the current number of Hashtable buckets
-        int newSize = HashPrimeNumbers::ToPrime((_table.Length() << 1) | 1);
+        int newSize = HashPrimeNumbers::ToPrime((int)(_table.Length() << 1) | 1);
 
         // allocate new hash table and link slots array
         IntArray newTable(newSize);
@@ -128,50 +128,72 @@ namespace System
         }
 
       template<class TKey, class TValue>
-      void Dictionary<TKey, TValue>::Add(TKey key, TValue value)
+      bool Dictionary<TKey, TValue>::TryGetValue(TKey key, TValue& value)
+        {
+        // get first item of linked list corresponding to given key
+        int32 hashCode = _hcp->GetHashCode(key) | HASH_FLAG;
+        int cur = _table[(hashCode & Int32::MaxValue) % _table.Length()] - 1;
+
+        // walk linked list until right slot is found or end is reached
+        while(cur != NO_SLOT)
+          {
+          // The ordering is important for compatibility with MS and strange
+          // Object.Equals () implementations
+          if(_linkSlots[cur].HashCode == hashCode && _hcp->Equals(_keySlots[cur], key))
             {
-            // get first item of linked list corresponding to given key
-            int32 hashCode = _hcp->GetHashCode(key) | HASH_FLAG;
-            int index = (hashCode & Int32::MaxValue) % _table.Length();
-            int cur = _table[index] - 1;
-
-            // walk linked list until end is reached (throw an exception if a
-            // existing slot is found having an equivalent key)
-            while(cur != NO_SLOT) 
-              {
-              // The ordering is important for compatibility with MS and strange
-              // Object.Equals () implementations
-              if(_linkSlots[cur].HashCode == hashCode && _hcp->Equals(_keySlots[cur], key))
-                throw ArgumentException(L"An element with the same key already exists in the dictionary.");
-              cur = _linkSlots[cur].Next;
-              }
-
-            if(++_count > _threshold) 
-              {
-              Resize();
-              index = (hashCode & Int32::MaxValue) % _table.Length();
-              }
-
-            // find an empty slot
-            cur = _emptySlot;
-            if(cur == NO_SLOT)
-              cur = _touchedSlots++;
-            else 
-              _emptySlot = _linkSlots[cur].Next;
-
-            // store the hash code of the added item,
-            // prepend the added item to its linked list,
-            // update the hash table
-            _linkSlots[cur].HashCode = hashCode;
-            _linkSlots[cur].Next = _table[index] - 1;
-            _table[index] = cur + 1;
-
-            // store item's data 
-            _keySlots[cur] = key;
-            _valueSlots[cur] = value;
-
-            _generation++;
+            value = _valueSlots[cur];
+            return true;
             }
+          cur = _linkSlots[cur].Next;
+          }
+        return false;
+        }
+
+      template<class TKey, class TValue>
+      void Dictionary<TKey, TValue>::Add(TKey key, TValue value)
+        {
+        // get first item of linked list corresponding to given key
+        int32 hashCode = _hcp->GetHashCode(key) | HASH_FLAG;
+        int index = (hashCode & Int32::MaxValue) % _table.Length();
+        int cur = _table[index] - 1;
+
+        // walk linked list until end is reached (throw an exception if a
+        // existing slot is found having an equivalent key)
+        while(cur != NO_SLOT) 
+          {
+          // The ordering is important for compatibility with MS and strange
+          // Object.Equals () implementations
+          if(_linkSlots[cur].HashCode == hashCode && _hcp->Equals(_keySlots[cur], key))
+            throw ArgumentException(L"An element with the same key already exists in the dictionary.");
+          cur = _linkSlots[cur].Next;
+          }
+
+        if(++_count > _threshold) 
+          {
+          Resize();
+          index = (hashCode & Int32::MaxValue) % _table.Length();
+          }
+
+        // find an empty slot
+        cur = _emptySlot;
+        if(cur == NO_SLOT)
+          cur = _touchedSlots++;
+        else 
+          _emptySlot = _linkSlots[cur].Next;
+
+        // store the hash code of the added item,
+        // prepend the added item to its linked list,
+        // update the hash table
+        _linkSlots[cur].HashCode = hashCode;
+        _linkSlots[cur].Next = _table[index] - 1;
+        _table[index] = cur + 1;
+
+        // store item's data 
+        _keySlots[cur] = key;
+        _valueSlots[cur] = value;
+
+        _generation++;
+        }
       }
     }
   }

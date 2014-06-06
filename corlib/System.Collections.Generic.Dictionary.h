@@ -33,6 +33,7 @@ namespace System
           void Add(TKey key, TValue value);
           bool ContainsKey(TKey key);
           int Count();
+          bool TryGetValue(TKey key, TValue& value);
         private:
           void Init(uint32 capacity, IEqualityComparer<TKey>* hcp);       
           void InitArrays(uint32 size);
