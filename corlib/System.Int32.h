@@ -26,6 +26,7 @@ namespace System
       String ToString(String format, IFormatProvider* provider);
       virtual uint32 GetHashCode() override;
       static Exception GetFormatException();
+      virtual bool Equals(Object* obj) override;
       static int Parse(String s); 
     private:
       static bool Parse(String s, bool tryParse, int& result, Exception& exc);

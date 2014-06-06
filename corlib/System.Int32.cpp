@@ -40,6 +40,14 @@ namespace System
     {
     return NumberFormatter::NumberToString(&format, _value, provider);
     }
+  bool Int32::Equals(Object* obj)
+    {
+    Int32 i;
+    if(!Object::IsInstance(*obj, i))
+      return false;
+    Int32* o = static_cast<Int32*>(obj);
+    return (*o)._value == _value;
+    }
   uint32 Int32::GetHashCode()
     {
     return (uint32)abs(_value);
