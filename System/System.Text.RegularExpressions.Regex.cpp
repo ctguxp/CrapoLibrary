@@ -2,6 +2,7 @@
 #include "System.Text.RegularExpressions.Regex.h"
 #include "System.Text.RegularExpressions.Syntax.Parser.h"
 #include "System.Text.RegularExpressions.Syntax.RegularExpression.h"
+#include "System.Text.RegularExpressions.RxCompiler.h"
 
 namespace System
   {
@@ -97,29 +98,29 @@ namespace System
         Parser parser;
         RegularExpression* regularExpression = parser.ParseRegularExpression(pattern, options);
         return nullptr;
-        /*ICompiler* compiler;
-        if(!Regex.old_rx)
-          {
-          if ((options & RegexOptions::Compiled) != RegexOptions::None)
-            {
-            compiler = new CILCompiler();
-            }
-          else
-            {
+        ICompiler* compiler = nullptr;
+        //if(!Regex.old_rx)
+         // {
+          //if ((options & RegexOptions::Compiled) != RegexOptions::None)
+            //{
+            //compiler = new CILCompiler();
+            //}
+          //else
+            //{
             compiler = new RxCompiler();
-            }
-          }
-        else
-          {
-          compiler = new PatternCompiler();
-          }
-        regularExpression.Compile(compiler, (options & RegexOptions.RightToLeft) != RegexOptions.None);
-        IMachineFactory* machineFactory = compiler.GetMachineFactory();
-        Hashtable hashtable = new Hashtable();
-        machineFactory.Gap = parser.GetMapping(hashtable);
-        machineFactory.Mapping = hashtable;
-        machineFactory.NamesMapping = Regex.GetGroupNamesArray(machineFactory.GroupCount, machineFactory.Mapping);
-        return machineFactory;*/
+            //}
+          //}
+        //else
+          //{
+          //compiler = new PatternCompiler();
+          //}
+        //regularExpression.Compile(compiler, (options & RegexOptions.RightToLeft) != RegexOptions.None);
+        //IMachineFactory* machineFactory = compiler.GetMachineFactory();
+        //Hashtable hashtable = new Hashtable();
+        //machineFactory.Gap = parser.GetMapping(hashtable);
+        //machineFactory.Mapping = hashtable;
+        //machineFactory.NamesMapping = Regex.GetGroupNamesArray(machineFactory.GroupCount, machineFactory.Mapping);
+        //return machineFactory;*/
         }
 
       }

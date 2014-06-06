@@ -35,6 +35,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System.Text.RegualarExpressions.ICompiler.h" />
+    <ClInclude Include="System.Text.RegularExpressions.RxCompiler.h" />
+    <ClInclude Include="System.Text.RegularExpressions.RxOp.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.ExpressionCollection.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.RegularExpression.h" />
     <ClInclude Include="System.Text.RegularExpressions.Cache.h" />
@@ -55,6 +58,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.RxCompiler.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.ExpressionCollection.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.RegularExpression.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Cache.cpp" />
