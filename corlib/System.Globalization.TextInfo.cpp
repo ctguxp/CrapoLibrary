@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "System.Globalization.TextInfo.h"
+#include "System.String.h"
 
 namespace System
   {
@@ -37,13 +38,41 @@ namespace System
       {
       }
 
+    String TextInfo::ToLower(String str)
+      {
+      // In ICU (3.2) there are a few cases that one single
+      // character results in multiple characters in e.g.
+      // tr-TR culture. So I tried brute force conversion
+      // test with single character as a string input, but 
+      // there was no such conversion. So I think it just
+      // invokes ToLower(char).
+
+      if(str.Length() == 0)
+        return String::Empty();
+
+      String tmp = String::InternalAllocateStr(str.Length());
+      const wchar_t* source = (cstring)str;
+      const wchar_t* dest = (cstring)tmp;
+
+      wchar_t* destPtr = (string)dest;
+      wchar_t* sourcePtr = (string)source;
+
+      for(int n = 0; n < str.Length(); n++)
+        {
+        *destPtr = ToLower(*sourcePtr);
+        sourcePtr++;
+        destPtr++;
+        }
+      return tmp;
+      }
+
     wchar_t TextInfo::ToLower(wchar_t c)
       {
       // quick ASCII range check
       if(c < 0x40 || 0x60 < c && c < 128)
         return c;
       //else if (L'A' <= c && c <= L'Z' && (!handleDotI || c != L'I'))
-        return (wchar_t)(c + 0x20);
+      return (wchar_t)(c + 0x20);
 
       //if(ci == nullptr || ci->LCID() == 0x7F)
       //  return Char::ToLowerInvariant(c);

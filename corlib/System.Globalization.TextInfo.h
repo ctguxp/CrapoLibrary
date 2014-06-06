@@ -3,6 +3,7 @@
 
 namespace System
   {
+  class String;
   namespace Globalization
     {
     class CultureInfo;
@@ -25,11 +26,12 @@ namespace System
         Data         _data;
       public:
         virtual ~TextInfo();
-         virtual wchar_t ToLower(wchar_t);
+        virtual wchar_t ToLower(wchar_t);
+        virtual String ToLower(String str);
       private:
         TextInfo(CultureInfo* ci, int lcid, void* data, bool read_only);
 
-      friend CultureInfo;
+        friend CultureInfo;
       };
 
     typedef AutoPtr<TextInfo> GCTextInfo;
