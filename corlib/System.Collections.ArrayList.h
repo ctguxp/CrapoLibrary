@@ -8,6 +8,10 @@ namespace System
     {
     class CRAPOCOREDLL_API ArrayList : public IList
       {
+      enum
+        {
+        DefaultInitialCapacity = 4
+        };
       public:
         ArrayList();
         ArrayList(sizet capacity);
@@ -16,9 +20,16 @@ namespace System
         virtual sizet Count() override;
         virtual bool IsSynchronized() override;
         // From IList
+        virtual bool IsFixedSize() override;
+        virtual bool IsReadOnly() override;
+        virtual int Add(Object* value) override;
         virtual void Clear() override;
+        virtual bool Contains(Object* /*item*/) override;
+        virtual int IndexOf(Object* value, sizet startIndex, sizet count);
       private:
+        void EnsureCapacity(sizet count);
         void Free();
+        static void ThrowNewArgumentOutOfRangeException(String name, Object* actual, String message);
       private:
         sizet           _size;
         int             _version;
