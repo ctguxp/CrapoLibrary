@@ -4,6 +4,8 @@
 
 #include "System.Array.h"
 #include "System.Exception.h"
+#include "System.NotImplementedException.h"
+#include "System.Collections.Generic.EqualityComparer.h"
 
 namespace System
   {
@@ -123,6 +125,24 @@ namespace System
     _base = new_base;
     }
 
+  template<class T>
+  sizet Array<T>::GetLowerBound()
+    {
+    assert(_ptr != nullptr);
+    if(_ptr == nullptr)
+      throw SystemException(L"Array has not been initialized");
+    return _base;
+    }
+
+  template<class T>
+  sizet Array<T>::GetUpperBound()
+    {
+    assert(_ptr != nullptr);
+    if(_ptr == nullptr)
+      throw SystemException(L"Array has not been initialized");
+    return _len - 1;  
+    }
+
   // ------------------------------------------------------------------------
   /// Set Length Property (Will Grow or Shrink Array depending on new length)
   template<class T>
@@ -185,6 +205,17 @@ namespace System
       {
       d1[i] = s1[i];
       }
+    }
+
+  template<class T>
+  int Array<T>::IndexOf(Array<T*>& arr, T& value, sizet startIndex, sizet count)
+    {
+    using namespace Collections;
+    // re-ordered to avoid possible integer overflow
+    if(startIndex < arr.GetLowerBound() || startIndex - 1 > arr.GetUpperBound() - count)
+      throw ArgumentOutOfRangeException ();
+
+    return Generic::EqualityComparer<T>::Default()->IndexOf(arr, value, startIndex, startIndex + count);
     }
 
   }

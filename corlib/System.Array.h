@@ -43,11 +43,14 @@ namespace System
       
       sizet Base() const { return _base; }
       void Base(sizet new_base);
+      sizet GetLowerBound();
+      sizet GetUpperBound();
       sizet Length() const { return _len; }
       void Length(sizet new_len);
 
       static void Copy(T*, sizet, T*, sizet, sizet);
       static void Copy(Array<T>&, sizet, Array<T>&, sizet, sizet);
+      static int IndexOf(Array<T*>& arr, T& value, sizet startIndex, sizet count);
 
     private:
       void Free();
