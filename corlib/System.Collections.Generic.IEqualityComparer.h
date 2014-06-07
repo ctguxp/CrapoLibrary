@@ -10,8 +10,8 @@ namespace System
       class IEqualityComparer
         {
         public:
-        virtual bool Equals(T x, T y) = 0;
-		    virtual int GetHashCode(T obj) = 0;
+        virtual bool Equals(T& x, T& y) = 0;
+		    virtual int GetHashCode(T& obj) = 0;
         };
       }
     }
