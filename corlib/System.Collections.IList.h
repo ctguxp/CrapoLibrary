@@ -13,7 +13,7 @@ namespace System
 		    virtual bool IsReadOnly() = 0;
 
         // Functions
-        virtual int Add(Object* value) = 0;
+        virtual sizet Add(Object* value) = 0;
         virtual void Clear() = 0;
         virtual bool Contains(Object* value) = 0;
       };

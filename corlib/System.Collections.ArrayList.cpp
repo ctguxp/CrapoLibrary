@@ -41,7 +41,7 @@ namespace System
       {
       return false;
       }
-    int ArrayList::Add(Object* value)
+    sizet ArrayList::Add(Object* value)
       {
       if(_items.Length() <= _size /* same as _items.Length < _size + 1) */) 
         EnsureCapacity(_size + 1);
@@ -67,7 +67,7 @@ namespace System
       {
       if(startIndex > _size) 
         {
-        UInt32 si(startIndex);
+        UInt32 si((uint32)startIndex);
         ThrowNewArgumentOutOfRangeException(L"startIndex", &si, L"Does not specify valid index.");
         }
 

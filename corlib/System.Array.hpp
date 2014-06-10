@@ -3,6 +3,7 @@
 #pragma once
 
 #include "System.Array.h"
+#include "System.Array.hpp"
 #include "System.Exception.h"
 #include "System.NotImplementedException.h"
 #include "System.Collections.Generic.EqualityComparer.h"

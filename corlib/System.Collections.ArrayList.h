@@ -22,7 +22,7 @@ namespace System
         // From IList
         virtual bool IsFixedSize() override;
         virtual bool IsReadOnly() override;
-        virtual int Add(Object* value) override;
+        virtual sizet Add(Object* value) override;
         virtual void Clear() override;
         virtual bool Contains(Object* /*item*/) override;
         virtual int IndexOf(Object* value, sizet startIndex, sizet count);

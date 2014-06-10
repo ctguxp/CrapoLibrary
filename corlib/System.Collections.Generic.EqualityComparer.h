@@ -46,12 +46,12 @@ namespace System
           EqualityComparer()
             {
             }
-          virtual int IndexOf(Array<T*> arr, T& value, int startIndex, int endIndex)
+          virtual int IndexOf(Array<T*> arr, T& value, sizet startIndex, sizet endIndex)
             {
-            for(int i = startIndex; i < endIndex; ++i)
+            for(sizet i = startIndex; i < endIndex; ++i)
               {
               if(Equals(*arr[i], value))
-                return i;
+                return (int)i;
               }
             return -1;
             }
