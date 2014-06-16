@@ -80,5 +80,8 @@
     <ClCompile Include="DictionaryTest.cpp">
       <Filter>Source Files\Collections</Filter>
     </ClCompile>
+    <ClCompile Include="UnitTestCollectionBase.cpp">
+      <Filter>Source Files\Collections</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
