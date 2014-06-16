@@ -7,6 +7,31 @@ namespace System
     {
     namespace RegularExpressions
       {
+      RxLinkRef::RxLinkRef()
+        :_offsets(8)
+        ,_current(0)
+        {
+        }
+      RxLinkRef::~RxLinkRef()
+        {
+        }
+      void RxLinkRef::PushInstructionBase(int offset)
+        {
+        if((_current & 1) != 0)
+          throw Exception();
+        if(_current == _offsets.Length())
+          {
+          _offsets.Length(_offsets.Length() * 2);
+          }
+        _offsets[_current++] = offset;
+        }
+      void RxLinkRef::PushOffsetPosition(int offset)
+        {
+        if((_current & 1) == 0)
+          throw Exception();
+        _offsets[_current++] = offset;
+        }
+
       RxCompiler::RxCompiler()
         :_curpos(0)
         ,_program(32)
@@ -119,6 +144,45 @@ namespace System
             }
           }
         }
+      void RxCompiler::EmitPosition(Position pos)
+        {
+        switch (pos)
+          {
+          case Position::Any:
+            Emit(RxOp::AnyPosition);
+            break;
+          case Position::Start:
+            Emit(RxOp::StartOfString);
+            break;
+          case Position::StartOfString:
+            Emit(RxOp::StartOfString);
+            break;
+          case Position::StartOfLine:
+            Emit(RxOp::StartOfLine);
+            break;
+          case Position::StartOfScan:
+            Emit(RxOp::StartOfScan);
+            break;
+          case Position::End:
+            Emit(RxOp::End);
+            break;
+          case Position::EndOfString:
+            Emit(RxOp::EndOfString);
+            break;
+          case Position::EndOfLine:
+            Emit(RxOp::EndOfLine);
+            break;
+          case Position::Boundary:
+            Emit(RxOp::WordBoundary);
+            break;
+          case Position::NonBoundary:
+            Emit(RxOp::NoWordBoundary);
+            break;
+          default:
+            //throw new NotSupportedException ();
+            throw SystemException(L"Not Supported");
+          }
+        }
       void RxCompiler::EmitOpen(int gid)
         {
         if(gid > 65535)
@@ -139,6 +203,15 @@ namespace System
         Emit(RxOp::CloseGroup);
         Emit((uint16)gid);
         }
+      void RxCompiler::EmitBalanceStart(int gid, int balance, bool capture, LinkRef* tail)
+        {
+        BeginLink(tail);
+        Emit(RxOp::BalanceStart);
+        Emit((uint16)gid);
+        Emit((uint16)balance);
+        Emit((byte)(capture ? 1 : 0));
+        EmitLink(tail);
+        }
       void RxCompiler::EmitBalance()
         {
         Emit(RxOp::Balance);
@@ -153,6 +226,50 @@ namespace System
         EmitOpIgnoreReverse(RxOp::Reference, ignore, reverse);
         Emit((uint16)gid);
         }
+      void RxCompiler::EmitIfDefined(int gid, LinkRef* tail)
+        {
+        if(gid > UInt16::MaxValue)
+          //throw new NotSupportedException ();
+            throw SystemException(L"Not Supported");
+        BeginLink(tail);
+        Emit(RxOp::IfDefined);
+        EmitLink(tail);
+        Emit((uint16)gid);
+        }
+      void RxCompiler::EmitSub(LinkRef* tail)
+        {
+        BeginLink(tail);
+        Emit(RxOp::SubExpression);
+        EmitLink(tail);
+        }
+      void RxCompiler::EmitTest(LinkRef* yes, LinkRef* tail)
+        {
+        BeginLink(yes);
+        BeginLink(tail);
+        Emit(RxOp::Test);
+        EmitLink(yes);
+        EmitLink(tail);
+        }
+      void RxCompiler::EmitBranch(LinkRef* next)
+        {
+        BeginLink(next);
+        Emit(RxOp::Branch);
+        EmitLink(next);
+        }
+      void RxCompiler::EmitJump(LinkRef* target)
+        {
+        BeginLink(target);
+        Emit(RxOp::Jump);
+        EmitLink(target);
+        }
+      void RxCompiler::EmitRepeat(int min, int max, bool lazy, LinkRef* until)
+        {
+        BeginLink(until);
+        Emit(lazy ? RxOp::RepeatLazy : RxOp::Repeat);
+        EmitLink(until);
+        Emit(min);
+        Emit(max);
+        }
       void RxCompiler::EmitInfo(int32 count, int32 min, int32 max)
         {
         Emit(RxOp::Info);
@@ -165,14 +282,25 @@ namespace System
         Emit(min);
         Emit(max);
         }
+      void RxCompiler::EmitAnchor(bool reverse, int offset, LinkRef* tail)
+        {
+        BeginLink(tail);
+        if(reverse)
+          Emit(RxOp::AnchorReverse);
+        else
+          Emit(RxOp::Anchor);
+        EmitLink(tail);
+        if (offset > UInt16::MaxValue)
+          //throw new NotSupportedException ();
+            throw SystemException(L"Not Supported");
+        Emit((uint16)offset);
+        }
       void RxCompiler::EmitBranchEnd()
         {
         }
       void RxCompiler::EmitAlternationEnd()
         {
         }
-
-
       // Virtual functions
       void RxCompiler::EmitOp(RxOp op, bool negate, bool ignore, bool reverse)
         {
@@ -204,8 +332,37 @@ namespace System
           }
         Emit((byte)((byte)op + (byte)num));
         }
+      LinkRef* RxCompiler::NewLink()
+        {
+        return new RxLinkRef();
+        }
+      void RxCompiler::ResolveLink(LinkRef* link)
+        {
+        RxLinkRef& l = static_cast<RxLinkRef&>(*link);
+        for (int i = 0; i < l._current; i += 2)
+          {
+          int offset = _curpos - l._offsets[i];
+          if (offset > UInt16::MaxValue)
+            //throw new NotSupportedException();
+            throw SystemException(L"Not Supported");
+          int offsetpos = l._offsets [i + 1];
+          _program[offsetpos] = (byte)offset;
+          _program[offsetpos + 1] = (byte)(offset >> 8);
+          }
+        }
 
       // Private functions
+      void RxCompiler::BeginLink(LinkRef* lref)
+        {
+        RxLinkRef& link = static_cast<RxLinkRef&>(*lref);
+        link.PushInstructionBase(_curpos);
+        }
+      void RxCompiler::EmitLink(LinkRef* lref)
+        {
+        RxLinkRef& link = static_cast<RxLinkRef&>(*lref);
+        link.PushOffsetPosition(_curpos);
+        Emit((uint16)0);
+        }
       void RxCompiler::Emit(byte val)
         {
         MakeRoom(1);

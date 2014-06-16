@@ -10,36 +10,45 @@ namespace System
       namespace Syntax
         {
         RegularExpression::RegularExpression()
+          :_group_count(0)
           {
           }
         RegularExpression::~RegularExpression()
           {
           }
-        /*void RegularExpression::Compile(ICompiler* cmp, bool reverse)
+        int RegularExpression::GroupCount()
+          {
+          return _group_count;
+          }
+        void RegularExpression::GroupCount(int value)
+          {
+          _group_count = value;
+          }
+        void RegularExpression::Compile(ICompiler* cmp, bool reverse)
           {
           int min;
           int max;
-          GetWidth(out min, out max);
-          cmp->EmitInfo(this.group_count, min, max);
-          AnchorInfo anchorInfo = this.GetAnchorInfo(reverse);
-          LinkRef linkRef = cmp.NewLink();
-          cmp->EmitAnchor(reverse, anchorInfo.Offset, linkRef);
-          if (anchorInfo.IsPosition)
+          GetWidth(min, max);
+          cmp->EmitInfo(_group_count, min, max);
+          AnchorInfo anchorInfo = GetAnchorInfo(reverse);
+          LinkRef* linkRef = cmp->NewLink();
+          cmp->EmitAnchor(reverse, anchorInfo.Offset(), linkRef);
+          if(anchorInfo.IsPosition())
             {
-            cmp->EmitPosition(anchorInfo.Position);
+            cmp->EmitPosition(anchorInfo.Position());
             }
           else
             {
-            if(anchorInfo.IsSubstring)
+            if(anchorInfo.IsSubstring())
               {
-              cmp->EmitString(anchorInfo.Substring, anchorInfo.IgnoreCase, reverse);
+              cmp->EmitString(anchorInfo.Substring(), anchorInfo.IgnoreCase(), reverse);
               }
             }
           cmp->EmitTrue();
           cmp->ResolveLink(linkRef);
           Group::Compile(cmp, reverse);
           cmp->EmitTrue();
-          }*/
+          }
         }
       }
     }

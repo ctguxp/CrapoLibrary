@@ -7,11 +7,22 @@ namespace System
     {
     namespace RegularExpressions
       {
-      ExpressionCollection::ExpressionCollection()
+      namespace Syntax
         {
-        }
-      ExpressionCollection::~ExpressionCollection()
-        {
+        ExpressionCollection::ExpressionCollection()
+          {
+          }
+        ExpressionCollection::~ExpressionCollection()
+          {
+          }
+        void ExpressionCollection::Add(Expression* e)
+          {
+          InnerList().Add(e);
+          }
+        sizet ExpressionCollection::Add(Object* value)
+          {
+          return CollectionBase::Add(value);
+          }
         }
       }
     }

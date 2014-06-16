@@ -1,4 +1,5 @@
 #pragma once
+#include "System.Text.RegularExpressions.Syntax.Expression.h"
 
 namespace System
   {
@@ -6,12 +7,17 @@ namespace System
     {
     namespace RegularExpressions
       {
-      class ExpressionCollection : public Collections::CollectionBase
+      namespace Syntax
         {
-        public:
-          ExpressionCollection();
-          ~ExpressionCollection();
-        };
+        class ExpressionCollection : public Collections::CollectionBase
+          {
+          public:
+            ExpressionCollection();
+            ~ExpressionCollection();
+            void Add(Expression* e);
+            virtual sizet Add(Object* value) override; 
+          };
+        }
       }
     }
   }

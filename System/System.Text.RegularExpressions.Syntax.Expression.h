@@ -1,5 +1,10 @@
+// Perch Lake Computer System
+// Golden on 6/13/2014
+
 #pragma once
-#include "System.Text.RegualarExpressions.ICompiler.h"
+#include "System.Object.h"
+#include "System.Text.RegularExpressions.ICompiler.h"
+#include "System.Text.RegularExpressions.Syntax.AnchorInfo.h"
 
 namespace System
   {
@@ -9,14 +14,14 @@ namespace System
       {
       namespace Syntax
         {
-        class Expression
+        class Expression : public Object
           {
           public:
-            ~Expression();
+            virtual ~Expression();
             virtual void Compile(ICompiler* cmp, bool reverse) = 0;
 		        virtual void GetWidth(int& min, int& max) = 0;
             int GetFixedWidth();
-            // TODO virtual AnchorInfo GetAnchorInfo(bool reverse);
+            AnchorInfo GetAnchorInfo(bool reverse);
             virtual bool IsComplex() = 0;
           protected:
             Expression();

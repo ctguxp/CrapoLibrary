@@ -97,8 +97,7 @@ namespace System
         using namespace Syntax;
         Parser parser;
         RegularExpression* regularExpression = parser.ParseRegularExpression(pattern, options);
-        return nullptr;
-        ICompiler* compiler = nullptr;
+        //ICompiler* compiler = nullptr;
         //if(!Regex.old_rx)
          // {
           //if ((options & RegexOptions::Compiled) != RegexOptions::None)
@@ -107,7 +106,7 @@ namespace System
             //}
           //else
             //{
-            compiler = new RxCompiler();
+            //compiler = new RxCompiler();
             //}
           //}
         //else

@@ -1,3 +1,6 @@
+// Perch Lake Computer System
+// Golden on 6/13/2014
+
 #include "pch.h"
 #include "System.Text.RegularExpressions.Syntax.Expression.h"
 
@@ -26,10 +29,10 @@ namespace System
             }
           return -1;
           }
-        /* TODO AnchorInfo Expression::GetAnchorInfo(bool reverse)
+        AnchorInfo Expression::GetAnchorInfo(bool)
 		      {
-			    return AnchorInfo(this, this.GetFixedWidth());
-		      } */
+			    return AnchorInfo(*this, GetFixedWidth());
+		      }
         }
       }
     }

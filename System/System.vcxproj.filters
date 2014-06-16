@@ -51,9 +51,6 @@
     <ClInclude Include="System.Text.RegularExpressions.Syntax.ExpressionCollection.h">
       <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClInclude>
-    <ClInclude Include="System.Text.RegualarExpressions.ICompiler.h">
-      <Filter>Header Files\System.Text.RegularExpressions</Filter>
-    </ClInclude>
     <ClInclude Include="System.Text.RegularExpressions.RxCompiler.h">
       <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
@@ -65,6 +62,21 @@
     </ClInclude>
     <ClInclude Include="System.Text.RegularExpressions.Syntax.CompositeExpression.h">
       <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Group.h">
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.AnchorInfo.h">
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.ICompiler.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Position.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Assertion.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +106,15 @@
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Syntax.CompositeExpression.cpp">
       <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Group.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.AnchorInfo.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Assertion.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

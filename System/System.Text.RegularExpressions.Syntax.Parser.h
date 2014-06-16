@@ -10,6 +10,7 @@ namespace System
       {
       namespace Syntax
         {
+        class Assertion;
         class Parser
           {
           public:
@@ -17,7 +18,7 @@ namespace System
             ~Parser();
             RegularExpression* ParseRegularExpression(String pattern, RegexOptions options);
           private:
-            // TODO void ParseGroup(Group group, RegexOptions options, Assertion assertion);
+            void ParseGroup(Group* group, RegexOptions options, Assertion* assertion);
           private:
             String                 _pattern;
             int                    _ptr;

@@ -1,5 +1,6 @@
 #pragma once
 #include "System.Text.RegularExpressions.Syntax.Expression.h"
+#include "System.Text.RegularExpressions.Syntax.ExpressionCollection.h"
 
 namespace System
   {
@@ -13,9 +14,14 @@ namespace System
           {
           public:
             ~CompositeExpression();
+            virtual bool IsComplex() override;
           protected:  
             CompositeExpression();
-            void GetWidth(int32& min, int32& max, int32 count);
+            ExpressionCollection& Expressions() { return _expressions; }
+            virtual void GetWidth(int& /*min*/, int& /*max*/) override {}
+            void GetWidth(int32& /*min*/, int32& /*max*/, int32 /*count*/);
+          private:
+            ExpressionCollection _expressions;
           };
         }
       }
