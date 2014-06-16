@@ -29,6 +29,21 @@ namespace System
       {
       return _size;
       }
+    sizet ArrayList::Capacity()
+      {
+      return _items.Length();
+      }
+
+    void ArrayList::Capacity(sizet value) 
+      {
+      if(value < _size)
+        { 
+        UInt32 v((uint32)value);
+        ThrowNewArgumentOutOfRangeException(L"Capacity", &v, "Must be more than count.");
+        }
+
+      _items.Length(value);
+      }
     bool ArrayList::IsSynchronized()
       {
       return false;
@@ -41,7 +56,7 @@ namespace System
       {
       return false;
       }
-    int ArrayList::Add(Object* value)
+    sizet ArrayList::Add(Object* value)
       {
       if(_items.Length() <= _size /* same as _items.Length < _size + 1) */) 
         EnsureCapacity(_size + 1);
@@ -51,6 +66,31 @@ namespace System
       _version++;
 
       return _size++;
+      }
+    void ArrayList::Insert(sizet index, Object* value)
+      {
+      if(index > _size) 
+        {
+        UInt32 i((uint32)index);
+        ThrowNewArgumentOutOfRangeException("index", &i, "Index must be >= 0 and <= Count.");
+        }
+
+      Shift(index, 1);
+
+      _items[index] = value;
+      _size++;
+      _version++;
+      }
+    void ArrayList::Remove(Object* value) 
+      {
+      int x = IndexOf(value);
+
+      if(x > -1) 
+        {
+        RemoveAt(x);
+        }
+
+      _version++;
       }
     bool ArrayList::Contains(Object* item)
       {
@@ -63,11 +103,36 @@ namespace System
       _size = 0;
       _version++;
       }
+    void ArrayList::RemoveAt(sizet index)
+      {
+      if(index >= _size) 
+        {
+        UInt32 i((uint32)index);
+        ThrowNewArgumentOutOfRangeException(L"index", &i, L"More than list count.");
+        }
+
+      if(_items[index] != nullptr)
+        {
+        delete _items[index];
+        _items[index] = nullptr;
+        }
+      Shift(index, -1);
+      _size--;
+      _version++;
+      }
+    int ArrayList::IndexOf(Object* value)
+      {
+      return IndexOf(value, 0);
+      }
+    int ArrayList::IndexOf(Object* value, int startIndex)
+      {
+      return IndexOf(value, startIndex, _size - startIndex);
+      }
     int ArrayList::IndexOf(Object* value, sizet startIndex, sizet count) 
       {
       if(startIndex > _size) 
         {
-        UInt32 si(startIndex);
+        UInt32 si((uint32)startIndex);
         ThrowNewArgumentOutOfRangeException(L"startIndex", &si, L"Does not specify valid index.");
         }
 
@@ -84,7 +149,7 @@ namespace System
 
     // ------------------------------------------------------------------------
     /// Ensures that the list has the capacity to contain the given count by
-		/// automatically expanding the capacity when required.
+    /// automatically expanding the capacity when required.
     void ArrayList::EnsureCapacity(sizet count) 
       {
       if(count <= _items.Length()) 
@@ -109,7 +174,7 @@ namespace System
 
     void ArrayList::Free()
       {
-      for(sizet i = 0; i < _items.Length(); ++i)
+      for(sizet i = 0; i < _size; ++i)
         {
         if(_items[i] != nullptr)
           {
@@ -120,9 +185,47 @@ namespace System
       }
 
     void ArrayList::ThrowNewArgumentOutOfRangeException(String name, Object*, String message)
-		  {
-			//throw ArgumentOutOfRangeException(name, actual, message);
+      {
+      //throw ArgumentOutOfRangeException(name, actual, message);
       throw ArgumentOutOfRangeException(name, message);
-		  }
+      }
+
+    void ArrayList::Shift(sizet index, int count)
+      {
+      if(count > 0) 
+        {
+        if(_size + count > _items.Length()) 
+          {
+          sizet newLength;
+          Array<Object*> newData;
+
+          newLength = (_items.Length() > 0) ? _items.Length() << 1 : 1;
+
+          while(newLength < _size + count) 
+            {
+            newLength <<= 1;
+            }
+
+          newData.Length(newLength);
+
+          Array<Object*>::Copy(_items, 0, newData, 0, index);
+          Array<Object*>::Copy(_items, index, newData, index + count, _size - index);
+
+          _items = newData;
+          }
+        else 
+          {
+          Array<Object*>::Copy(_items, index, _items, index + count, _size - index);
+          }
+        }
+      else if (count < 0) 
+        {
+        // Remember count is negative so this is actually index + (-count)
+
+        int x = (int32)index - count ;
+
+        Array<Object*>::Copy(_items, x, _items, index, _size - x);
+        }
+      }
     }
   }

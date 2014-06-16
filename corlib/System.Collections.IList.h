@@ -13,9 +13,14 @@ namespace System
 		    virtual bool IsReadOnly() = 0;
 
         // Functions
-        virtual int Add(Object* value) = 0;
+        virtual Object& operator[](const sizet index) = 0;
+        virtual sizet Add(Object* value) = 0;
         virtual void Clear() = 0;
         virtual bool Contains(Object* value) = 0;
+        virtual int IndexOf(Object* value) = 0;
+        virtual void Insert(sizet index, Object* value) = 0;
+        virtual void Remove(Object* value) = 0;
+        virtual void RemoveAt(sizet index) = 0;
       };
     }
   }
