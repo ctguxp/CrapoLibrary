@@ -59,5 +59,5 @@ namespace System
   typedef Array<byte>    ByteArray;
   typedef Array<sbyte>   SByteArray;
   typedef Array<wchar_t> CharArray;
-  typedef Array<int>     IntArray;
+  typedef Array<int32>   IntArray;
   }
