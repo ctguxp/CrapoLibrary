@@ -8,6 +8,68 @@ namespace System
   {
   namespace Collections
     {
+    Stack::Enumerator::Enumerator(Collections::Stack* s)
+      :_stack(s)
+      ,_modCount(s->_modCount)
+      ,_current(Enumerator::Begin)
+      {
+      }
+    Stack::Enumerator::Enumerator(const Enumerator& e)
+      :_stack(e._stack)
+      ,_modCount(e._modCount)
+      ,_current(e._current)
+      {
+      }
+    Stack::Enumerator& Stack::Enumerator::operator=(const Enumerator& e)
+      {
+      if(this == &e)
+        return *this;
+
+      _stack = e._stack;
+      _modCount = e._modCount;
+      _current = e._current;
+      return *this;
+      }
+    Object& Stack::Enumerator::Current()
+      {
+      if(_modCount != _stack->_modCount 
+        || _current == Enumerator::Begin
+        || _current == Enumerator::End
+        || _current > (int32)_stack->_count)
+        //throw new InvalidOperationException();
+        throw SystemException(L"Invalid Operation");
+
+      return (*_stack->_contents[_current]);
+      }
+    bool Stack::Enumerator::MoveNext()
+      {
+      if(_modCount != _stack->_modCount)
+        //throw new InvalidOperationException();
+          throw SystemException(L"Invalid Operation");
+
+      switch(_current)
+        {
+        case Enumerator::Begin:
+          _current = _stack->_current;
+          return _current != -1;
+
+        case Enumerator::End:
+          return false;
+
+        default:
+          _current--; 
+          return _current != -1;
+        }
+      }
+    void Stack::Enumerator::Reset()
+      {
+      if(_modCount != _stack->_modCount)
+        //throw new InvalidOperationException();
+          throw SystemException(L"Invalid Operation");
+
+      _current = Enumerator::Begin;
+      } 
+
     Stack::Stack()
       :_capacity(default_capacity)
       ,_count(0)
@@ -73,6 +135,18 @@ namespace System
 
       return false;
       }
+    Object& Stack::Peek()
+      {
+      if(_current == -1)
+        {
+        //throw InvalidOperationException();
+        throw SystemException(L"Invalid Operation");
+        } 
+      else 
+        {
+        return (*_contents[_current]);
+        }
+      }
     Object* Stack::Pop()
       {
       if(_current == -1)
@@ -117,6 +191,10 @@ namespace System
       _current++;
 
       _contents[_current] = obj;
+      }
+    IEnumerator* Stack::GetEnumerator()
+      {
+      return new Enumerator(this);
       }
     void Stack::Resize(sizet ncapacity)
       {
