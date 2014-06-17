@@ -50,7 +50,7 @@ namespace System
 
       _version++;
 
-      return _size++;
+      return (int)_size++;
       }
     bool ArrayList::Contains(Object* item)
       {

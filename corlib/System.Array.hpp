@@ -216,7 +216,7 @@ namespace System
     if(startIndex < arr.GetLowerBound() || startIndex - 1 > arr.GetUpperBound() - count)
       throw ArgumentOutOfRangeException ();
 
-    return Generic::EqualityComparer<T>::Default()->IndexOf(arr, value, startIndex, startIndex + count);
+    return (int)Generic::EqualityComparer<T>::Default()->IndexOf(arr, value, (int)startIndex, (int)(startIndex + count) );
     }
 
   }
