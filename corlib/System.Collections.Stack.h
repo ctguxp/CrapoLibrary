@@ -1,16 +1,37 @@
 #pragma once
 #include "System.Array.h"
 #include "System.Collections.ICollection.h"
+#include "System.Collections.IEnumerable.h"
 
 namespace System
   {
   namespace Collections
     {
-    class Stack : public ICollection
+    class Stack : public ICollection, public IEnumerable
       {
       enum
         {
         default_capacity = 16
+        };
+      private:
+        class Enumerator : public IEnumerator
+        {
+        enum
+          {
+          End = -1,
+			    Begin = -2
+          };
+        public:
+          Enumerator(Stack*);
+          Enumerator(const Enumerator& e);
+          Enumerator& operator=(const Enumerator& e);
+          virtual Object& Current() override;
+          virtual bool MoveNext() override;
+          virtual void Reset() override;
+        private:
+          Stack* _stack;
+          sizet  _modCount;
+          int32  _current;
         };
       public:
         Stack();
@@ -19,8 +40,10 @@ namespace System
         virtual bool Contains(Object* obj);
         virtual sizet Count() override;
         virtual bool IsSynchronized() override;
+        virtual IEnumerator* GetEnumerator() override;
         virtual void Push(Object* /*obj*/);
         virtual Object* Pop();
+        virtual Object& Peek();
       private:
         void Resize(sizet ncapacity);
       private:
