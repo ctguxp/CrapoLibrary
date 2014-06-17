@@ -92,11 +92,12 @@ namespace System
         _groupNames = _machineFactory->NamesMapping();
         }
 
-      IMachineFactory* Regex::CreateMachineFactory(String pattern, RegexOptions options)
+      IMachineFactory* Regex::CreateMachineFactory(String pattern, RegexOptions /*options*/)
         {
         using namespace Syntax;
         Parser parser;
-        RegularExpression* regularExpression = parser.ParseRegularExpression(pattern, options);
+        throw NotImplementedException();
+        //RegularExpression* regularExpression = parser.ParseRegularExpression(pattern, options);
         //ICompiler* compiler = nullptr;
         //if(!Regex.old_rx)
          // {

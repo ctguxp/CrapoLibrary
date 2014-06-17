@@ -50,6 +50,7 @@
     <ClInclude Include="System.Collections.IDictonary.h" />
     <ClInclude Include="System.Collections.IEqualityComparer.h" />
     <ClInclude Include="System.Collections.IHashCodeProvider.h" />
+    <ClInclude Include="System.Collections.Stack.h" />
     <ClInclude Include="System.FormatException.h" />
     <ClInclude Include="System.Globalization.NumberStyles.h" />
     <ClInclude Include="System.IO.BinaryReader.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="System.Collections.ArrayList.cpp" />
     <ClCompile Include="System.Collections.CollectionBase.cpp" />
     <ClCompile Include="System.Collections.Hashtable.cpp" />
+    <ClCompile Include="System.Collections.Stack.cpp" />
     <ClCompile Include="System.FormatException.cpp" />
     <ClCompile Include="System.IO.BinaryReader.cpp" />
     <ClCompile Include="System.IO.BinaryWriter.cpp" />

@@ -83,5 +83,8 @@
     <ClCompile Include="UnitTestCollectionBase.cpp">
       <Filter>Source Files\Collections</Filter>
     </ClCompile>
+    <ClCompile Include="UnitTestStack.cpp">
+      <Filter>Source Files\Collections</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

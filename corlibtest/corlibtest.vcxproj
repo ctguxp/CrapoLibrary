@@ -340,6 +340,7 @@
     <ClCompile Include="UnitTestInt32.cpp" />
     <ClCompile Include="UnitTestPath.cpp" />
     <ClCompile Include="UnitTestSingle.cpp" />
+    <ClCompile Include="UnitTestStack.cpp" />
     <ClCompile Include="UnitTestStreamReader.cpp" />
     <ClCompile Include="UnitTestStringBuilder.cpp" />
     <ClCompile Include="UnitTestStrings.cpp" />

@@ -65,7 +65,7 @@ namespace System
 
       _version++;
 
-      return _size++;
+      return (int)_size++;
       }
     void ArrayList::Insert(sizet index, Object* value)
       {

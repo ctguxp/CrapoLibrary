@@ -492,6 +492,9 @@
     <ClInclude Include="System.Collections.Generic.h">
       <Filter>Header Files\System.Collections.Generic</Filter>
     </ClInclude>
+    <ClInclude Include="System.Collections.Stack.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -772,6 +775,9 @@
     </ClCompile>
     <ClCompile Include="System.Threading.ManualResetEvent.cpp">
       <Filter>Source Files\System.Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Collections.Stack.cpp">
+      <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
