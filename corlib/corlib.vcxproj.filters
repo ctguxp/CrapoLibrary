@@ -495,6 +495,12 @@
     <ClInclude Include="System.Collections.Stack.h">
       <Filter>Header Files\System.Collections</Filter>
     </ClInclude>
+    <ClInclude Include="System.Collections.IEnumerator.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.IEnumerable.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

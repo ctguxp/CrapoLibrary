@@ -38,6 +38,8 @@
     <ClInclude Include="Crapo.Security.BitConverterLE.h" />
     <ClInclude Include="System.Collections.CollectionBase.h" />
     <ClInclude Include="System.Collections.Generic.h" />
+    <ClInclude Include="System.Collections.IEnumerable.h" />
+    <ClInclude Include="System.Collections.IEnumerator.h" />
     <ClInclude Include="System.Collections.IList.h" />
     <ClInclude Include="Microsoft.Win32.h" />
     <ClInclude Include="Microsoft.Win32.RegistryHive.h" />
