@@ -39,6 +39,18 @@
     <ClInclude Include="System.Window.Gui.Canvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="System.Window.Gui.Dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Window.Gui.CommonControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Window.Gui.Control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Window.Gui.EditControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="System.Window.Gui.WinClass.cpp">
@@ -63,6 +75,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System.Window.Gui.Canvas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Window.Gui.Dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Window.Gui.DialogProc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Window.Gui.CommonControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Window.Gui.Control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Window.Gui.EditControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

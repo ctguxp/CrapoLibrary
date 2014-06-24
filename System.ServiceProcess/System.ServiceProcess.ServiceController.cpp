@@ -1,16 +1,40 @@
 #include "pch.h"
 #include "System.ServiceProcess.ServiceController.h"
+#include "System.ServiceProcess.ServiceManager.h"
+#include "System.Exception.h"
 
 namespace System
   {
   namespace ServiceProcess
     {
+
+    ServiceController::ServiceHandle::ServiceHandle(String& name)
+      :_name(name)
+      ,_handle(NULL)
+      {
+      }
+
+    ServiceController::ServiceHandle::~ServiceHandle()
+      {
+      if(_handle != NULL)
+        ::CloseServiceHandle(_handle);
+      }
+
+    void ServiceController::ServiceHandle::Open(ServiceManager& manager, DWORD dwDesiredAccess)
+      {
+      _handle = ::OpenService(manager, (cstring)_name, dwDesiredAccess);
+      if(_handle == NULL)
+        throw WinException(L"Failed to open service");
+      }
+
     ServiceController::ServiceController(cstring name, cstring machine)
-      :_name(name != nullptr ? name : L"")
+      :_status()
+      ,_name(name != nullptr ? name : L"")
       ,_serviceName()
       ,_machineName(machine != nullptr ? machine : L".")
       ,_displayName()
       {
+      ZeroMemory(&_status, sizeof(SERVICE_STATUS_PROCESS));
       }
     ServiceController::~ServiceController()
       {
@@ -53,23 +77,23 @@ namespace System
       }
     void ServiceController::DisplayName(String value)
       {
-				if (_displayName == value)
-					return;
+      if (_displayName == value)
+        return;
 
-				_displayName = value;
+      _displayName = value;
 
-				// if display name is modified, then we also need to force a
-				// new lookup of the corresponding service name
-				_serviceName = String::Empty();
+      // if display name is modified, then we also need to force a
+      // new lookup of the corresponding service name
+      _serviceName = String::Empty();
 
-				// you'd expect the DependentServices and ServiceDependedOn cache
-				// to be cleared too, but the MS implementation doesn't do this
-				//
-				// categorized as by design:
-				// https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=201762
+      // you'd expect the DependentServices and ServiceDependedOn cache
+      // to be cleared too, but the MS implementation doesn't do this
+      //
+      // categorized as by design:
+      // https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=201762
 
-				// release any handles and clear cache
-				//Close ();
+      // release any handles and clear cache
+      //Close ();
       }
     String ServiceController::ServiceName()
       {
@@ -125,6 +149,49 @@ namespace System
 
       // release any handles and clear cache
       //Close ();
+      }
+    ServiceControllerStatus ServiceController::Status() 
+      {
+      if ((int) _status.dwServiceType == 0)
+        _status = GetServiceStatus(ServiceName(), _machineName);
+      return (ServiceControllerStatus)_status.dwCurrentState;
+      }
+    SERVICE_STATUS_PROCESS ServiceController::GetServiceStatus(String& serviceName, String& machineName)
+      {
+      SERVICE_STATUS_PROCESS serviceStatus;
+      ZeroMemory(&serviceStatus, sizeof(SERVICE_STATUS_PROCESS));
+
+      ServiceManager manager(machineName, SC_MANAGER_CONNECT);
+
+      ServiceHandle s(serviceName);
+      s.Open(manager, SERVICE_QUERY_STATUS);
+
+      DWORD bufferSize = 0;
+      DWORD bytesNeeded = 0;
+      ByteArray buffer;
+
+      while (true) 
+        {
+        if (!::QueryServiceStatusEx(s, SC_STATUS_PROCESS_INFO, buffer.ToPtr(), bufferSize, &bytesNeeded)) {
+          int err = ::GetLastError();
+          if (err == ERROR_INSUFFICIENT_BUFFER) 
+            {
+            buffer.Length(bytesNeeded);
+            bufferSize = bytesNeeded;
+            }
+          else 
+            {
+            throw WinException(L"Failed to query service status", err);
+            }
+          } 
+        else 
+          {
+          memcpy(&serviceStatus, buffer.ToPtr(), sizeof(SERVICE_STATUS_PROCESS));
+          break;
+          }
+        }
+
+      return serviceStatus;
       }
     String ServiceController::GetServiceDisplayName(ServiceManager& scHandle, String& serviceName, String& machineName)
       {
