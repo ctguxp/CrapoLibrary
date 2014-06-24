@@ -62,6 +62,7 @@
     <ClInclude Include="System.OutOfMemoryException.h" />
     <ClInclude Include="System.PlatformID.h" />
     <ClInclude Include="System.Runtime.InteropServices.DllImport.h" />
+    <ClInclude Include="System.Runtime.InteropServices.UseCom.h" />
     <ClInclude Include="System.Threading.ActiveObject.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AutoPtr.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="System.OperatingSystem.cpp" />
     <ClCompile Include="System.OutOfMemoryException.cpp" />
     <ClCompile Include="System.Runtime.InteropServices.DllImport.cpp" />
+    <ClCompile Include="System.Runtime.InteropServices.UseCom.cpp" />
     <ClCompile Include="System.Threading.ActiveObject.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="System.Byte.cpp" />

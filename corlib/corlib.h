@@ -67,6 +67,7 @@ typedef uint32 uintptr;
 #include "System.IO.h"
 
 #include "System.Runtime.InteropServices.DllImport.h"
+#include "System.Runtime.InteropServices.UseCom.h"
 
 #include "System.Text.ASCIIEncoding.h"
 //#include "System.Text.DecoderFallback.h"

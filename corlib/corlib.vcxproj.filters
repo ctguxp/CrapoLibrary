@@ -501,6 +501,9 @@
     <ClInclude Include="System.Collections.IEnumerable.h">
       <Filter>Header Files\System.Collections</Filter>
     </ClInclude>
+    <ClInclude Include="System.Runtime.InteropServices.UseCom.h">
+      <Filter>Header Files\System.Runtime.InteropServices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -784,6 +787,9 @@
     </ClCompile>
     <ClCompile Include="System.Collections.Stack.cpp">
       <Filter>Source Files\System.Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Runtime.InteropServices.UseCom.cpp">
+      <Filter>Source Files\System.Runtime.InteropServices</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
