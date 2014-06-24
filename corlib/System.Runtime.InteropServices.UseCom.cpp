@@ -7,6 +7,16 @@ namespace System
     {
     namespace InteropServices
       {
+      UseOle::UseOle()
+        {
+        ::OleInitialize(NULL);
+        }
+      
+      UseOle::~UseOle()
+        {
+        ::OleUninitialize();
+        }
+
       UseCom::UseCom()
         {
         ::CoInitialize(NULL);
@@ -18,7 +28,7 @@ namespace System
 
       UseComEx::UseComEx()
         {
-        ::CoInitializeEx(NULL, COINIT_MULTITHREADED);
+        ::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
         }
 
       UseComEx::~UseComEx()
