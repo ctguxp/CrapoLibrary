@@ -6,6 +6,13 @@ namespace System
     {
     namespace InteropServices
       {
+      class UseOle
+        {
+        public:
+          UseOle();
+          ~UseOle();
+        };
+
       class UseCom
         {
         public:
