@@ -25,7 +25,7 @@ namespace System
           // On close handler
           virtual bool OnClose();
           // On command handler
-          virtual bool OnCommand(uint16, uint16, HWND) { return false; }
+          virtual bool OnCommand(uint16 /*code*/, uint16 /*id*/, HWND /*hwnd*/) { return false; }
           // On size handler
           virtual bool OnSize(uint32, long, long) { return false; }
         protected:

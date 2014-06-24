@@ -37,7 +37,11 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="System.Window.Gui.Canvas.h" />
+    <ClInclude Include="System.Window.Gui.CommonControl.h" />
+    <ClInclude Include="System.Window.Gui.Control.h" />
     <ClInclude Include="System.Window.Gui.Controller.h" />
+    <ClInclude Include="System.Window.Gui.Dialog.h" />
+    <ClInclude Include="System.Window.Gui.EditControl.h" />
     <ClInclude Include="System.Window.Gui.h" />
     <ClInclude Include="System.Window.Gui.Msg.h" />
     <ClInclude Include="System.Window.Gui.WinClass.h" />
@@ -56,6 +60,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="System.Window.Gui.Canvas.cpp" />
+    <ClCompile Include="System.Window.Gui.CommonControl.cpp" />
+    <ClCompile Include="System.Window.Gui.Control.cpp" />
+    <ClCompile Include="System.Window.Gui.Dialog.cpp" />
+    <ClCompile Include="System.Window.Gui.DialogProc.cpp" />
+    <ClCompile Include="System.Window.Gui.EditControl.cpp" />
     <ClCompile Include="System.Window.Gui.Msg.cpp" />
     <ClCompile Include="System.Window.Gui.WinProc.cpp" />
     <ClCompile Include="System.Window.Gui.Controller.cpp" />
