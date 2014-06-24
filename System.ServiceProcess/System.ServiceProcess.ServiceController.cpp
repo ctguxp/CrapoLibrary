@@ -36,8 +36,29 @@ namespace System
       {
       ZeroMemory(&_status, sizeof(SERVICE_STATUS_PROCESS));
       }
+    ServiceController::ServiceController(const ServiceController& sc)
+      :_status(sc._status)
+      ,_name(sc._name)
+      ,_serviceName(sc._serviceName)
+      ,_machineName(sc._machineName)
+      ,_displayName(sc._displayName)
+      {
+      }
     ServiceController::~ServiceController()
       {
+      }
+    ServiceController& ServiceController::operator=(const ServiceController& sc)
+      {
+      if(this == &sc)
+        return *this;
+
+      _status = sc._status;
+      _name = sc._name;
+      _serviceName = sc._serviceName;
+      _machineName = sc._machineName;
+      _displayName = sc._displayName;
+
+      return *this;
       }
     String ServiceController::Name()
       {
@@ -193,6 +214,12 @@ namespace System
 
       return serviceStatus;
       }
+    Array<ServiceController> ServiceController::GetServices()
+      {
+      ServiceController sc(L"dummy");
+      String machineName(L".");
+      return sc.GetServices(machineName, SERVICE_WIN32);
+      }
     String ServiceController::GetServiceDisplayName(ServiceManager& scHandle, String& serviceName, String& machineName)
       {
       CharArray buffer;
@@ -244,7 +271,7 @@ namespace System
           } 
         else 
           {
-          return String(buffer);
+          return String(buffer.ToConstPtr());
           }
         }
       }
@@ -253,6 +280,57 @@ namespace System
       if(serviceName.Length() == 0 || serviceName.Length() > 80)
         //throw new ArgumentException (string.Format (CultureInfo.CurrentCulture, "Service name {0} contains invalid characters, is empty" + " or is too long (max length = 80).", serviceName));
           throw ArgumentException(L"Service name is empty or contains invalid characters.");
+      }
+    Array<ServiceController> ServiceController::GetServices(String& machineName, DWORD serviceType, cstring group)
+      {
+      ByteArray buffer;
+
+
+
+      ServiceManager manager(machineName, SC_MANAGER_ENUMERATE_SERVICE);
+
+      DWORD bufferSize = 0;
+      DWORD bytesNeeded = 0;
+      DWORD servicesReturned = 0;
+      DWORD resumeHandle = 0;
+
+      Array<ServiceController> services;
+
+      while (true) 
+        {
+        if (!::EnumServicesStatusEx(manager, SC_ENUM_PROCESS_INFO, serviceType, SERVICE_STATE_ALL, buffer.ToPtr(), bufferSize, &bytesNeeded, &servicesReturned, &resumeHandle, group))
+          {
+          int err = GetLastError();
+          if(err == ERROR_MORE_DATA) 
+            {
+            buffer.Length(bytesNeeded);
+            bufferSize = bytesNeeded;
+            } 
+          else 
+            {
+            throw WinException(L"Failed to enumerate services", err);
+            // TODO throw new Win32Exception(err);
+            }
+          } 
+        else 
+          {
+          byte* ptr = buffer.ToPtr();
+
+          services.Length(servicesReturned);
+          for(DWORD i = 0; i < servicesReturned; i++) 
+            {
+            ENUM_SERVICE_STATUS_PROCESS serviceStatus;
+            memcpy(&serviceStatus, ptr, sizeof(ENUM_SERVICE_STATUS_PROCESS));
+            services[i] = ServiceController(serviceStatus.lpServiceName, machineName);
+            ptr += sizeof(ENUM_SERVICE_STATUS_PROCESS);
+            }
+
+          // we're done, so exit the loop
+          break;
+          }
+        }
+
+      return services;
       }
     }
   }

@@ -23,12 +23,15 @@ namespace System
         };
       public:
         ServiceController(cstring name = nullptr, cstring machine = nullptr);
+        ServiceController(const ServiceController& sc);
         ~ServiceController();
+        ServiceController& operator=(const ServiceController& sc);
         String DisplayName();
         void DisplayName(String value);
         String ServiceName();
         void ServiceName(String value);
-        ServiceControllerStatus Status(); 
+        ServiceControllerStatus Status();
+        static Array<ServiceController> GetServices();
       protected:
         String Name();
       private:
@@ -36,6 +39,7 @@ namespace System
         static String GetServiceName(ServiceManager& scHandle, String& displayName);
         static String GetServiceDisplayName(ServiceManager& scHandle, String& serviceName, String& machineName);
         static void ValidateServiceName(String& serviceName);
+        static Array<ServiceController> GetServices(String& machineName, DWORD serviceType, cstring group = nullptr);
       private:
         SERVICE_STATUS_PROCESS _status;
         String _name;
