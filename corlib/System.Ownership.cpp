@@ -7,8 +7,20 @@ namespace System
     :_isOwner(true)
     {
     }
+  Ownership::Ownership(Ownership const& owner)
+    :_isOwner(owner._isOwner)
+    {
+    }
   Ownership::~Ownership()
     {
+    }
+  Ownership& Ownership::operator=(Ownership const& owner)
+    {
+    if(this == &owner)
+      return *this;
+
+    _isOwner = owner._isOwner;
+    return *this;
     }
   void Ownership::AssertOwnership()
     {
