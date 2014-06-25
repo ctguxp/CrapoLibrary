@@ -12,10 +12,33 @@ class AutoPtr : public System::Ownership
       ,_isMutable(isMutable)
       {
       }
+    AutoPtr(AutoPtr<T>& ap)
+      :System::Ownership(ap)
+      ,_ptr(ap._ptr)
+      ,_isMutable(ap._isMutable)
+      {
+      if(ap.IsOwner())
+        ap.RescindOwnership();
+      }
     ~AutoPtr()
       {
       if(IsOwner())
         delete _ptr;
+      _ptr = nullptr;
+      }
+    AutoPtr<T>& operator=(AutoPtr<T>& ap)
+      {
+      if(this == &ap)
+        return *this;
+
+      System::Ownership::operator=(ap);
+      _ptr = ap._ptr;
+      _isMutable = ap._isMutable;
+
+      if(ap.IsOwner())
+        ap.RescindOwnership();
+
+      return *this;
       }
     T* operator->() { return _ptr; }
     T* Get() { return _ptr; }
