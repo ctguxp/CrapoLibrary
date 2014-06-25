@@ -1,6 +1,7 @@
 // Perch Lake Computer System
 
 #pragma once
+#include "AutoPtr.h"
 #include "System.Array.h"
 #include "System.Ownership.h"
 
@@ -17,6 +18,19 @@ namespace System
       virtual String ToString();
       virtual uint32 GetHashCode();
       virtual bool Equals(Object* obj);
+    };
+
+  typedef AutoPtr<Object> GCObject;
+
+  class CRAPOCOREDLL_API NullObject : public Object
+    {
+    private:
+      static NullObject _instance;
+    private:
+      NullObject();
+    public:
+      virtual uint32 NullObject::GetHashCode() override;
+      static NullObject& Instance();
     };
 
   class CRAPOCOREDLL_API ObjectArray : public Ownership

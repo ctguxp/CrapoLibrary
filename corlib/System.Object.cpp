@@ -7,6 +7,9 @@
 
 namespace System
   {
+
+  NullObject NullObject::_instance;
+
   // Default constructor
   Object::Object()
     {
@@ -41,6 +44,20 @@ namespace System
   bool Object::Equals(Object* obj)
     {
     return this == obj;
+    }
+
+  NullObject::NullObject()
+    {
+    }
+
+  uint32 NullObject::GetHashCode()
+    {
+    return 0;
+    }
+
+  NullObject& NullObject::Instance()
+    {
+    return _instance;
     }
 
   ObjectArray::ObjectArray(uint32 len)
