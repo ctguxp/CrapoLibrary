@@ -1,5 +1,6 @@
 #pragma once
 #include "System.Collections.ICollection.h"
+#include "System.Collections.IDictionaryEnumerator.h"
 
 namespace System
   {
@@ -16,6 +17,7 @@ namespace System
         virtual void Clear() = 0;
         virtual bool Contains(Object* key) = 0;
         virtual void Remove(Object* key) = 0;
+        virtual IDictionaryEnumerator* GetEnumerator() = 0;
       };
     }
   }
