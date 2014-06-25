@@ -14,6 +14,20 @@ namespace System
         {
         DefaultInitialCapacity = 4
         };
+      private:
+        class SimpleEnumerator : public IEnumerator
+          {
+          public:
+            SimpleEnumerator(ArrayList* list);
+            virtual GCObject Current() override;
+            virtual bool MoveNext() override;
+            virtual void Reset() override;
+          private:
+            int32      _index;
+            int32      _version;
+            ArrayList* _list;
+            Object*    _currentElement;
+          };
       public:
         ArrayList();
         ArrayList(sizet capacity);
@@ -23,6 +37,9 @@ namespace System
         virtual void Capacity(sizet value);
         virtual int IndexOf(Object* /*value*/, int /*startIndex*/);
         virtual int IndexOf(Object* value, sizet startIndex, sizet count);
+        // From IEnumerable
+        virtual IEnumerator* GetEnumerator() override;
+        //virtual IEnumerator* GetEnumerator(int index, int count) override;
         // From ICollection
         virtual sizet Count() override;
         virtual bool IsSynchronized() override;
@@ -48,6 +65,6 @@ namespace System
         Array<Object*>  _items;
 #pragma warning(default:4251)
       };
-      typedef AutoPtr<ArrayList> GCArrayList;
+    typedef AutoPtr<ArrayList> GCArrayList;
     }
   }

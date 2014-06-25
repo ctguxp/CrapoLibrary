@@ -7,6 +7,59 @@ namespace System
   {
   namespace Collections
     {
+    ArrayList::SimpleEnumerator::SimpleEnumerator(ArrayList* list)
+      :_index(-1)
+      ,_version((*list)._version)
+      ,_list(list)
+      ,_currentElement(&NullObject::Instance())
+      {
+      }
+
+    GCObject ArrayList::SimpleEnumerator::Current()
+      {
+      if(_currentElement->Equals(&NullObject::Instance()))
+        {
+        if(_index == -1)
+          //throw new InvalidOperationException(L"Enumerator not started");
+            throw SystemException(L"InvalidOperationException Enumerator not started");
+        else
+          //throw new InvalidOperationException(L"Enumerator ended");
+          throw SystemException(L"InvalidOperationException Enumerator ended");						 
+        }
+
+      GCObject retval(_currentElement, false);
+      retval.RescindOwnership();
+      return retval;
+      }
+
+    bool ArrayList::SimpleEnumerator::MoveNext()
+      {
+      if(_version != (*_list)._version)
+        //throw new InvalidOperationException("List has changed.");
+          throw SystemException(L"InvalidOperationException List has changed.");
+
+      if (++_index < (int32)_list->Count()) 
+        {
+        _currentElement = &(*_list)[_index];
+        return true;
+        } 
+      else 
+        {
+        _currentElement = &NullObject::Instance();
+        return false;
+        }
+      }
+
+    void ArrayList::SimpleEnumerator::Reset()
+      {
+      if(_version != (*_list)._version)
+        //throw new InvalidOperationException("List has changed.");
+          throw SystemException(L"InvalidOperationException List has changed.");
+
+      _currentElement = &NullObject::Instance();
+      _index = -1;
+      }
+
     ArrayList::ArrayList()
       :_size(0)
       ,_version(0)
@@ -146,6 +199,18 @@ namespace System
 
       return Array<Object>::IndexOf(_items, *value, startIndex, count);
       }
+
+    IEnumerator* ArrayList::GetEnumerator() 
+      {
+      return new SimpleEnumerator(this);
+      }
+
+    /*public virtual IEnumerator GetEnumerator(int index, int count) 
+    {
+    ArrayList.CheckRange(index, count, _size);
+
+    return new ArrayListEnumerator(this, index, count);
+    }*/
 
     // ------------------------------------------------------------------------
     /// Ensures that the list has the capacity to contain the given count by

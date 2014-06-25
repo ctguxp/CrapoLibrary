@@ -3,6 +3,7 @@
 #include "System.Exception.h"
 #include "System.Single.h"
 #include "System.Collections.HashPrimeNumbers.h"
+#include "System.Collections.DictionaryEntry.h"
 #include "System.Array.hpp"
 
 namespace System
@@ -10,6 +11,106 @@ namespace System
   namespace Collections
     {
     Hashtable::KeyMarker Hashtable::Removed;
+
+    Hashtable::Enumerator::Enumerator(Hashtable* host, EnumeratorMode mode)
+      :_pos(-1)
+      ,_stamp((*host)._modificationCount)
+      ,_size((int32)(*host)._table.Length())
+      ,_mode(mode)
+      ,_host(host)
+      ,_currentKey(nullptr)
+      ,_currentValue(nullptr)
+      {
+      }
+
+    GCObject Hashtable::Enumerator::Current()
+      {
+      if(_currentKey == nullptr)
+        //throw InvalidOperationException();
+          throw SystemException(L"InvalidOperation");
+
+      switch(_mode) 
+        {
+        case EnumeratorMode::KEY_MODE:
+          {
+          GCObject retval(_currentKey, false);
+          retval.RescindOwnership();
+          return retval;
+          }
+        case EnumeratorMode::VALUE_MODE:
+          {
+          GCObject retval(_currentValue, false);
+          retval.RescindOwnership();
+          return retval;
+          }
+        case EnumeratorMode::ENTRY_MODE:
+          {
+          GCObject retval(new DictionaryEntry(_currentKey, _currentValue), false);
+          return retval;
+          }
+        }
+      throw Exception(L"should never happen");
+      }
+
+    void Hashtable::Enumerator::Reset()
+      {
+      FailFast();
+
+      _pos = -1;
+      _currentKey = nullptr;
+      _currentValue = nullptr;
+      }
+
+    bool Hashtable::Enumerator::MoveNext()
+      {
+      FailFast ();
+
+      if(_pos < _size)
+        {
+        while(++_pos < _size)
+          {
+          Slot entry = (*_host)._table[_pos];
+
+          if(entry.key != nullptr && entry.key != &Removed)
+            {
+            _currentKey = entry.key;
+            _currentValue = entry.value;
+            return true;
+            }
+          }
+        }
+
+      _currentKey = nullptr;
+      _currentValue = nullptr;
+      return false;
+      }
+
+    Object* Hashtable::Enumerator::Key()
+      {
+      if(_currentKey == nullptr)
+        //throw new InvalidOperationException ();
+          throw SystemException(L"InvalidOperationException");
+      FailFast();
+      return _currentKey;
+      }
+
+    Object* Hashtable::Enumerator::Value()
+      {
+      if(_currentKey == nullptr)
+        //throw new InvalidOperationException ();
+        throw SystemException(L"InvalidOperationException");
+      FailFast ();
+      return _currentValue;
+      }
+
+    void Hashtable::Enumerator::FailFast()
+      {
+      if((*_host)._modificationCount != _stamp)
+        {
+        //throw new InvalidOperationException (xstr);
+        throw SystemException(L"InvalidOperationException Hashtable.Enumerator: snapshot out of sync.");
+        }
+      }
 
     Hashtable::Hashtable(sizet capacity, float loadFactor, IHashCodeProvider* hcp, IComparer* comparer)
       :_inUse(0)
@@ -144,6 +245,10 @@ namespace System
         --_inUse;
         ++_modificationCount;
         }
+      }
+    IDictionaryEnumerator* Hashtable::GetEnumerator()
+      {
+      return new Enumerator(this, EnumeratorMode::ENTRY_MODE);
       }
 
     void Hashtable::Init(sizet capacity, float loadFactor)

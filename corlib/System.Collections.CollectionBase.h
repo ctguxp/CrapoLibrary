@@ -22,6 +22,7 @@ namespace System
         virtual bool IsSynchronized() override;
         virtual void RemoveAt(sizet index) override;
         virtual void Remove(Object* value) override;
+        virtual IEnumerator* GetEnumerator();
       protected:
         CollectionBase();
         CollectionBase(sizet capacity);

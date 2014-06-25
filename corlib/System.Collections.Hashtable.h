@@ -11,6 +11,12 @@ namespace System
     {
     class CRAPOCOREDLL_API Hashtable : public IDictionary
       {
+      enum class EnumeratorMode : int32
+        {
+          KEY_MODE = 0,
+          VALUE_MODE,
+          ENTRY_MODE
+        };
       enum
         {
         CHAIN_MARKER  = ~Int32::MaxValue
@@ -31,12 +37,34 @@ namespace System
           public:
             KeyMarker(){}
           };
+         class Enumerator : public IDictionaryEnumerator
+          {
+          private:
+            int32          _pos;
+            int32          _stamp;
+            int32          _size;
+            EnumeratorMode _mode;
+            Hashtable*     _host;
+            Object*        _currentKey;
+            Object*        _currentValue;
+          public:
+            Enumerator(Hashtable* host, EnumeratorMode mode);
+            // From IEnumerator
+            virtual GCObject Current() override;
+            virtual void Reset() override;
+            virtual bool MoveNext() override;
+            virtual Object* Key() override;
+            virtual Object* Value() override;
+          private:
+            void FailFast();
+          };
       protected:
         static KeyMarker Removed;
       public:
         Hashtable(sizet capacity = 0, float loadFactor = 1, IHashCodeProvider* hcp = nullptr, IComparer* comparer = nullptr);
         Hashtable(IDictionary* d, float loadFactor = 1, IHashCodeProvider* hcp = nullptr, IComparer* comparer = nullptr);
         virtual ~Hashtable();
+        virtual IDictionaryEnumerator* GetEnumerator() override;
         // From ICollection
         virtual sizet Count() override;
         virtual bool IsSynchronized() override;

@@ -34,6 +34,10 @@ namespace System
       InnerList().Clear(); 
       OnClearComplete();
       }
+    IEnumerator* CollectionBase::GetEnumerator()
+      { 
+      return InnerList().GetEnumerator();
+      }
     bool CollectionBase::IsSynchronized()
       {
       return InnerList().IsSynchronized();
