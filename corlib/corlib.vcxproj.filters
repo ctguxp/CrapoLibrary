@@ -504,6 +504,12 @@
     <ClInclude Include="System.Runtime.InteropServices.UseCom.h">
       <Filter>Header Files\System.Runtime.InteropServices</Filter>
     </ClInclude>
+    <ClInclude Include="System.Collections.IDictionaryEnumerator.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.DictionaryEntry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -790,6 +796,9 @@
     </ClCompile>
     <ClCompile Include="System.Runtime.InteropServices.UseCom.cpp">
       <Filter>Source Files\System.Runtime.InteropServices</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Collections.DictionaryEntry.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

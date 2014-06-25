@@ -37,7 +37,9 @@
   <ItemGroup>
     <ClInclude Include="Crapo.Security.BitConverterLE.h" />
     <ClInclude Include="System.Collections.CollectionBase.h" />
+    <ClInclude Include="System.Collections.DictionaryEntry.h" />
     <ClInclude Include="System.Collections.Generic.h" />
+    <ClInclude Include="System.Collections.IDictionaryEnumerator.h" />
     <ClInclude Include="System.Collections.IEnumerable.h" />
     <ClInclude Include="System.Collections.IEnumerator.h" />
     <ClInclude Include="System.Collections.IList.h" />
@@ -188,6 +190,7 @@
     <ClCompile Include="Microsoft.Win32.RegistryKey.cpp" />
     <ClCompile Include="System.Collections.ArrayList.cpp" />
     <ClCompile Include="System.Collections.CollectionBase.cpp" />
+    <ClCompile Include="System.Collections.DictionaryEntry.cpp" />
     <ClCompile Include="System.Collections.Hashtable.cpp" />
     <ClCompile Include="System.Collections.Stack.cpp" />
     <ClCompile Include="System.FormatException.cpp" />
