@@ -19,7 +19,7 @@ namespace System
         {
         if((_current & 1) != 0)
           throw Exception();
-        if(_current == _offsets.Length())
+        if(_current == (int)_offsets.Length())
           {
           _offsets.Length(_offsets.Length() * 2);
           }
@@ -32,6 +32,43 @@ namespace System
         _offsets[_current++] = offset;
         }
 
+      RxInterpreterFactory::RxInterpreterFactory(ByteArray& program, EvalDelegate eval_del)
+        :_program(program)
+        ,_namesMapping()
+		    ,_gap(0)
+        ,_mapping(nullptr)
+        ,_eval_del(eval_del)
+        {
+        }
+      int32 RxInterpreterFactory::GroupCount()
+        { 
+        return (int32)_program[1] | ((int32)_program[2] << 8);
+        }
+      StringArray& RxInterpreterFactory::NamesMapping()
+			  { 
+        return _namesMapping;
+        }
+			void RxInterpreterFactory::NamesMapping(StringArray& value)
+        { 
+        _namesMapping = value; 
+        }
+      int32 RxInterpreterFactory::Gap()
+        {
+        return _gap;
+        }
+      void RxInterpreterFactory::Gap(int32 value)
+        {
+        _gap = value;
+        }
+      Collections::IDictionary* RxInterpreterFactory::Mapping()
+        {
+        return _mapping;
+        }
+      void RxInterpreterFactory::Mapping(Collections::IDictionary* value)
+        {
+        _mapping = value;
+        }
+			
       RxCompiler::RxCompiler()
         :_curpos(0)
         ,_program(32)
@@ -49,8 +86,7 @@ namespace System
       IMachineFactory* RxCompiler::GetMachineFactory()
         {
         ByteArray dst(_program);
-        // TODO return new RxInterpreterFactory(dst, null);
-        throw NotImplementedException();
+        return new RxInterpreterFactory(dst, nullptr);
         }
       void RxCompiler::EmitFalse()
         {
@@ -344,7 +380,7 @@ namespace System
           int offset = _curpos - l._offsets[i];
           if (offset > UInt16::MaxValue)
             //throw new NotSupportedException();
-            throw SystemException(L"Not Supported");
+              throw SystemException(L"Not Supported");
           int offsetpos = l._offsets [i + 1];
           _program[offsetpos] = (byte)offset;
           _program[offsetpos + 1] = (byte)(offset >> 8);

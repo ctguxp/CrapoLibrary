@@ -17,6 +17,7 @@ namespace System
             Parser();
             ~Parser();
             RegularExpression* ParseRegularExpression(String pattern, RegexOptions options);
+            int GetMapping(Collections::Hashtable* mapping);
           private:
             void ParseGroup(Group* group, RegexOptions options, Assertion* assertion);
           private:

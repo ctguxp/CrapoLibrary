@@ -35,9 +35,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System.Text.RegularExpressions.h" />
     <ClInclude Include="System.Text.RegularExpressions.ICompiler.h" />
     <ClInclude Include="System.Text.RegularExpressions.Position.h" />
     <ClInclude Include="System.Text.RegularExpressions.RxCompiler.h" />
+    <ClInclude Include="System.Text.RegularExpressions.RxInterpreter.h" />
     <ClInclude Include="System.Text.RegularExpressions.RxOp.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.AnchorInfo.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Assertion.h" />
@@ -65,6 +67,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.RxCompiler.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.RxInterpreter.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.AnchorInfo.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Assertion.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.CompositeExpression.cpp" />

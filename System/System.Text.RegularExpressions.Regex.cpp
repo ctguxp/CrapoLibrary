@@ -92,35 +92,43 @@ namespace System
         _groupNames = _machineFactory->NamesMapping();
         }
 
-      IMachineFactory* Regex::CreateMachineFactory(String pattern, RegexOptions /*options*/)
+      IMachineFactory* Regex::CreateMachineFactory(String pattern, RegexOptions options)
         {
         using namespace Syntax;
         Parser parser;
-        throw NotImplementedException();
-        //RegularExpression* regularExpression = parser.ParseRegularExpression(pattern, options);
-        //ICompiler* compiler = nullptr;
+        RegularExpression* regularExpression = parser.ParseRegularExpression(pattern, options);
+        ICompiler* compiler = nullptr;
         //if(!Regex.old_rx)
-         // {
-          //if ((options & RegexOptions::Compiled) != RegexOptions::None)
-            //{
-            //compiler = new CILCompiler();
-            //}
-          //else
-            //{
-            //compiler = new RxCompiler();
-            //}
-          //}
+        // {
+        //if ((options & RegexOptions::Compiled) != RegexOptions::None)
+        //{
+        //compiler = new CILCompiler();
+        //}
         //else
-          //{
-          //compiler = new PatternCompiler();
-          //}
-        //regularExpression.Compile(compiler, (options & RegexOptions.RightToLeft) != RegexOptions.None);
-        //IMachineFactory* machineFactory = compiler.GetMachineFactory();
-        //Hashtable hashtable = new Hashtable();
-        //machineFactory.Gap = parser.GetMapping(hashtable);
-        //machineFactory.Mapping = hashtable;
-        //machineFactory.NamesMapping = Regex.GetGroupNamesArray(machineFactory.GroupCount, machineFactory.Mapping);
-        //return machineFactory;*/
+        //{
+        compiler = new RxCompiler();
+        //}
+        //}
+        //else
+        //{
+        //compiler = new PatternCompiler();
+        //}
+        regularExpression->Compile(compiler, ((intptr)options & (intptr)RegexOptions::RightToLeft) != (intptr)RegexOptions::None);
+        IMachineFactory* machineFactory = compiler->GetMachineFactory();
+        Collections::Hashtable* hashtable = new Collections::Hashtable();
+        machineFactory->Gap(parser.GetMapping(hashtable));
+        machineFactory->Mapping(hashtable);
+        machineFactory->NamesMapping() = Regex::GetGroupNamesArray(machineFactory->GroupCount(), machineFactory->Mapping());
+        return machineFactory;
+        }
+
+      StringArray Regex::GetGroupNamesArray(int groupCount, Collections::IDictionary* mapping)
+        {
+        StringArray group_names(groupCount + 1);
+        Collections::IDictionaryEnumerator* de = mapping->GetEnumerator();
+        while(de->MoveNext())
+          group_names[(int32)de->Value()] = (String&)*de->Key();
+        return group_names;
         }
 
       }

@@ -18,11 +18,9 @@ namespace System
           ,_refs()
           {
           }
-
         Parser::~Parser()
           {
           }
-
         RegularExpression* Parser::ParseRegularExpression(String pattern, RegexOptions options)
           {
           _pattern = pattern;
@@ -48,8 +46,26 @@ namespace System
             throw SystemException(L"Unexpected end of pattern.");
             }
           }
-
-        void ParseGroup(Group* /*group*/, RegexOptions /*options*/, Assertion* /*assertion*/) 
+        int Parser::GetMapping(Collections::Hashtable* mapping)
+          {
+          sizet end = _caps.Count();
+          mapping->Add(new String(L"0"), new Int32(0));
+          for(sizet i = 0; i < end; i++) 
+            {
+            //CapturingGroup group = (CapturingGroup)caps[i];
+            //string name = group.Name != null ? group.Name : group.Index.ToString ();
+            //if (mapping.Contains (name)) 
+              ///{
+              //if ((int) mapping [name] != group.Index)
+                //throw new SystemException ("invalid state");
+              //;
+              //
+            //mapping.Add (name, group.Index);
+            }
+          throw NotImplementedException();
+          //return gap;
+          }
+        void Parser::ParseGroup(Group* /*group*/, RegexOptions /*options*/, Assertion* /*assertion*/) 
           {
           //bool is_top_level = group is RegularExpression;
 

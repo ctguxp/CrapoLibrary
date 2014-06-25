@@ -1,6 +1,8 @@
 #pragma once
 #include "System.Text.RegularExpressions.ICompiler.h"
+#include "System.Text.RegularExpressions.IMachineFactory.h"
 #include "System.Text.RegularExpressions.RxOp.h"
+#include "System.Text.RegularExpressions.RxInterpreter.h"
 
 namespace System
   {
@@ -18,6 +20,25 @@ namespace System
           ~RxLinkRef();
           void PushInstructionBase(int offset);
           void PushOffsetPosition(int offset);
+        };
+
+      class RxInterpreterFactory : public IMachineFactory
+        {
+        private:
+          ByteArray                 _program;
+          StringArray               _namesMapping;
+		      int32                     _gap;
+          Collections::IDictionary* _mapping;
+          EvalDelegate              _eval_del;
+        public:
+          RxInterpreterFactory(ByteArray& program, EvalDelegate eval_del);
+          virtual int32 Gap() override;
+          virtual void Gap(int32 value) override;
+          virtual int32 GroupCount() override;
+          virtual Collections::IDictionary* Mapping() override;
+          virtual void Mapping(Collections::IDictionary* value) override;
+          virtual StringArray& NamesMapping() override;
+          virtual void NamesMapping(StringArray&) override; 
         };
 
       class RxCompiler : public ICompiler

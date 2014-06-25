@@ -21,7 +21,8 @@ namespace System
         private:
           void Init();
           void InitNewRegex();
-          static IMachineFactory* CreateMachineFactory(String pattern, RegexOptions options); 
+          static IMachineFactory* CreateMachineFactory(String pattern, RegexOptions options);
+          static StringArray GetGroupNamesArray(int groupCount, Collections::IDictionary* mapping);
         protected:
           int                       _groupCount;
           int                       _gap;

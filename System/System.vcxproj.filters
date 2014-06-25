@@ -76,7 +76,13 @@
       <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Assertion.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.RxInterpreter.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -114,7 +120,10 @@
       <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Assertion.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.RxInterpreter.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
