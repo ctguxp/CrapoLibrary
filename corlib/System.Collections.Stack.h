@@ -7,7 +7,7 @@ namespace System
   {
   namespace Collections
     {
-    class Stack : public ICollection, public IEnumerable
+    class Stack : public ICollection
       {
       enum
         {
@@ -25,7 +25,7 @@ namespace System
           Enumerator(Stack*);
           Enumerator(const Enumerator& e);
           Enumerator& operator=(const Enumerator& e);
-          virtual Object& Current() override;
+          virtual GCObject Current() override;
           virtual bool MoveNext() override;
           virtual void Reset() override;
         private:

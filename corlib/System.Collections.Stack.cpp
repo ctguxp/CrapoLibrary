@@ -30,7 +30,7 @@ namespace System
       _current = e._current;
       return *this;
       }
-    Object& Stack::Enumerator::Current()
+    GCObject Stack::Enumerator::Current()
       {
       if(_modCount != _stack->_modCount 
         || _current == Enumerator::Begin
@@ -39,7 +39,9 @@ namespace System
         //throw new InvalidOperationException();
         throw SystemException(L"Invalid Operation");
 
-      return (*_stack->_contents[_current]);
+      GCObject retval(_stack->_contents[_current], false);
+      retval.RescindOwnership();
+      return retval;
       }
     bool Stack::Enumerator::MoveNext()
       {

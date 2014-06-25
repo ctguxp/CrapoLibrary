@@ -8,7 +8,7 @@ namespace System
     class IEnumerator
       {
       public:
-        virtual Object& Current() = 0;
+        virtual GCObject Current() = 0;
         virtual bool MoveNext() = 0;
         virtual void Reset() = 0;
       };
