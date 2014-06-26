@@ -14,6 +14,7 @@ namespace System
           :_pattern()
           ,_ptr(0)
           ,_numGroups(0)
+          ,_gap(0)
           ,_caps()
           ,_refs()
           {
@@ -62,8 +63,8 @@ namespace System
               //
             //mapping.Add (name, group.Index);
             }
-          throw NotImplementedException();
-          //return gap;
+          //throw NotImplementedException();
+          return _gap;
           }
         void Parser::ParseGroup(Group* /*group*/, RegexOptions /*options*/, Assertion* /*assertion*/) 
           {

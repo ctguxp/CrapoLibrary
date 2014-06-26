@@ -24,6 +24,7 @@ namespace System
             String                 _pattern;
             int                    _ptr;
             int                    _numGroups;
+            int                    _gap;
             Collections::ArrayList _caps;
             Collections::Hashtable _refs;
           };
