@@ -127,7 +127,11 @@ namespace System
         StringArray group_names(groupCount + 1);
         Collections::IDictionaryEnumerator* de = mapping->GetEnumerator();
         while(de->MoveNext())
-          group_names[(int32)de->Value()] = (String&)*de->Key();
+          {
+          Int32& i = static_cast<Int32&>(*de->Value());
+          String& s = static_cast<String&>(*de->Key());
+          group_names[(int32)i] = s;
+          }
         return group_names;
         }
 
