@@ -85,7 +85,10 @@
       <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
     <ClInclude Include="System.Text.RegularExpressions.Syntax.CapturingGroup.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Capture.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -129,7 +132,10 @@
       <Filter>Source Files\System.Text.RegularExpressions</Filter>
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Syntax.CapturingGroup.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Capture.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
