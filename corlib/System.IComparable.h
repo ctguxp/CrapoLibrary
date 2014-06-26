@@ -5,9 +5,16 @@
 
 namespace System
   {
-  template<class T>
   class IComparable
     {
-    virtual int CompareTo(T&) = 0;
+    public:
+      virtual int CompareTo(Object& obj) = 0;
+    };  
+
+  template<class T>
+  class IComparableT
+    {
+    public:
+      virtual int CompareTo(T&) = 0;
     };
   }

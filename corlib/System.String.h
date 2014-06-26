@@ -33,7 +33,7 @@ namespace System
   class Int32;
   class String;
   typedef Array<String> StringArray;
-  class CRAPOCOREDLL_API String : public Object, public IComparable<String>, public IEquatable<String>
+  class CRAPOCOREDLL_API String : public Object, public IComparableT<String>, public IEquatable<String>
     {
     private:
       uint32   _length;
