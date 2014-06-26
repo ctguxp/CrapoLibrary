@@ -43,6 +43,7 @@
     <ClInclude Include="System.Text.RegularExpressions.RxOp.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.AnchorInfo.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Assertion.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.CapturingGroup.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.CompositeExpression.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Expression.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.ExpressionCollection.h" />
@@ -70,6 +71,7 @@
     <ClCompile Include="System.Text.RegularExpressions.RxInterpreter.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.AnchorInfo.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Assertion.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.CapturingGroup.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.CompositeExpression.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Expression.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.ExpressionCollection.cpp" />

@@ -84,6 +84,9 @@
     <ClInclude Include="System.Text.RegularExpressions.RxInterpreter.h">
       <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.CapturingGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -124,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.RxInterpreter.cpp">
       <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.CapturingGroup.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
