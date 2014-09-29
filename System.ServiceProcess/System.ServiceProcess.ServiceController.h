@@ -30,6 +30,8 @@ namespace System
         void DisplayName(String value);
         String ServiceName();
         void ServiceName(String value);
+        void MachineName(String value);
+        String MachineName();
         ServiceControllerStatus Status();
         static Array<ServiceController> GetServices();
       protected:
@@ -39,6 +41,7 @@ namespace System
         static String GetServiceName(ServiceManager& scHandle, String& displayName);
         static String GetServiceDisplayName(ServiceManager& scHandle, String& serviceName, String& machineName);
         static void ValidateServiceName(String& serviceName);
+        static void ValidateMachineName(String machineName);
         static Array<ServiceController> GetServices(String& machineName, DWORD serviceType, cstring group = nullptr);
       private:
         SERVICE_STATUS_PROCESS _status;

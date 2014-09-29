@@ -60,6 +60,14 @@ namespace System
 
       return *this;
       }
+    void ServiceController::MachineName(String value)
+      {
+      _machineName = value;
+      }
+    String ServiceController::MachineName()
+      {
+      return _machineName;
+      }
     String ServiceController::Name()
       {
       return _name;
@@ -279,8 +287,14 @@ namespace System
       {
       if(serviceName.Length() == 0 || serviceName.Length() > 80)
         //throw new ArgumentException (string.Format (CultureInfo.CurrentCulture, "Service name {0} contains invalid characters, is empty" + " or is too long (max length = 80).", serviceName));
-          throw ArgumentException(L"Service name is empty or contains invalid characters.");
+        throw ArgumentException(L"Service name is empty or contains invalid characters.");
       }
+    void ServiceController::ValidateMachineName(String machineName)
+		{
+			if(machineName.Length() == 0)
+				//throw new ArgumentException (string.Format (CultureInfo.CurrentCulture, "MachineName value {0} is invalid.", machineName));
+        throw ArgumentException(L"MachineName is invalid");
+		}
     Array<ServiceController> ServiceController::GetServices(String& machineName, DWORD serviceType, cstring group)
       {
       ByteArray buffer;
