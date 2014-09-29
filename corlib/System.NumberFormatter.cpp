@@ -1288,7 +1288,7 @@ namespace System
       }
     return nfc.FormatGeneral(_defPrecision + 2, nfi);
     }
-
+#pragma warning(disable:4738)
   String NumberFormatter::FormatRoundtrip(float origval, Globalization::NumberFormatInfo* nfi)
     {
     NumberFormatter nfc(*this);
@@ -1298,6 +1298,7 @@ namespace System
       return shortRep;
     return nfc.FormatGeneral(_defPrecision + 2, nfi);
     }
+#pragma warning(default:4738)
 
   String NumberFormatter::FormatGeneral(int precision, Globalization::NumberFormatInfo* nfi)
     {

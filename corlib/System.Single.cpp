@@ -60,6 +60,7 @@ namespace System
     {
     return NumberFormatter::NumberToString(&format, _value, provider);
     }
+#pragma warning(disable:4738)
   float Single::Parse(String s, IFormatProvider* provider)
     {
     using namespace Globalization;
@@ -70,4 +71,5 @@ namespace System
 
     return (float)parsed_value;
     }
+#pragma warning(default:4738)
   }

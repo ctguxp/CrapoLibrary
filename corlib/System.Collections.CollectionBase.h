@@ -37,7 +37,9 @@ namespace System
 		    virtual void OnRemoveComplete(sizet index, Object* value);
         virtual void OnValidate(Object* value);
       private:
+#pragma warning(disable:4251)
         GCArrayList _list;
+#pragma warning(default:4251)
       };
     }
   }
