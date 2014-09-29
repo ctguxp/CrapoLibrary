@@ -219,4 +219,27 @@ namespace System
     return (int)Generic::EqualityComparer<T>::Default()->IndexOf(arr, value, (int)startIndex, (int)(startIndex + count) );
     }
 
+  template<class T>
+  Array2D<T>::Array2D(sizet r, sizet c)
+    :_numberOfRows(r)
+    ,_numberOfColumns(c)
+    ,_array(r * c)
+    {
+    }
+  
+  template<class T>
+  T& Array2D<T>::Select(sizet i, sizet j)
+    {
+    if(i >= _numberOfRows)
+      throw ArgumentOutOfRangeException(L"Invalid Row");
+    if(j >= _numberOfColumns)
+      throw ArgumentOutOfRangeException(L"Invalid Column");
+    return _array[i * _numberOfColumns + j];
+    }
+
+  template<class T>
+  typename Array2D<T>::Row Array2D<T>::operator [] (sizet row)
+    {
+    return Row(*this, row);
+    }
   }

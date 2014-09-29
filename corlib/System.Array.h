@@ -56,6 +56,35 @@ namespace System
       void Free();
     };
 
+  template <class T>
+  class Array2D
+  {
+  protected:
+    sizet    _numberOfRows;
+    sizet    _numberOfColumns;
+    Array<T> _array;
+  public:
+    class Row
+    {
+    private:
+      Array2D& _array2D;
+      sizet    _row;
+    public:
+      Row(Array2D& array2D, sizet row)
+        :_array2D(array2D)
+        ,_row(row)
+        {
+        }
+      T& operator [] (sizet column) const
+        {
+        return _array2D.Select(_row, column);
+        }
+    };
+    Array2D(sizet, sizet);
+    T& Select(sizet, sizet);
+    Row operator [] (sizet);
+  };
+
   typedef Array<byte>    ByteArray;
   typedef Array<sbyte>   SByteArray;
   typedef Array<wchar_t> CharArray;
