@@ -38,4 +38,14 @@ namespace System
       return Single::NaN;
     return sqrt(d);
     }
+  double Math::Round(double a)
+    {
+    double int_part = floor(a);
+    double dec_part = a - int_part;
+    if (((dec_part == 0.5) && ((2.0 * ((int_part / 2.0) - floor(int_part / 2.0))) != 0.0)) || (dec_part > 0.5))
+      {
+      int_part++;
+      }
+    return int_part;
+    }
   }

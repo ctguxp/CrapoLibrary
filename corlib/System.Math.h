@@ -16,5 +16,6 @@ namespace System
       static uintptr Max(uintptr, uintptr);
       static int Min(int, int);
       static double Sqrt(double d);
+      static double Round(double a);
     };
   }
