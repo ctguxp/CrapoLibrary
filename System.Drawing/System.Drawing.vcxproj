@@ -36,12 +36,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="System.Drawing.Bitmap.h" />
     <ClInclude Include="System.Drawing.Color.h" />
     <ClInclude Include="System.Drawing.GDIPlus.h" />
     <ClInclude Include="System.Drawing.Graphics.h" />
     <ClInclude Include="System.Drawing.GraphicsUnit.h" />
     <ClInclude Include="System.Drawing.h" />
     <ClInclude Include="System.Drawing.Imaging.ColorAdjustType.h" />
+    <ClInclude Include="System.Drawing.Image.h" />
+    <ClInclude Include="System.Drawing.Imaging.PixelFormat.h" />
+    <ClInclude Include="System.Drawing.KnownColor.h" />
+    <ClInclude Include="System.Drawing.KnownColors.h" />
     <ClInclude Include="System.Drawing.Pen.h" />
   </ItemGroup>
   <ItemGroup>
@@ -55,9 +60,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="System.Drawing.Bitmap.cpp" />
     <ClCompile Include="System.Drawing.Color.cpp" />
     <ClCompile Include="System.Drawing.GDIPlus.cpp" />
     <ClCompile Include="System.Drawing.Graphics.cpp" />
+    <ClCompile Include="System.Drawing.Image.cpp" />
+    <ClCompile Include="System.Drawing.KnownColors.cpp" />
     <ClCompile Include="System.Drawing.Pen.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

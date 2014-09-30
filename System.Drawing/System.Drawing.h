@@ -9,6 +9,8 @@ struct IDirectDrawSurface7;
 #include <gdiplustypes.h>
 #include <gdiplusinit.h>
 
+#include "System.Drawing.Bitmap.h"
 #include "System.Drawing.GDIPlus.h"
 #include "System.Drawing.Graphics.h"
+#include "System.Drawing.Image.h"
 #include "System.Drawing.Pen.h"

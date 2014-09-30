@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "System.Drawing.Color.h"
+#include "System.Drawing.KnownColor.h"
+#include "System.Drawing.KnownColors.h"
 
 namespace System
   {
@@ -8,6 +10,7 @@ namespace System
     Color::Color(int red, int green, int blue, int alpha)
       :_state(Color::ColorType::ARGB)
       ,_value(0)
+      ,_knownColor(0)
       {
       CheckARGBValues(red, green, blue, alpha);
       _value = (int32)((uint32) alpha << 24) + (red << 16) + (green << 8) + blue;
@@ -15,6 +18,7 @@ namespace System
     Color::Color(const Color& color)
       :_state(color._state)
       ,_value(color._value)
+      ,_knownColor(color._knownColor)
       {
       }
     Color::~Color()
@@ -27,8 +31,25 @@ namespace System
 
       _state = color._state;
       _value = color._value;
+      _knownColor = color._knownColor;
       return *this;
       }
+    Color Color::FromArgb(int red, int green, int blue)
+		{
+			return FromArgb(255, red, green, blue);
+		}
+    Color Color::FromArgb(int alpha, int red, int green, int blue)
+		{
+			CheckARGBValues(alpha, red, green, blue);
+			Color color;
+			color._state = ColorType::ARGB;
+			color._value = ((uint32) alpha << 24) + (red << 16) + (green << 8) + blue;
+			return color;
+		}
+    Color Color::FromArgb(int argb)
+		{
+			return FromArgb ((argb >> 24) & 0x0FF, (argb >> 16) & 0x0FF, (argb >> 8) & 0x0FF, argb & 0x0FF);
+		}
     DWORD Color::ToArgb()
       {
       return _value;
@@ -52,6 +73,10 @@ namespace System
       {
       Int32 v(value);
       return ArgumentException(String::Format(L"'{0}' is not a valid value for '{1}'. '{1}' should be greater or equal to 0 and less than or equal to 255.", &v, &color));
+      }
+    Color Color::Transparent()
+			{ 
+      return KnownColors::FromKnownColor(KnownColor::Transparent);
       }
     }
   }
