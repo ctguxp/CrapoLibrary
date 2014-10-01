@@ -8,15 +8,17 @@ namespace System
     class Image
       {
       public:
-        Image();
         virtual ~Image();
         int Height();
         int Width();
         Imaging::PixelFormat PixelFormat();
         void* NativeObject() { return _nativeObject; }
       protected:
+        Image();
+      protected:
         void* _nativeObject;
       };
+    typedef AutoPtr<Image> GCImage;
     }
   }
 
