@@ -27,6 +27,10 @@ namespace System
     {
     return (&o1 == &o2);
     }
+  bool Object::Equals(Object* o1, Object* o2)
+    {
+    return o1->Equals(o2);
+    }
   uint32 Object::GetHashCode()
     {
     return (uint32)typeid(*this).hash_code();

@@ -16,6 +16,7 @@ namespace System
       ~Single();
       Single& operator = (float const&);
       operator float const& () const;
+      virtual bool Equals(Object* obj) override;
       virtual uint32 GetHashCode() override;
       static bool IsNaN(float);
       virtual String ToString() override;

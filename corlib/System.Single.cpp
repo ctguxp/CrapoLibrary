@@ -31,6 +31,13 @@ namespace System
     {
     return _value;
     }
+  bool Single::Equals(Object* obj)
+    {
+    Single const& arg = dynamic_cast<Single const&>(*obj);
+    if(_value == arg._value)
+      return true;
+    return false;
+    }
   uint32 Single::GetHashCode()
     {
     if(_value == 0)

@@ -15,6 +15,7 @@ namespace System
       virtual ~Object();
       static bool IsInstance(const Object&, const Object&);
       static bool ReferenceEquals(const Object&, const Object&);
+      static bool Equals(Object*, Object*);
       virtual String ToString();
       virtual uint32 GetHashCode();
       virtual bool Equals(Object* obj);
