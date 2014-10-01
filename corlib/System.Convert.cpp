@@ -65,4 +65,8 @@ namespace System
     using namespace Security;
     return Cryptography::Base64Helper::ToByteArray(arr.ToPtr() + offset, length, false);
     }
+  byte Convert::ToByte(int value) 
+		{ 
+			return (byte)value; 
+		}
   }
