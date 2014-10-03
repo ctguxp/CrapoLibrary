@@ -34,6 +34,7 @@ namespace System
         virtual ~ArrayList();
         virtual Object& operator[](const sizet item) override { return (*_items[item]); }
         virtual sizet Capacity();
+        void Set(sizet /*index*/, Object* /*obj*/);
         virtual void Capacity(sizet value);
         virtual int IndexOf(Object* /*value*/, int /*startIndex*/);
         virtual int IndexOf(Object* value, sizet startIndex, sizet count);

@@ -2,6 +2,7 @@
 #include "System.Collections.ArrayList.h"
 #include "System.Array.hpp"
 #include "System.UInt32.h"
+#include "System.Exception.h"
 
 namespace System
   {
@@ -77,6 +78,15 @@ namespace System
     ArrayList::~ArrayList()
       {
       Free();
+      }
+    void ArrayList::Set(sizet index, Object* obj)
+      {
+      if(index >= _size) 
+					//throw ArgumentOutOfRangeException(L"index", index, L"Index is less than 0 or more than or equal to the list count.");
+          throw ArgumentOutOfRangeException(L"index", L"Index is less than 0 or more than or equal to the list count.");
+
+				_items[index] = obj;
+				_version++;
       }
     size_t ArrayList::Count()
       {
