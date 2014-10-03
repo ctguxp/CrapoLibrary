@@ -9,7 +9,7 @@ namespace System
   {
   namespace Collections
     {
-    class ICollection : public IEnumerable
+    class CRAPOCOREDLL_API ICollection : public IEnumerable
       {
       public:
         virtual sizet Count() = 0;
