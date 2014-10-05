@@ -16,6 +16,7 @@ namespace System
           int32  _length;
           String _text;
         public:
+          Capture();
           Capture(String /*text*/, int32 index = 0, int32 length = 0);
           ~Capture();
           String Value();

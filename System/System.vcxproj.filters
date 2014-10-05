@@ -90,6 +90,27 @@
     <ClInclude Include="System.Text.RegularExpressions.Capture.h">
       <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Group.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.CaptureCollection.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Match.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.BaseMachine.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Compiler.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.GroupCollection.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Category.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -135,6 +156,27 @@
       <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Capture.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Group.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.CaptureCollection.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Match.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.BaseMachine.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Compiler.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.GroupCollection.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Category.cpp">
       <Filter>Source Files\System.Text.RegularExpressions</Filter>
     </ClCompile>
   </ItemGroup>

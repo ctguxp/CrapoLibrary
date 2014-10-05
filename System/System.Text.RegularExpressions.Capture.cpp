@@ -7,6 +7,12 @@ namespace System
     {
     namespace RegularExpressions
       {
+      Capture::Capture()
+        :_index(0)
+        ,_length(0)
+        ,_text()
+        {
+        }
       Capture::Capture(String text, int32 index, int32 length)
         :_index(index)
         ,_length(length)

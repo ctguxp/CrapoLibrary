@@ -3,6 +3,8 @@
 #include "System.Text.RegularExpressions.Syntax.Parser.h"
 #include "System.Text.RegularExpressions.Syntax.RegularExpression.h"
 #include "System.Text.RegularExpressions.RxCompiler.h"
+#include "System.Text.RegularExpressions.Match.h"
+#include "System.Text.RegularExpressions.IMachineFactory.h"
 
 namespace System
   {
@@ -39,6 +41,19 @@ namespace System
 
       Regex::~Regex()
         {
+        }
+
+      RegularExpressions::Match* Regex::Match(String input, int startat)
+        {
+        if(startat < 0 || startat > input.Length())
+          throw ArgumentOutOfRangeException(L"startat");
+
+        return CreateMachine()->Scan(this, input, startat, input.Length());
+        }
+
+      IMachine* Regex::CreateMachine()
+        {
+        return _machineFactory->NewInstance();
         }
 
       void Regex::ValidateOptions(RegexOptions options)

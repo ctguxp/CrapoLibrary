@@ -35,7 +35,7 @@ namespace System
       RxInterpreterFactory::RxInterpreterFactory(ByteArray& program, EvalDelegate eval_del)
         :_program(program)
         ,_namesMapping()
-		    ,_gap(0)
+        ,_gap(0)
         ,_mapping(nullptr)
         ,_eval_del(eval_del)
         {
@@ -45,10 +45,10 @@ namespace System
         return (int32)_program[1] | ((int32)_program[2] << 8);
         }
       StringArray& RxInterpreterFactory::NamesMapping()
-			  { 
+        { 
         return _namesMapping;
         }
-			void RxInterpreterFactory::NamesMapping(StringArray& value)
+      void RxInterpreterFactory::NamesMapping(StringArray& value)
         { 
         _namesMapping = value; 
         }
@@ -68,7 +68,11 @@ namespace System
         {
         _mapping = value;
         }
-			
+      IMachine* RxInterpreterFactory::NewInstance()
+        {
+        return new RxInterpreter(_program, _eval_del);
+        }
+
       RxCompiler::RxCompiler()
         :_curpos(0)
         ,_program(32)

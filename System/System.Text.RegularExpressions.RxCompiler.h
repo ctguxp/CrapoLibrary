@@ -38,7 +38,8 @@ namespace System
           virtual Collections::IDictionary* Mapping() override;
           virtual void Mapping(Collections::IDictionary* value) override;
           virtual StringArray& NamesMapping() override;
-          virtual void NamesMapping(StringArray&) override; 
+          virtual void NamesMapping(StringArray&) override;
+          virtual IMachine* NewInstance() override; 
         };
 
       class RxCompiler : public ICompiler

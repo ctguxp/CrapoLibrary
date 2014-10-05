@@ -35,9 +35,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System.Text.RegularExpressions.BaseMachine.h" />
     <ClInclude Include="System.Text.RegularExpressions.Capture.h" />
+    <ClInclude Include="System.Text.RegularExpressions.CaptureCollection.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Category.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Compiler.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Group.h" />
+    <ClInclude Include="System.Text.RegularExpressions.GroupCollection.h" />
     <ClInclude Include="System.Text.RegularExpressions.h" />
     <ClInclude Include="System.Text.RegularExpressions.ICompiler.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Match.h" />
     <ClInclude Include="System.Text.RegularExpressions.Position.h" />
     <ClInclude Include="System.Text.RegularExpressions.RxCompiler.h" />
     <ClInclude Include="System.Text.RegularExpressions.RxInterpreter.h" />
@@ -68,7 +75,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.BaseMachine.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Capture.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.CaptureCollection.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Category.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Compiler.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Group.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.GroupCollection.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Match.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.RxCompiler.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.RxInterpreter.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.AnchorInfo.cpp" />
