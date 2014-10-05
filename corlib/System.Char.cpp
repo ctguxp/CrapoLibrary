@@ -5,7 +5,6 @@
 #include "System.Exception.h"
 #include "System.Windows.Locale.h"
 #include "System.Globalization.CultureInfo.h"
-#include "System.Globalization.UnicodeCategory.h"
 #include "CharConversions.h"
 
 namespace System
@@ -89,6 +88,19 @@ namespace System
     {
     using namespace Globalization;
     return CategoryData_v4[c] <= ((byte)UnicodeCategory::OtherLetter);
+    }
+
+  bool Char::IsLetterOrDigit(wchar_t c)
+    {
+    using namespace Globalization;
+    int category = CategoryData_v4[c];
+    return (category <= ((byte)UnicodeCategory::OtherLetter) ||
+      category == ((byte)UnicodeCategory::DecimalDigitNumber));
+    }
+
+  Globalization::UnicodeCategory Char::GetUnicodeCategory(wchar_t c)
+    {
+    return(Globalization::UnicodeCategory)(CategoryData_v4[c]);
     }
 
   wchar_t Char::ToUpperInvariant(wchar_t c)

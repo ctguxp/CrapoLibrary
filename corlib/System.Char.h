@@ -4,6 +4,7 @@
 #include "System.Object.h"
 #include "System.String.h"
 #include "System.IEquatable.h"
+#include "System.Globalization.UnicodeCategory.h"
 
 namespace System
   {
@@ -27,6 +28,8 @@ namespace System
       static bool IsWhiteSpace(wchar_t);
       static bool IsDigit(wchar_t c);
       static bool IsLetter(wchar_t c);
+      static bool IsLetterOrDigit(wchar_t c);
+      static Globalization::UnicodeCategory GetUnicodeCategory(wchar_t c);
       static wchar_t ToLower(wchar_t c);
       static wchar_t ToLowerInvariant(wchar_t c);
       static wchar_t ToUpperInvariant(wchar_t c);
