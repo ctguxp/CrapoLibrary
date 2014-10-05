@@ -209,6 +209,18 @@ namespace System
     }
 
   template<class T>
+  int Array<T>::IndexOf(Array<T*>& arr, T& value)
+    {
+    return IndexOf(arr, value, 0, arr.Length());
+    }
+
+  template<class T>
+  int Array<T>::IndexOf(Array<T*>& arr, T& value, sizet startIndex)
+    {
+    return IndexOf(arr, value, startIndex, arr.Length() - startIndex);
+    }
+
+  template<class T>
   int Array<T>::IndexOf(Array<T*>& arr, T& value, sizet startIndex, sizet count)
     {
     using namespace Collections;
@@ -226,7 +238,7 @@ namespace System
     ,_array(r * c)
     {
     }
-  
+
   template<class T>
   T& Array2D<T>::Select(sizet i, sizet j)
     {

@@ -7,7 +7,7 @@ namespace System
   {
   namespace Collections
     {
-    class Stack : public ICollection
+    class CRAPOCOREDLL_API Stack : public ICollection
       {
       enum
         {

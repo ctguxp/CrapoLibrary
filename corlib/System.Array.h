@@ -50,6 +50,8 @@ namespace System
 
       static void Copy(T*, sizet, T*, sizet, sizet);
       static void Copy(Array<T>&, sizet, Array<T>&, sizet, sizet);
+      static int IndexOf(Array<T*>& arr, T& value);
+      static int IndexOf(Array<T*>& arr, T& value, sizet startIndex);
       static int IndexOf(Array<T*>& arr, T& value, sizet startIndex, sizet count);
 
     private:
