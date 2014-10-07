@@ -16,6 +16,9 @@
     <Filter Include="Source Files\Collections">
       <UniqueIdentifier>{7cce15d8-4668-4199-946e-309c91a21d88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\System.IO">
+      <UniqueIdentifier>{f97b50e5-e7e6-49fe-9aa0-dda551cc1c25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -85,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="UnitTestStack.cpp">
       <Filter>Source Files\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryStreamTest.cpp">
+      <Filter>Source Files\System.IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
