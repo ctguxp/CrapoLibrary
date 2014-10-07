@@ -510,6 +510,9 @@
     <ClInclude Include="System.Collections.DictionaryEntry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="System.IO.MemoryStream.h">
+      <Filter>Header Files\System.IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -799,6 +802,9 @@
     </ClCompile>
     <ClCompile Include="System.Collections.DictionaryEntry.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.IO.MemoryStream.cpp">
+      <Filter>Source Files\System.IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

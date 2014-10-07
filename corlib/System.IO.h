@@ -16,6 +16,7 @@
 #include "System.IO.FileStream.h"
 #include "System.IO.FileSystemInfo.h"
 #include "System.IO.IOException.h"
+#include "System.IO.MemoryStream.h"
 #include "System.IO.Path.h"
 #include "System.IO.SearchPatterns.h"
 #include "System.IO.SeekOrigin.h"
