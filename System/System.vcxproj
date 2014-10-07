@@ -49,6 +49,7 @@
     <ClInclude Include="System.Text.RegularExpressions.RxCompiler.h" />
     <ClInclude Include="System.Text.RegularExpressions.RxInterpreter.h" />
     <ClInclude Include="System.Text.RegularExpressions.RxOp.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Alternation.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.AnchorInfo.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Assertion.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.CapturingGroup.h" />
@@ -56,6 +57,7 @@
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Expression.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.ExpressionCollection.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Group.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.PositionAssertion.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.RegularExpression.h" />
     <ClInclude Include="System.Text.RegularExpressions.Cache.h" />
     <ClInclude Include="System.Text.RegularExpressions.IMachineFactory.h" />
@@ -85,6 +87,7 @@
     <ClCompile Include="System.Text.RegularExpressions.Match.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.RxCompiler.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.RxInterpreter.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Alternation.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.AnchorInfo.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Assertion.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.CapturingGroup.cpp" />
@@ -92,6 +95,7 @@
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Expression.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.ExpressionCollection.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Group.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.PositionAssertion.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.RegularExpression.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Cache.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Regex.cpp" />

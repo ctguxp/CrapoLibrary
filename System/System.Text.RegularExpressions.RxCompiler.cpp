@@ -90,6 +90,7 @@ namespace System
       IMachineFactory* RxCompiler::GetMachineFactory()
         {
         ByteArray dst(_program);
+        dst.Length(_curpos);
         return new RxInterpreterFactory(dst, nullptr);
         }
       void RxCompiler::EmitFalse()

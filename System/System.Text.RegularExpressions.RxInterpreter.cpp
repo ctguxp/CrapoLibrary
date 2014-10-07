@@ -101,7 +101,8 @@ namespace System
         {
         first_mark_index = -1;
         n_caps = 0;
-        for(int m = _groups[gid]; m >= 0; m = _marks[m].Previous) {
+        for(int m = _groups[gid]; m >= 0; m = _marks[m].Previous)
+          {
           if(!_marks[m].IsDefined())
             continue;
           if(first_mark_index < 0)
@@ -292,7 +293,7 @@ namespace System
           //  }
           switch ((RxOp)_program[pc]) 
             {
-            case RxOp::True:
+            case RxOp::True: // 2
               if (char_group_end != 0) 
                 {
                 pc = char_group_end;
@@ -301,7 +302,7 @@ namespace System
                 }
               strpos_result = strpos;
               return true;
-            case RxOp::False:
+            case RxOp::False: //2
               return false;
             case RxOp::AnyPosition:
               pc++;
@@ -398,7 +399,7 @@ namespace System
                   }
                 }
               return false;
-            case RxOp::Anchor:
+            case RxOp::Anchor: //150
               {
               int skip = _program [pc + 1] | ((int)_program [pc + 2] << 8);
               int anch_offset = _program [pc + 3] | ((int)_program [pc + 4] << 8);
@@ -429,7 +430,7 @@ namespace System
 
               pc += skip;
 
-              if ((RxOp)_program [pc] == RxOp::StartOfString)
+              if ((RxOp)_program[pc] == RxOp::StartOfString)
                 {
                 if (strpos == 0) {
                   int res = strpos;

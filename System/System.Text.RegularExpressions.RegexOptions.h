@@ -12,6 +12,7 @@ namespace System
         IgnoreCase			        = 0x001,
         Multiline			          = 0x002,
         ExplicitCapture			    = 0x004,
+        Compiled			          = 0x008,
         Singleline			        = 0x010,
         IgnorePatternWhitespace = 0x020,
         RightToLeft			        = 0x040,

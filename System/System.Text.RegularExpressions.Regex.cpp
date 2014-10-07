@@ -113,21 +113,22 @@ namespace System
         Parser parser;
         RegularExpression* regularExpression = parser.ParseRegularExpression(pattern, options);
         ICompiler* compiler = nullptr;
-        //if(!Regex.old_rx)
-        // {
-        //if ((options & RegexOptions::Compiled) != RegexOptions::None)
-        //{
-        //compiler = new CILCompiler();
-        //}
-        //else
-        //{
-        compiler = new RxCompiler();
-        //}
-        //}
-        //else
-        //{
-        //compiler = new PatternCompiler();
-        //}
+        int x = 0;
+        if(x != 1)
+          {
+          if (((intptr)options & (intptr)RegexOptions::Compiled) != (intptr)RegexOptions::None)
+            {
+            //compiler = new CILCompiler();
+            }
+          else
+            {
+            compiler = new RxCompiler();
+            }
+          }
+          else
+          {
+          //compiler = new PatternCompiler();
+          }
         regularExpression->Compile(compiler, ((intptr)options & (intptr)RegexOptions::RightToLeft) != (intptr)RegexOptions::None);
         IMachineFactory* machineFactory = compiler->GetMachineFactory();
         Collections::Hashtable* hashtable = new Collections::Hashtable();

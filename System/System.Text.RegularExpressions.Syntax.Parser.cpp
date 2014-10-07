@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "System.Text.RegularExpressions.Syntax.Parser.h"
 #include "System.Text.RegularExpressions.Syntax.Assertion.h"
+#include "System.Text.RegularExpressions.Syntax.Alternation.h"
+#include "System.Text.RegularExpressions.Syntax.PositionAssertion.h"
 
 namespace System
   {
@@ -35,7 +37,7 @@ namespace System
             {
             RegularExpression* re = new RegularExpression();
             ParseGroup((Group*)re, options, nullptr);
-            //ResolveReferences();
+            ResolveReferences();
 
             //re->GroupCount(num_groups);
 
@@ -56,234 +58,238 @@ namespace System
             //CapturingGroup group = (CapturingGroup)caps[i];
             //string name = group.Name != null ? group.Name : group.Index.ToString ();
             //if (mapping.Contains (name)) 
-              ///{
-              //if ((int) mapping [name] != group.Index)
-                //throw new SystemException ("invalid state");
-              //;
-              //
+            ///{
+            //if ((int) mapping [name] != group.Index)
+            //throw new SystemException ("invalid state");
+            //;
+            //
             //mapping.Add (name, group.Index);
             }
           //throw NotImplementedException();
           return _gap;
           }
-        void Parser::ParseGroup(Group* /*group*/, RegexOptions /*options*/, Assertion* /*assertion*/) 
+        void Parser::ParseGroup(Group* group, RegexOptions options, Assertion* assertion) 
           {
-          //bool is_top_level = group is RegularExpression;
+          RegularExpression g;
+          bool is_top_level = Object::IsInstance((*group), g);
+          if(!is_top_level)
+            return;
 
-          //Alternation* alternation = nullptr;
-          //string lit;
+          Alternation* alternation = nullptr;
+          String lit;
 
-          //Group* current = new Group );
-          //Expression* expr = nullptr;
-          //bool closed = false;
+          Group* current = new Group();
+          Expression* expr = nullptr;
+          bool closed = false;
 
-          //          while(true) 
-          //            {
-          //            ConsumeWhitespace(IsIgnorePatternWhitespace (options));
-          //            if(_ptr >= _pattern.Length())
-          //              break;
-          //
-          //            // (1) Parse for Expressions
-          //
-          //            wchar_t ch = pattern[_ptr++];
-          //
-          //            switch(ch) 
-          //              {
-          //              case L'^': 
-          //                {
-          //                Position pos =
-          //                  IsMultiline (options) ? Position.StartOfLine : Position.Start;
-          //                expr = new PositionAssertion (pos);
-          //                break;
-          //                }
-          //
-          //              case L'$': 
-          //                {
-          //                Position pos =
-          //                  IsMultiline (options) ? Position.EndOfLine : Position.End;
-          //                expr = new PositionAssertion (pos);
-          //                break;
-          //                }
-          //
-          //              case L'.': 
-          //                {
-          //                Category cat =
-          //                  IsSingleline (options) ? Category.AnySingleline : Category.Any;
-          //                expr = new CharacterClass (cat, false);
-          //                break;
-          //                }
-          //
-          //              case L'\\': 
-          //                {
-          //                int c = ParseEscape (false);
-          //                if (c >= 0)
-          //                  ch = (char)c;
-          //                else 
-          //                  {
-          //                  expr = ParseSpecial (options);
-          //
-          //                  if (expr == null)
-          //                    ch = pattern[ptr ++];		// default escape
-          //                  }
-          //                break;
-          //                }
-          //
-          //              case L'[': 
-          //                {
-          //                expr = ParseCharacterClass (options);
-          //                break;
-          //                }
-          //
-          //              case L'(': 
-          //                {
-          //                bool ignore = IsIgnoreCase (options);
-          //                expr = ParseGroupingConstruct (ref options);
-          //                if (expr == null) {
-          //                  if (lit != null && IsIgnoreCase (options) != ignore) {
-          //                    current.AppendExpression (new Literal (lit, IsIgnoreCase (options)));
-          //                    lit = null;
-          //                    }
-          //
-          //                  continue;
-          //                  }
-          //                break;
-          //                }
-          //
-          //              case L')': 
-          //                {
-          //                closed = true;
-          //                goto EndOfGroup;
-          //                }
-          //
-          //              case L'|': 
-          //                {
-          //                if (lit != null) 
-          //                  {
-          //                  current.AppendExpression (new Literal (lit, IsIgnoreCase (options)));
-          //                  lit = null;
-          //                  }
-          //
-          //                if (assertion != null) 
-          //                  {
-          //                  if (assertion.TrueExpression == null)
-          //                    assertion.TrueExpression = current;
-          //                  else if (assertion.FalseExpression == null)
-          //                    assertion.FalseExpression = current;
-          //                  else
-          //                    throw NewParseException ("Too many | in (?()|).");
-          //                  }
-          //                else 
-          //                  {
-          //                  if (alternation == null)
-          //                    alternation = new Alternation ();
-          //
-          //                  alternation.AddAlternative (current);
-          //                  }
-          //
-          //                current = new Group ();
-          //                continue;
-          //                }
-          //
-          //              case L'*': case L'+': case L'?': 
-          //                {
-          //                throw NewParseException ("Bad quantifier.");
-          //                }
-          //
-          //              default: 
-          //                break;		// literal character
-          //              }
-          //
-          //            ConsumeWhitespace (IsIgnorePatternWhitespace (options));
-          //
-          //            // (2) Check for Repetitions
-          //
-          //            if(_ptr < pattern.Length())
-          //              {
-          //              wchar_t k = pattern[ptr];
-          //              int min = 0, max = 0;
-          //              bool lazy = false;
-          //              bool haveRep = false;
-          //
-          //
-          //              if (k == L'?' || k == L'*' || k == L'+') 
-          //                {
-          //                ++ ptr;
-          //                haveRep = true;
-          //
-          //                switch (k) 
-          //{
-          //                  case L'?': min = 0; max = 1; break;
-          //                  case L'*': min = 0; max = 0x7fffffff; break;
-          //                  case L'+': min = 1; max = 0x7fffffff; break;
-          //                  }
-          //                } 
-          //              else if (k == L'{' && ptr + 1 < pattern.Length) 
-          //                {
-          //                int saved_ptr = _ptr;
-          //                ++_ptr;
-          //                haveRep = ParseRepetitionBounds (out min, out max, options);
-          //                if (!haveRep)
-          //                  _ptr = saved_ptr;
-          //                }
-          //
-          //              if (haveRep) 
-          //                {
-          //                ConsumeWhitespace (IsIgnorePatternWhitespace (options));
-          //                if (ptr < pattern.Length && pattern[ptr] == L'?')
-          //                  {
-          //                  ++_ptr;
-          //                  lazy = true;
-          //                  }
-          //
-          //                //It doesn't make sense to assert a given position more than once.
-          //                bool ignore_repetition = false;
-          //                if (expr is PositionAssertion) 
-          //                  {
-          //                  ignore_repetition = min > 0 && !lazy;
-          //                  max = 1;
-          //                  }
-          //
-          //                if (!ignore_repetition) 
-          //                  {
-          //                  Repetition repetition = new Repetition (min, max, lazy);
-          //
-          //                  if (expr == null)
-          //                    repetition.Expression = new Literal (ch.ToString (), IsIgnoreCase (options));
-          //                  else
-          //                    repetition.Expression = expr;
-          //
-          //                  expr = repetition;
-          //                  }
-          //                }
-          //              }
-          //
-          //            // (3) Append Expression and/or Literal
-          //
-          //            if (expr == null) 
-          //              {
-          //              if (lit == null)
-          //                lit = L"";
-          //              lit += ch;
-          //              }
-          //            else 
-          //              {
-          //              if (lit != null) 
-          //                {
-          //                current.AppendExpression (new Literal (lit, IsIgnoreCase (options)));
-          //                lit = null;
-          //                }
-          //
-          //              current.AppendExpression (expr);
-          //              expr = null;
-          //              }
-          //
-          //            if (is_top_level && ptr >= pattern.Length)
-          //              goto EndOfGroup;
-          //            }
-          //
-          //EndOfGroup:
-          //          if (is_top_level && closed)
-          //            throw NewParseException ("Too many )'s.");
+          for(;;) 
+            {
+            ConsumeWhitespace(IsIgnorePatternWhitespace(options));
+            if(_ptr >= _pattern.Length())
+              break;
+
+            // (1) Parse for Expressions
+
+            wchar_t ch = _pattern[_ptr++];
+
+            switch(ch) 
+              {
+              case L'^': 
+                {
+                //Position pos = IsMultiline (options) ? Position.StartOfLine : Position.Start;
+                //expr = new PositionAssertion(pos);
+                break;
+                }
+
+              case L'$': 
+                {
+                //Position pos = IsMultiline (options) ? Position.EndOfLine : Position.End;
+                //expr = new PositionAssertion(pos);
+                break;
+                }
+
+              case L'.': 
+                {
+                //Category cat = IsSingleline (options) ? Category.AnySingleline : Category.Any;
+                //expr = new CharacterClass(cat, false);
+                break;
+                }
+
+              case L'\\': 
+                {
+                //int c = ParseEscape(false);
+                //if (c >= 0)
+                //  ch = (wchar_t)c;
+                //else 
+                //  {
+                //  expr = ParseSpecial(options);
+
+                if(expr == nullptr)
+                  ch = _pattern[_ptr ++];		// default escape
+                //}
+                break;
+                }
+
+              case L'[': 
+                {
+                //expr = ParseCharacterClass(options);
+                break;
+                }
+
+              case L'(': 
+                {
+                /*bool ignore = IsIgnoreCase(options);
+                expr = ParseGroupingConstruct(ref options);
+                if (expr == nullptr)
+                {
+                if(lit != nullptr && IsIgnoreCase (options) != ignore)
+                {
+                current->AppendExpression(new Literal(lit, IsIgnoreCase (options)));
+                lit = String::Empty();
+                }
+
+                continue;
+                }*/
+                break;
+                }
+
+              case L')': 
+                {
+                closed = true;
+                goto EndOfGroup;
+                }
+
+              case L'|': 
+                {
+                if (lit.Length() != 0) 
+                  {
+                  //current.AppendExpression (new Literal (lit, IsIgnoreCase (options)));
+                  lit = String::Empty();
+                  }
+
+                if(assertion != nullptr) 
+                  {
+                  /*if (assertion.TrueExpression == null)
+                  assertion.TrueExpression = current;
+                  else if (assertion.FalseExpression == null)
+                  assertion.FalseExpression = current;
+                  else
+                  throw NewParseException(L"Too many | in (?()|).");*/
+                  }
+                else 
+                  {
+                  if(alternation == nullptr){}
+                  //alternation = new Alternation();
+
+                  //alternation->AddAlternative(current);
+                  }
+
+                current = new Group();
+                continue;
+                }
+
+              case L'*': case L'+': case L'?': 
+                {
+                //throw NewParseException(L"Bad quantifier.");
+                }
+
+              default: 
+                break;		// literal character
+              }
+
+            ConsumeWhitespace(IsIgnorePatternWhitespace(options));
+
+            // (2) Check for Repetitions
+
+            if(_ptr < _pattern.Length())
+              {
+              wchar_t k = _pattern[_ptr];
+              int min = 0, max = 0;
+              bool lazy = false;
+              bool haveRep = false;
+
+
+              if(k == L'?' || k == L'*' || k == L'+') 
+                {
+                ++ _ptr;
+                haveRep = true;
+
+                switch(k) 
+                  {
+                  case L'?': min = 0; max = 1; break;
+                  case L'*': min = 0; max = 0x7fffffff; break;
+                  case L'+': min = 1; max = 0x7fffffff; break;
+                  }
+                } 
+              else if(k == L'{' && _ptr + 1 < _pattern.Length()) 
+                {
+                int saved_ptr = _ptr;
+                ++_ptr;
+                //haveRep = ParseRepetitionBounds (out min, out max, options);
+                //if (!haveRep)
+                _ptr = saved_ptr;
+                }
+
+              if(haveRep) 
+                {
+                ConsumeWhitespace(IsIgnorePatternWhitespace(options));
+                if(_ptr < _pattern.Length() && _pattern[_ptr] == L'?')
+                  {
+                  ++_ptr;
+                  lazy = true;
+                  }
+
+              // It doesn't make sense to assert a given position more than once.
+              bool ignore_repetition = false;
+              PositionAssertion pos;
+              if(Object::IsInstance(*expr, pos)) 
+                {
+                ignore_repetition = min > 0 && !lazy;
+                max = 1;
+                }
+
+              if(!ignore_repetition) 
+                {
+              //    Repetition repetition = new Repetition (min, max, lazy);
+
+              //    if (expr == null)
+              //      repetition.Expression = new Literal (ch.ToString (), IsIgnoreCase (options));
+              //    else
+              //      repetition.Expression = expr;
+
+              //    expr = repetition;
+                  }
+                }
+              }
+
+            // (3) Append Expression and/or Literal
+
+            if(expr == nullptr) 
+              {
+              if(lit.Length() == 0)
+                lit = L"";
+              lit += ch;
+              }
+            else 
+              {
+              if (lit.Length() != 0) 
+                {
+                //current.AppendExpression (new Literal (lit, IsIgnoreCase (options)));
+                lit = String::Empty();
+                }
+
+              //current.AppendExpression (expr);
+              expr = nullptr;
+              }
+
+            if (is_top_level && _ptr >= _pattern.Length())
+              goto EndOfGroup;
+            }
+
+EndOfGroup:
+          if (is_top_level && closed)
+            //throw NewParseException(L"Too many )'s.");
+              throw NotImplementedException();
           //          if (!is_top_level && !closed)
           //            throw NewParseException ("Not enough )'s.");
           //
@@ -309,9 +315,136 @@ namespace System
           //            }
           //          else
           //            group.AppendExpression (current);
-          //          }
           }
+      void Parser::ResolveReferences()
+        {
+        //int gid = 1;
+        //Hashtable dict = new Hashtable ();
+        //ArrayList explicit_numeric_groups = null;
+
+        //// number unnamed groups
+
+        //foreach (CapturingGroup group in caps) {
+        //  if (group.Name != null)
+        //    continue;
+
+        //  dict.Add (gid.ToString (), group);
+        //  group.Index = gid ++;
+        //  ++ num_groups;
+        //  }
+
+        //// number named groups
+
+        //foreach (CapturingGroup group in caps) {
+        //  if (group.Name == null)
+        //    continue;
+
+        //  if (dict.Contains (group.Name)) {
+        //    CapturingGroup prev = (CapturingGroup) dict [group.Name];
+        //    group.Index = prev.Index;
+
+        //    if (group.Index == gid)
+        //      gid ++;
+        //    else if (group.Index > gid)
+        //      explicit_numeric_groups.Add (group);
+        //    continue;
+        //    }
+
+        //  if (Char.IsDigit (group.Name [0])) {
+        //    int ptr = 0;
+        //    int group_gid = ParseDecimal (group.Name, ref ptr);
+        //    if (ptr == group.Name.Length) {
+        //      group.Index = group_gid;
+        //      dict.Add (group.Name, group);
+        //      ++ num_groups;
+
+        //      if (group_gid == gid) {
+        //        gid ++;
+        //        } else {
+        //          // all numbers before 'gid' are already in the dictionary.  So, we know group_gid > gid
+        //          if (explicit_numeric_groups == null)
+        //            explicit_numeric_groups = new ArrayList (4);
+        //          explicit_numeric_groups.Add (group);
+        //        }
+
+        //      continue;
+        //      }
+        //    }
+
+        //  string gid_s = gid.ToString ();
+        //  while (dict.Contains (gid_s))
+        //    gid_s = (++gid).ToString ();
+
+        //  dict.Add (gid_s, group);
+        //  dict.Add (group.Name, group);
+        //  group.Index = gid ++;
+        //  ++ num_groups;
+        //  }
+
+        //gap = gid; // == 1 + num_groups, if explicit_numeric_groups == null
+
+        //if (explicit_numeric_groups != null)
+        //  HandleExplicitNumericGroups (explicit_numeric_groups);
+
+        //// resolve references
+
+        //foreach (Expression expr in refs.Keys) {
+        //  string name = (string) refs [expr];
+        //  if (!dict.Contains (name)) {
+        //    if (expr is CaptureAssertion && !Char.IsDigit (name [0]))
+        //      continue;
+        //    BackslashNumber bn = expr as BackslashNumber;
+        //    if (bn != null && bn.ResolveReference (name, dict))
+        //      continue;
+        //    throw NewParseException ("Reference to undefined group " +
+        //      (Char.IsDigit (name[0]) ? "number " : "name ") +
+        //      name);
+        //    }
+
+        //  CapturingGroup group = (CapturingGroup)dict[name];
+        //  if (expr is Reference)
+        //    ((Reference)expr).CapturingGroup = group;
+        //  else if (expr is CaptureAssertion)
+        //    ((CaptureAssertion)expr).CapturingGroup = group;
+        //  else if (expr is BalancingGroup)
+        //    ((BalancingGroup)expr).Balance = group;
+        //  }
+        }
+      void Parser::ConsumeWhitespace(bool ignore)
+        {
+        while(_ptr < _pattern.Length()) 
+          {
+          if(_pattern[_ptr] == '(') 
+            {
+            if(_ptr + 3 >= _pattern.Length())
+              return;
+
+            if(_pattern[_ptr + 1] != L'?' || _pattern[_ptr + 2] != L'#')
+              return;
+
+            _ptr += 3;
+            while(_ptr < _pattern.Length() && _pattern[_ptr ++] != L')')
+              /* ignore */ ;
+            }
+          else if(ignore && _pattern[_ptr] == L'#') 
+            {
+            while(_ptr < _pattern.Length() && _pattern[_ptr ++] != L'\n')
+              /* ignore */ ;
+            }
+          else if (ignore && Char::IsWhiteSpace(_pattern[_ptr])) 
+            {
+            while(_ptr < _pattern.Length() && Char::IsWhiteSpace(_pattern[_ptr]))
+              ++_ptr;
+            }
+          else
+            return;
+          }
+        }
+      bool Parser::IsIgnorePatternWhitespace(RegexOptions options)
+        {
+        return((intptr)options & (intptr)RegexOptions::IgnorePatternWhitespace) != 0;
         }
       }
     }
+  }
   }

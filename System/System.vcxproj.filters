@@ -111,6 +111,12 @@
     <ClInclude Include="System.Text.RegularExpressions.Category.h">
       <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Alternation.h">
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.PositionAssertion.h">
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -178,6 +184,12 @@
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Category.cpp">
       <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Alternation.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.PositionAssertion.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

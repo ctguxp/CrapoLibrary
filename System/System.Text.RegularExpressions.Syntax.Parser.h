@@ -20,6 +20,9 @@ namespace System
             int GetMapping(Collections::Hashtable* mapping);
           private:
             void ParseGroup(Group* group, RegexOptions options, Assertion* assertion);
+            void ResolveReferences();
+            void ConsumeWhitespace(bool /*ignore*/);
+            static bool IsIgnorePatternWhitespace(RegexOptions /*options*/);
           private:
             String                 _pattern;
             int                    _ptr;
