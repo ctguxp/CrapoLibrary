@@ -3,6 +3,7 @@
 #include "System.Text.RegularExpressions.Syntax.Assertion.h"
 #include "System.Text.RegularExpressions.Syntax.Alternation.h"
 #include "System.Text.RegularExpressions.Syntax.PositionAssertion.h"
+#include "System.Text.RegularExpressions.Syntax.CharacterClass.h"
 
 namespace System
   {
@@ -132,7 +133,7 @@ namespace System
 
               case L'[': 
                 {
-                //expr = ParseCharacterClass(options);
+                expr = ParseCharacterClass(options);
                 break;
                 }
 
@@ -239,25 +240,25 @@ namespace System
                   lazy = true;
                   }
 
-              // It doesn't make sense to assert a given position more than once.
-              bool ignore_repetition = false;
-              PositionAssertion pos;
-              if(Object::IsInstance(*expr, pos)) 
-                {
-                ignore_repetition = min > 0 && !lazy;
-                max = 1;
-                }
+                // It doesn't make sense to assert a given position more than once.
+                bool ignore_repetition = false;
+                PositionAssertion pos;
+                if(Object::IsInstance(*expr, pos)) 
+                  {
+                  ignore_repetition = min > 0 && !lazy;
+                  max = 1;
+                  }
 
-              if(!ignore_repetition) 
-                {
-              //    Repetition repetition = new Repetition (min, max, lazy);
+                if(!ignore_repetition) 
+                  {
+                  //    Repetition repetition = new Repetition (min, max, lazy);
 
-              //    if (expr == null)
-              //      repetition.Expression = new Literal (ch.ToString (), IsIgnoreCase (options));
-              //    else
-              //      repetition.Expression = expr;
+                  //    if (expr == null)
+                  //      repetition.Expression = new Literal (ch.ToString (), IsIgnoreCase (options));
+                  //    else
+                  //      repetition.Expression = expr;
 
-              //    expr = repetition;
+                  //    expr = repetition;
                   }
                 }
               }
@@ -290,161 +291,274 @@ EndOfGroup:
           if (is_top_level && closed)
             //throw NewParseException(L"Too many )'s.");
               throw NotImplementedException();
-          //          if (!is_top_level && !closed)
-          //            throw NewParseException ("Not enough )'s.");
-          //
-          //
-          //          // clean up literals and alternations
-          //
-          //          if (lit != null)
-          //            current.AppendExpression (new Literal (lit, IsIgnoreCase (options)));
-          //
-          //          if (assertion != null) 
-          //            {
-          //            if (assertion.TrueExpression == null)
-          //              assertion.TrueExpression = current;
-          //            else
-          //              assertion.FalseExpression = current;
-          //
-          //            group.AppendExpression (assertion);
-          //            }
-          //          else if (alternation != null) 
-          //            {
-          //            alternation.AddAlternative (current);
-          //            group.AppendExpression (alternation);
-          //            }
-          //          else
-          //            group.AppendExpression (current);
-          }
-      void Parser::ResolveReferences()
-        {
-        //int gid = 1;
-        //Hashtable dict = new Hashtable ();
-        //ArrayList explicit_numeric_groups = null;
+          if (!is_top_level && !closed)
+            //throw NewParseException ("Not enough )'s.");
+              throw NotImplementedException();
 
-        //// number unnamed groups
 
-        //foreach (CapturingGroup group in caps) {
-        //  if (group.Name != null)
-        //    continue;
+          // clean up literals and alternations
 
-        //  dict.Add (gid.ToString (), group);
-        //  group.Index = gid ++;
-        //  ++ num_groups;
-        //  }
+          if(lit.Length() == 0){}
+          //current->AppendExpression(new Literal (lit, IsIgnoreCase (options)));
 
-        //// number named groups
-
-        //foreach (CapturingGroup group in caps) {
-        //  if (group.Name == null)
-        //    continue;
-
-        //  if (dict.Contains (group.Name)) {
-        //    CapturingGroup prev = (CapturingGroup) dict [group.Name];
-        //    group.Index = prev.Index;
-
-        //    if (group.Index == gid)
-        //      gid ++;
-        //    else if (group.Index > gid)
-        //      explicit_numeric_groups.Add (group);
-        //    continue;
-        //    }
-
-        //  if (Char.IsDigit (group.Name [0])) {
-        //    int ptr = 0;
-        //    int group_gid = ParseDecimal (group.Name, ref ptr);
-        //    if (ptr == group.Name.Length) {
-        //      group.Index = group_gid;
-        //      dict.Add (group.Name, group);
-        //      ++ num_groups;
-
-        //      if (group_gid == gid) {
-        //        gid ++;
-        //        } else {
-        //          // all numbers before 'gid' are already in the dictionary.  So, we know group_gid > gid
-        //          if (explicit_numeric_groups == null)
-        //            explicit_numeric_groups = new ArrayList (4);
-        //          explicit_numeric_groups.Add (group);
-        //        }
-
-        //      continue;
-        //      }
-        //    }
-
-        //  string gid_s = gid.ToString ();
-        //  while (dict.Contains (gid_s))
-        //    gid_s = (++gid).ToString ();
-
-        //  dict.Add (gid_s, group);
-        //  dict.Add (group.Name, group);
-        //  group.Index = gid ++;
-        //  ++ num_groups;
-        //  }
-
-        //gap = gid; // == 1 + num_groups, if explicit_numeric_groups == null
-
-        //if (explicit_numeric_groups != null)
-        //  HandleExplicitNumericGroups (explicit_numeric_groups);
-
-        //// resolve references
-
-        //foreach (Expression expr in refs.Keys) {
-        //  string name = (string) refs [expr];
-        //  if (!dict.Contains (name)) {
-        //    if (expr is CaptureAssertion && !Char.IsDigit (name [0]))
-        //      continue;
-        //    BackslashNumber bn = expr as BackslashNumber;
-        //    if (bn != null && bn.ResolveReference (name, dict))
-        //      continue;
-        //    throw NewParseException ("Reference to undefined group " +
-        //      (Char.IsDigit (name[0]) ? "number " : "name ") +
-        //      name);
-        //    }
-
-        //  CapturingGroup group = (CapturingGroup)dict[name];
-        //  if (expr is Reference)
-        //    ((Reference)expr).CapturingGroup = group;
-        //  else if (expr is CaptureAssertion)
-        //    ((CaptureAssertion)expr).CapturingGroup = group;
-        //  else if (expr is BalancingGroup)
-        //    ((BalancingGroup)expr).Balance = group;
-        //  }
-        }
-      void Parser::ConsumeWhitespace(bool ignore)
-        {
-        while(_ptr < _pattern.Length()) 
-          {
-          if(_pattern[_ptr] == '(') 
+          if (assertion != nullptr) 
             {
-            if(_ptr + 3 >= _pattern.Length())
-              return;
+            /*if(assertion->TrueExpression == null)
+            assertion->TrueExpression = current;
+            else
+            assertion->FalseExpression = current;*/
 
-            if(_pattern[_ptr + 1] != L'?' || _pattern[_ptr + 2] != L'#')
-              return;
-
-            _ptr += 3;
-            while(_ptr < _pattern.Length() && _pattern[_ptr ++] != L')')
-              /* ignore */ ;
+            group->AppendExpression(assertion);
             }
-          else if(ignore && _pattern[_ptr] == L'#') 
+          else if (alternation != nullptr) 
             {
-            while(_ptr < _pattern.Length() && _pattern[_ptr ++] != L'\n')
-              /* ignore */ ;
-            }
-          else if (ignore && Char::IsWhiteSpace(_pattern[_ptr])) 
-            {
-            while(_ptr < _pattern.Length() && Char::IsWhiteSpace(_pattern[_ptr]))
-              ++_ptr;
+            //alternation->AddAlternative (current);
+            group->AppendExpression(alternation);
             }
           else
-            return;
+            group->AppendExpression(current);
           }
-        }
-      bool Parser::IsIgnorePatternWhitespace(RegexOptions options)
-        {
-        return((intptr)options & (intptr)RegexOptions::IgnorePatternWhitespace) != 0;
+        Expression* Parser::ParseCharacterClass(RegexOptions options) 
+          {
+          bool negate = false;
+          if(_pattern[_ptr] == L'^') 
+            {
+            negate = true;
+            ++_ptr;
+            }
+
+          bool ecma = IsECMAScript(options);
+          if(ecma == true){} // delete me
+          CharacterClass* cls = new CharacterClass(negate, IsIgnoreCase(options));
+
+          if(_pattern[_ptr] == L']')
+            {
+            cls->AddCharacter(L']');
+            ++_ptr;
+            }
+
+          int c = -1;
+          int last = -1;
+          bool range = false;
+          bool closed = false;
+          while(_ptr < _pattern.Length())
+            {
+            c = _pattern[_ptr ++];
+
+            if (c == L']') 
+              {
+              closed = true;
+              break;
+              }
+
+            if(c == L'-' && last >= 0 && !range)
+              {
+              range = true;
+              continue;
+              }
+
+            if (c == L'\\') 
+              {
+              //c = ParseEscape(true);
+              if (c >= 0)
+                goto char_recognized;
+
+              // didn't recognize escape
+              c = _pattern[_ptr ++];
+              switch (c) {
+                case 'b':
+                  c = '\b';
+                  goto char_recognized;
+
+                case 'd': case 'D':
+                  //cls.AddCategory (ecma ? Category.EcmaDigit : Category.Digit, c == 'D');
+                  break;
+
+                case 'w': case 'W':
+                  //cls.AddCategory (ecma ? Category.EcmaWord : Category.Word, c == 'W');
+                  break;
+
+                case 's': case 'S':
+                  //cls.AddCategory (ecma ? Category.EcmaWhiteSpace : Category.WhiteSpace, c == 'S');
+                  break;
+
+                case 'p': case 'P':
+                  //cls.AddCategory (ParseUnicodeCategory (), c == 'P');	// ignore ecma
+                  break;
+
+                default:		// add escaped character
+                  goto char_recognized;
+                }
+
+              // if the pattern looks like [a-\s] ...
+              if (range){}
+              //throw NewParseException ("character range cannot have category \\" + c);
+
+              last = -1;
+              continue;
+              }
+
+char_recognized:
+            if (range) 
+              {
+              // if 'range' is true, we know that 'last >= 0'
+              if (c < last){}
+              //throw NewParseException ("[" + last + "-" + c + "] range in reverse order.");
+              //cls.AddRange ((char)last, (char)c);
+              last = -1;
+              range = false;
+              continue;
+              }
+
+            //cls.AddCharacter ((char)c);
+            last = c;
+            }
+
+          if (!closed){}
+          //throw NewParseException ("Unterminated [] set.");
+
+          if(range)
+            cls->AddCharacter(L'-');
+
+          return cls;
+          }
+        void Parser::ResolveReferences()
+          {
+          //int gid = 1;
+          //Hashtable dict = new Hashtable ();
+          //ArrayList explicit_numeric_groups = null;
+
+          //// number unnamed groups
+
+          //foreach (CapturingGroup group in caps) {
+          //  if (group.Name != null)
+          //    continue;
+
+          //  dict.Add (gid.ToString (), group);
+          //  group.Index = gid ++;
+          //  ++ num_groups;
+          //  }
+
+          //// number named groups
+
+          //foreach (CapturingGroup group in caps) {
+          //  if (group.Name == null)
+          //    continue;
+
+          //  if (dict.Contains (group.Name)) {
+          //    CapturingGroup prev = (CapturingGroup) dict [group.Name];
+          //    group.Index = prev.Index;
+
+          //    if (group.Index == gid)
+          //      gid ++;
+          //    else if (group.Index > gid)
+          //      explicit_numeric_groups.Add (group);
+          //    continue;
+          //    }
+
+          //  if (Char.IsDigit (group.Name [0])) {
+          //    int ptr = 0;
+          //    int group_gid = ParseDecimal (group.Name, ref ptr);
+          //    if (ptr == group.Name.Length) {
+          //      group.Index = group_gid;
+          //      dict.Add (group.Name, group);
+          //      ++ num_groups;
+
+          //      if (group_gid == gid) {
+          //        gid ++;
+          //        } else {
+          //          // all numbers before 'gid' are already in the dictionary.  So, we know group_gid > gid
+          //          if (explicit_numeric_groups == null)
+          //            explicit_numeric_groups = new ArrayList (4);
+          //          explicit_numeric_groups.Add (group);
+          //        }
+
+          //      continue;
+          //      }
+          //    }
+
+          //  string gid_s = gid.ToString ();
+          //  while (dict.Contains (gid_s))
+          //    gid_s = (++gid).ToString ();
+
+          //  dict.Add (gid_s, group);
+          //  dict.Add (group.Name, group);
+          //  group.Index = gid ++;
+          //  ++ num_groups;
+          //  }
+
+          //gap = gid; // == 1 + num_groups, if explicit_numeric_groups == null
+
+          //if (explicit_numeric_groups != null)
+          //  HandleExplicitNumericGroups (explicit_numeric_groups);
+
+          //// resolve references
+
+          //foreach (Expression expr in refs.Keys) {
+          //  string name = (string) refs [expr];
+          //  if (!dict.Contains (name)) {
+          //    if (expr is CaptureAssertion && !Char.IsDigit (name [0]))
+          //      continue;
+          //    BackslashNumber bn = expr as BackslashNumber;
+          //    if (bn != null && bn.ResolveReference (name, dict))
+          //      continue;
+          //    throw NewParseException ("Reference to undefined group " +
+          //      (Char.IsDigit (name[0]) ? "number " : "name ") +
+          //      name);
+          //    }
+
+          //  CapturingGroup group = (CapturingGroup)dict[name];
+          //  if (expr is Reference)
+          //    ((Reference)expr).CapturingGroup = group;
+          //  else if (expr is CaptureAssertion)
+          //    ((CaptureAssertion)expr).CapturingGroup = group;
+          //  else if (expr is BalancingGroup)
+          //    ((BalancingGroup)expr).Balance = group;
+          //  }
+          }
+        void Parser::ConsumeWhitespace(bool ignore)
+          {
+          while(_ptr < _pattern.Length()) 
+            {
+            if(_pattern[_ptr] == '(') 
+              {
+              if(_ptr + 3 >= _pattern.Length())
+                return;
+
+              if(_pattern[_ptr + 1] != L'?' || _pattern[_ptr + 2] != L'#')
+                return;
+
+              _ptr += 3;
+              while(_ptr < _pattern.Length() && _pattern[_ptr ++] != L')')
+                /* ignore */ ;
+              }
+            else if(ignore && _pattern[_ptr] == L'#') 
+              {
+              while(_ptr < _pattern.Length() && _pattern[_ptr ++] != L'\n')
+                /* ignore */ ;
+              }
+            else if (ignore && Char::IsWhiteSpace(_pattern[_ptr])) 
+              {
+              while(_ptr < _pattern.Length() && Char::IsWhiteSpace(_pattern[_ptr]))
+                ++_ptr;
+              }
+            else
+              return;
+            }
+          }
+        bool Parser::IsIgnorePatternWhitespace(RegexOptions options)
+          {
+          return((intptr)options & (intptr)RegexOptions::IgnorePatternWhitespace) != 0;
+          }
+        bool Parser::IsECMAScript(RegexOptions options) 
+          {
+          return((intptr)options & (intptr)RegexOptions::ECMAScript) != 0;
+          }
+        bool Parser::IsIgnoreCase(RegexOptions options) 
+          {
+          return((intptr)options & (intptr)RegexOptions::IgnoreCase) != 0;
+          }
         }
       }
     }
-  }
   }

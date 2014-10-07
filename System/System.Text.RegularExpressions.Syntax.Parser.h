@@ -20,9 +20,12 @@ namespace System
             int GetMapping(Collections::Hashtable* mapping);
           private:
             void ParseGroup(Group* group, RegexOptions options, Assertion* assertion);
+            Expression* ParseCharacterClass(RegexOptions /*options*/);
             void ResolveReferences();
             void ConsumeWhitespace(bool /*ignore*/);
             static bool IsIgnorePatternWhitespace(RegexOptions /*options*/);
+            static bool IsECMAScript(RegexOptions /*options*/);
+            static bool IsIgnoreCase(RegexOptions /*options*/);
           private:
             String                 _pattern;
             int                    _ptr;
