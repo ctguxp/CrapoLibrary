@@ -254,8 +254,8 @@ namespace System
         length=length2;
         }
 
-      string ustr1 = (string)(cstring)str1 + offset1;
-      string ustr2 = (string)(cstring)str2 + offset2;
+      wstring ustr1 = (wstring)(cstring)str1 + offset1;
+      wstring ustr2 = (wstring)(cstring)str2 + offset2;
 
       int pos = 0;
 

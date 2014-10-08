@@ -83,7 +83,7 @@ namespace I18N
         {
         //Calculate byte count by actually doing encoding and discarding the data.
         cstring s_ptr = s;
-        return GetBytesImpl((string)s_ptr, s.Length(), nullptr, 0);
+        return GetBytesImpl((wstring)s_ptr, s.Length(), nullptr, 0);
         }
       else
         {

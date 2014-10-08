@@ -79,7 +79,7 @@ namespace I18N
         if (charCount == 0)
           return 0;
 
-      string cptr = chars.ToPtr();
+      wstring cptr = chars.ToPtr();
       byte* bptr = bytes.ToPtr();
       return GetBytesImpl(cptr + charIndex, charCount, bptr + byteIndex, (int)bytes.Length() - byteIndex);
       }
@@ -101,7 +101,7 @@ namespace I18N
         return 0;
       cstring cptr = s;
       byte* bptr = bytes.ToPtr();
-      return GetBytesImpl((string)cptr + charIndex, charCount, bptr + byteIndex, (int)bytes.Length() - byteIndex);
+      return GetBytesImpl((wstring)cptr + charIndex, charCount, bptr + byteIndex, (int)bytes.Length() - byteIndex);
       }
     int CrapoEncoding::GetBytes(wchar_t* chars, int charCount, byte* bytes, int byteCount)
       {

@@ -48,7 +48,8 @@ class AutoPtr : public System::Ownership
       if(_isMutable)
         {
         if(_ptr != nullptr)
-          delete _ptr;
+          if(IsOwner())
+            delete _ptr;
         _ptr = ptr;
         }
       }

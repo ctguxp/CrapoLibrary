@@ -34,7 +34,7 @@ namespace corlibtest
         wchar_t charArr[] = {L'M',L'o',L'n',L'o',L'm',L'o',L'n',L'o'};
         byte expectedByteArr[] = {50, 137, 232, 154, 137, 232};
 
-        CharArray in((string)charArr, 8);
+        CharArray in((wstring)charArr, 8);
         ByteArray fromCharArr = Convert::FromBase64CharArray(in, 0, 8);			
 
         for(sizet i = 0; i < (int)fromCharArr.Length(); i++)

@@ -67,7 +67,7 @@ namespace System
         return 0;
       cstring cptr = s;
         {
-        return GetByteCount((string)cptr, s.Length());
+        return GetByteCount((wstring)cptr, s.Length());
         }
       }
 
@@ -110,7 +110,7 @@ namespace System
       cstring cptr = s;
       ByteArray bytes(byteCount, L'\0');
       byte* bptr = bytes.ToPtr();
-      GetBytes((string)cptr, s.Length(), bptr, byteCount);
+      GetBytes((wstring)cptr, s.Length(), bptr, byteCount);
       return bytes;
       }
 
@@ -137,7 +137,7 @@ namespace System
         return 0;
       cstring cptr = s;
       byte* bptr = bytes.ToPtr();
-      return GetBytes((string)cptr + charIndex, charCount, bptr + byteIndex, (int)bytes.Length() - byteIndex);
+      return GetBytes((wstring)cptr + charIndex, charCount, bptr + byteIndex, (int)bytes.Length() - byteIndex);
       }
 
     int Encoding::GetBytes(wchar_t *chars, int charCount, byte* bytes, int byteCount)

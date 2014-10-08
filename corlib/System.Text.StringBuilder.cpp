@@ -147,7 +147,7 @@ namespace System
       if((int)_str.Length() < needed_cap)
         InternalEnsureCapacity(needed_cap);
 
-      String::CharCopy((string)(cstring)_str + _length, value, (int)len + 1);
+      String::CharCopy((wstring)(cstring)_str + _length, value, (int)len + 1);
       _length = needed_cap;
 
       return *this;

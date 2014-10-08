@@ -13,7 +13,7 @@ typedef unsigned char byte;
 typedef char sbyte;
 typedef unsigned long ulong;
 typedef const wchar_t* cstring;
-typedef wchar_t* string;
+typedef wchar_t* wstring;
 
 typedef __int8             int8;
 typedef unsigned __int8   uint8;

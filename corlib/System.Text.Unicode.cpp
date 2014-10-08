@@ -105,7 +105,7 @@ namespace System
       if(bytes.Length() == 0)
         bytes.Length(1);
 
-      string charPtr = chars.ToPtr();
+      wstring charPtr = chars.ToPtr();
       byte* bytePtr = bytes.ToPtr();
       return GetBytesInternal(charPtr + charIndex, charCount, bytePtr + byteIndex, byteCount);
       }
@@ -139,7 +139,7 @@ namespace System
 
       cstring charPtr = s;
       byte* bytePtr = bytes.ToPtr();
-      return GetBytesInternal((string)charPtr + charIndex, charCount, bytePtr + byteIndex, byteCount);
+      return GetBytesInternal((wstring)charPtr + charIndex, charCount, bytePtr + byteIndex, byteCount);
       }
 
     int UnicodeEncoding::GetBytes(wchar_t* chars, int charCount, byte* bytes, int byteCount)
@@ -234,7 +234,7 @@ namespace System
         chars.Length(1);
 
       byte* bytePtr = bytes.ToPtr();
-      string charPtr = chars.ToPtr();
+      wstring charPtr = chars.ToPtr();
       return GetCharsInternal(bytePtr + byteIndex, byteCount, charPtr + charIndex, charCount);
       }
 
@@ -273,7 +273,7 @@ namespace System
       return count;
       }
 
-    int UnicodeEncoding::GetCharsInternal(byte* bytes, int byteCount, string chars, int charCount)
+    int UnicodeEncoding::GetCharsInternal(byte* bytes, int byteCount, wstring chars, int charCount)
       {
       int count = byteCount / 2;
 

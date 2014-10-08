@@ -383,10 +383,10 @@ namespace System
     if(len != b._length)
       return false;
 
-    string s1 = a._start_char;
-    string  s2 = b._start_char; 
-    string  s1_ptr = s1;
-    string  s2_ptr = s2;
+    wstring s1 = a._start_char;
+    wstring  s2 = b._start_char; 
+    wstring  s1_ptr = s1;
+    wstring  s2_ptr = s2;
 
     while (len >= 8)
       {
@@ -920,9 +920,9 @@ namespace System
 
     cstring aptr = strA;
     cstring bptr = strB;
-    string ap = (string)aptr + indexA;
-    string end = ap + Math::Min(lengthA, lengthB);
-    string bp = (string)bptr + indexB;
+    wstring ap = (wstring)aptr + indexA;
+    wstring end = ap + Math::Min(lengthA, lengthB);
+    wstring bp = (wstring)bptr + indexB;
     while (ap < end) 
       {
       if (*ap != *bp)
@@ -946,9 +946,9 @@ namespace System
 
     cstring aptr = strA;
     cstring bptr = strB;
-    string ap = (string)aptr + indexA;
-    string end = ap + Math::Min (lengthA, lengthB);
-    string bp = (string)bptr + indexB;
+    wstring ap = (wstring)aptr + indexA;
+    wstring end = ap + Math::Min (lengthA, lengthB);
+    wstring bp = (wstring)bptr + indexB;
     while(ap < end)
       {
       if(*ap != *bp)
@@ -984,10 +984,10 @@ namespace System
       return startIndex;
       }
 
-    string thisptr = _start_char;
+    wstring thisptr = _start_char;
     cstring valueptr = value;
-    string ap = thisptr + startIndex;
-    string thisEnd = ap + count - valueLen + 1;
+    wstring ap = thisptr + startIndex;
+    wstring thisEnd = ap + count - valueLen + 1;
     while(ap != thisEnd)
       {
       if(*ap == *valueptr) 
@@ -1117,12 +1117,12 @@ namespace System
       if (source.Length() > 0) 
         {
         cstring src = source;
-        CharCopy((string)dest + pos, src, source.Length());
+        CharCopy((wstring)dest + pos, src, source.Length());
         pos += source.Length();
         }
       if(separator.Length() > 0)
         {
-        CharCopy((string)dest + pos, sepsrc, separator.Length());
+        CharCopy((wstring)dest + pos, sepsrc, separator.Length());
         pos += separator.Length();
         }
       }
@@ -1132,7 +1132,7 @@ namespace System
     if(sourceLast.Length() > 0)
       {
       cstring src = sourceLast;
-      CharCopy((string)dest + pos, src, sourceLast.Length());
+      CharCopy((wstring)dest + pos, src, sourceLast.Length());
       }
     return tmp;
     }
@@ -1270,7 +1270,7 @@ namespace System
     wchar_t* source = _start_char;
     const wchar_t* dest = (cstring)tmp;
       {
-      wchar_t* destPtr = (string)dest;
+      wchar_t* destPtr = (wstring)dest;
       wchar_t* sourcePtr = (wchar_t*)source;
 
       for(int n = 0; n < (int)_length; n++)
@@ -1785,15 +1785,15 @@ namespace System
   void String::CharCopy(String& target, int targetIndex, CharArray& source, int sourceIndex, int count)
     {
     cstring dest = (cstring)target;
-    string src = source.ToPtr();
-    CharCopy((string)dest + targetIndex, src + sourceIndex, count);
+    wstring src = source.ToPtr();
+    CharCopy((wstring)dest + targetIndex, src + sourceIndex, count);
     }
 
   void String::CharCopy(String& target, int targetIndex, String& source, int sourceIndex, int count)
     {
     cstring dest = target;
     cstring src = (cstring)source;
-    CharCopy((string)dest + targetIndex, src + sourceIndex, count);
+    CharCopy((wstring)dest + targetIndex, src + sourceIndex, count);
     }
 
   void String::CharCopy(wchar_t *dest, const wchar_t *src, int count)
@@ -1823,7 +1823,7 @@ namespace System
     {
     cstring dest = (cstring)target;
     cstring src = (cstring)source;
-    CharCopyReverse((string)dest + targetIndex, (string)src + sourceIndex, count);
+    CharCopyReverse((wstring)dest + targetIndex, (wstring)src + sourceIndex, count);
     }
 
   void String::CharCopyReverse(wchar_t *dest, wchar_t *src, int count)

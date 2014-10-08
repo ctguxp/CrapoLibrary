@@ -54,8 +54,8 @@ namespace System
       const wchar_t* source = (cstring)str;
       const wchar_t* dest = (cstring)tmp;
 
-      wchar_t* destPtr = (string)dest;
-      wchar_t* sourcePtr = (string)source;
+      wchar_t* destPtr = (wstring)dest;
+      wchar_t* sourcePtr = (wstring)source;
 
       for(int n = 0; n < str.Length(); n++)
         {

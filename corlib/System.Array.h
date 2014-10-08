@@ -22,7 +22,7 @@ namespace System
     private:
       sizet _len;  // Current length
       sizet _base;
-      T*   _ptr;  // Pointer to array
+      T*    _ptr;  // Pointer to array
     public:
       Array(sizet len = 0);
       Array(const T*, sizet);
