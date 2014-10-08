@@ -46,7 +46,7 @@ namespace System
         virtual ByteArray GetPreamble() override;
       private:
         int GetBytesInternal(wchar_t* chars, int charCount, byte* bytes, int byteCount);
-        int GetCharsInternal(byte* bytes, int byteCount, string chars, int charCount);
+        int GetCharsInternal(byte* bytes, int byteCount, wstring chars, int charCount);
         void CopyChars(byte* src, byte* dest, int count, bool bigEndian);
       private:
         bool _isThrowException;

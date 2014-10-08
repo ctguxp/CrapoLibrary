@@ -1084,10 +1084,10 @@ namespace System
       switch(nfi->CurrencyPositivePattern()) 
         {
         case 0:
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           break;
         case 2:
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           Append(L' ');
           break;
         }
@@ -1098,45 +1098,45 @@ namespace System
         {
         case 0:
           Append(L'(');
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           break;
         case 1:
-          Append((string)(cstring)nfi->NegativeSign());
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           break;
         case 2:
-          Append((string)(cstring)nfi->CurrencySymbol());
-          Append((string)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->NegativeSign());
           break;
         case 3:
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           break;
         case 4:
           Append(L'(');
           break;
         case 5:
-          Append((string)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->NegativeSign());
           break;
         case 8:
-          Append((string)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->NegativeSign());
           break;
         case 9:
-          Append((string)(cstring)nfi->NegativeSign());
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           Append(L' ');
           break;
         case 11:
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           Append(L' ');
           break;
         case 12:
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           Append(L' ');
-          Append((string)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->NegativeSign());
           break;
         case 14:
           Append(L'(');
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           Append(L' ');
           break;
         case 15:
@@ -1149,7 +1149,7 @@ namespace System
 
     if(precision > 0) 
       {
-      Append((string)(cstring)nfi->CurrencyDecimalSeparator());
+      Append((wstring)(cstring)nfi->CurrencyDecimalSeparator());
       AppendDecimalString(precision);
       }
 
@@ -1158,11 +1158,11 @@ namespace System
       switch(nfi->CurrencyPositivePattern()) 
         {
         case 1:
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           break;
         case 3:
           Append(L' ');
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           break;
         }
       }
@@ -1174,46 +1174,46 @@ namespace System
           Append(L')');
           break;
         case 3:
-          Append((string)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->NegativeSign());
           break;
         case 4:
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           Append(L')');
           break;
         case 5:
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           break;
         case 6:
-          Append((string)(cstring)nfi->NegativeSign());
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           break;
         case 7:
-          Append((string)(cstring)nfi->CurrencySymbol());
-          Append((string)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->NegativeSign());
           break;
         case 8:
           Append(L' ');
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           break;
         case 10:
           Append(L' ');
-          Append((string)(cstring)nfi->CurrencySymbol());
-          Append((string)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->NegativeSign());
           break;
         case 11:
-          Append((string)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->NegativeSign());
           break;
         case 13:
-          Append((string)(cstring)nfi->NegativeSign());
+          Append((wstring)(cstring)nfi->NegativeSign());
           Append(L' ');
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           break;
         case 14:
           Append(L')');
           break;
         case 15:
           Append(L' ');
-          Append((string)(cstring)nfi->CurrencySymbol());
+          Append((wstring)(cstring)nfi->CurrencySymbol());
           Append(L')');
           break;
         }
@@ -1262,7 +1262,7 @@ namespace System
     ResetCharBuf(precision + 8);
 
     if(!_positive)
-      Append((string)(cstring)nfi->NegativeSign());
+      Append((wstring)(cstring)nfi->NegativeSign());
 
     AppendOneDigit(digits - 1);
 

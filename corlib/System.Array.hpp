@@ -63,7 +63,7 @@ namespace System
     :_len(arr._len)
     ,_base(arr._base)
     {
-    _ptr = new T[_len];
+    _ptr = (_len > 0) ? new T[_len] : nullptr;
     for(sizet i = 0; i < _len; ++i)
       _ptr[i] = arr._ptr[i];
     }

@@ -81,7 +81,7 @@ namespace System
         throw ArgumentNullException(L"chars");*/
 
       cstring cptr = chars;
-      return InternalGetBytes((string)cptr, chars.Length(), charIndex, charCount, bytes, byteIndex, buffer, fallback_chars);
+      return InternalGetBytes((wstring)cptr, chars.Length(), charIndex, charCount, bytes, byteIndex, buffer, fallback_chars);
       }
 
     ByteArray ASCIIEncoding::GetBytes(CharArray& chars, int index, int count)

@@ -59,6 +59,7 @@
     <ClInclude Include="System.Globalization.NumberStyles.h" />
     <ClInclude Include="System.IO.BinaryReader.h" />
     <ClInclude Include="System.IO.BinaryWriter.h" />
+    <ClInclude Include="System.IO.MemoryStream.h" />
     <ClInclude Include="System.NotImplementedException.h" />
     <ClInclude Include="System.OperatingSystem.h" />
     <ClInclude Include="System.OutOfMemoryException.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="System.FormatException.cpp" />
     <ClCompile Include="System.IO.BinaryReader.cpp" />
     <ClCompile Include="System.IO.BinaryWriter.cpp" />
+    <ClCompile Include="System.IO.MemoryStream.cpp" />
     <ClCompile Include="System.NotImplementedException.cpp" />
     <ClCompile Include="System.OperatingSystem.cpp" />
     <ClCompile Include="System.OutOfMemoryException.cpp" />

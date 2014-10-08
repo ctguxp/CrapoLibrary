@@ -9,7 +9,7 @@ class CRAPOCOREDLL_API Ownership
   private:
     bool _isOwner;
   protected:
-    Ownership();
+    Ownership(bool isOwner = true);
     Ownership(Ownership const& owner);
     Ownership& operator=(Ownership const& owner);
   public:

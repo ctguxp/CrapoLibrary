@@ -3,8 +3,8 @@
 
 namespace System
   {
-  Ownership::Ownership()
-    :_isOwner(true)
+  Ownership::Ownership(bool isOwner)
+    :_isOwner(isOwner)
     {
     }
   Ownership::Ownership(Ownership const& owner)

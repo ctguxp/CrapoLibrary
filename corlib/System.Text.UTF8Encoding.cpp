@@ -143,7 +143,7 @@ namespace System
         return 0;
         }
 
-      string cptr = chars.ToPtr(); 
+      wstring cptr = chars.ToPtr(); 
       return InternalGetByteCount(cptr + index, count, fallback, leftOver, flush);
       }
 
