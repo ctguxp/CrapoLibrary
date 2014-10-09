@@ -36,6 +36,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Crapo.Security.BitConverterLE.h" />
+    <ClInclude Include="Global.Memory.h" />
+    <ClInclude Include="Global.RefCountBase.h" />
     <ClInclude Include="System.Collections.CollectionBase.h" />
     <ClInclude Include="System.Collections.DictionaryEntry.h" />
     <ClInclude Include="System.Collections.Generic.h" />
@@ -189,6 +191,7 @@
   <ItemGroup>
     <ClCompile Include="Crapo.Security.BitConverterLE.cpp" />
     <ClCompile Include="Microsoft.Win32.RegistryKey.cpp" />
+    <ClCompile Include="Global.RefCountBase.cpp" />
     <ClCompile Include="System.Collections.ArrayList.cpp" />
     <ClCompile Include="System.Collections.CollectionBase.cpp" />
     <ClCompile Include="System.Collections.DictionaryEntry.cpp" />
@@ -403,7 +406,7 @@
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
-      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExceptionHandling>Async</ExceptionHandling>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
@@ -422,7 +425,7 @@
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
-      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExceptionHandling>Async</ExceptionHandling>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
@@ -442,7 +445,7 @@
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
-      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExceptionHandling>Async</ExceptionHandling>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
@@ -461,7 +464,7 @@
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
-      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExceptionHandling>Async</ExceptionHandling>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>

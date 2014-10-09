@@ -88,6 +88,12 @@
     <Filter Include="Source Files\System.Runtime.InteropServices">
       <UniqueIdentifier>{16fe65e6-8e90-4e1b-b9f7-96f27e7bd47e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Global">
+      <UniqueIdentifier>{672b3997-1383-44fb-9e5d-5285ac1177c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Global">
+      <UniqueIdentifier>{4b209396-4950-40d3-8708-851df82fb5fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -513,6 +519,12 @@
     <ClInclude Include="System.IO.MemoryStream.h">
       <Filter>Header Files\System.IO</Filter>
     </ClInclude>
+    <ClInclude Include="Global.Memory.h">
+      <Filter>Header Files\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.RefCountBase.h">
+      <Filter>Header Files\Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -805,6 +817,9 @@
     </ClCompile>
     <ClCompile Include="System.IO.MemoryStream.cpp">
       <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.RefCountBase.cpp">
+      <Filter>Source Files\Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

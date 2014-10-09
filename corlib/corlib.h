@@ -52,6 +52,7 @@ typedef uint32 uintptr;
 // Global
 #include "Application.h"
 #include "AutoPtr.h"
+#include "Global.Memory.h"
 
 // System namespace
 #include "System.h"
