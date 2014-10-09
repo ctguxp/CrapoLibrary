@@ -61,16 +61,16 @@ namespace corlibtest
         Assert::AreEqual<uintptr>(100, ms.Length(), L"#01");
         Assert::AreEqual<uintptr>(0, ms.Position(), L"#02");
         ms.Position(50);
-        byte saved = (*testStreamData.Get())[50];
+        byte saved = (*testStreamData)[50];
         try
           {
           ms.WriteByte(23);
-          Assert::AreEqual<byte>(23, (*testStreamData.Get())[50], L"#03");
+          Assert::AreEqual<byte>(23, (*testStreamData)[50], L"#03");
           }
         catch(Exception& /*ex*/)
           {
           }
-        (*testStreamData.Get())[50] = saved;
+        (*testStreamData)[50] = saved;
         ms.Position(100);
         try
           {
