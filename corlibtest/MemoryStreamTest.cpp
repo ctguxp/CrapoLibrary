@@ -3,21 +3,22 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace System;
+using namespace Global;
 
 namespace corlibtest
   {
   TEST_CLASS(MemoryStreamTest)
     {
     private:
-      ByteArray testStreamData;
+      SharedPtr<ByteArray> testStreamData;
 
     public:
       MemoryStreamTest()
+        :testStreamData(new ByteArray(100))
         {
-        testStreamData.Length(100);
 
-        for(sizet i = 0; i < testStreamData.Length(); i++)
-          testStreamData[i] = (byte)(100 - i);
+        for(sizet i = 0; i < testStreamData->Length(); i++)
+          (*testStreamData.Get())[i] = (byte)(100 - i);
         }
 
       TEST_METHOD(ConstructorsOne)
@@ -60,20 +61,16 @@ namespace corlibtest
         Assert::AreEqual<uintptr>(100, ms.Length(), L"#01");
         Assert::AreEqual<uintptr>(0, ms.Position(), L"#02");
         ms.Position(50);
-        byte saved = ms.ReadByte();
+        byte saved = (*testStreamData.Get())[50];
         try
           {
-          ms.Position(50);
           ms.WriteByte(23);
-          ms.Position(50);
-          byte test = ms.ReadByte();
-          Assert::AreEqual<byte>(23, test, L"#03");
+          Assert::AreEqual<byte>(23, (*testStreamData.Get())[50], L"#03");
           }
         catch(Exception& /*ex*/)
           {
           }
-        ms.Position(50);
-        ms.WriteByte(saved);
+        (*testStreamData.Get())[50] = saved;
         ms.Position(100);
         try
           {

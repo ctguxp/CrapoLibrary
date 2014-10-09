@@ -16,37 +16,35 @@ namespace System
       ,_dirty_bytes(0)
       ,_capacity(capacity)
       ,_length(0)
-      ,_internalBuffer()
+      ,_internalBuffer(new ByteArray(capacity))
       {
-      if(_capacity > 0)
-        _internalBuffer.Length(_capacity);
       }
 
-    MemoryStream::MemoryStream(ByteArray& buffer)
+    MemoryStream::MemoryStream(const SharedPtr<ByteArray>& buffer)
       :_streamClosed(false)
       ,_dirty_bytes(0)
       {
-      if(buffer.IsNull())
+      if(buffer->IsNull())
         throw ArgumentNullException(L"buffer");
 
-      InternalConstructor(buffer, 0, (int32)buffer.Length(), true, false);
+      InternalConstructor(buffer, 0, (int32)buffer->Length(), true, false);
       }
 
-    MemoryStream::MemoryStream(ByteArray& buffer, bool writable)
+    MemoryStream::MemoryStream(const SharedPtr<ByteArray>& buffer, bool writable)
       :_streamClosed(false)
       ,_dirty_bytes(0)
       {
-      if(buffer.IsNull())
+      if(buffer->IsNull())
         throw ArgumentNullException(L"buffer");
 
-      InternalConstructor(buffer, 0, (int32)buffer.Length(), writable, false);
+      InternalConstructor(buffer, 0, (int32)buffer->Length(), writable, false);
       }
 
-    MemoryStream::MemoryStream(ByteArray& buffer, int32 index, int32 count, bool writable, bool publiclyVisible)
+    MemoryStream::MemoryStream(const SharedPtr<ByteArray>& buffer, int32 index, int32 count, bool writable, bool publiclyVisible)
       :_streamClosed(false)
       ,_dirty_bytes(0)
       {
-      if(buffer.IsNull())
+      if(buffer->IsNull())
         throw ArgumentNullException(L"buffer");
 
       InternalConstructor(buffer, index, count, writable, publiclyVisible);
@@ -56,12 +54,12 @@ namespace System
       {
       }
 
-    void MemoryStream::InternalConstructor(ByteArray& buffer, int32 index, int32 count, bool writable, bool publicallyVisible)
+    void MemoryStream::InternalConstructor(const SharedPtr<ByteArray>& buffer, int32 index, int32 count, bool writable, bool publicallyVisible)
       {
       if(index < 0 || count < 0)
         throw ArgumentOutOfRangeException(L"index or count is less than 0.");
 
-      if((int32)buffer.Length() - index < count)
+      if((int32)buffer->Length() - index < count)
         throw ArgumentException (L"index+count",  L"The size of the buffer is less than index + count.");
 
       _canWrite = writable;
@@ -99,10 +97,10 @@ namespace System
       if(value < _length)
         throw ArgumentOutOfRangeException(L"value", L"New capacity cannot be negative or less than the current capacity" /*+ value + " " + capacity*/);
 
-      if(!_internalBuffer.IsNull() && value == _internalBuffer.Length())
+      if(!_internalBuffer->IsNull() && value == _internalBuffer->Length())
         return;
 
-      _internalBuffer.Length(value);
+      _internalBuffer->Length(value);
 
       _capacity = value;
       }
@@ -118,7 +116,7 @@ namespace System
       if(!_allowGetBuffer)
         throw UnauthorizedAccessException();
 
-      return _internalBuffer;
+      return (*_internalBuffer.Get());
       }
 
     int MemoryStream::ReadByte() 
@@ -127,7 +125,7 @@ namespace System
       if(_position >= (int32)_length)
         return -1;
 
-			return _internalBuffer[_position++];
+			return (*_internalBuffer.Get())[_position++];
 		}
 
     uintptr MemoryStream::Seek(uintptr, SeekOrigin)
@@ -190,7 +188,7 @@ namespace System
 			if(_position > (int32)_length - count)
 				count = (int)_length - _position;
 
-      Array<byte>::Copy(buffer, offset, _internalBuffer, 0, count);
+      Array<byte>::Copy(buffer, offset, (*_internalBuffer.Get()), 0, count);
 
 			_position += count;
 			return count;
@@ -238,7 +236,7 @@ namespace System
         _length = _position + 1;
         }
 
-      _internalBuffer[_position++] = value;
+      (*_internalBuffer.Get())[_position++] = value;
       }
 
     void MemoryStream::Write(ByteArray&, int, int)

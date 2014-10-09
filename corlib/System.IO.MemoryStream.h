@@ -1,5 +1,8 @@
 #pragma once
 #include "System.IO.Stream.h"
+#include "Global.Memory.h"
+
+using namespace Global;
 
 namespace System
   {
@@ -17,12 +20,12 @@ namespace System
         int32     _dirty_bytes;
         uintptr   _capacity;
         uintptr   _length;
-        ByteArray _internalBuffer;
+        SharedPtr<ByteArray> _internalBuffer;
       public:
         MemoryStream(uintptr capacity = 0);
-        MemoryStream(ByteArray& /*buffer*/);
-        MemoryStream(ByteArray& /*buffer*/, bool /*writable*/);
-        MemoryStream(ByteArray& /*buffer*/, int32 /*index*/, int32 /*count*/, bool /*writable*/, bool /*publiclyVisible*/);
+        MemoryStream(const SharedPtr<ByteArray>& /*buffer*/);
+        MemoryStream(const SharedPtr<ByteArray>& /*buffer*/, bool /*writable*/);
+        MemoryStream(const SharedPtr<ByteArray>& /*buffer*/, int32 /*index*/, int32 /*count*/, bool /*writable*/, bool /*publiclyVisible*/);
         ~MemoryStream();
         uintptr Capacity();
         void Capacity(uintptr);
@@ -41,7 +44,7 @@ namespace System
         virtual void WriteByte(byte value) override;
         virtual void Write(ByteArray&, int, int) override;
       private:
-        void InternalConstructor(ByteArray& buffer, int32 index, int32 count, bool writable, bool publicallyVisible);
+        void InternalConstructor(const SharedPtr<ByteArray>& buffer, int32 index, int32 count, bool writable, bool publicallyVisible);
         void CheckIfClosedThrowDisposed();
         int CalculateNewCapacity(int minimum);
         void Expand(int newSize);
