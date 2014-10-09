@@ -116,7 +116,7 @@ namespace System
       if(!_allowGetBuffer)
         throw UnauthorizedAccessException();
 
-      return (*_internalBuffer.Get());
+      return (*_internalBuffer);
       }
 
     int MemoryStream::ReadByte() 
@@ -125,7 +125,7 @@ namespace System
       if(_position >= (int32)_length)
         return -1;
 
-			return (*_internalBuffer.Get())[_position++];
+			return (*_internalBuffer)[_position++];
 		}
 
     uintptr MemoryStream::Seek(uintptr, SeekOrigin)
@@ -188,7 +188,7 @@ namespace System
 			if(_position > (int32)_length - count)
 				count = (int)_length - _position;
 
-      Array<byte>::Copy(buffer, offset, (*_internalBuffer.Get()), 0, count);
+      Array<byte>::Copy(buffer, offset, (*_internalBuffer), 0, count);
 
 			_position += count;
 			return count;
@@ -232,11 +232,11 @@ namespace System
 
       if(_position >= (int32)_length)
         {
-        Expand (_position + 1);
+        Expand(_position + 1);
         _length = _position + 1;
         }
 
-      (*_internalBuffer.Get())[_position++] = value;
+      (*_internalBuffer)[_position++] = value;
       }
 
     void MemoryStream::Write(ByteArray&, int, int)
