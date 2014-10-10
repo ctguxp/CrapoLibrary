@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "System.IO.MemoryStream.h"
 #include "System.h"
+#include "System.IO.IOException.h"
 
 namespace System
   {
   namespace IO
     {
-    MemoryStream::MemoryStream(uintptr capacity)
+    MemoryStream::MemoryStream(int32 capacity)
       :_canWrite(true)
       ,_expandable(true)
       ,_streamClosed(false)
@@ -16,8 +17,13 @@ namespace System
       ,_dirty_bytes(0)
       ,_capacity(capacity)
       ,_length(0)
-      ,_internalBuffer(new ByteArray(capacity))
+      ,_internalBuffer()
       {
+      if(_capacity < 0)
+        {
+        throw ArgumentOutOfRangeException(L"capacity");
+        }
+      _internalBuffer.Reset(new ByteArray(capacity));
       }
 
     MemoryStream::MemoryStream(const SharedPtr<ByteArray>& buffer)
@@ -38,6 +44,13 @@ namespace System
         throw ArgumentNullException(L"buffer");
 
       InternalConstructor(buffer, 0, (int32)buffer->Length(), writable, false);
+      }
+
+    MemoryStream::MemoryStream(const SharedPtr<ByteArray>& buffer, int32 index, int32 count)
+      :_streamClosed(false)
+      ,_dirty_bytes(0)
+      {
+      InternalConstructor(buffer, index, count, true, false);
       }
 
     MemoryStream::MemoryStream(const SharedPtr<ByteArray>& buffer, int32 index, int32 count, bool writable, bool publiclyVisible)
@@ -81,23 +94,22 @@ namespace System
           throw Exception(L"Object disposed exception - Memory Stream");
       }
 
-    uintptr MemoryStream::Capacity() 
+    int32 MemoryStream::Capacity() 
       { 
       CheckIfClosedThrowDisposed();
       return _capacity - _initialIndex;
       }
-    void MemoryStream::Capacity(uintptr value)
+    void MemoryStream::Capacity(int32 value)
       { 
       CheckIfClosedThrowDisposed();
 
       if(!_expandable)
-        // TODO: throw NotSupportedException(L"Cannot expand this MemoryStream");
-          throw SystemException(L"Not supported, cannot expand this Memory Stream");
+        throw NotSupportedException(L"Cannot expand this MemoryStream");
 
       if(value < _length)
         throw ArgumentOutOfRangeException(L"value", L"New capacity cannot be negative or less than the current capacity" /*+ value + " " + capacity*/);
 
-      if(!_internalBuffer->IsNull() && value == _internalBuffer->Length())
+      if(!_internalBuffer->IsNull() && value == (int32)_internalBuffer->Length())
         return;
 
       _internalBuffer->Length(value);
@@ -105,10 +117,10 @@ namespace System
       _capacity = value;
       }
 
-    uintptr MemoryStream::Length()
+    int64 MemoryStream::Length()
       {
       CheckIfClosedThrowDisposed();
-      return _length;
+      return _length - _initialIndex;
       }
 
     ByteArray& MemoryStream::GetBuffer()
@@ -125,12 +137,40 @@ namespace System
       if(_position >= (int32)_length)
         return -1;
 
-			return (*_internalBuffer)[_position++];
-		}
+      return (*_internalBuffer)[_position++];
+      }
 
-    uintptr MemoryStream::Seek(uintptr, SeekOrigin)
+    int64 MemoryStream::Seek(int64 offset, SeekOrigin loc)
       {
-      throw Exception(L"The method or operation is not implemented.");
+      CheckIfClosedThrowDisposed ();
+
+			if(offset > (int64)Int32::MaxValue)
+			  throw ArgumentOutOfRangeException(L"Offset out of range. " + offset);
+
+			int32 refPoint;
+			switch(loc)
+      {
+			case SeekOrigin::Begin:
+			  if(offset < 0)
+			    throw new IOException(L"Attempted to seek before start of MemoryStream.");
+			    refPoint = _initialIndex;
+			    break;
+			case SeekOrigin::Current:
+			    refPoint = _position;
+			    break;
+			case SeekOrigin::End:
+			    refPoint = (int32)_length;
+			    break;
+			default:
+			  throw new ArgumentException(L"loc", L"Invalid SeekOrigin");
+			}
+
+			refPoint += (int32)offset;
+			if(refPoint < _initialIndex)
+			  throw IOException(L"Attempted to seek before start of MemoryStream.");
+
+			_position = refPoint;
+			return _position;
       }
 
     uintptr MemoryStream::Position()
@@ -172,26 +212,26 @@ namespace System
     int MemoryStream::Read(ByteArray& buffer, int offset, int count)
       {
       if(buffer.IsNull())
-				throw ArgumentNullException(L"buffer");
+        throw ArgumentNullException(L"buffer");
 
-			if(offset < 0 || count < 0)
-				throw ArgumentOutOfRangeException(L"offset or count less than zero.");
+      if(offset < 0 || count < 0)
+        throw ArgumentOutOfRangeException(L"offset or count less than zero.");
 
-			if((int32)buffer.Length() - offset < count )
-				throw ArgumentException (L"offset+count", L"The size of the buffer is less than offset + count.");
+      if((int32)buffer.Length() - offset < count )
+        throw ArgumentException (L"offset+count", L"The size of the buffer is less than offset + count.");
 
-			CheckIfClosedThrowDisposed ();
+      CheckIfClosedThrowDisposed ();
 
-			if(_position >= (int32)_length || count == 0)
-				return 0;
+      if(_position >= (int32)_length || count == 0)
+        return 0;
 
-			if(_position > (int32)_length - count)
-				count = (int)_length - _position;
+      if(_position > (int32)_length - count)
+        count = (int)_length - _position;
 
-      Array<byte>::Copy(buffer, offset, (*_internalBuffer), 0, count);
+      Array<byte>::Copy((*_internalBuffer), _position, buffer, offset, count);
 
-			_position += count;
-			return count;
+      _position += count;
+      return count;
       }
 
     void MemoryStream::SetLength(uintptr)
@@ -227,8 +267,7 @@ namespace System
       {
       CheckIfClosedThrowDisposed();
       if(!_canWrite)
-        //TODO : throw new NotSupportedException ("Cannot write to this stream.");
-          throw SystemException(L"Cannot write to this stream.");
+        throw NotSupportedException(L"Cannot write to this stream.");
 
       if(_position >= (int32)_length)
         {
@@ -243,6 +282,15 @@ namespace System
       {
       throw Exception(L"The method or operation is not implemented.");
       }
+    ByteArray MemoryStream::ToArray()
+      {
+      
+      int32 l = (int32)_length - _initialIndex;
+			ByteArray outBuffer(l);
 
+			if(_internalBuffer.Get() != nullptr)
+        Array<byte>::Copy((*_internalBuffer), _initialIndex, outBuffer, 0, 1);
+			return outBuffer;
+      }
     }
   }

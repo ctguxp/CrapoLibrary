@@ -11,8 +11,8 @@ namespace System
       {
       public:
         virtual ~Stream();
-        virtual uintptr Length() = 0;
-        virtual uintptr Seek(uintptr, SeekOrigin) = 0;
+        virtual int64 Length() = 0;
+        virtual int64 Seek(int64, SeekOrigin) = 0;
         virtual uintptr Position() = 0;
         virtual void Position(uintptr) = 0;
         virtual bool CanRead() = 0;
