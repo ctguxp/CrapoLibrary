@@ -178,7 +178,7 @@ namespace System
       if(access == FileAccess::Read && _canseek && (bufferSize == DefaultBufferSize))
         {
         /* Avoid allocating a large buffer for small files */
-        intptr len = Length();
+        int64 len = Length();
         if (bufferSize > (uint32)len) {
           bufferSize = (uint32)(len < 1000 ? 1000 : len);
           }
@@ -238,7 +238,7 @@ namespace System
       _buf_size = size;
       }
 
-    uintptr FileStream::Length()
+    int64 FileStream::Length()
       {
       if(_handle == INVALID_HANDLE_VALUE)
         throw SystemException(L"Stream has been closed");
@@ -268,11 +268,11 @@ namespace System
       {
       }
 
-    uintptr FileStream::Seek(uintptr offset, SeekOrigin origin)
+    int64 FileStream::Seek(int64 offset, SeekOrigin origin)
       {
       if(_handle == INVALID_HANDLE_VALUE)
         throw SystemException(L"Stream has been closed");
-      //throw new ObjectDisposedException ("Stream has been closed");
+      //throw new ObjectDisposedExcept4ion ("Stream has been closed");
 
       // make absolute
 
@@ -282,7 +282,7 @@ namespace System
         //throw new NotSupportedException("The stream does not support seeking");
         }
 
-      uintptr pos = 0;
+      int64 pos = 0;
       switch(origin)
         {
         case SeekOrigin::End:
@@ -298,7 +298,7 @@ namespace System
           throw new ArgumentException(L"origin", L"Invalid SeekOrigin");
         }
 
-      if(pos < (uintptr)_append_startpos)
+      if(pos < (int64)_append_startpos)
         {
         /* More undocumented crap */
         throw IOException(L"Can't seek back over pre-existing data in append mode");

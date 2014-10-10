@@ -35,8 +35,8 @@ namespace System
           ,FileOptions options = FileOptions::None);
         // Destructor
         ~FileStream();
-        virtual uintptr Length() override;
-        virtual uintptr Seek(uintptr, SeekOrigin) override;
+        virtual int64 Length() override;
+        virtual int64 Seek(int64, SeekOrigin) override;
         virtual uintptr Position() override;
         virtual void Position(uintptr) override;
         virtual bool CanRead() override;
