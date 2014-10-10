@@ -525,6 +525,12 @@
     <ClInclude Include="Global.RefCountBase.h">
       <Filter>Header Files\Global</Filter>
     </ClInclude>
+    <ClInclude Include="Global.Utility.h">
+      <Filter>Header Files\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="System.NotSupportedException.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -820,6 +826,9 @@
     </ClCompile>
     <ClCompile Include="Global.RefCountBase.cpp">
       <Filter>Source Files\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="System.NotSupportedException.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -38,6 +38,7 @@
     <ClInclude Include="Crapo.Security.BitConverterLE.h" />
     <ClInclude Include="Global.Memory.h" />
     <ClInclude Include="Global.RefCountBase.h" />
+    <ClInclude Include="Global.Utility.h" />
     <ClInclude Include="System.Collections.CollectionBase.h" />
     <ClInclude Include="System.Collections.DictionaryEntry.h" />
     <ClInclude Include="System.Collections.Generic.h" />
@@ -63,6 +64,7 @@
     <ClInclude Include="System.IO.BinaryWriter.h" />
     <ClInclude Include="System.IO.MemoryStream.h" />
     <ClInclude Include="System.NotImplementedException.h" />
+    <ClInclude Include="System.NotSupportedException.h" />
     <ClInclude Include="System.OperatingSystem.h" />
     <ClInclude Include="System.OutOfMemoryException.h" />
     <ClInclude Include="System.PlatformID.h" />
@@ -202,6 +204,7 @@
     <ClCompile Include="System.IO.BinaryWriter.cpp" />
     <ClCompile Include="System.IO.MemoryStream.cpp" />
     <ClCompile Include="System.NotImplementedException.cpp" />
+    <ClCompile Include="System.NotSupportedException.cpp" />
     <ClCompile Include="System.OperatingSystem.cpp" />
     <ClCompile Include="System.OutOfMemoryException.cpp" />
     <ClCompile Include="System.Runtime.InteropServices.DllImport.cpp" />

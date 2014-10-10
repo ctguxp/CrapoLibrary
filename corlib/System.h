@@ -11,6 +11,7 @@
 #include "System.Double.h"
 #include "System.Environment.h"
 #include "System.NotImplementedException.h"
+#include "System.NotSupportedException.h"
 #include "System.OutOfMemoryException.h"
 #include "System.Exception.h"
 #include "System.FormatException.h"
