@@ -1,4 +1,5 @@
 #pragma once
+#include "Global.Utility.h"
 #include "Global.RefCountBase.h"
 
 namespace Global
@@ -39,19 +40,21 @@ namespace Global
         }
       virtual ~PtrBase()
         {
-        _ptr = nullptr;
         }
       void DecrementRef()
         {
         if(_ref != nullptr)
+          {
           _ref->DecrementRef();
-        _ref = nullptr;
+          _ref = nullptr;
+          _ptr = nullptr;
+          }
         }
       T* GetPtr() const
         {
         return _ptr;
         }
-      void Reset(T* ptr, RefCountBase* ref)
+      void ResetPtrRef(T* ptr, RefCountBase* ref)
         {
         if(_ref != nullptr)
           _ref->DecrementRef();
@@ -71,13 +74,18 @@ namespace Global
         {
         if(otherRep)
           otherRep->IncrementRef();
-        Reset(otherPtr, otherRep);
+        ResetPtrRef(otherPtr, otherRep);
         }
+       void SwapOther(PtrBase& right)
+		    {
+		    Global::Swap(_ref, right._ref);
+		    Global::Swap(_ptr, right._ptr);
+		    }
     private:
       T*          _ptr;
       RefCountBase* _ref;
       template<class X>
-		  friend class PtrBase;
+      friend class PtrBase;
     };
 
   template<class T>
@@ -85,39 +93,76 @@ namespace Global
     {
     public:
       typedef SharedPtr<T> Me;
+
+      // Default constructor
       SharedPtr(T* ptr = nullptr)
         {
         ResetPtr(ptr);
         }
+
+      // Copy Constructor SharedPtr<T>
       SharedPtr(const Me& other)
         {
         ResetOther(other);
         }
+
+      // Copy Constructor SharedPtr<X>
       template<class X>
       SharedPtr(const SharedPtr<X>& other)
         {
         ResetOther(other);
         }
+
+      // Destructor
       ~SharedPtr()
         {
         DecrementRef();
         }
+
+      // Assignment Operator SharedPtr<T>
+      Me& operator=(const Me& other)
+        {
+        SharedPtr(other).Swap(*this);
+        return (*this);
+        }
+
+      template<class X>
+      Me& operator=(const SharedPtr<X>& other)
+        {
+        SharedPtr(other).Swap(*this);
+        return (*this);
+        } 
+
       T& operator*() const
-		    {
-		    return (*Get());
-		    }
+        {
+        return (*Get());
+        }
+
       T* operator->() const
         {
         return Get();
         }
+
       T* Get() const
         {
         return this->GetPtr();
         }
+
+      void Reset(T* ptr = nullptr)
+        {
+        SharedPtr(ptr).Swap(*this);
+        }
+
       void ResetPtr(T* ptr, RefCountBase* ref)
         {
-        Reset(ptr, ref);
+        ResetPtrRef(ptr, ref);
         }
+
+      void Swap(Me& other)
+		    {
+		    SwapOther(other);
+		    }
+
     private:
       void ResetPtr(T* ptr)
         {
