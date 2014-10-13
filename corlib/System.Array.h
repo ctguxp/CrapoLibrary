@@ -87,6 +87,7 @@ namespace System
     Row operator [] (sizet);
   };
 
+  typedef Array<bool>    BoolArray;
   typedef Array<byte>    ByteArray;
   typedef Array<sbyte>   SByteArray;
   typedef Array<wchar_t> CharArray;
