@@ -95,5 +95,8 @@
     <ClCompile Include="BitArrayTest.cpp">
       <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
+    <ClCompile Include="SharedPointerTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
