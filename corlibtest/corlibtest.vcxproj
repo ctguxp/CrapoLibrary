@@ -318,6 +318,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BitArrayTest.cpp" />
     <ClCompile Include="DictionaryTest.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="MemoryStreamTest.cpp" />
