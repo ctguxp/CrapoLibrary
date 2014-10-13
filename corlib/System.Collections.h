@@ -1,6 +1,7 @@
 #pragma once
 
 #include "System.Collections.ArrayList.h"
+#include "System.Collections.BitArray.h"
 #include "System.Collections.CollectionBase.h"
 #include "System.Collections.HashPrimeNumbers.h"
 #include "System.Collections.Hashtable.h"

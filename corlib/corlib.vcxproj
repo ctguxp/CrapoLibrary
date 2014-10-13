@@ -39,6 +39,7 @@
     <ClInclude Include="Global.Memory.h" />
     <ClInclude Include="Global.RefCountBase.h" />
     <ClInclude Include="Global.Utility.h" />
+    <ClInclude Include="System.Collections.BitArray.h" />
     <ClInclude Include="System.Collections.CollectionBase.h" />
     <ClInclude Include="System.Collections.DictionaryEntry.h" />
     <ClInclude Include="System.Collections.Generic.h" />
@@ -195,6 +196,7 @@
     <ClCompile Include="Microsoft.Win32.RegistryKey.cpp" />
     <ClCompile Include="Global.RefCountBase.cpp" />
     <ClCompile Include="System.Collections.ArrayList.cpp" />
+    <ClCompile Include="System.Collections.BitArray.cpp" />
     <ClCompile Include="System.Collections.CollectionBase.cpp" />
     <ClCompile Include="System.Collections.DictionaryEntry.cpp" />
     <ClCompile Include="System.Collections.Hashtable.cpp" />

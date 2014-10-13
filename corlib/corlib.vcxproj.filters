@@ -513,9 +513,6 @@
     <ClInclude Include="System.Collections.IDictionaryEnumerator.h">
       <Filter>Header Files\System.Collections</Filter>
     </ClInclude>
-    <ClInclude Include="System.Collections.DictionaryEntry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="System.IO.MemoryStream.h">
       <Filter>Header Files\System.IO</Filter>
     </ClInclude>
@@ -530,6 +527,12 @@
     </ClInclude>
     <ClInclude Include="System.NotSupportedException.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.BitArray.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.DictionaryEntry.h">
+      <Filter>Header Files\System.Collections</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -818,9 +821,6 @@
     <ClCompile Include="System.Runtime.InteropServices.UseCom.cpp">
       <Filter>Source Files\System.Runtime.InteropServices</Filter>
     </ClCompile>
-    <ClCompile Include="System.Collections.DictionaryEntry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="System.IO.MemoryStream.cpp">
       <Filter>Source Files\System.IO</Filter>
     </ClCompile>
@@ -829,6 +829,12 @@
     </ClCompile>
     <ClCompile Include="System.NotSupportedException.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Collections.BitArray.cpp">
+      <Filter>Source Files\System.Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Collections.DictionaryEntry.cpp">
+      <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
