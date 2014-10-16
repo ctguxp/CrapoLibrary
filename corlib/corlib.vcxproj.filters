@@ -519,9 +519,6 @@
     <ClInclude Include="Global.Memory.h">
       <Filter>Header Files\Global</Filter>
     </ClInclude>
-    <ClInclude Include="Global.RefCountBase.h">
-      <Filter>Header Files\Global</Filter>
-    </ClInclude>
     <ClInclude Include="Global.Utility.h">
       <Filter>Header Files\Global</Filter>
     </ClInclude>
@@ -533,6 +530,12 @@
     </ClInclude>
     <ClInclude Include="System.Collections.DictionaryEntry.h">
       <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.SharedCount.h">
+      <Filter>Header Files\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.SharedPtrCountedBase.h">
+      <Filter>Header Files\Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -824,9 +827,6 @@
     <ClCompile Include="System.IO.MemoryStream.cpp">
       <Filter>Source Files\System.IO</Filter>
     </ClCompile>
-    <ClCompile Include="Global.RefCountBase.cpp">
-      <Filter>Source Files\Global</Filter>
-    </ClCompile>
     <ClCompile Include="System.NotSupportedException.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
@@ -835,6 +835,12 @@
     </ClCompile>
     <ClCompile Include="System.Collections.DictionaryEntry.cpp">
       <Filter>Source Files\System.Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.SharedPtrCountedBase.cpp">
+      <Filter>Source Files\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.SharedCount.cpp">
+      <Filter>Source Files\Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

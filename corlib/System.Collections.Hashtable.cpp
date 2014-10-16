@@ -6,26 +6,32 @@
 #include "System.Collections.DictionaryEntry.h"
 #include "System.Array.hpp"
 
+using namespace Global;
+
 namespace System
   {
   namespace Collections
     {
-    Hashtable::KeyMarker Hashtable::Removed;
+    GCObject Hashtable::Removed(new Hashtable::KeyMarker());
 
-    Hashtable::Enumerator::Enumerator(Hashtable* host, EnumeratorMode mode)
+    Hashtable::Enumerator::Enumerator(Hashtable& host, EnumeratorMode mode)
       :_pos(-1)
-      ,_stamp((*host)._modificationCount)
-      ,_size((int32)(*host)._table.Length())
+      ,_stamp(host._modificationCount)
+      ,_size((int32)host._table.Length())
       ,_mode(mode)
       ,_host(host)
-      ,_currentKey(nullptr)
-      ,_currentValue(nullptr)
+      ,_currentKey()
+      ,_currentValue()
       {
       }
 
+    Hashtable::Enumerator::~Enumerator()
+      {
+      } 
+
     GCObject Hashtable::Enumerator::Current()
       {
-      if(_currentKey == nullptr)
+      if(_currentKey.Get() == nullptr)
         //throw InvalidOperationException();
           throw SystemException(L"InvalidOperation");
 
@@ -33,19 +39,16 @@ namespace System
         {
         case EnumeratorMode::KEY_MODE:
           {
-          GCObject retval(_currentKey, false);
-          retval.RescindOwnership();
-          return retval;
+          return _currentKey;
           }
         case EnumeratorMode::VALUE_MODE:
           {
-          GCObject retval(_currentValue, false);
-          retval.RescindOwnership();
-          return retval;
+          GCObject retval(_currentValue);
+          return _currentValue;
           }
         case EnumeratorMode::ENTRY_MODE:
           {
-          GCObject retval(new DictionaryEntry(_currentKey, _currentValue), false);
+          GCObject retval(new DictionaryEntry(_currentKey, _currentValue));
           return retval;
           }
         }
@@ -57,8 +60,8 @@ namespace System
       FailFast();
 
       _pos = -1;
-      _currentKey = nullptr;
-      _currentValue = nullptr;
+      _currentKey.Reset();
+      _currentValue.Reset();
       }
 
     bool Hashtable::Enumerator::MoveNext()
@@ -69,9 +72,9 @@ namespace System
         {
         while(++_pos < _size)
           {
-          Slot entry = (*_host)._table[_pos];
+          Slot entry = _host._table[_pos];
 
-          if(entry.key != nullptr && entry.key != &Removed)
+          if(entry.key.Get() != nullptr && entry.key.Get() != Removed.Get())
             {
             _currentKey = entry.key;
             _currentValue = entry.value;
@@ -80,32 +83,32 @@ namespace System
           }
         }
 
-      _currentKey = nullptr;
-      _currentValue = nullptr;
+      _currentKey.Reset();
+      _currentValue.Reset();
       return false;
       }
 
-    Object* Hashtable::Enumerator::Key()
+    GCObject Hashtable::Enumerator::Key()
       {
-      if(_currentKey == nullptr)
+      if(_currentKey.Get() == nullptr)
         //throw new InvalidOperationException ();
           throw SystemException(L"InvalidOperationException");
       FailFast();
       return _currentKey;
       }
 
-    Object* Hashtable::Enumerator::Value()
+    GCObject Hashtable::Enumerator::Value()
       {
-      if(_currentKey == nullptr)
+      if(_currentKey.Get() == nullptr)
         //throw new InvalidOperationException ();
-        throw SystemException(L"InvalidOperationException");
-      FailFast ();
+          throw SystemException(L"InvalidOperationException");
+      FailFast();
       return _currentValue;
       }
 
     void Hashtable::Enumerator::FailFast()
       {
-      if((*_host)._modificationCount != _stamp)
+      if(_host._modificationCount != _stamp)
         {
         //throw new InvalidOperationException (xstr);
         throw SystemException(L"InvalidOperationException Hashtable.Enumerator: snapshot out of sync.");
@@ -146,10 +149,10 @@ namespace System
       {
       for(sizet i = 0; i < _table.Length(); ++i)
         {
-        if(_table[i].key != nullptr)
-          delete _table[i].key;
-        if(_table[i].value != nullptr)
-          delete _table[i].value;
+        if(_table[i].key.Get() != nullptr)
+          _table[i].key.Reset();
+        if(_table[i].value.Get() != nullptr)
+          _table[i].value.Reset();
         }
       }
 
@@ -175,7 +178,9 @@ namespace System
 
     void Hashtable::Add(Object* key, Object* value)
       {
-      PutImpl(key, value, false);
+      GCObject k(key);
+      GCObject v(value);
+      PutImpl(k, v, false);
       }
 
     bool Hashtable::Contains(Object* key)
@@ -187,10 +192,8 @@ namespace System
       {
       for(sizet i = 0; i < _table.Length(); i++)
         {
-        delete _table[i].key;
-        _table[i].key = nullptr;
-        delete _table[i].value;
-        _table[i].value = nullptr;
+        _table[i].key.Reset();
+        _table[i].value.Reset();
         _hashes.Length(0);
         }
       _inUse = 0;
@@ -213,14 +216,14 @@ namespace System
         indx %= size;
         Slot entry = _table[indx];
         int hashMix = _hashes[indx];
-        Object* k = entry.key;
-        if(k == nullptr)
+        GCObject k = entry.key;
+        if(k.Get() == nullptr)
           break;
 
-        if(k == key || ((hashMix & Int32::MaxValue) == h
+        if(k.Get() == key || ((hashMix & Int32::MaxValue) == h
           && KeyEquals(key, k)))
           {
-          return entry.value;
+          return entry.value.Get();
           }
 
         if((hashMix & CHAIN_MARKER) == 0)
@@ -234,21 +237,25 @@ namespace System
 
     void Hashtable::Remove(Object* key)
       {
-      int i = Find (key);
+      int i = Find(key);
       if (i >= 0)
         {
         int h = _hashes[i];
         h &= CHAIN_MARKER;
         _hashes[i] = h;
-        _table[i].key = (h != 0) ? &Removed : nullptr;
-        _table[i].value = nullptr;
+        if(h != 0)
+          _table[i].key = Removed;
+        else
+          _table[i].key.Reset();
+
+        _table[i].value.Reset();
         --_inUse;
         ++_modificationCount;
         }
       }
     IDictionaryEnumerator* Hashtable::GetEnumerator()
       {
-      return new Enumerator(this, EnumeratorMode::ENTRY_MODE);
+      return new Enumerator(*this, EnumeratorMode::ENTRY_MODE);
       }
 
     void Hashtable::Init(sizet capacity, float loadFactor)
@@ -283,9 +290,9 @@ namespace System
       AdjustThreshold();
       }
 
-    void Hashtable::PutImpl(Object* key, Object* value, bool overwrite)
+    void Hashtable::PutImpl(GCObject& key, GCObject& value, bool overwrite)
       {
-      if(key == nullptr)
+      if(key.Get() == nullptr)
         throw ArgumentNullException(L"key", L"null key");
 
       if(_inUse >= (sizet)_threshold) 
@@ -293,7 +300,7 @@ namespace System
 
       uint32 size = (uint32)_table.Length();
 
-      int32 h = GetHash(key) & Int32::MaxValue;
+      int32 h = GetHash(key.Get()) & Int32::MaxValue;
       uint32 spot = (uint32)h;
       uint32 step = (uint32) ((spot>>5)+1)% (size-1)+1;
       Slot entry;
@@ -306,12 +313,12 @@ namespace System
         int32 hashMix = _hashes[indx];
 
         if(freeIndx == -1
-          && entry.key == &Removed
+          && entry.key.Get() == Removed.Get()
           && (hashMix & CHAIN_MARKER) != 0)
           freeIndx = indx;
 
-        if(entry.key == nullptr ||
-          (entry.key == &Removed
+        if(entry.key.Get() == nullptr ||
+          (entry.key.Get() == Removed.Get()
           && (hashMix & CHAIN_MARKER) == 0))
           {
 
@@ -320,7 +327,7 @@ namespace System
           break;
           }
 
-        if((hashMix & Int32::MaxValue) == h && KeyEquals(key, entry.key))
+        if((hashMix & Int32::MaxValue) == h && KeyEquals(key.Get(), entry.key))
           {
           if (overwrite)
             {
@@ -332,7 +339,7 @@ namespace System
             // Handle Add ():
             // An entry with the same key already exists in the Hashtable.
             String err;
-            err.Format(L"Key duplication when adding: {0}", key);
+            err.Format(L"Key duplication when adding: {0}", key.Get());
             throw ArgumentException(err);
             }
           return;
@@ -378,7 +385,7 @@ namespace System
       for(int32 i = 0; i < oldSize; i++) 
         {
         Slot s = table[i];
-        if(s.key!= nullptr)
+        if(s.key.Get() != nullptr)
           {
           int h = hashes[i] & Int32::MaxValue;
           uint32 spot = (uint32)h;
@@ -387,7 +394,7 @@ namespace System
             {
             // No check for KeyMarker.Removed here,
             // because the table is just allocated.
-            if (newTable[j].key == nullptr) 
+            if (newTable[j].key.Get() == nullptr) 
               {
               newTable[j].key = s.key;
               newTable[j].value = s.value;
@@ -412,21 +419,21 @@ namespace System
       if(_equalityComparer != nullptr)
         return _equalityComparer->GetHashCode(key);
       if(_hcpRef == nullptr)
-        return key->GetHashCode ();
+        return key->GetHashCode();
 
       return _hcpRef->GetHashCode(key);
       }
 
-    bool Hashtable::KeyEquals(Object* item, Object* key)
+    bool Hashtable::KeyEquals(Object* item, GCObject& key)
       {
-      if(key == &Removed)
+      if(key.Get() == Removed.Get())
         return false;
       if(_equalityComparer != nullptr)
-        return _equalityComparer->Equals(item, key);
+        return _equalityComparer->Equals(item, key.Get());
       if(_comparerRef == nullptr)
-        return item->Equals(key);
+        return item->Equals(key.Get());
 
-      return _comparerRef->Compare(item, key) == 0;
+      return _comparerRef->Compare(item, key.Get()) == 0;
       }
 
     int Hashtable::Find(Object* key)
@@ -445,11 +452,11 @@ namespace System
         indx %= size;
         Slot entry = _table[indx];
         int hashMix = _hashes[indx];
-        Object* k = entry.key;
-        if(k == nullptr)
+        GCObject k = entry.key;
+        if(k.Get() == nullptr)
           break;
 
-        if(k == key || ((hashMix & Int32::MaxValue) == h
+        if(k.Get() == key || ((hashMix & Int32::MaxValue) == h
           && KeyEquals(key, k)))
           {
           return (int)indx;

@@ -10,18 +10,18 @@ namespace System
       {
       public:
         virtual ~CollectionBase();
-        virtual Object& operator[](const sizet index) override;
+        virtual GCObject& operator[](const sizet index) override;
         virtual bool IsFixedSize() override;
 		    virtual bool IsReadOnly() override;
-        virtual sizet Add(Object* value) override;
-        virtual bool Contains(Object* value) override;
+        virtual sizet Add(GCObject& value) override;
+        virtual bool Contains(GCObject& value) override;
         virtual sizet Count() override;
         virtual void Clear() override;
-        virtual int IndexOf(Object* value) override;
-        virtual void Insert(sizet index, Object* value) override;
+        virtual int IndexOf(GCObject& value) override;
+        virtual void Insert(sizet index, GCObject& value) override;
         virtual bool IsSynchronized() override;
         virtual void RemoveAt(sizet index) override;
-        virtual void Remove(Object* value) override;
+        virtual void Remove(GCObject& value) override;
         virtual IEnumerator* GetEnumerator();
       protected:
         CollectionBase();
@@ -33,9 +33,9 @@ namespace System
         virtual void OnClearComplete();
         virtual void OnInsert(sizet index, Object* value);
         virtual void OnInsertComplete(sizet index, Object* value);
-        virtual void OnRemove(sizet index, Object* value);
-		    virtual void OnRemoveComplete(sizet index, Object* value);
-        virtual void OnValidate(Object* value);
+        virtual void OnRemove(sizet index, GCObject& value);
+		    virtual void OnRemoveComplete(sizet index, GCObject& value);
+        virtual void OnValidate(GCObject& value);
       private:
 #pragma warning(disable:4251)
         GCArrayList _list;

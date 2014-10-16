@@ -46,8 +46,8 @@ namespace corlibtest
           Assert::Fail(id + L"+1 testBytes is null");
 
         if(start < 0 || count < 0  ||
-          start + count > testStreamData->Length() ||
-          start > testStreamData->Length())
+          start + count > (int)testStreamData->Length() ||
+          start > (int)testStreamData->Length())
           throw ArgumentOutOfRangeException (id + L"+2");
 
         for(int test = 0; test < count; test++) 
@@ -103,7 +103,7 @@ namespace corlibtest
         {
         using namespace IO;
         MemoryStream ms(testStreamData, true);
-        Assert::AreEqual<uintptr>(100, ms.Length(), L"#01");
+        Assert::AreEqual<int64>(100, ms.Length(), L"#01");
         Assert::AreEqual<uintptr>(0, ms.Position(), L"#02");
         ms.Position(50);
         byte saved = (*testStreamData)[50];

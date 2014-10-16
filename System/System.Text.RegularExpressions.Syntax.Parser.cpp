@@ -4,6 +4,9 @@
 #include "System.Text.RegularExpressions.Syntax.Alternation.h"
 #include "System.Text.RegularExpressions.Syntax.PositionAssertion.h"
 #include "System.Text.RegularExpressions.Syntax.CharacterClass.h"
+#include "System.Text.RegularExpressions.Category.h"
+
+using namespace Global;
 
 namespace System
   {
@@ -37,7 +40,8 @@ namespace System
           try 
             {
             RegularExpression* re = new RegularExpression();
-            ParseGroup((Group*)re, options, nullptr);
+            SharedPtr<Assertion> assert;
+            ParseGroup((Group*)re, options, assert);
             ResolveReferences();
 
             //re->GroupCount(num_groups);
@@ -69,18 +73,18 @@ namespace System
           //throw NotImplementedException();
           return _gap;
           }
-        void Parser::ParseGroup(Group* group, RegexOptions options, Assertion* assertion) 
+        void Parser::ParseGroup(Group* group, RegexOptions options, SharedPtr<Assertion>& assertion) 
           {
           RegularExpression g;
           bool is_top_level = Object::IsInstance((*group), g);
           if(!is_top_level)
             return;
 
-          Alternation* alternation = nullptr;
+          SharedPtr<Alternation> alternation;
           String lit;
 
-          Group* current = new Group();
-          Expression* expr = nullptr;
+          SharedPtr<Group> current(new Group());
+          SharedPtr<Expression> expr;
           bool closed = false;
 
           for(;;) 
@@ -97,22 +101,22 @@ namespace System
               {
               case L'^': 
                 {
-                //Position pos = IsMultiline (options) ? Position.StartOfLine : Position.Start;
-                //expr = new PositionAssertion(pos);
+                Position pos = IsMultiline(options) ? Position::StartOfLine : Position::Start;
+                expr.Reset(new PositionAssertion(pos));
                 break;
                 }
 
               case L'$': 
                 {
-                //Position pos = IsMultiline (options) ? Position.EndOfLine : Position.End;
-                //expr = new PositionAssertion(pos);
+                Position pos = IsMultiline (options) ? Position::EndOfLine : Position::End;
+                expr.Reset(new PositionAssertion(pos));
                 break;
                 }
 
               case L'.': 
                 {
-                //Category cat = IsSingleline (options) ? Category.AnySingleline : Category.Any;
-                //expr = new CharacterClass(cat, false);
+                Category cat = IsSingleline(options) ? Category::AnySingleline : Category::Any;
+                expr.Reset(new CharacterClass(cat, false));
                 break;
                 }
 
@@ -125,7 +129,7 @@ namespace System
                 //  {
                 //  expr = ParseSpecial(options);
 
-                if(expr == nullptr)
+                if(expr.Get() == nullptr)
                   ch = _pattern[_ptr ++];		// default escape
                 //}
                 break;
@@ -139,8 +143,8 @@ namespace System
 
               case L'(': 
                 {
-                /*bool ignore = IsIgnoreCase(options);
-                expr = ParseGroupingConstruct(ref options);
+                //bool ignore = IsIgnoreCase(options);
+                /*expr = ParseGroupingConstruct(ref options);
                 if (expr == nullptr)
                 {
                 if(lit != nullptr && IsIgnoreCase (options) != ignore)
@@ -168,7 +172,7 @@ namespace System
                   lit = String::Empty();
                   }
 
-                if(assertion != nullptr) 
+                if(assertion.Get() != nullptr) 
                   {
                   /*if (assertion.TrueExpression == null)
                   assertion.TrueExpression = current;
@@ -179,13 +183,13 @@ namespace System
                   }
                 else 
                   {
-                  if(alternation == nullptr){}
+                  if(alternation.Get() == nullptr){}
                   //alternation = new Alternation();
 
                   //alternation->AddAlternative(current);
                   }
 
-                current = new Group();
+                current.Reset(new Group());
                 continue;
                 }
 
@@ -265,7 +269,7 @@ namespace System
 
             // (3) Append Expression and/or Literal
 
-            if(expr == nullptr) 
+            if(expr.Get() == nullptr) 
               {
               if(lit.Length() == 0)
                 lit = L"";
@@ -279,8 +283,8 @@ namespace System
                 lit = String::Empty();
                 }
 
-              //current.AppendExpression (expr);
-              expr = nullptr;
+              current->AppendExpression(expr);
+              expr.Reset();
               }
 
             if (is_top_level && _ptr >= _pattern.Length())
@@ -301,7 +305,7 @@ EndOfGroup:
           if(lit.Length() == 0){}
           //current->AppendExpression(new Literal (lit, IsIgnoreCase (options)));
 
-          if (assertion != nullptr) 
+          if (assertion.Get() != nullptr) 
             {
             /*if(assertion->TrueExpression == null)
             assertion->TrueExpression = current;
@@ -310,7 +314,7 @@ EndOfGroup:
 
             group->AppendExpression(assertion);
             }
-          else if (alternation != nullptr) 
+          else if(alternation.Get() != nullptr) 
             {
             //alternation->AddAlternative (current);
             group->AppendExpression(alternation);
@@ -318,7 +322,7 @@ EndOfGroup:
           else
             group->AppendExpression(current);
           }
-        Expression* Parser::ParseCharacterClass(RegexOptions options) 
+        SharedPtr<Expression> Parser::ParseCharacterClass(RegexOptions options) 
           {
           bool negate = false;
           if(_pattern[_ptr] == L'^') 
@@ -329,7 +333,7 @@ EndOfGroup:
 
           bool ecma = IsECMAScript(options);
           if(ecma == true){} // delete me
-          CharacterClass* cls = new CharacterClass(negate, IsIgnoreCase(options));
+          SharedPtr<CharacterClass> cls(new CharacterClass(negate, IsIgnoreCase(options)));
 
           if(_pattern[_ptr] == L']')
             {
@@ -365,25 +369,26 @@ EndOfGroup:
 
               // didn't recognize escape
               c = _pattern[_ptr ++];
-              switch (c) {
-                case 'b':
-                  c = '\b';
+              switch (c) 
+{
+                case L'b':
+                  c = L'\b';
                   goto char_recognized;
 
-                case 'd': case 'D':
-                  //cls.AddCategory (ecma ? Category.EcmaDigit : Category.Digit, c == 'D');
+                case L'd': case L'D':
+                  cls->AddCategory(ecma ? Category::EcmaDigit : Category::Digit, c == L'D');
                   break;
 
-                case 'w': case 'W':
-                  //cls.AddCategory (ecma ? Category.EcmaWord : Category.Word, c == 'W');
+                case L'w': case L'W':
+                  cls->AddCategory(ecma ? Category::EcmaWord : Category::Word, c == L'W');
                   break;
 
                 case 's': case 'S':
-                  //cls.AddCategory (ecma ? Category.EcmaWhiteSpace : Category.WhiteSpace, c == 'S');
+                  cls->AddCategory(ecma ? Category::EcmaWhiteSpace : Category::WhiteSpace, c == 'S');
                   break;
 
                 case 'p': case 'P':
-                  //cls.AddCategory (ParseUnicodeCategory (), c == 'P');	// ignore ecma
+                  //cls->AddCategory(ParseUnicodeCategory (), c == :'P');	// ignore ecma
                   break;
 
                 default:		// add escaped character
@@ -558,6 +563,14 @@ char_recognized:
           {
           return((intptr)options & (intptr)RegexOptions::IgnoreCase) != 0;
           }
+        bool Parser::IsMultiline(RegexOptions options) 
+          {
+			    return((intptr)options & (intptr)RegexOptions::Multiline) != 0;
+		      }
+        bool Parser::IsSingleline(RegexOptions options) 
+          {
+			    return((intptr)options & (intptr)RegexOptions::Singleline) != 0;
+		      }
         }
       }
     }

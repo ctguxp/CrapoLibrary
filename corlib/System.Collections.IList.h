@@ -1,5 +1,8 @@
 #pragma once
 #include "System.Collections.ICollection.h"
+#include "Global.Memory.h"
+
+using namespace Global;
 
 namespace System
   {
@@ -13,13 +16,13 @@ namespace System
 		    virtual bool IsReadOnly() = 0;
 
         // Functions
-        virtual Object& operator[](const sizet index) = 0;
-        virtual sizet Add(Object* value) = 0;
+        virtual GCObject& operator[](const sizet index) = 0;
+        virtual sizet Add(GCObject& value) = 0;
         virtual void Clear() = 0;
-        virtual bool Contains(Object* value) = 0;
-        virtual int IndexOf(Object* value) = 0;
-        virtual void Insert(sizet index, Object* value) = 0;
-        virtual void Remove(Object* value) = 0;
+        virtual bool Contains(GCObject& value) = 0;
+        virtual int IndexOf(GCObject& value) = 0;
+        virtual void Insert(sizet index, GCObject& value) = 0;
+        virtual void Remove(GCObject& value) = 0;
         virtual void RemoveAt(sizet index) = 0;
       };
     }

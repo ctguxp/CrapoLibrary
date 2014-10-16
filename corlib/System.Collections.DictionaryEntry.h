@@ -8,10 +8,10 @@ namespace System
     class DictionaryEntry : public Object
       {
       private:
-        Object* _key;
-		    Object* _value;
+        GCObject _key;
+		    GCObject _value;
       public:
-        DictionaryEntry(Object* key, Object* value);
+        DictionaryEntry(GCObject& key, GCObject& value);
         ~DictionaryEntry();
       };
     }

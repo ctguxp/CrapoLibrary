@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "System.Text.RegularExpressions.Syntax.ExpressionCollection.h"
 
+using namespace Global;
+
 namespace System
   {
   namespace Text
@@ -15,11 +17,12 @@ namespace System
         ExpressionCollection::~ExpressionCollection()
           {
           }
-        void ExpressionCollection::Add(Expression* e)
+        void ExpressionCollection::Add(SharedPtr<Expression>& e)
           {
-          InnerList().Add(e);
+          GCObject temp = e;
+          InnerList().Add(temp);
           }
-        sizet ExpressionCollection::Add(Object* value)
+        sizet ExpressionCollection::Add(GCObject& value)
           {
           return CollectionBase::Add(value);
           }

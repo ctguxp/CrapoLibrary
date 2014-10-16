@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "System.Text.RegularExpressions.Syntax.Group.h"
 
+using namespace Global;
+
 namespace System
   {
   namespace Text
@@ -15,7 +17,7 @@ namespace System
         Group::~Group()
           {
           }
-        void Group::AppendExpression(Expression* e)
+        void Group::AppendExpression(SharedPtr<Expression> e)
           {
           Expressions().Add(e);
           }
@@ -26,9 +28,9 @@ namespace System
             {
             Expression* e = nullptr;
             if(reverse)
-              e = static_cast<Expression*>(&Expressions()[count - i - 1]);
+              e = static_cast<Expression*>(Expressions()[count - i - 1].Get());
             else
-              e = static_cast<Expression*>(&Expressions()[i]);
+              e = static_cast<Expression*>(Expressions()[i].Get());
 
             e->Compile(cmp, reverse);
             }
@@ -40,7 +42,7 @@ namespace System
 
           for(sizet i = 0; i < Expressions().Count(); ++i)
             {
-            Expression* expression = static_cast<Expression*>(&Expressions()[i]);
+            Expression* expression = static_cast<Expression*>(Expressions()[i].Get());
             int a, b;
             expression->GetWidth(a, b);
             min += a;

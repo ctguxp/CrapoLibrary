@@ -21,15 +21,16 @@ namespace System
           End = -1,
 			    Begin = -2
           };
-        public:
-          Enumerator(Stack*);
+        private:
           Enumerator(const Enumerator& e);
           Enumerator& operator=(const Enumerator& e);
+        public:
+          Enumerator(Stack&);
           virtual GCObject Current() override;
           virtual bool MoveNext() override;
           virtual void Reset() override;
         private:
-          Stack* _stack;
+          Stack& _stack;
           sizet  _modCount;
           int32  _current;
         };
@@ -41,8 +42,8 @@ namespace System
         virtual sizet Count() override;
         virtual bool IsSynchronized() override;
         virtual IEnumerator* GetEnumerator() override;
-        virtual void Push(Object* /*obj*/);
-        virtual Object* Pop();
+        virtual void Push(GCObject& /*obj*/);
+        virtual GCObject Pop();
         virtual Object& Peek();
       private:
         void Resize(sizet ncapacity);
@@ -52,7 +53,7 @@ namespace System
         int32          _current;
         sizet          _modCount;
 #pragma warning(disable:4251)
-        Array<Object*> _contents;
+        Array<GCObject> _contents;
 #pragma warning(default:4251)
       };
     }

@@ -1,6 +1,8 @@
 #pragma once
 #include "System.Text.RegularExpressions.Syntax.Expression.h"
 
+using namespace Global;
+
 namespace System
   {
   namespace Text
@@ -14,8 +16,8 @@ namespace System
           public:
             ExpressionCollection();
             ~ExpressionCollection();
-            void Add(Expression* e);
-            virtual sizet Add(Object* value) override; 
+            void Add(SharedPtr<Expression>& e);
+            virtual sizet Add(GCObject& value) override; 
           };
         }
       }
