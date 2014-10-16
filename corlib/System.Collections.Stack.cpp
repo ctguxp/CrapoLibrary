@@ -8,9 +8,9 @@ namespace System
   {
   namespace Collections
     {
-    Stack::Enumerator::Enumerator(Collections::Stack* s)
+    Stack::Enumerator::Enumerator(Collections::Stack& s)
       :_stack(s)
-      ,_modCount(s->_modCount)
+      ,_modCount(s._modCount)
       ,_current(Enumerator::Begin)
       {
       }
@@ -32,27 +32,25 @@ namespace System
       }
     GCObject Stack::Enumerator::Current()
       {
-      if(_modCount != _stack->_modCount 
+      if(_modCount != _stack._modCount 
         || _current == Enumerator::Begin
         || _current == Enumerator::End
-        || _current > (int32)_stack->_count)
+        || _current > (int32)_stack._count)
         //throw new InvalidOperationException();
         throw SystemException(L"Invalid Operation");
 
-      GCObject retval(_stack->_contents[_current], false);
-      retval.RescindOwnership();
-      return retval;
+      return _stack._contents[_current];
       }
     bool Stack::Enumerator::MoveNext()
       {
-      if(_modCount != _stack->_modCount)
+      if(_modCount != _stack._modCount)
         //throw new InvalidOperationException();
           throw SystemException(L"Invalid Operation");
 
       switch(_current)
         {
         case Enumerator::Begin:
-          _current = _stack->_current;
+          _current = _stack._current;
           return _current != -1;
 
         case Enumerator::End:
@@ -65,7 +63,7 @@ namespace System
       }
     void Stack::Enumerator::Reset()
       {
-      if(_modCount != _stack->_modCount)
+      if(_modCount != _stack._modCount)
         //throw new InvalidOperationException();
           throw SystemException(L"Invalid Operation");
 
@@ -81,7 +79,7 @@ namespace System
       {
       sizet s = _contents.Length();
       for(sizet i = 0; i < s; ++i)
-        _contents[i] = nullptr;  
+        _contents[i].Reset();  
       }
     Stack::Stack(sizet initialCapacity)
       :_capacity(initialCapacity)
@@ -92,16 +90,15 @@ namespace System
       {
       sizet s = _contents.Length();
       for(sizet i = 0; i < s; ++i)
-        _contents[i] = nullptr;  
+        _contents[i].Reset();  
       }
     Stack::~Stack()
       {
       for(sizet i = 0; i < _count; ++i)
         {
-        if(_contents[i] != nullptr)
+        if(_contents[i].Get() != nullptr)
           {
-          delete _contents[i];
-          _contents[i] = nullptr;
+          _contents[i].Reset();
           }
         }
       }
@@ -122,7 +119,7 @@ namespace System
         {
         for(sizet i = 0; i < _count; i++)
           {
-          if(_contents[i] == nullptr)
+          if(_contents[i].Get() == nullptr)
             return true; 
           }
         } 
@@ -130,7 +127,7 @@ namespace System
         {
         for(sizet i = 0; i < _count; i++) 
           {
-          if(obj->Equals(_contents[i]))
+          if(obj->Equals(_contents[i].Get()))
             return true; 
           }
         }
@@ -149,7 +146,7 @@ namespace System
         return (*_contents[_current]);
         }
       }
-    Object* Stack::Pop()
+    GCObject Stack::Pop()
       {
       if(_current == -1)
         {
@@ -160,8 +157,8 @@ namespace System
         {
         _modCount++;
 
-        Object* ret = _contents[_current];
-        _contents[_current] = nullptr;
+        GCObject ret = _contents[_current];
+        _contents[_current].Reset();
 
         _count--;
         _current--;
@@ -180,7 +177,7 @@ namespace System
         return ret;
         }
       }
-    void Stack::Push(Object* obj)
+    void Stack::Push(GCObject& obj)
       {
       _modCount++;
 
@@ -196,17 +193,17 @@ namespace System
       }
     IEnumerator* Stack::GetEnumerator()
       {
-      return new Enumerator(this);
+      return new Enumerator(*this);
       }
     void Stack::Resize(sizet ncapacity)
       {
       ncapacity = Math::Max((uintptr)ncapacity, (uintptr)default_capacity);
-      Array<Object*> ncontents(ncapacity);
+      Array<GCObject> ncontents(ncapacity);
       sizet s = ncontents.Length();
       for(sizet i = 0; i < s; ++i)
-        ncontents[i] = nullptr; 
+        ncontents[i].Reset(); 
 
-      Array<Object*>::Copy(_contents, 0, ncontents, 0, _count);		
+      Array<GCObject>::Copy(_contents, 0, ncontents, 0, _count);		
       _capacity = ncapacity;
       _contents = ncontents;
       }

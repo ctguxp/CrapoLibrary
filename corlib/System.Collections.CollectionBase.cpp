@@ -17,14 +17,14 @@ namespace System
     CollectionBase::~CollectionBase()
       {
       }
-    Object& CollectionBase::operator[](const sizet index)
+    GCObject& CollectionBase::operator[](const sizet index)
       {
       return InnerList()[index];
       }
     sizet CollectionBase::Capacity()
       {
       if(_list.Get() == nullptr)
-        _list.Set(new ArrayList());
+        _list.Reset(new ArrayList());
 
       return _list->Capacity();
       }
@@ -54,16 +54,16 @@ namespace System
       { 
       return InnerList().IsReadOnly();
       }
-    sizet CollectionBase::Add(Object* value)
+    sizet CollectionBase::Add(GCObject& value)
       {
       sizet newPosition;
       OnValidate(value);
       newPosition = InnerList().Count();
-      OnInsert(newPosition, value);
+      OnInsert(newPosition, value.Get());
       InnerList().Add(value);
       try
         {
-        OnInsertComplete(newPosition, value);
+        OnInsertComplete(newPosition, value.Get());
         }
       catch(Exception&)
         {
@@ -73,14 +73,14 @@ namespace System
 
       return newPosition;
       }
-    void CollectionBase::Insert(sizet index, Object* value)
+    void CollectionBase::Insert(sizet index, GCObject& value)
       {
       OnValidate(value);
-      OnInsert(index, value);
+      OnInsert(index, value.Get());
       InnerList().Insert(index, value);
       try
         {
-        OnInsertComplete(index, value);
+        OnInsertComplete(index, value.Get());
         }
       catch(Exception&)
         {
@@ -90,13 +90,13 @@ namespace System
       }
     void CollectionBase::RemoveAt(sizet index) 
       {
-      Object& objectToRemove = InnerList()[index];
-      OnValidate(&objectToRemove);
-      OnRemove(index, &objectToRemove);
+      GCObject& objectToRemove = InnerList()[index];
+      OnValidate(objectToRemove);
+      OnRemove(index, objectToRemove);
       InnerList().RemoveAt(index);
-      OnRemoveComplete(index, &objectToRemove);
+      OnRemoveComplete(index, objectToRemove);
       }
-    void CollectionBase::Remove(Object* value)
+    void CollectionBase::Remove(GCObject& value)
       {
       int removeIndex;
       OnValidate(value);
@@ -107,25 +107,25 @@ namespace System
       InnerList().Remove(value);
       OnRemoveComplete(removeIndex, value);
       }
-    bool CollectionBase::Contains(Object* value)
+    bool CollectionBase::Contains(GCObject& value)
       {
       return InnerList().Contains(value);
       }
-    int CollectionBase::IndexOf(Object* value)
+    int CollectionBase::IndexOf(GCObject& value)
       {
       return InnerList().IndexOf(value);
       }
     void CollectionBase::Capacity(sizet value)
       {
       if(_list.Get() == nullptr)
-        _list.Set(new ArrayList());
+        _list.Reset(new ArrayList());
 
       _list->Capacity(value);
       }
     ArrayList& CollectionBase::InnerList()
       {
       if(_list.Get() == nullptr)
-        _list.Set(new ArrayList());
+        _list.Reset(new ArrayList());
       return (*_list.Get());
       }
     void CollectionBase::OnClear()
@@ -134,10 +134,10 @@ namespace System
     void CollectionBase::OnClearComplete()
       {
       }
-    void CollectionBase::OnRemove(sizet, Object*)
+    void CollectionBase::OnRemove(sizet, GCObject&)
       {
       }
-    void CollectionBase::OnRemoveComplete(sizet, Object*)
+    void CollectionBase::OnRemoveComplete(sizet, GCObject&)
       {
       }
     void CollectionBase::OnInsert(sizet, Object*)
@@ -146,9 +146,9 @@ namespace System
     void CollectionBase::OnInsertComplete(sizet, Object*)
       {
       }
-    void CollectionBase::OnValidate(Object* value)
+    void CollectionBase::OnValidate(GCObject& value)
       {
-      if(nullptr == value)
+      if(nullptr == value.Get())
         throw ArgumentNullException(L"CollectionBase.OnValidate: Invalid parameter value passed to method: null");
       }
     }

@@ -37,7 +37,8 @@
   <ItemGroup>
     <ClInclude Include="Crapo.Security.BitConverterLE.h" />
     <ClInclude Include="Global.Memory.h" />
-    <ClInclude Include="Global.RefCountBase.h" />
+    <ClInclude Include="Global.SharedCount.h" />
+    <ClInclude Include="Global.SharedPtrCountedBase.h" />
     <ClInclude Include="Global.Utility.h" />
     <ClInclude Include="System.Collections.BitArray.h" />
     <ClInclude Include="System.Collections.CollectionBase.h" />
@@ -193,8 +194,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Crapo.Security.BitConverterLE.cpp" />
+    <ClCompile Include="Global.SharedCount.cpp" />
+    <ClCompile Include="Global.SharedPtrCountedBase.cpp" />
     <ClCompile Include="Microsoft.Win32.RegistryKey.cpp" />
-    <ClCompile Include="Global.RefCountBase.cpp" />
     <ClCompile Include="System.Collections.ArrayList.cpp" />
     <ClCompile Include="System.Collections.BitArray.cpp" />
     <ClCompile Include="System.Collections.CollectionBase.cpp" />

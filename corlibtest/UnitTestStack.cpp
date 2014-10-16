@@ -17,10 +17,10 @@ namespace corlibtest
         {
         using namespace Collections;			
         Stack stackTest;
-        stackTest.Push(new Int32(50));
-        stackTest.Push(new Int32(5));
-        stackTest.Push(new Int32(0));
-        stackTest.Push(new Int32(50));
+        stackTest.Push(GCObject(new Int32(50)));
+        stackTest.Push(GCObject(new Int32(5)));
+        stackTest.Push(GCObject(new Int32(0)));
+        stackTest.Push(GCObject(new Int32(50)));
 
         Assert::AreEqual<sizet>(stackTest.Count(), 4);
         }
@@ -28,33 +28,31 @@ namespace corlibtest
       TEST_METHOD(TestContains)
         {
         using namespace Collections;	
-        String* toLocate = new String(L"test");
+        GCObject toLocate(new String(L"test"));
 
         stackInt.Push(toLocate);
 
-        stackInt.Push(new String(L"chaff"));
+        stackInt.Push(GCObject(new String(L"chaff")));
 
-        stackInt.Push(nullptr);
+        stackInt.Push(GCObject());
 
-        Assert::IsTrue(stackInt.Contains(toLocate));
+        Assert::IsTrue(stackInt.Contains(toLocate.Get()));
 
         Assert::IsTrue(stackInt.Contains(nullptr), L"must contain null");
 
-        Object* i = stackInt.Pop();
+        GCObject i = stackInt.Pop();
 
         i = stackInt.Pop();
-        delete i;
-        i = nullptr;
+        i.Reset();
 
-        Assert::IsTrue (stackInt.Contains(toLocate));
+        Assert::IsTrue(stackInt.Contains(toLocate.Get()));
 
         i = stackInt.Pop();
-        delete i;
-        i = nullptr;
+        i.Reset();
 
-        Assert::IsTrue(!stackInt.Contains(toLocate));
+        Assert::IsTrue(!stackInt.Contains(toLocate.Get()));
 
-        stackInt.Push(nullptr);
+        stackInt.Push(GCObject());
         Assert::IsTrue (stackInt.Contains(nullptr));
         stackInt.Pop();
         Assert::IsTrue(!stackInt.Contains(nullptr));

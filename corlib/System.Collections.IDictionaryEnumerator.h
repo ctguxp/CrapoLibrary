@@ -10,8 +10,8 @@ namespace System
     class IDictionaryEnumerator : public IEnumerator
       {
       public:
-        virtual Object* Key() = 0;
-		    virtual Object* Value() = 0;
+        virtual GCObject Key() = 0;
+		    virtual GCObject Value() = 0;
       };
     }
   }

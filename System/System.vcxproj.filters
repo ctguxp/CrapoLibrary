@@ -120,6 +120,9 @@
     <ClInclude Include="System.Text.RegularExpressions.Syntax.CharacterClass.h">
       <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Interval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -196,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Syntax.CharacterClass.cpp">
       <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Interval.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

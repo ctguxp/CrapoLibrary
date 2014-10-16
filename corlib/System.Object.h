@@ -4,6 +4,9 @@
 #include "AutoPtr.h"
 #include "System.Array.h"
 #include "System.Ownership.h"
+#include "Global.Memory.h"
+
+using namespace Global;
 
 namespace System
   {
@@ -21,7 +24,7 @@ namespace System
       virtual bool Equals(Object* obj);
     };
 
-  typedef AutoPtr<Object> GCObject;
+  typedef SharedPtr<Object> GCObject;
 
   class CRAPOCOREDLL_API NullObject : public Object
     {

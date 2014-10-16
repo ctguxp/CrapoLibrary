@@ -1,180 +1,86 @@
 #pragma once
 #include "Global.Utility.h"
-#include "Global.RefCountBase.h"
+#include "Global.SharedCount.h"
 
 namespace Global
   {
-
   template<class T>
-  class RefCount : public RefCountBase
+  class SharedPtr
     {
-    public:
-      RefCount(T* ptr)
-        :RefCountBase()
-        ,_ptr(ptr)
-        {
-        }
+    typedef T e_type;
+    typedef SharedPtr<T> c_type;
     private:
-      virtual void Delete() override
-        {
-        delete _ptr;
-        _ptr = nullptr;
-        }
-      virtual void DeleteSelf() override
-        {
-        delete this;
-        }
-    private:
-      T* _ptr;
-    };
-
-  template<class T>
-  class PtrBase
-    {
+      e_type*     _px;
+      SharedCount _pn;
     public:
-      typedef PtrBase<T> Me;
-      PtrBase()
-        :_ptr(nullptr)
-        ,_ref(nullptr)
+      SharedPtr()
+        :_px(nullptr)
+        ,_pn()
         {
         }
-      virtual ~PtrBase()
+      SharedPtr(SharedPtr const& sp)
+        :_px(sp._px)
+        ,_pn(sp._pn)
         {
         }
-      void DecrementRef()
+      template<class U>
+      explicit SharedPtr(U* px)
+        :_px(px)
+        ,_pn()
         {
-        if(_ref != nullptr)
-          {
-          _ref->DecrementRef();
-          _ref = nullptr;
-          _ptr = nullptr;
-          }
+        ConstructSharedPtr(this, px, _pn);
         }
-      T* GetPtr() const
+      template<class U>
+      SharedPtr(SharedPtr<U> const& other)
+        :_px(other._px)
+        ,_pn(other._pn)
         {
-        return _ptr;
         }
-      void ResetPtrRef(T* ptr, RefCountBase* ref)
-        {
-        if(_ref != nullptr)
-          _ref->DecrementRef();
-        _ptr = ptr;
-        _ref = ref;
-        }
-      void ResetOther(const Me& other)
-        {
-        ResetAndTakeOther(other._ptr, other._ref);
-        }
-      template<class X>
-      void ResetOther(const PtrBase<X>& other)
-        {
-        ResetAndTakeOther(other._ptr, other._ref);
-        }
-      void ResetAndTakeOther(T* otherPtr, RefCountBase* otherRep)
-        {
-        if(otherRep)
-          otherRep->IncrementRef();
-        ResetPtrRef(otherPtr, otherRep);
-        }
-       void SwapOther(PtrBase& right)
-		    {
-		    Global::Swap(_ref, right._ref);
-		    Global::Swap(_ptr, right._ptr);
-		    }
-    private:
-      T*          _ptr;
-      RefCountBase* _ref;
-      template<class X>
-      friend class PtrBase;
-    };
-
-  template<class T>
-  class SharedPtr : public PtrBase<T>
-    {
-    public:
-      typedef SharedPtr<T> Me;
-
-      // Default constructor
-      SharedPtr(T* ptr = nullptr)
-        {
-        ResetPtr(ptr);
-        }
-
-      // Copy Constructor SharedPtr<T>
-      SharedPtr(const Me& other)
-        {
-        ResetOther(other);
-        }
-
-      // Copy Constructor SharedPtr<X>
-      template<class X>
-      SharedPtr(const SharedPtr<X>& other)
-        {
-        ResetOther(other);
-        }
-
-      // Destructor
       ~SharedPtr()
         {
-        DecrementRef();
         }
-
-      // Assignment Operator SharedPtr<T>
-      Me& operator=(const Me& other)
+      SharedPtr& operator= (SharedPtr const& sp)
         {
-        SharedPtr(other).Swap(*this);
-        return (*this);
+        c_type(sp).Swap(*this);
+        return *this;
         }
-
-      template<class X>
-      Me& operator=(const SharedPtr<X>& other)
+      e_type& operator* ()
         {
-        SharedPtr(other).Swap(*this);
-        return (*this);
-        } 
-
-      T& operator*() const
-        {
-        return (*Get());
+        assert(_px != nullptr);
+        return *_px;
         }
-
-      T* operator->() const
+      e_type* operator-> () const
         {
-        return Get();
+        assert(_px != nullptr);
+        return _px;
         }
-
-      T* Get() const
+      e_type* Get() const
         {
-        return this->GetPtr();
+        return _px;
         }
-
-      void Reset(T* ptr = nullptr)
+      void Reset()
         {
-        SharedPtr(ptr).Swap(*this);
+        c_type().Swap(*this);
         }
-
-      void ResetPtr(T* ptr, RefCountBase* ref)
+      template<class U>
+      void Reset(U* p)
         {
-        ResetPtrRef(ptr, ref);
+        assert(p == nullptr || p != _px );
+        c_type(p).Swap(*this);
         }
-
-      void Swap(Me& other)
-		    {
-		    SwapOther(other);
-		    }
-
+      void Swap(SharedPtr& other)
+        {
+        Global::Swap(_px, other._px);
+        _pn.Swap(other._pn);
+        }
     private:
-      void ResetPtr(T* ptr)
-        {
-        try
-          {
-          ResetPtr(ptr, new RefCount<T>(ptr));
-          }
-        catch(...)
-          {
-          delete ptr;
-          throw;
-          }
-        }
+      template<class T>
+      friend class SharedPtr;
     };
+
+  template<class T, class U>
+  inline void ConstructSharedPtr(SharedPtr<T>* /*ptr*/, U* p, SharedCount& sc)
+    {
+    SharedCount(p).Swap(sc);
+    }
   }

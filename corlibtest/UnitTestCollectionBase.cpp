@@ -16,7 +16,7 @@ namespace corlibtest
 
         for(sizet j = 0; j< i; j++)
           {
-          listObj->Add(new UInt64(j));
+          listObj->Add(GCObject(new UInt64(j)));
           }
         }
     };

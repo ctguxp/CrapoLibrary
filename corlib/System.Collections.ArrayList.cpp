@@ -8,17 +8,21 @@ namespace System
   {
   namespace Collections
     {
-    ArrayList::SimpleEnumerator::SimpleEnumerator(ArrayList* list)
+    ArrayList::SimpleEnumerator::SimpleEnumerator(ArrayList& list)
       :_index(-1)
-      ,_version((*list)._version)
+      ,_version(list._version)
       ,_list(list)
-      ,_currentElement(&NullObject::Instance())
+      ,_currentElement()
+      {
+      }
+
+    ArrayList::SimpleEnumerator::~SimpleEnumerator()
       {
       }
 
     GCObject ArrayList::SimpleEnumerator::Current()
       {
-      if(_currentElement->Equals(&NullObject::Instance()))
+      if(_currentElement.Get() == nullptr)
         {
         if(_index == -1)
           //throw new InvalidOperationException(L"Enumerator not started");
@@ -28,36 +32,34 @@ namespace System
           throw SystemException(L"InvalidOperationException Enumerator ended");						 
         }
 
-      GCObject retval(_currentElement, false);
-      retval.RescindOwnership();
-      return retval;
+      return _currentElement;
       }
 
     bool ArrayList::SimpleEnumerator::MoveNext()
       {
-      if(_version != (*_list)._version)
+      if(_version != _list._version)
         //throw new InvalidOperationException("List has changed.");
           throw SystemException(L"InvalidOperationException List has changed.");
 
-      if (++_index < (int32)_list->Count()) 
+      if (++_index < (int32)_list.Count()) 
         {
-        _currentElement = &(*_list)[_index];
+        _currentElement = _list[_index];
         return true;
         } 
       else 
         {
-        _currentElement = &NullObject::Instance();
+        _currentElement.Reset();
         return false;
         }
       }
 
     void ArrayList::SimpleEnumerator::Reset()
       {
-      if(_version != (*_list)._version)
+      if(_version != _list._version)
         //throw new InvalidOperationException("List has changed.");
           throw SystemException(L"InvalidOperationException List has changed.");
 
-      _currentElement = &NullObject::Instance();
+      _currentElement.Reset();
       _index = -1;
       }
 
@@ -73,13 +75,13 @@ namespace System
       ,_items(_size)
       {
       for(sizet i = 0; i < _items.Length(); ++i)
-        _items[i] = nullptr;
+        _items[i] = GCObject();
       }
     ArrayList::~ArrayList()
       {
       Free();
       }
-    void ArrayList::Set(sizet index, Object* obj)
+    void ArrayList::Set(sizet index, GCObject& obj)
       {
       if(index >= _size) 
 					//throw ArgumentOutOfRangeException(L"index", index, L"Index is less than 0 or more than or equal to the list count.");
@@ -119,7 +121,7 @@ namespace System
       {
       return false;
       }
-    sizet ArrayList::Add(Object* value)
+    sizet ArrayList::Add(GCObject& value)
       {
       if(_items.Length() <= _size /* same as _items.Length < _size + 1) */) 
         EnsureCapacity(_size + 1);
@@ -130,7 +132,7 @@ namespace System
 
       return (int)_size++;
       }
-    void ArrayList::Insert(sizet index, Object* value)
+    void ArrayList::Insert(sizet index, GCObject& value)
       {
       if(index > _size) 
         {
@@ -144,7 +146,7 @@ namespace System
       _size++;
       _version++;
       }
-    void ArrayList::Remove(Object* value) 
+    void ArrayList::Remove(GCObject& value) 
       {
       int x = IndexOf(value);
 
@@ -155,9 +157,10 @@ namespace System
 
       _version++;
       }
-    bool ArrayList::Contains(Object* item)
+    bool ArrayList::Contains(GCObject& /*item*/)
       {
-      return IndexOf(item, 0, _size) > -1;
+      //TODO: return IndexOf(item, 0, _size) > -1;
+      return false;
       }
     void ArrayList::Clear()
       {
@@ -174,45 +177,45 @@ namespace System
         ThrowNewArgumentOutOfRangeException(L"index", &i, L"More than list count.");
         }
 
-      if(_items[index] != nullptr)
+      if(_items[index].Get() != nullptr)
         {
-        delete _items[index];
-        _items[index] = nullptr;
+        _items[index].Reset();
         }
       Shift(index, -1);
       _size--;
       _version++;
       }
-    int ArrayList::IndexOf(Object* value)
+    int ArrayList::IndexOf(GCObject& /*value*/)
       {
-      return IndexOf(value, 0);
+      //return IndexOf(value, 0);
+      return 0;
       }
-    int ArrayList::IndexOf(Object* value, int startIndex)
-      {
-      return IndexOf(value, startIndex, _size - startIndex);
-      }
-    int ArrayList::IndexOf(Object* value, sizet startIndex, sizet count) 
-      {
-      if(startIndex > _size) 
-        {
-        UInt32 si((uint32)startIndex);
-        ThrowNewArgumentOutOfRangeException(L"startIndex", &si, L"Does not specify valid index.");
-        }
+    //int ArrayList::IndexOf(GCObject& value, int startIndex)
+    //  {
+    //  return IndexOf(value, startIndex, _size - startIndex);
+    //  }
+    //int ArrayList::IndexOf(GCObject& value, sizet startIndex, sizet count) 
+    //  {
+    //  if(startIndex > _size) 
+    //    {
+    //    UInt32 si((uint32)startIndex);
+    //    ThrowNewArgumentOutOfRangeException(L"startIndex", &si, L"Does not specify valid index.");
+    //    }
 
-      // re-ordered to avoid integer overflow
-      if(startIndex > _size - count) 
-        {
-        // LAMESPEC: Every other method throws ArgumentException
+    //  // re-ordered to avoid integer overflow
+    //  if(startIndex > _size - count) 
+    //    {
+    //    // LAMESPEC: Every other method throws ArgumentException
 
-        throw ArgumentOutOfRangeException(L"count", L"Start index and count do not specify a valid range.");
-        }
+    //    throw ArgumentOutOfRangeException(L"count", L"Start index and count do not specify a valid range.");
+    //    }
 
-      return Array<Object>::IndexOf(_items, *value, startIndex, count);
-      }
+    //  return Array<GCObject>::IndexOf(_items, value, startIndex, count);
+    //  }
 
     IEnumerator* ArrayList::GetEnumerator() 
       {
-      return new SimpleEnumerator(this);
+      return new SimpleEnumerator(*this);
       }
 
     /*public virtual IEnumerator GetEnumerator(int index, int count) 
@@ -251,10 +254,9 @@ namespace System
       {
       for(sizet i = 0; i < _size; ++i)
         {
-        if(_items[i] != nullptr)
+        if(_items[i].Get() != nullptr)
           {
-          delete _items[i];
-          _items[i] = nullptr;
+          _items[i].Reset();
           }
         }
       }
@@ -272,7 +274,7 @@ namespace System
         if(_size + count > _items.Length()) 
           {
           sizet newLength;
-          Array<Object*> newData;
+          Array<GCObject> newData;
 
           newLength = (_items.Length() > 0) ? _items.Length() << 1 : 1;
 
@@ -283,14 +285,14 @@ namespace System
 
           newData.Length(newLength);
 
-          Array<Object*>::Copy(_items, 0, newData, 0, index);
-          Array<Object*>::Copy(_items, index, newData, index + count, _size - index);
+          Array<GCObject>::Copy(_items, 0, newData, 0, index);
+          Array<GCObject>::Copy(_items, index, newData, index + count, _size - index);
 
           _items = newData;
           }
         else 
           {
-          Array<Object*>::Copy(_items, index, _items, index + count, _size - index);
+          Array<GCObject>::Copy(_items, index, _items, index + count, _size - index);
           }
         }
       else if (count < 0) 
@@ -299,7 +301,7 @@ namespace System
 
         int x = (int32)index - count ;
 
-        Array<Object*>::Copy(_items, x, _items, index, _size - x);
+        Array<GCObject>::Copy(_items, x, _items, index, _size - x);
         }
       }
     }

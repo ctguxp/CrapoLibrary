@@ -20,7 +20,7 @@ namespace System
           {
           for(sizet i = 0; i < Expressions().Count(); ++i)
             {
-            Expression* expression = static_cast<Expression*>(&Expressions()[i]);
+            Expression* expression = static_cast<Expression*>(Expressions()[i].Get());
             if(expression->IsComplex())
               return true;
             }
@@ -33,7 +33,7 @@ namespace System
           bool flag = true;
           for(int i = 0; i < count; i++)
             {
-            Expression* expression = static_cast<Expression*>(&Expressions()[i]);
+            Expression* expression = static_cast<Expression*>(Expressions()[i].Get());
             if(expression != nullptr)
               {
               flag = false;

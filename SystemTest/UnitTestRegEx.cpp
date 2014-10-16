@@ -18,6 +18,16 @@ namespace SystemTest
             {
             using namespace RegularExpressions;
             Regex regex(L"[A-Z]", RegexOptions::None);
+            Match* m = regex.Match(L"the TEST", 0);
+            if(m == nullptr)
+              {
+              throw SystemException(L"null ptr");
+              }
+            if(m->Success())
+              {
+              Assert::AreEqual(L"T", (cstring)m->Value());
+              }
+            delete m;
             }
           catch(Exception& ex)
             {

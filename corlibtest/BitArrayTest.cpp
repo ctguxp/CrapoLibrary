@@ -15,7 +15,7 @@ namespace corlibtest
       void VerifyPattern(Collections::BitArray& ba, BoolArray& pattern)
         {
         Assert::AreEqual<int32>(ba.Length(), (int32)pattern.Length());
-        for(int i = 0; i < pattern.Length(); i++)
+        for(sizet i = 0; i < pattern.Length(); i++)
           Assert::AreEqual(ba.Get(i), pattern[i]);
         }
     public:

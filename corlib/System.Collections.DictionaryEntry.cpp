@@ -5,7 +5,7 @@ namespace System
   {
   namespace Collections
     {
-    DictionaryEntry::DictionaryEntry(Object* key, Object* value)
+    DictionaryEntry::DictionaryEntry(GCObject& key, GCObject& value)
       :_key(key)
 		  ,_value(value)
       {
