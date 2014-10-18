@@ -143,15 +143,20 @@ namespace System
 
     IEnumerator* BitArray::GetEnumerator()
       {
-      return nullptr;
+      return new BitArrayEnumerator(*this);
       }
 
-    bool BitArray::Get(int32 index)
+    bool BitArray::Get(int32 index) const
       {
       if(index < 0 || index >= _length)
         throw ArgumentOutOfRangeException();
 
       return (_array[index >> 5] & (1 << (index & 31))) != 0;
+      }
+
+    bool BitArray::operator[] (int32 index) const
+      {
+      return Get(index);
       }
 
     void BitArray::Set(int32 index, bool value)
@@ -238,14 +243,14 @@ namespace System
       }
 
     byte BitArray::GetByte(int32 byteIndex)
-		{
-			int32 index = byteIndex / 4;
-			int32 shift = (byteIndex % 4) * 8;
-			
-			int32 theByte = _array[index] & (0xff << shift);
-			
-			return (byte)((theByte >> shift) & 0xff);
-		}
+      {
+      int32 index = byteIndex / 4;
+      int32 shift = (byteIndex % 4) * 8;
+
+      int32 theByte = _array[index] & (0xff << shift);
+
+      return (byte)((theByte >> shift) & 0xff);
+      }
 
     void BitArray::SetByte(int32 byteIndex, byte value)
       {
@@ -259,5 +264,55 @@ namespace System
 
       _version++;
       }
+
+    BitArray::BitArrayEnumerator::BitArrayEnumerator(BitArray& bitArray)
+      :_bitArray(bitArray)
+      ,_current()
+      ,_index(-1)
+      ,_version(bitArray._version)
+      {
+      }
+
+    BitArray::BitArrayEnumerator::~BitArrayEnumerator()
+      {
+      }
+
+    GCObject& BitArray::BitArrayEnumerator::Current()
+      {
+      if(_index == -1)
+        //throw InvalidOperationException(L"Enum not started");
+        throw SystemException(L"Enum not started");
+      if(_index >= _bitArray.Count())
+        //throw InvalidOperationException(L"Enum Ended");
+        throw SystemException(L"Enum Ended");
+
+      return _current;
+      }
+    bool BitArray::BitArrayEnumerator::MoveNext()
+      {
+      CheckVersion();
+
+      if(_index < (_bitArray.Count() - 1)) 
+        {
+        _current.Reset(new Boolean(_bitArray[++_index]));
+        return true;
+        }
+
+      _index = _bitArray.Count();
+      return false;
+      }
+    void BitArray::BitArrayEnumerator::Reset()
+      {
+      CheckVersion();
+		  _index = -1;
+      }
+
+    void BitArray::BitArrayEnumerator::CheckVersion()
+      {
+      if(_version != _bitArray._version)
+        //throw InvalidOperationException();
+          throw SystemException(L"Invalid Operation");
+      }
+
     }
   }

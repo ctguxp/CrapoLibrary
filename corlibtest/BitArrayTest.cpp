@@ -69,12 +69,12 @@ namespace corlibtest
         Assert::AreEqual<int32>(ba.Length(), (int32)byteArr.Length() * 8, L"Lengths not equal");
 
         //// spot check
-        Assert::IsTrue(ba.Get(7), L"7 not true");
-        Assert::IsTrue(!ba.Get(6), L"6 not false");
-        Assert::IsTrue(!ba.Get(15), L"15 not false");
-        Assert::IsTrue(ba.Get(14), L"14 not true");
-        Assert::IsTrue(ba.Get(39), L"39 not true");
-        Assert::IsTrue(!ba.Get(35), L"35 not false");
+        Assert::IsTrue(ba[7], L"7 not true");
+        Assert::IsTrue(!ba[6], L"6 not false");
+        Assert::IsTrue(!ba[15], L"15 not false");
+        Assert::IsTrue(ba[14], L"14 not true");
+        Assert::IsTrue(ba[39], L"39 not true");
+        Assert::IsTrue(!ba[35], L"35 not false");
         }
 
       TEST_METHOD(TestIntConstructor)
@@ -87,12 +87,12 @@ namespace corlibtest
         Assert::AreEqual<int32>(ba.Length(), (int32)intArr.Length() * 32);
 
         //// spot check
-        Assert::IsTrue(ba.Get(31));
-        Assert::IsTrue(!ba.Get(30));
-        Assert::IsTrue(!ba.Get(63));
-        Assert::IsTrue(ba.Get(62));
-        Assert::IsTrue(ba.Get(32));
-        Assert::IsTrue(!ba.Get(35));
+        Assert::IsTrue(ba[31]);
+        Assert::IsTrue(!ba[30]);
+        Assert::IsTrue(!ba[63]);
+        Assert::IsTrue(ba[62]);
+        Assert::IsTrue(ba[32]);
+        Assert::IsTrue(!ba[35]);
         }
 
       TEST_METHOD(TestValConstructor)
@@ -103,13 +103,13 @@ namespace corlibtest
         Assert::AreEqual<int32>(ba_false.Length(), 64);
         int32 i = 0;
         for(; i < ba_false.Length(); ++i)
-          Assert::IsTrue(!ba_false.Get(i));
+          Assert::IsTrue(!ba_false[i]);
 
         BitArray ba_true(64, true);
 
         Assert::AreEqual<int32>(ba_true.Length(), 64);
         for(i = 0; i < ba_true.Length(); ++i)
-          Assert::IsTrue(ba_true.Get(i));
+          Assert::IsTrue(ba_true[i]);
         }
 
       TEST_METHOD(TestClone)
@@ -137,7 +137,7 @@ namespace corlibtest
           _testBa.CopyTo<bool>(barray, 5);
 
           for(int32 i = 0; i < (int32)_testBa.Length(); i++)
-            Assert::AreEqual<bool>(_testBa.Get(i), barray[i+5]);
+            Assert::AreEqual<bool>(_testBa[i], barray[i+5]);
           }
         catch(Exception& ex)
           {
@@ -196,6 +196,16 @@ namespace corlibtest
           }
         }
 
+      TEST_METHOD(CopyToEmptyEmpty) 
+        {
+        using namespace Collections;
+        BitArray bitarray(0);
+
+        IntArray intarray(1);
+
+        bitarray.CopyTo<int32>(intarray, 0);
+        }
+
       TEST_METHOD(TestAnd)
         {
         using namespace Collections;
@@ -203,10 +213,10 @@ namespace corlibtest
         Assert::AreEqual<int32>(result.Length(), _op1.Length());
         for(int32 i = 0; i < result.Length(); )
           {
-          Assert::IsTrue(!result.Get(i++));
-          Assert::IsTrue(result.Get(i++));
-          Assert::IsTrue(!result.Get(i++));
-          Assert::IsTrue(!result.Get(i++));
+          Assert::IsTrue(!result[i++]);
+          Assert::IsTrue(result[i++]);
+          Assert::IsTrue(!result[i++]);
+          Assert::IsTrue(!result[i++]);
           }
         }
 
@@ -217,10 +227,10 @@ namespace corlibtest
         Assert::AreEqual<int32>(result.Length(), _op1.Length());
         for(int32 i = 0; i < result.Length(); )
           {
-          Assert::IsTrue(result.Get(i++));
-          Assert::IsTrue(result.Get(i++));
-          Assert::IsTrue(result.Get(i++));
-          Assert::IsTrue(!result.Get(i++));
+          Assert::IsTrue(result[i++]);
+          Assert::IsTrue(result[i++]);
+          Assert::IsTrue(result[i++]);
+          Assert::IsTrue(!result[i++]);
           }
         }
 
@@ -231,10 +241,10 @@ namespace corlibtest
         Assert::AreEqual<int32>(result.Length(), _op1.Length());
         for(int32 i = 0; i < result.Length(); )
           {
-          Assert::IsTrue(!result.Get(i++));
-          Assert::IsTrue(!result.Get(i++));
-          Assert::IsTrue(result.Get(i++));
-          Assert::IsTrue(result.Get(i++));
+          Assert::IsTrue(!result[i++]);
+          Assert::IsTrue(!result[i++]);
+          Assert::IsTrue(result[i++]);
+          Assert::IsTrue(result[i++]);
           }
         }
 
@@ -245,10 +255,10 @@ namespace corlibtest
         Assert::AreEqual<int32>(result.Length(), _op1.Length());
         for(int32 i = 0; i < result.Length(); )
           {
-          Assert::IsTrue(result.Get(i++));
-          Assert::IsTrue(!result.Get(i++));
-          Assert::IsTrue(result.Get(i++));
-          Assert::IsTrue(!result.Get(i++));
+          Assert::IsTrue(result[i++]);
+          Assert::IsTrue(!result[i++]);
+          Assert::IsTrue(result[i++]);
+          Assert::IsTrue(!result[i++]);
           }
         }
 
@@ -257,10 +267,10 @@ namespace corlibtest
         _testBa.SetAll(false);
         int32 i = 0;
         for(; i < _testBa.Length(); ++i)
-          Assert::IsTrue(!_testBa.Get(i));
+          Assert::IsTrue(!_testBa[i]);
         _testBa.SetAll(true);
         for(i = 0; i < _testBa.Length(); ++i)
-          Assert::IsTrue(_testBa.Get(i));
+          Assert::IsTrue(_testBa[i]);
         }
 
       TEST_METHOD(TestSetLength)
@@ -274,6 +284,51 @@ namespace corlibtest
 
         _testBa.Length(_testBa.Length() - 33);
         VerifyPattern(_testBa, _testPattern);
+        }
+
+      TEST_METHOD(TestEnumerator)
+        {
+        using namespace Collections;
+        try 
+          {
+          GCIEnumerator e(_testBa.GetEnumerator());
+
+          int32 i = 0;
+          for(; e->MoveNext(); i++)
+            {
+            Boolean& cur = (Boolean&)(*e->Current().Get());
+            Assert::AreEqual<bool>(cur, _testPattern[i]);
+            }
+
+          Assert::IsTrue(!e->MoveNext());
+          // read, to make sure reading isn't considered a write.
+          bool b = _testBa[0];
+
+          e->Reset();
+          for(i = 0; e->MoveNext(); i++)
+            {
+            Boolean& cur = (Boolean&)(*e->Current().Get());
+            Assert::AreEqual<bool>(cur, _testPattern[i]);
+            }
+
+          try
+            {
+            e->Reset();
+            _testBa.Set(0, !_testBa[0]);
+            e->MoveNext();
+            Assert::Fail(L"IEnumerator.MoveNext() should throw when collection modified.");
+            }
+          catch(SystemException&)
+          //catch(InvalidOperationException ex)
+            {
+            }
+          }
+        catch(Exception& ex)
+          {
+          String msg(L"Unexpected exception thrown: ");
+          msg += ex.Message();
+          Assert::Fail((cstring)msg);
+          }
         }
     };
   }

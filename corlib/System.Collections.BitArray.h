@@ -20,6 +20,7 @@ namespace System
         BitArray(const BitArray& /*bitArray*/);
         virtual ~BitArray();
         BitArray& operator = (const BitArray& /*bitArray*/);
+        bool operator[] (int32 index) const;
 
         template<class T>
         void CopyTo(Array<T>& arr, int index)
@@ -78,7 +79,7 @@ namespace System
         BitArray& Not();
         BitArray& Xor(BitArray& /*value*/);
         bool IsReadOnly();
-        bool Get(int32 /*index*/);
+        bool Get(int32 /*index*/) const;
         int32 Length();
         void Length(int32 /*value*/);
         void Set(int32 /*index*/, bool /*value*/);
@@ -92,6 +93,25 @@ namespace System
         void CheckOperand(BitArray& /*operand*/);
         byte GetByte(int32 byteIndex);
         void SetByte(int32 /*byteIndex*/, byte /*value*/);
+      private:
+        class BitArrayEnumerator : public IEnumerator
+          {
+          private:
+            BitArrayEnumerator& operator=(BitArrayEnumerator const&);
+          private:
+            BitArray& _bitArray;
+			      GCObject  _current;
+			      int32     _index;
+            int32     _version;
+          public:
+            BitArrayEnumerator(BitArray& /*bitArray*/);
+            virtual ~BitArrayEnumerator();
+            virtual GCObject& Current() override;
+            virtual bool MoveNext() override;
+            virtual void Reset() override;
+          private:
+            void CheckVersion();
+          };
       };
     }
   }
