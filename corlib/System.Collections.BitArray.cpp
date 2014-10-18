@@ -6,6 +6,7 @@ namespace System
   {
   namespace Collections
     {
+
     BitArray::BitArray(int32 length)
       :_length(length)
       ,_version(0)
@@ -17,6 +18,7 @@ namespace System
       if(_length > 0)
         _array.Length((_length + 31) / 32);
       }
+
     BitArray::BitArray(BoolArray& values)
       :_length(0)
       ,_version(0)
@@ -31,6 +33,7 @@ namespace System
       for(int32 i = 0; i < (int32)values.Length(); i++)
         Set(i, values[i]);
       }
+
     BitArray::BitArray(ByteArray& bytes)
       :_length(0)
       ,_version(0)
@@ -45,6 +48,7 @@ namespace System
       for(int i = 0; i < (int)bytes.Length(); i++)
         SetByte(i, bytes [i]);
       }
+
     BitArray::BitArray(IntArray& values)
       :_length(0)
       ,_version(0)
@@ -57,16 +61,42 @@ namespace System
       _length = arrlen*32;
       _array = values;
       }
+
+    BitArray::BitArray(int32 length, bool defaultValue)
+      :_length(length)
+      ,_version(0)
+      ,_array(0)
+      {
+      if(_length < 0)
+        throw ArgumentOutOfRangeException(L"length");
+
+      if(_length > 0)
+        _array.Length((_length + 31) / 32);
+
+      if(defaultValue) 
+        {
+        for(int32 i = 0; i < (int32)_array.Length(); i++)
+          _array[i] = ~0;
+        }
+      else
+        {
+        for(int32 i = 0; i < (int32)_array.Length(); i++)
+          _array[i] = 0;
+        }
+      }
+
     BitArray::BitArray(const BitArray& bitArray)
       :_length(bitArray._length)
       ,_version(bitArray._version)
       ,_array(bitArray._array)
       {
       }
+
     BitArray::~BitArray()
       {
       }
-    BitArray& BitArray::operator = (const BitArray& bitArray)
+
+    BitArray& BitArray::operator=(const BitArray& bitArray)
       {
       if(this == &bitArray)
         return *this;
@@ -75,10 +105,17 @@ namespace System
       _array = bitArray._array;
       return *this;
       }
+
+    bool BitArray::IsReadOnly()
+      {
+      return false;
+      }
+
     int32 BitArray::Length()
       {
       return _length;
       }
+
     void BitArray::Length(int32 value)
       {
       if(_length == value)
@@ -93,18 +130,22 @@ namespace System
       _length = value;
       _version++;
       }
-    sizet BitArray::Count()
+
+    int32 BitArray::Count()
       {
-      return 0;
+      return _length;
       }
+
     bool BitArray::IsSynchronized()
       {
       return false;
       }
+
     IEnumerator* BitArray::GetEnumerator()
       {
       return nullptr;
       }
+
     bool BitArray::Get(int32 index)
       {
       if(index < 0 || index >= _length)
@@ -112,6 +153,7 @@ namespace System
 
       return (_array[index >> 5] & (1 << (index & 31))) != 0;
       }
+
     void BitArray::Set(int32 index, bool value)
       {
       if(index < 0 || index >= _length)
@@ -124,6 +166,86 @@ namespace System
 
       _version++;
       }
+
+    BitArray& BitArray::And(BitArray& value)
+      {
+      CheckOperand(value);
+
+      int32 ints = (_length + 31) / 32;
+      for(int32 i = 0; i < ints; i++)
+        _array[i] &= value._array[i];
+
+      _version++;
+      return *this;
+      }
+
+    BitArray& BitArray::Or(BitArray& value)
+      {
+      CheckOperand(value);
+
+      int32 ints = (_length + 31) / 32;
+      for(int32 i = 0; i < ints; i++)
+        _array[i] |= value._array[i];
+
+      _version++;
+      return *this;
+      }
+
+    BitArray& BitArray::Not()
+      {
+      int32 ints = (_length + 31) / 32;
+      for(int32 i = 0; i < ints; i++)
+        _array[i] = ~_array[i];
+
+      _version++;
+      return *this;
+      }
+
+    BitArray& BitArray::Xor(BitArray& value)
+      {
+      CheckOperand(value);
+
+      int32 ints = (_length + 31) / 32;
+      for(int32 i = 0; i < ints; i++)
+        _array[i] ^= value._array[i];
+
+      _version++;
+      return *this;
+      }
+
+    void BitArray::SetAll(bool value)
+      {
+      if(value)
+        {
+        for(int32 i = 0; i < (int32)_array.Length(); i++)
+          _array[i] = ~0;
+        }
+      else
+        {
+        for(int32 i = 0; i < (int32)_array.Length(); i++)
+          _array[i] = 0;
+        }
+
+      _version++;
+      }
+
+    void BitArray::CheckOperand(BitArray& operand)
+      {
+      if(&operand == nullptr)
+        throw ArgumentNullException();
+      if(operand._length != _length)
+        throw ArgumentException ();
+      }
+
+    byte BitArray::GetByte(int32 byteIndex)
+		{
+			int32 index = byteIndex / 4;
+			int32 shift = (byteIndex % 4) * 8;
+			
+			int32 theByte = _array[index] & (0xff << shift);
+			
+			return (byte)((theByte >> shift) & 0xff);
+		}
 
     void BitArray::SetByte(int32 byteIndex, byte value)
       {
