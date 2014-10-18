@@ -18,7 +18,7 @@ namespace System
           }
         bool CompositeExpression::IsComplex ()
           {
-          for(sizet i = 0; i < Expressions().Count(); ++i)
+          for(int32 i = 0; i < Expressions().Count(); ++i)
             {
             Expression* expression = static_cast<Expression*>(Expressions()[i].Get());
             if(expression->IsComplex())

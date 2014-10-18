@@ -16,7 +16,7 @@ namespace System
           GroupCollection(int n, int gap);
           virtual ~GroupCollection();
           void SetValue(Group* g, int i);
-          virtual sizet Count() override;
+          virtual int32 Count() override;
           bool IsReadOnly () { return true; }
           virtual bool IsSynchronized() override;
           virtual Collections::IEnumerator* GetEnumerator() override;
