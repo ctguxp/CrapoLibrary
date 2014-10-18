@@ -20,7 +20,7 @@ namespace System
       {
       }
 
-    GCObject ArrayList::SimpleEnumerator::Current()
+    GCObject& ArrayList::SimpleEnumerator::Current()
       {
       if(_currentElement.Get() == nullptr)
         {

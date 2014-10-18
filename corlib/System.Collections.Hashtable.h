@@ -52,6 +52,7 @@ namespace System
             Hashtable&     _host;
             GCObject        _currentKey;
             GCObject        _currentValue;
+            GCObject        _currentDictionary;
           private:
             Enumerator& operator= (Enumerator const&);
             Enumerator(Enumerator const&);
@@ -59,7 +60,7 @@ namespace System
             Enumerator(Hashtable& host, EnumeratorMode mode);
             virtual ~Enumerator();
             // From IEnumerator
-            virtual GCObject Current() override;
+            virtual GCObject& Current() override;
             virtual void Reset() override;
             virtual bool MoveNext() override;
             virtual GCObject Key() override;

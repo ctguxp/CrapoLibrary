@@ -30,7 +30,7 @@ namespace System
       _current = e._current;
       return *this;
       }
-    GCObject Stack::Enumerator::Current()
+    GCObject& Stack::Enumerator::Current()
       {
       if(_modCount != _stack._modCount 
         || _current == Enumerator::Begin

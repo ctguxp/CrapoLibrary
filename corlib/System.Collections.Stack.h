@@ -26,7 +26,7 @@ namespace System
           Enumerator& operator=(const Enumerator& e);
         public:
           Enumerator(Stack&);
-          virtual GCObject Current() override;
+          virtual GCObject& Current() override;
           virtual bool MoveNext() override;
           virtual void Reset() override;
         private:

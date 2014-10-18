@@ -26,7 +26,7 @@ namespace System
           public:
             SimpleEnumerator(ArrayList& list);
             virtual ~SimpleEnumerator();
-            virtual GCObject Current() override;
+            virtual GCObject& Current() override;
             virtual bool MoveNext() override;
             virtual void Reset() override;
           private:

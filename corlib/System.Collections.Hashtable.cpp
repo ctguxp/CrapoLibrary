@@ -22,6 +22,7 @@ namespace System
       ,_host(host)
       ,_currentKey()
       ,_currentValue()
+      ,_currentDictionary()
       {
       }
 
@@ -29,7 +30,7 @@ namespace System
       {
       } 
 
-    GCObject Hashtable::Enumerator::Current()
+    GCObject& Hashtable::Enumerator::Current()
       {
       if(_currentKey.Get() == nullptr)
         //throw InvalidOperationException();
@@ -43,13 +44,11 @@ namespace System
           }
         case EnumeratorMode::VALUE_MODE:
           {
-          GCObject retval(_currentValue);
           return _currentValue;
           }
         case EnumeratorMode::ENTRY_MODE:
           {
-          GCObject retval(new DictionaryEntry(_currentKey, _currentValue));
-          return retval;
+          return _currentDictionary;
           }
         }
       throw Exception(L"should never happen");
@@ -62,6 +61,7 @@ namespace System
       _pos = -1;
       _currentKey.Reset();
       _currentValue.Reset();
+      _currentDictionary.Reset();
       }
 
     bool Hashtable::Enumerator::MoveNext()
@@ -78,6 +78,7 @@ namespace System
             {
             _currentKey = entry.key;
             _currentValue = entry.value;
+            _currentDictionary.Reset(new DictionaryEntry(_currentKey, _currentValue));
             return true;
             }
           }
@@ -85,6 +86,7 @@ namespace System
 
       _currentKey.Reset();
       _currentValue.Reset();
+      _currentDictionary.Reset();
       return false;
       }
 
