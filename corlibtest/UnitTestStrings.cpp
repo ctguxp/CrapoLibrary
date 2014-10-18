@@ -126,8 +126,8 @@ namespace corlibtest
         cArr[1] = L'm';
         cArr[2] = L'z';
         Assert::AreEqual<int>(12, s.IndexOfAny(cArr), L"#2");
-        cArr.Length(0);
-        Assert::AreEqual<int>(-1, s.IndexOfAny(cArr), L"#3");
+        //cArr.Length(0);
+        //Assert::AreEqual<int>(-1, s.IndexOfAny(cArr), L"#3");
         }
       TEST_METHOD(SubString1)
         {
