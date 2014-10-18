@@ -36,20 +36,20 @@ namespace System
         };
       public:
         Stack();
-        Stack(sizet /*initialCapacity*/);
+        Stack(int32 /*initialCapacity*/);
         virtual ~Stack();
         virtual bool Contains(Object* obj);
-        virtual sizet Count() override;
+        virtual int32 Count() override;
         virtual bool IsSynchronized() override;
         virtual IEnumerator* GetEnumerator() override;
         virtual void Push(GCObject& /*obj*/);
         virtual GCObject Pop();
         virtual Object& Peek();
       private:
-        void Resize(sizet ncapacity);
+        void Resize(int32 ncapacity);
       private:
-        sizet          _capacity;
-        sizet          _count;
+        int32          _capacity;
+        int32          _count;
         int32          _current;
         sizet          _modCount;
 #pragma warning(disable:4251)

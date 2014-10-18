@@ -76,7 +76,7 @@ namespace System
         virtual IDictionaryEnumerator* GetEnumerator() override;
         Object* Get(Object* key);
         // From ICollection
-        virtual sizet Count() override;
+        virtual int32 Count() override;
         virtual bool IsSynchronized() override;
         // From IDictionary
         virtual bool IsFixedSize() override;
@@ -96,10 +96,10 @@ namespace System
         void SetTable(Array<Slot>& table, IntArray& hashes);
         void PutImpl(GCObject& key, GCObject& value, bool overwrite);
       private:
-        sizet              _inUse;
-        int                _modificationCount;
+        int32              _inUse;
+        int32              _modificationCount;
         float              _loadFactor;
-        int                _threshold;
+        int32              _threshold;
         IHashCodeProvider* _hcpRef;
         IComparer*         _comparerRef;
         IEqualityComparer* _equalityComparer;

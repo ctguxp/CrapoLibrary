@@ -228,7 +228,7 @@ namespace System
       if(_position > (int32)_length - count)
         count = (int)_length - _position;
 
-      Array<byte>::Copy((*_internalBuffer), _position, buffer, offset, count);
+      Array<byte>::Copy(_internalBuffer->ToPtr(), _position, buffer.ToPtr(), offset, count);
 
       _position += count;
       return count;
@@ -289,7 +289,7 @@ namespace System
 			ByteArray outBuffer(l);
 
 			if(_internalBuffer.Get() != nullptr)
-        Array<byte>::Copy((*_internalBuffer), _initialIndex, outBuffer, 0, 1);
+        Array<byte>::Copy(_internalBuffer->ToPtr(), _initialIndex, outBuffer.ToPtr(), 0, 1);
 			return outBuffer;
       }
     }

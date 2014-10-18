@@ -10,14 +10,14 @@ namespace System
       :_list()
       {
       }
-    CollectionBase::CollectionBase(sizet capacity)
+    CollectionBase::CollectionBase(int32 capacity)
       :_list( new ArrayList(capacity) )
       {
       }
     CollectionBase::~CollectionBase()
       {
       }
-    GCObject& CollectionBase::operator[](const sizet index)
+    GCObject& CollectionBase::operator[](const int32 index)
       {
       return InnerList()[index];
       }
@@ -42,7 +42,7 @@ namespace System
       {
       return InnerList().IsSynchronized();
       }
-    sizet CollectionBase::Count()
+    int32 CollectionBase::Count()
       { 
       return InnerList().Count(); 
       }
@@ -56,7 +56,7 @@ namespace System
       }
     sizet CollectionBase::Add(GCObject& value)
       {
-      sizet newPosition;
+      int32 newPosition;
       OnValidate(value);
       newPosition = InnerList().Count();
       OnInsert(newPosition, value.Get());
@@ -73,7 +73,7 @@ namespace System
 
       return newPosition;
       }
-    void CollectionBase::Insert(sizet index, GCObject& value)
+    void CollectionBase::Insert(int32 index, GCObject& value)
       {
       OnValidate(value);
       OnInsert(index, value.Get());
@@ -88,7 +88,7 @@ namespace System
         throw;
         }
       }
-    void CollectionBase::RemoveAt(sizet index) 
+    void CollectionBase::RemoveAt(int32 index) 
       {
       GCObject& objectToRemove = InnerList()[index];
       OnValidate(objectToRemove);
@@ -115,7 +115,7 @@ namespace System
       {
       return InnerList().IndexOf(value);
       }
-    void CollectionBase::Capacity(sizet value)
+    void CollectionBase::Capacity(int32 value)
       {
       if(_list.Get() == nullptr)
         _list.Reset(new ArrayList());

@@ -81,7 +81,7 @@ namespace System
       for(sizet i = 0; i < s; ++i)
         _contents[i].Reset();  
       }
-    Stack::Stack(sizet initialCapacity)
+    Stack::Stack(int32 initialCapacity)
       :_capacity(initialCapacity)
       ,_count(0)
       ,_current(-1)
@@ -94,7 +94,7 @@ namespace System
       }
     Stack::~Stack()
       {
-      for(sizet i = 0; i < _count; ++i)
+      for(int32 i = 0; i < _count; ++i)
         {
         if(_contents[i].Get() != nullptr)
           {
@@ -102,7 +102,7 @@ namespace System
           }
         }
       }
-    sizet Stack::Count()
+    int32 Stack::Count()
       {
       return _count;
       }
@@ -117,7 +117,7 @@ namespace System
 
       if(obj == nullptr)
         {
-        for(sizet i = 0; i < _count; i++)
+        for(int32 i = 0; i < _count; i++)
           {
           if(_contents[i].Get() == nullptr)
             return true; 
@@ -125,7 +125,7 @@ namespace System
         } 
       else 
         {
-        for(sizet i = 0; i < _count; i++) 
+        for(int32 i = 0; i < _count; i++) 
           {
           if(obj->Equals(_contents[i].Get()))
             return true; 
@@ -195,15 +195,15 @@ namespace System
       {
       return new Enumerator(*this);
       }
-    void Stack::Resize(sizet ncapacity)
+    void Stack::Resize(int32 ncapacity)
       {
-      ncapacity = Math::Max((uintptr)ncapacity, (uintptr)default_capacity);
+      ncapacity = Math::Max(ncapacity, default_capacity);
       Array<GCObject> ncontents(ncapacity);
       sizet s = ncontents.Length();
       for(sizet i = 0; i < s; ++i)
         ncontents[i].Reset(); 
 
-      Array<GCObject>::Copy(_contents, 0, ncontents, 0, _count);		
+      Array<GCObject>::CopyByRef(_contents, 0, ncontents, 0, _count);		
       _capacity = ncapacity;
       _contents = ncontents;
       }

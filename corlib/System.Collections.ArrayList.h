@@ -37,19 +37,19 @@ namespace System
           };
       public:
         ArrayList();
-        ArrayList(sizet capacity);
+        ArrayList(int32 capacity);
         virtual ~ArrayList();
-        virtual GCObject& operator[](const sizet item) override { return _items[item]; }
+        virtual GCObject& operator[](const int32 item) override { return _items[item]; }
         virtual sizet Capacity();
-        void Set(sizet /*index*/, GCObject& /*obj*/);
-        virtual void Capacity(sizet value);
+        void Set(int32 /*index*/, GCObject& /*obj*/);
+        virtual void Capacity(int32 value);
         //virtual int IndexOf(GCObject& /*value*/, int /*startIndex*/);
         //virtual int IndexOf(GCObject& value, sizet startIndex, sizet count);
         // From IEnumerable
         virtual IEnumerator* GetEnumerator() override;
         //virtual IEnumerator* GetEnumerator(int index, int count) override;
         // From ICollection
-        virtual sizet Count() override;
+        virtual int32 Count() override;
         virtual bool IsSynchronized() override;
         // From IList
         virtual bool IsFixedSize() override;
@@ -58,17 +58,17 @@ namespace System
         virtual void Clear() override;
         virtual bool Contains(GCObject& /*item*/) override;
         virtual int IndexOf(GCObject& /*value*/) override;
-        virtual void Insert(sizet index, GCObject& value) override;
+        virtual void Insert(int32 index, GCObject& value) override;
         virtual void Remove(GCObject& value) override;
-        virtual void RemoveAt(sizet index) override;
+        virtual void RemoveAt(int32 index) override;
       private:
         void EnsureCapacity(sizet count);
         void Shift(sizet index, int count);
         void Free();
         static void ThrowNewArgumentOutOfRangeException(String name, Object* actual, String message);
       private:
-        sizet           _size;
-        int             _version;
+        int32          _size;
+        int32          _version;
 #pragma warning(disable:4251)
         Array<GCObject>  _items;
 #pragma warning(default:4251)

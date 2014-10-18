@@ -12,7 +12,7 @@ namespace System
     class CRAPOCOREDLL_API ICollection : public IEnumerable
       {
       public:
-        virtual sizet Count() = 0;
+        virtual int32 Count() = 0;
         virtual bool IsSynchronized() = 0;
         //virtual Object* SyncRoot() = 0;
         //virtual void CopyTo(Array<Object*> array, int index) = 0;
