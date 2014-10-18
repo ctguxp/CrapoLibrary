@@ -20,7 +20,7 @@ namespace System
     {
     return (val1 > val2)? val1: val2;
     }
-  int Math::Max(int val1, int val2)
+  int Math::Max(int32 val1, int32 val2)
     {
     return (val1 > val2)? val1: val2;
     }

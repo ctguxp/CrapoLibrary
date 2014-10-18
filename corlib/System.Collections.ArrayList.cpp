@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "System.Collections.ArrayList.h"
 #include "System.Array.hpp"
-#include "System.UInt32.h"
+#include "System.Int32.h"
 #include "System.Exception.h"
 
 namespace System
@@ -69,7 +69,7 @@ namespace System
       ,_items()
       {
       }
-    ArrayList::ArrayList(sizet capacity)
+    ArrayList::ArrayList(int32 capacity)
       :_size(capacity != 0 ? capacity : 4)
       ,_version(0)
       ,_items(_size)
@@ -81,7 +81,7 @@ namespace System
       {
       Free();
       }
-    void ArrayList::Set(sizet index, GCObject& obj)
+    void ArrayList::Set(int32 index, GCObject& obj)
       {
       if(index >= _size) 
 					//throw ArgumentOutOfRangeException(L"index", index, L"Index is less than 0 or more than or equal to the list count.");
@@ -90,7 +90,7 @@ namespace System
 				_items[index] = obj;
 				_version++;
       }
-    size_t ArrayList::Count()
+    int32 ArrayList::Count()
       {
       return _size;
       }
@@ -99,11 +99,11 @@ namespace System
       return _items.Length();
       }
 
-    void ArrayList::Capacity(sizet value) 
+    void ArrayList::Capacity(int32 value) 
       {
       if(value < _size)
         { 
-        UInt32 v((uint32)value);
+        Int32 v(value);
         ThrowNewArgumentOutOfRangeException(L"Capacity", &v, "Must be more than count.");
         }
 
@@ -123,7 +123,7 @@ namespace System
       }
     sizet ArrayList::Add(GCObject& value)
       {
-      if(_items.Length() <= _size /* same as _items.Length < _size + 1) */) 
+      if((int32)_items.Length() <= _size /* same as _items.Length < _size + 1) */) 
         EnsureCapacity(_size + 1);
 
       _items[_size] = value;
@@ -132,11 +132,11 @@ namespace System
 
       return (int)_size++;
       }
-    void ArrayList::Insert(sizet index, GCObject& value)
+    void ArrayList::Insert(int32 index, GCObject& value)
       {
       if(index > _size) 
         {
-        UInt32 i((uint32)index);
+        Int32 i(index);
         ThrowNewArgumentOutOfRangeException("index", &i, "Index must be >= 0 and <= Count.");
         }
 
@@ -169,11 +169,11 @@ namespace System
       _size = 0;
       _version++;
       }
-    void ArrayList::RemoveAt(sizet index)
+    void ArrayList::RemoveAt(int32 index)
       {
       if(index >= _size) 
         {
-        UInt32 i((uint32)index);
+        Int32 i(index);
         ThrowNewArgumentOutOfRangeException(L"index", &i, L"More than list count.");
         }
 
@@ -252,7 +252,7 @@ namespace System
 
     void ArrayList::Free()
       {
-      for(sizet i = 0; i < _size; ++i)
+      for(int32 i = 0; i < _size; ++i)
         {
         if(_items[i].Get() != nullptr)
           {
@@ -271,12 +271,12 @@ namespace System
       {
       if(count > 0) 
         {
-        if(_size + count > _items.Length()) 
+        if(_size + count > (int32)_items.Length()) 
           {
-          sizet newLength;
+          int32 newLength;
           Array<GCObject> newData;
 
-          newLength = (_items.Length() > 0) ? _items.Length() << 1 : 1;
+          newLength = ((int32)_items.Length() > 0) ? (int32)_items.Length() << 1 : 1;
 
           while(newLength < _size + count) 
             {
@@ -285,14 +285,14 @@ namespace System
 
           newData.Length(newLength);
 
-          Array<GCObject>::Copy(_items, 0, newData, 0, index);
-          Array<GCObject>::Copy(_items, index, newData, index + count, _size - index);
+          Array<GCObject>::CopyByRef(_items, 0, newData, 0, index);
+          Array<GCObject>::CopyByRef(_items, index, newData, index + count, _size - index);
 
           _items = newData;
           }
         else 
           {
-          Array<GCObject>::Copy(_items, index, _items, index + count, _size - index);
+          Array<GCObject>::CopyByRef(_items, index, _items, index + count, _size - index);
           }
         }
       else if (count < 0) 
@@ -301,7 +301,7 @@ namespace System
 
         int x = (int32)index - count ;
 
-        Array<GCObject>::Copy(_items, x, _items, index, _size - x);
+        Array<GCObject>::CopyByRef(_items, x, _items, index, _size - x);
         }
       }
     }

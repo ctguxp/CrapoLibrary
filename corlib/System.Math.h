@@ -12,7 +12,7 @@ namespace System
       Math();
       ~Math();
       static byte Max(byte, byte);
-      static int Max(int, int);
+      static int Max(int32, int32);
       static uintptr Max(uintptr, uintptr);
       static int Min(int, int);
       static double Sqrt(double d);

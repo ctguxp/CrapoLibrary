@@ -10,24 +10,24 @@ namespace System
       {
       public:
         virtual ~CollectionBase();
-        virtual GCObject& operator[](const sizet index) override;
+        virtual GCObject& operator[](const int32 index) override;
         virtual bool IsFixedSize() override;
 		    virtual bool IsReadOnly() override;
         virtual sizet Add(GCObject& value) override;
         virtual bool Contains(GCObject& value) override;
-        virtual sizet Count() override;
+        virtual int32 Count() override;
         virtual void Clear() override;
         virtual int IndexOf(GCObject& value) override;
-        virtual void Insert(sizet index, GCObject& value) override;
+        virtual void Insert(int32 index, GCObject& value) override;
         virtual bool IsSynchronized() override;
-        virtual void RemoveAt(sizet index) override;
+        virtual void RemoveAt(int32 index) override;
         virtual void Remove(GCObject& value) override;
         virtual IEnumerator* GetEnumerator();
       protected:
         CollectionBase();
-        CollectionBase(sizet capacity);
+        CollectionBase(int32 capacity);
         sizet Capacity();
-        void Capacity(sizet value); 
+        void Capacity(int32 value); 
         ArrayList& InnerList();
         virtual void OnClear();
         virtual void OnClearComplete();

@@ -156,7 +156,7 @@ namespace System
         }
       }
 
-    sizet Hashtable::Count()
+    int32 Hashtable::Count()
       {
       return _inUse;
       }
@@ -295,7 +295,7 @@ namespace System
       if(key.Get() == nullptr)
         throw ArgumentNullException(L"key", L"null key");
 
-      if(_inUse >= (sizet)_threshold) 
+      if(_inUse >= _threshold) 
         Rehash();
 
       uint32 size = (uint32)_table.Length();

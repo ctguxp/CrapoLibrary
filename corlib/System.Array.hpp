@@ -198,7 +198,7 @@ namespace System
     }
 
   template<class T>
-  void Array<T>::Copy(Array<T>& src, sizet srcIdx, Array<T>& dest, sizet destIdx, sizet length)
+  void Array<T>::CopyByRef(Array<T>& src, sizet srcIdx, Array<T>& dest, sizet destIdx, sizet length)
     {
     T* s1 = src.ToPtr() + srcIdx;
     T* d1 = dest.ToPtr() + destIdx;

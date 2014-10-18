@@ -23,8 +23,8 @@ namespace System
           }
         void Group::Compile(ICompiler* cmp, bool reverse)
           {
-          sizet count = Expressions().Count();
-          for(sizet i = 0; i < count; ++ i)
+          int32 count = Expressions().Count();
+          for(int32 i = 0; i < count; ++ i)
             {
             Expression* e = nullptr;
             if(reverse)
@@ -40,7 +40,7 @@ namespace System
           min = 0;
           max = 0;
 
-          for(sizet i = 0; i < Expressions().Count(); ++i)
+          for(int32 i = 0; i < Expressions().Count(); ++i)
             {
             Expression* expression = static_cast<Expression*>(Expressions()[i].Get());
             int a, b;

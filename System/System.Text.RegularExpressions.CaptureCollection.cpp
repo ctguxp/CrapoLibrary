@@ -14,9 +14,9 @@ namespace System
       CaptureCollection::~CaptureCollection()
         {
         }
-      sizet CaptureCollection::Count()
+      int32 CaptureCollection::Count()
         {
-        return _list.Length();
+        return (int32)_list.Length();
         }
       bool CaptureCollection::IsSynchronized()
         {

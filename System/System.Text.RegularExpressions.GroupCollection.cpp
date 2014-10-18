@@ -20,9 +20,9 @@ namespace System
 		    {
 			  _list[i] = g;
 		    }
-      sizet GroupCollection::Count() 
+      int32 GroupCollection::Count() 
         {
-			  return _list.Length();
+			  return (int32)_list.Length();
 		    }
       bool GroupCollection::IsSynchronized()
         { 
