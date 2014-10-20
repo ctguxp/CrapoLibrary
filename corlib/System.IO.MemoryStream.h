@@ -19,7 +19,7 @@ namespace System
         int32     _position;
         int32     _dirty_bytes;
         int32     _capacity;
-        int64     _length;
+        int32     _length;
         SharedPtr<ByteArray> _internalBuffer;
       public:
         MemoryStream(int32 capacity = 0);
@@ -33,18 +33,18 @@ namespace System
         virtual ByteArray& GetBuffer();
         virtual int64 Length() override;
         virtual int64 Seek(int64, SeekOrigin) override;
-        virtual uintptr Position() override;
-        virtual void Position(uintptr value) override;
+        virtual int64 Position() override;
+        virtual void Position(int64 value) override;
         virtual bool CanRead() override;
         virtual bool CanSeek() override;
         virtual bool CanWrite() override;
         virtual void Flush() override;
-        virtual int Read(ByteArray& /*buffer*/, int /*offset*/, int /*count*/) override;
-        virtual int ReadByte() override;
-        virtual void SetLength(uintptr) override;
+        virtual int Read(ByteArray& /*buffer*/, int32 /*offset*/, int32 /*count*/) override;
+        virtual int32 ReadByte() override;
+        virtual void SetLength(int64 /*value*/) override;
         virtual ByteArray ToArray();
         virtual void WriteByte(byte value) override;
-        virtual void Write(ByteArray&, int, int) override;
+        virtual void Write(ByteArray& /*buffer*/, int32 /*offset*/, int32 /*count*/) override;
       private:
         void InternalConstructor(const SharedPtr<ByteArray>& buffer, int32 index, int32 count, bool writable, bool publicallyVisible);
         void CheckIfClosedThrowDisposed();
