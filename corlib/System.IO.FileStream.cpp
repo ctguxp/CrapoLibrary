@@ -264,7 +264,7 @@ namespace System
       return length;
       }
 
-    void FileStream::SetLength(uintptr value)
+    void FileStream::SetLength(int64 value)
       {
       }
 
@@ -319,7 +319,7 @@ namespace System
       return _buf_start;
       }     
 
-    uintptr FileStream::Position()
+    int64 FileStream::Position()
       {
       if(_handle == INVALID_HANDLE_VALUE)
         throw SystemException(L"Stream has been closed");
@@ -366,7 +366,7 @@ namespace System
       return _access == FileAccess::Write || _access == FileAccess::ReadWrite;
       }
 
-    void FileStream::Position(uintptr value)
+    void FileStream::Position(int64 value)
       {	
       Seek(value, SeekOrigin::Begin);
       }

@@ -16,7 +16,7 @@ namespace System
         ByteArray  _buf_recycle;
         ByteArray  _buf;			// the buffer
         String     _name;
-        intptr     _append_startpos;
+        int64      _append_startpos;
         HANDLE     _handle;
         FileAccess _access;
         bool       _owner;
@@ -37,14 +37,14 @@ namespace System
         ~FileStream();
         virtual int64 Length() override;
         virtual int64 Seek(int64, SeekOrigin) override;
-        virtual uintptr Position() override;
-        virtual void Position(uintptr) override;
+        virtual int64 Position() override;
+        virtual void Position(int64) override;
         virtual bool CanRead() override;
         virtual bool CanSeek() override;
         virtual bool CanWrite() override;
         virtual void Flush() override;
         virtual void Write(ByteArray&, int, int) override;
-        virtual void SetLength(uintptr) override;
+        virtual void SetLength(int64) override;
         virtual int Read(ByteArray& array, int offset, int count) override;
       protected:
         void Init(String& path, FileMode mode, FileAccess access, FileShare share, uint32 bufferSize, bool anonymous, FileOptions options);
