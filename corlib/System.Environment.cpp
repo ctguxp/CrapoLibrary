@@ -11,6 +11,7 @@ namespace System
   {
 
   GCOperatingSystem Environment::_os;
+  String            Environment::_nl;
 
   // Default constructor
   Environment::Environment()
@@ -20,6 +21,16 @@ namespace System
   Environment::~Environment()
     {
     }
+
+  String Environment::NewLine() 
+    {
+    if(_nl.Length() != 0)
+      return _nl;
+
+    _nl = GetNewLine();
+    return _nl;
+    }
+
   // Gets the NetBIOS name of this local computer.
   String Environment::MachineName()
     {
@@ -110,5 +121,10 @@ namespace System
       return String::Format(format, temp);
       }
     return String(L"0.0.0.0");
+    }
+
+  String Environment::GetNewLine()
+    {
+    return String(L"\r\n");
     }
   }
