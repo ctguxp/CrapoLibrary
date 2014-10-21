@@ -342,6 +342,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SharedPointerTest.cpp" />
+    <ClCompile Include="TextWriterTest.cpp" />
     <ClCompile Include="UnitTestASCII.cpp" />
     <ClCompile Include="UnitTestCollectionBase.cpp" />
     <ClCompile Include="UnitTestConvert.cpp" />
