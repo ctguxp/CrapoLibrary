@@ -38,6 +38,7 @@ namespace System
         virtual bool CanRead() override;
         virtual bool CanSeek() override;
         virtual bool CanWrite() override;
+        virtual void Close() override;
         virtual void Flush() override;
         virtual int Read(ByteArray& /*buffer*/, int32 /*offset*/, int32 /*count*/) override;
         virtual int32 ReadByte() override;

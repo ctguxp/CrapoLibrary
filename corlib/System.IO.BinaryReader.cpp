@@ -22,7 +22,7 @@ namespace System
       {
       _buffer.Length(Math::Max(16, _encoding->GetMaxByteCount(1)));
       }
-    BinaryReader::BinaryReader(Stream* stream, Text::Encoding* encoding)
+    BinaryReader::BinaryReader(Stream* stream, Text::GCEncoding& encoding)
       :_leaveOpen(false)
       ,_buffer()
       ,_stream(stream)
@@ -30,7 +30,6 @@ namespace System
       {
       if(_encoding.Get() != nullptr)
         {
-        _encoding.RescindOwnership();
         _buffer.Length(Math::Max(16, _encoding->GetMaxByteCount(1)));
         }
       }
@@ -90,7 +89,7 @@ namespace System
       int32 len = Read7BitEncodedInt();
 
       if(len < 0)
-        throw new IOException(L"Invalid binary file (string len < 0)");
+        throw IOException(L"Invalid binary file (string len < 0)");
 
       if(len == 0)
         return String::Empty();

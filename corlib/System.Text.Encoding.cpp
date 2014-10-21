@@ -271,7 +271,7 @@ namespace System
       return String();
       }
 
-    Encoding* Encoding::Default()
+    GCEncoding& Encoding::Default()
       {
       if(_defaultEncoding.Get() == nullptr) 
         {
@@ -287,7 +287,7 @@ namespace System
             try 
               {
               if (code_page == -1)
-                _defaultEncoding.Set(GetEncoding(code_page_name));
+                _defaultEncoding = GetEncoding(code_page_name);
               else {
                 // map the codepage from internal to our numbers
                 code_page = code_page & 0x0fffffff;
@@ -300,7 +300,7 @@ namespace System
                   case 5: code_page = UnicodeEncoding::BIG_UNICODE_CODE_PAGE; break;
                     //case 6: code_page = Latin1Encoding.ISOLATIN_CODE_PAGE; break;
                   }
-                _defaultEncoding.Set(GetEncoding(code_page));
+                _defaultEncoding = GetEncoding(code_page);
                 }
               } 
             //catch (NotSupportedException) 
@@ -318,13 +318,13 @@ namespace System
             }
           }
         }
-      return _defaultEncoding.Get();
+      return _defaultEncoding;
       }
 
 #pragma warning(disable:4100)
-    Encoding* Encoding::GetEncoding(String& name)
+    GCEncoding Encoding::GetEncoding(String& name)
       {
-      return (Encoding*)new I18N::West::CP1252();
+      return GCEncoding((Encoding*)new I18N::West::CP1252());
       //String converted = name.ToLowerInvariant ().Replace ('-', '_');
 
       // Builtin web encoding names and the corresponding code pages.
@@ -413,7 +413,7 @@ namespace System
       }
 #pragma warning(disable:4100)
 
-    Encoding* Encoding::GetEncoding(int codepage)
+    GCEncoding Encoding::GetEncoding(int codepage)
       {
       if(codepage < 0 || codepage > 0xffff)
         throw ArgumentOutOfRangeException(L"codepage",  L"Valid values are between 0 and 65535, inclusive.");
@@ -424,11 +424,12 @@ namespace System
         case 0: 
           return Default();
         case ASCIIEncoding::ASCII_CODE_PAGE:
-          return (Encoding*)new ASCIIEncoding;
+          
+          return GCEncoding((Encoding*)new ASCIIEncoding);
           //case UTF7Encoding.UTF7_CODE_PAGE:
           //return UTF7;
         case UTF8Encoding::UTF8_CODE_PAGE:
-          return (Encoding*)new UTF8Encoding;
+          return GCEncoding((Encoding*)new UTF8Encoding);
           //case UTF32Encoding.UTF32_CODE_PAGE:
           //return UTF32;
 
@@ -445,7 +446,7 @@ namespace System
           //return ISOLatin1;
         default: break;
         }
-      return nullptr;
+      return GCEncoding();
       // Try to obtain a code page handler from the I18N handler.
       /*Encoding enc = (Encoding)(InvokeI18N ("GetEncoding", codepage));
       if (enc != null) 
@@ -487,7 +488,7 @@ namespace System
       return _windows_code_page;
       }
 
-    Encoding* Encoding::BigEndianUnicode()
+    GCEncoding& Encoding::BigEndianUnicode()
       {
       if(_bigEndianEncoding.Get() == nullptr) 
         {
@@ -495,15 +496,15 @@ namespace System
           {
           if(Encoding::_bigEndianEncoding.Get() == nullptr) 
             {
-            Encoding::_bigEndianEncoding.Set((Encoding*)new UnicodeEncoding (true, true));
+            Encoding::_bigEndianEncoding.Reset((Encoding*)new UnicodeEncoding (true, true));
             }
           }
         }
 
-      return _bigEndianEncoding.Get();
+      return _bigEndianEncoding;
       }
 
-    Encoding* Encoding::Unicode()
+    GCEncoding& Encoding::Unicode()
       {
       if(_unicodeEncoding.Get() == nullptr) 
         {
@@ -511,15 +512,15 @@ namespace System
           {
           if(Encoding::_unicodeEncoding.Get() == nullptr)
             {
-            Encoding::_unicodeEncoding.Set((Encoding*)new UnicodeEncoding(false,true));
+            Encoding::_unicodeEncoding.Reset((Encoding*)new UnicodeEncoding(false,true));
             }
           }
         }
 
-      return Encoding::_unicodeEncoding.Get();
+      return Encoding::_unicodeEncoding;
       }
 
-    Encoding* Encoding::UTF8()
+    GCEncoding& Encoding::UTF8()
       {
       if(_utf8EncodingWithMarkers.Get() == nullptr)
         {
@@ -527,14 +528,14 @@ namespace System
           {
           if(Encoding::_utf8EncodingWithMarkers.Get() == nullptr)
             {
-            Encoding::_utf8EncodingWithMarkers.Set((Encoding*)new UTF8Encoding(true));
+            Encoding::_utf8EncodingWithMarkers.Reset((Encoding*)new UTF8Encoding(true));
             }
           }
         }
-      return Encoding::_utf8EncodingWithMarkers.Get();
+      return Encoding::_utf8EncodingWithMarkers;
       }
 
-    Encoding* Encoding::UTF8Unmarked() 
+    GCEncoding& Encoding::UTF8Unmarked() 
       {
       if(_utf8EncodingWithoutMarkers.Get() == nullptr) 
         {
@@ -542,12 +543,12 @@ namespace System
           {
           if(Encoding::_utf8EncodingWithoutMarkers.Get() == nullptr)
             {
-            _utf8EncodingWithoutMarkers.Set(new UTF8Encoding(false, false));
+            _utf8EncodingWithoutMarkers.Reset(new UTF8Encoding(false, false));
             }
           }
         }
 
-      return Encoding::_utf8EncodingWithoutMarkers.Get();
+      return Encoding::_utf8EncodingWithoutMarkers;
       }
 
     Decoder* Encoding::GetDecoder()

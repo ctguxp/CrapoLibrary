@@ -11,8 +11,10 @@ namespace System
     class CRAPOCOREDLL_API BinaryWriter
       {
       public:
-        BinaryWriter(Stream* /*stream*/);
+        BinaryWriter(Stream* stream = nullptr, Text::GCEncoding& encoding = Text::Encoding::UTF8());
         virtual ~BinaryWriter();
+        virtual Stream& BaseStream();
+        virtual void Flush();
         virtual void Write(bool /*value*/);
         virtual void Write(byte /*value*/);
         virtual void Write(float /*value*/);
@@ -26,7 +28,7 @@ namespace System
 #pragma warning(disable:4251)
         ByteArray        _buffer;
 #pragma warning(default:4251)
-        Stream*          _stream;
+        Stream*          _outStream;
 #pragma warning(disable:4251)
         Text::GCEncoding _encoding;
 #pragma warning(default:4251)

@@ -1,7 +1,7 @@
 // Perch Lake Computer System
 
 #pragma once
-#include "AutoPtr.h"
+#include "Global.Memory.h"
 #include "System.Object.h"
 #include "System.Text.Decoder.h"
 #include "System.Threading.CriticalSection.h"
@@ -21,7 +21,7 @@ namespace System
     }
   namespace Text
     {
-    typedef AutoPtr<Encoding> GCEncoding;
+    typedef Global::SharedPtr<Encoding> GCEncoding;
     class CRAPOCOREDLL_API Encoding : public Object
       {
       private:
@@ -88,16 +88,16 @@ namespace System
 
         virtual Decoder* GetDecoder();
 
-        static Encoding* Default();
-        static Encoding* BigEndianUnicode();
-        static Encoding* Unicode();
-        static Encoding* UTF8();
-        static Encoding* GetEncoding(int);
-        static Encoding* GetEncoding(String& name);
+        static GCEncoding& Default();
+        static GCEncoding& BigEndianUnicode();
+        static GCEncoding& Unicode();
+        static GCEncoding& UTF8();
+        static GCEncoding GetEncoding(int);
+        static GCEncoding GetEncoding(String& name);
 
       protected:
         Encoding(int codePage = 0);
-        static Encoding* UTF8Unmarked();
+        static GCEncoding& UTF8Unmarked();
         static String InternalCodePage(int& code_page);
         static Threading::CriticalSection _lockobj;
 

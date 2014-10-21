@@ -3,14 +3,11 @@
 #include "System.String.h"
 #include "System.Text.Decoder.h"
 #include "System.IO.Stream.h"
+#include "System.Text.Encoding.h"
 
 #pragma warning(disable:4251)
 namespace System
   {
-  namespace Text
-    {
-    class Encoding;
-    }
   namespace IO
     {
     class CRAPOCOREDLL_API StreamReader : public TextReader
@@ -30,7 +27,7 @@ namespace System
         int              _pos;
         int              _buffer_size;
         int              _do_checks;
-        Text::Encoding*  _encoding;
+        Text::GCEncoding _encoding;
         Text::GCDecoder  _decoder;
         GCStream         _base_stream;
         bool             _mayBlock;

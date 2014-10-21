@@ -50,7 +50,7 @@ namespace System
       {
       if(nullptr == _base_stream.Get())
         throw ArgumentNullException(L"stream");
-      if (nullptr == _encoding)
+      if (nullptr == _encoding.Get())
         throw ArgumentNullException (L"encoding");
       if (!_base_stream->CanRead())
         throw ArgumentException(L"Cannot read stream");
@@ -139,9 +139,9 @@ namespace System
       _mayBlock = cbEncoded < _buffer_size;
       if(_do_checks > 0)
         {
-        Text::Encoding* old = _encoding;
+        Text::Encoding* old = _encoding.Get();
         parse_start = DoChecks(cbEncoded);
-        if (old != _encoding)
+        if (old != _encoding.Get())
           {
           int old_decoded_size = old->GetMaxCharCount(_buffer_size) + 1;
           int new_decoded_size = _encoding->GetMaxCharCount(_buffer_size) + 1;

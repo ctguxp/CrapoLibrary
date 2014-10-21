@@ -162,7 +162,7 @@ namespace System
     void BitArray::Set(int32 index, bool value)
       {
       if(index < 0 || index >= _length)
-        throw new ArgumentOutOfRangeException ();
+        throw ArgumentOutOfRangeException ();
 
       if(value)
         _array[index >> 5] |=  (1 << (index & 31));

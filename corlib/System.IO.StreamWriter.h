@@ -4,15 +4,12 @@
 #include "System.Array.h"
 #include "System.IO.TextWriter.h"
 #include "System.IO.Stream.h"
+#include "System.Text.Encoding.h"
 
 #pragma warning(disable:4251)
 namespace System
   {
   class String;
-  namespace Text
-    {
-    class Encoding;
-    }
   namespace IO
     {
     class CRAPOCOREDLL_API StreamWriter : public TextWriter
@@ -24,8 +21,8 @@ namespace System
         MinimumBufferSize = 256
         };
       private:
-        Text::Encoding*  _internalEncoding;
-        GCStream         _internalStream;
+        Text::GCEncoding  _internalEncoding;
+        GCStream          _internalStream;
 
         uint32           _defaultBufferSize;
         uint32           _defaultFileBufferSize;

@@ -310,7 +310,7 @@ namespace System
       throw OutOfMemoryException ();
     nlen += str2.Length();
     if (nlen < 0)
-      throw new OutOfMemoryException ();
+      throw OutOfMemoryException ();
     String tmp = InternalAllocateStr(nlen + 1);
 
     if(str0.Length() != 0) 
@@ -1060,7 +1060,7 @@ namespace System
       if(length == 0)
         return Empty();
 
-      enc = Text::Encoding::Default();
+      enc = Text::Encoding::Default().Get();
       assert(enc != nullptr);
       }
 

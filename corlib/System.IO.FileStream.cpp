@@ -295,7 +295,7 @@ namespace System
           pos = offset;
           break;
         default:
-          throw new ArgumentException(L"origin", L"Invalid SeekOrigin");
+          throw ArgumentException(L"origin", L"Invalid SeekOrigin");
         }
 
       if(pos < (int64)_append_startpos)

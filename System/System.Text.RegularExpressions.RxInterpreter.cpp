@@ -2422,7 +2422,7 @@ namespace System
                   }	
 
                 if (tail <= pc)
-                  throw new Exception ();
+                  throw Exception();
 
                 // Then, match the tail, backtracking as necessary.
                 for(;;)

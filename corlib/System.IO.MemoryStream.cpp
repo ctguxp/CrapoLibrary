@@ -87,6 +87,12 @@ namespace System
       _expandable = false;
       }
 
+    void MemoryStream::Close()
+      {
+      _streamClosed = true;
+      _expandable = false;
+      }
+
     void MemoryStream::CheckIfClosedThrowDisposed()
       {
       if(_streamClosed)
@@ -152,7 +158,7 @@ namespace System
         {
         case SeekOrigin::Begin:
           if(offset < 0)
-            throw new IOException(L"Attempted to seek before start of MemoryStream.");
+            throw IOException(L"Attempted to seek before start of MemoryStream.");
           refPoint = _initialIndex;
           break;
         case SeekOrigin::Current:
@@ -162,7 +168,7 @@ namespace System
           refPoint = _length;
           break;
         default:
-          throw new ArgumentException(L"loc", L"Invalid SeekOrigin");
+          throw ArgumentException(L"loc", L"Invalid SeekOrigin");
         }
 
       refPoint += (int32)offset;
@@ -253,7 +259,7 @@ namespace System
       // seen anywhere mention what the maximum length of a MemoryStream is and
       // since we're this far this memory stream is expandable.
       if (value < 0 || (value + _initialIndex) > (int64)Int32::MaxValue)
-        throw new ArgumentOutOfRangeException ();
+        throw ArgumentOutOfRangeException ();
 
       int32 newSize = (int32)value + _initialIndex;
 

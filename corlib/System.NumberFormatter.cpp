@@ -1955,7 +1955,7 @@ namespace System
         return;
         }
       }
-    throw new ArgumentException ();
+    throw ArgumentException();
     }
 
   NumberFormatter::CustomInfo* NumberFormatter::CustomInfo::Parse(String& format, int offset, int length, Globalization::NumberFormatInfo* /*nfi*/)

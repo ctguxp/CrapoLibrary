@@ -16,7 +16,7 @@ namespace System
         };
       public:
         BinaryReader(Stream* /*stream*/);
-        BinaryReader(Stream* /*stream*/, Text::Encoding* /*encoding*/);
+        BinaryReader(Stream* stream = nullptr, Text::GCEncoding& encoding = Text::Encoding::UTF8());
         virtual ~BinaryReader();
         virtual bool ReadBoolean();
         virtual byte ReadByte();
