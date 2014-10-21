@@ -98,5 +98,8 @@
     <ClCompile Include="SharedPointerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BinaryWriterTest.cpp">
+      <Filter>Source Files\System.IO</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
