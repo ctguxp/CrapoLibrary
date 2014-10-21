@@ -29,20 +29,30 @@ namespace System
         uint32           _minimumBufferSize;
         ByteArray        _byte_buf;
         CharArray        _decode_buf;
-        int              _byte_pos;
-        int              _decode_pos;
+        int32            _byte_pos;
+        int32            _decode_pos;
         bool             _iflush;
         bool             _preamble_done;
       public:
         StreamWriter(String path);
         //StreamWriter(Stream*, Text::Encoding*, uint32 bufferSize = DefaultBufferSize);
         ~StreamWriter();
-        void Write(String&);
+        virtual void Write(String /*value*/) override;
+        virtual void Write(int32 /*value*/) override;
+        virtual void Write(int64 /*value*/) override;
+        virtual void Write(Object* /*value*/) override;
+        virtual void Write(CharArray /*buffer*/) override;
+        virtual void Write(CharArray /*buffer*/, int32 /*index*/, int32 /*count*/) override;
+        virtual void Write(bool /*value*/) override;
+        virtual void Write(double /*value*/) override;
+        virtual void Write(float /*value*/) override;
+        virtual void Write(wchar_t /*value*/) override;
         void Flush();
       private:
         void Initialize(int);
         void CheckState();
         void LowLevelWrite(String&);
+        void LowLevelWrite(CharArray /*buffer*/, int32 /*index*/, int32 /*count*/);
         void Decode();
         void FlushBytes();
         void FlushCore();

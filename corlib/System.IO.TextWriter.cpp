@@ -85,7 +85,7 @@ namespace System
       {
       if(buffer.IsNull())
         return;
-      Write(buffer, 0, buffer.Length());
+      Write(buffer, 0, (int32)buffer.Length());
       }
 
     void TextWriter::Write(CharArray buffer, int32 index, int32 count)

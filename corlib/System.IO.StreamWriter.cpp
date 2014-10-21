@@ -8,6 +8,7 @@
 #include "System.Exception.h"
 #include "System.IO.Enums.h"
 #include "System.Array.hpp"
+#include "System.Buffer.h"
 
 using namespace System;
 
@@ -57,14 +58,86 @@ namespace System
         _preamble_done = true;
       }
 
-    void StreamWriter::Write(String& s)
+    void StreamWriter::Write(String value)
       {
       CheckState();
 
-      LowLevelWrite(s);
+      LowLevelWrite(value);
 
       if(_iflush)
         FlushCore();
+      }
+
+    void StreamWriter::Write(int32 value)
+      {
+      TextWriter::Write(value);
+      }
+
+    void StreamWriter::Write(int64 value)
+      {
+      TextWriter::Write(value);
+      }
+
+    void StreamWriter::Write(Object* value)
+      {
+      TextWriter::Write(value);
+      }
+
+    void StreamWriter::Write(CharArray buffer)
+      {
+      CheckState();
+
+			if(buffer.IsNull())
+				LowLevelWrite(buffer, 0, (int32)buffer.Length());
+			if(_iflush)
+				FlushCore();
+      }
+
+    void StreamWriter::Write(CharArray buffer, int32 index, int32 count) 
+      {
+      if(buffer.IsNull())
+        throw ArgumentNullException(L"buffer");
+      if(index < 0)
+        throw ArgumentOutOfRangeException(L"index", L"< 0");
+      if(count < 0)
+        throw ArgumentOutOfRangeException(L"count", L"< 0");
+      // re-ordered to avoid possible integer overflow
+      if(index > (int32)buffer.Length() - count)
+        throw ArgumentException(L"index + count > buffer.Length");
+
+      CheckState();
+
+      LowLevelWrite(buffer, index, count);
+      if(_iflush)
+        FlushCore();
+      }
+
+    void StreamWriter::Write(bool value)
+      {
+      TextWriter::Write(value);
+      }
+
+    void StreamWriter::Write(double value)
+      {
+      TextWriter::Write(value);
+      }
+
+    void StreamWriter::Write(float value)
+      {
+      TextWriter::Write(value);
+      }
+
+    void StreamWriter::Write(wchar_t value)
+      {
+      CheckState ();
+
+      // the size of decode_buf is always > 0 and
+      // we check for overflow right away
+      if(_decode_pos >= (int32)_decode_buf.Length())
+        Decode();
+      _decode_buf[_decode_pos++] = value;
+      if(_iflush)
+        FlushCore ();
       }
 
     void StreamWriter::CheckState()
@@ -91,6 +164,24 @@ namespace System
         for(int i = 0; i < todo; i ++)
           _decode_buf[i + _decode_pos] = s [i + index];
 
+        count -= todo;
+        index += todo;
+        _decode_pos += todo;
+        }
+      }
+
+    void StreamWriter::LowLevelWrite(CharArray buffer, int32 index, int32 count)
+      {
+      while(count > 0) {
+        int32 todo = (int32)_decode_buf.Length() - _decode_pos;
+        if(todo == 0)
+          {
+          Decode();
+          todo = (int32)_decode_buf.Length();
+          }
+        if(todo > count)
+          todo = count;
+        Buffer::BlockCopy(buffer, index * 2, _decode_buf, _decode_pos * 2, todo * 2);
         count -= todo;
         index += todo;
         _decode_pos += todo;
