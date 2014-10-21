@@ -20,6 +20,8 @@ namespace System
           void Create(HWND parent);
           // Get handle property
           Wnd& Hwnd() { return _hwnd; }
+          void Enable();
+          void Disable();
           String Text();
           void Text(String value);
         protected:

@@ -25,6 +25,14 @@ namespace System
         {
         _hwnd = ::GetDlgItem(parent, _id);
         }
+      void Control::Enable()
+        {
+        _hwnd.Enable();
+        }
+      void Control::Disable()
+        {
+        _hwnd.Disable();
+        }
       // Get text
       String Control::Text()
         {

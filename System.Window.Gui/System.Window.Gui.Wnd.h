@@ -31,6 +31,8 @@ namespace System
             ,HWND parent = NULL, HMENU menu = NULL, ulong exstyle = 0);
           // Destroy window
           void Destroy();
+          void Enable();
+          void Disable();
           // Get client rect of window
           void GetClientRect(sys::rect& r);
           // Is null handle
