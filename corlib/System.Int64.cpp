@@ -28,6 +28,10 @@ namespace System
     {
     return NumberFormatter::NumberToString(_value, nullptr);
     }
+  String Int64::ToString(IFormatProvider* provider)
+    {
+    return NumberFormatter::NumberToString(_value, provider);
+    }
   uint32 Int64::GetHashCode()
     {
     return abs((int32)(_value & 0xffffffff) ^ (int32)(_value >> 32));

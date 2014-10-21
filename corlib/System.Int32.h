@@ -22,15 +22,16 @@ namespace System
       Int32& operator = (int32 const&);
       operator int32 const& () const;
       virtual String ToString() override;
-      String ToString(String format);
-      String ToString(String format, IFormatProvider* provider);
+      String ToString(String /*format*/);
+      String ToString(IFormatProvider* /*provider*/);
+      String ToString(String format, IFormatProvider* /*provider*/);
       virtual uint32 GetHashCode() override;
       static Exception GetFormatException();
-      virtual bool Equals(Object* obj) override;
-      static int Parse(String s); 
+      virtual bool Equals(Object* /*obj*/) override;
+      static int Parse(String /*s*/); 
     private:
-      static bool Parse(String s, bool tryParse, int& result, Exception& exc);
-      static bool ProcessTrailingWhitespace(bool tryParse, String s, int position, Exception& exc);
+      static bool Parse(String /*s*/, bool /*tryParse*/, int& /*result*/, Exception& /*exc*/);
+      static bool ProcessTrailingWhitespace(bool /*tryParse*/, String /*s*/, int /*position*/, Exception& /*exc*/);
     };
   }
 

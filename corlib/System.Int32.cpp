@@ -32,6 +32,10 @@ namespace System
     {
     return NumberFormatter::NumberToString(_value, nullptr);
     }
+  String Int32::ToString(IFormatProvider* provider)
+    {
+    return NumberFormatter::NumberToString(_value, provider);
+    }
   String Int32::ToString(String format)
     {
     return NumberFormatter::NumberToString(&format, _value, nullptr);

@@ -1,5 +1,6 @@
 #pragma once
 #include "System.Object.h"
+#include "System.IFormatProvider.h"
 
 namespace System
   {
@@ -20,6 +21,7 @@ namespace System
       Int64& operator = (int64 const&);
       operator int64 const& () const;
       virtual String ToString() override;
+      String ToString(IFormatProvider* /*provider*/);
       virtual uint32 GetHashCode() override;
     };
   }
