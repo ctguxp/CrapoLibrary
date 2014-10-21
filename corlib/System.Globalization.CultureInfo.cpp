@@ -10,6 +10,8 @@ namespace System
   {
   namespace Globalization
     {
+    CultureInfo CultureInfo::_invariantCultureInfo(127, false, false);
+
     CultureInfo::CultureInfo(uint32 culture, bool useUserOverride)
       {
       Ctor(culture, useUserOverride, false);
@@ -32,6 +34,11 @@ namespace System
 
     CultureInfo::~CultureInfo()
       {
+      }
+
+    CultureInfo& CultureInfo::InvariantCulture() 
+      {
+      return _invariantCultureInfo;
       }
 
     void CultureInfo::Ctor(String name, bool useUserOverride, bool readOnly)

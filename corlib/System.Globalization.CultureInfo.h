@@ -27,6 +27,8 @@ namespace System
         InvariantCultureId = 0x7F
         };
       private:
+        static CultureInfo _invariantCultureInfo;
+      private:
         bool               _isReadOnly;
         uint32             _cultureID;
         uint32             _parent_lcid;
@@ -55,6 +57,7 @@ namespace System
         virtual NumberFormatInfo* NumberFormat();
         bool IsReadOnly();
         static CultureInfo& CurrentCulture();
+        static CultureInfo& InvariantCulture();
         virtual String Name();
         virtual int LCID();
         virtual CompareInfo& CompareInfo();
