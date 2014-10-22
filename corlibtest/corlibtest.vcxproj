@@ -322,6 +322,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CustomFramework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -330,6 +331,8 @@
     <ClCompile Include="BitArrayTest.cpp" />
     <ClCompile Include="DictionaryTest.cpp" />
     <ClCompile Include="Environment.cpp" />
+    <ClCompile Include="Int32Test.cpp" />
+    <ClCompile Include="Int64Test.cpp" />
     <ClCompile Include="MemoryStreamTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -350,7 +353,6 @@
     <ClCompile Include="UnitTestDouble.cpp" />
     <ClCompile Include="UnitTestGenericList.cpp" />
     <ClCompile Include="UnitTestHashTable.cpp" />
-    <ClCompile Include="UnitTestInt32.cpp" />
     <ClCompile Include="UnitTestPath.cpp" />
     <ClCompile Include="UnitTestSingle.cpp" />
     <ClCompile Include="UnitTestStack.cpp" />

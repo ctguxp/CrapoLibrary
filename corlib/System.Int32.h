@@ -8,7 +8,7 @@
 namespace System
   {
   class Exception;
-  class CRAPOCOREDLL_API Int32 : public Object
+  class CRAPOCOREDLL_API Int32 : public Object, public IComparable
     {
     public:
       static const int32 MaxValue = 2147483647;
@@ -21,6 +21,7 @@ namespace System
       ~Int32();
       Int32& operator = (int32 const&);
       operator int32 const& () const;
+      virtual int CompareTo(Object& /*value*/) override;
       virtual String ToString() override;
       String ToString(String /*format*/);
       String ToString(IFormatProvider* /*provider*/);
