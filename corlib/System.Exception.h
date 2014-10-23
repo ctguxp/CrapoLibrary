@@ -5,7 +5,7 @@
 
 namespace System
   {
-  class CRAPOCOREDLL_API Exception
+  class CRAPOCOREDLL_API Exception : public Object
     {
     public:
       // Default constructor

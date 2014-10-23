@@ -192,4 +192,23 @@ namespace System
 
     return true;
     }
+
+    int Int32::CompareTo(Object& value)
+      {
+      if(&value == nullptr)
+				return 1;
+			
+			Int32 test;
+      if(!(Object::IsInstance(test, value)))
+				throw ArgumentException(L"Value is not a System.Int32");
+
+			Int32& xv = static_cast<Int32&>(value);
+			if(_value == xv)
+				return 0;
+			if(_value > xv)
+				return 1;
+			else
+				return -1;
+      }
+
   }
