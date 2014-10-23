@@ -9,24 +9,41 @@ namespace System
   {
   namespace IO
     {
-    
+
     BinaryWriter::BinaryWriter(Stream* stream, Text::GCEncoding& encoding)
       :_leaveOpen(false)
+      ,_disposed(false)
       ,_buffer(16)
       ,_outStream(stream)
       ,_encoding(encoding)
       {
       if(stream == nullptr) 
-				throw ArgumentNullException(L"output");
-			if(encoding.Get() == nullptr) 
-				throw ArgumentNullException(L"encoding");
-			if (!stream->CanWrite())
-				throw ArgumentException(L"Stream does not support writing or already closed.");
+        throw ArgumentNullException(L"output");
+      if(encoding.Get() == nullptr) 
+        throw ArgumentNullException(L"encoding");
+      if (!stream->CanWrite())
+        throw ArgumentException(L"Stream does not support writing or already closed.");
       }
 
     BinaryWriter::~BinaryWriter()
       {
       }
+
+    void BinaryWriter::Close() 
+      {
+      Dispose(true);
+      }
+
+    void BinaryWriter::Dispose(bool disposing)
+      {
+      if(disposing && _outStream != nullptr && _leaveOpen)
+        _outStream->Close();
+
+      _buffer.Length(0);
+      _encoding.Reset();
+      _disposed = true;
+      }
+
     Stream& BinaryWriter::BaseStream()
       {
       Flush();

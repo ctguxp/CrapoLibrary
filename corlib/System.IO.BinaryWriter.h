@@ -14,6 +14,7 @@ namespace System
         BinaryWriter(Stream* stream = nullptr, Text::GCEncoding& encoding = Text::Encoding::UTF8());
         virtual ~BinaryWriter();
         virtual Stream& BaseStream();
+        virtual void Close();
         virtual void Flush();
         virtual void Write(bool /*value*/);
         virtual void Write(byte /*value*/);
@@ -23,8 +24,10 @@ namespace System
         virtual void Write(String /*value*/);
       protected:
         void Write7BitEncodedInt(int32 /*value*/);
+        virtual void Dispose(bool disposing);
       private:
         bool             _leaveOpen;
+        bool             _disposed;
 #pragma warning(disable:4251)
         ByteArray        _buffer;
 #pragma warning(default:4251)
