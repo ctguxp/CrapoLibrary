@@ -121,6 +121,9 @@
       <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClInclude>
     <ClInclude Include="System.Text.RegularExpressions.Interval.h">
+      <Filter>Header Files\System.Text.RegularExpressions</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Literal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -201,6 +204,9 @@
       <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Interval.cpp">
+      <Filter>Source Files\System.Text.RegularExpressions</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Literal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

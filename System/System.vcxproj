@@ -59,6 +59,7 @@
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Expression.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.ExpressionCollection.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Group.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Literal.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.PositionAssertion.h" />
     <ClInclude Include="System.Text.RegularExpressions.Syntax.RegularExpression.h" />
     <ClInclude Include="System.Text.RegularExpressions.Cache.h" />
@@ -99,6 +100,7 @@
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Expression.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.ExpressionCollection.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Group.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Literal.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.PositionAssertion.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.RegularExpression.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Cache.cpp" />
