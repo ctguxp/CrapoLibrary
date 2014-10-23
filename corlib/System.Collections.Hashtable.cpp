@@ -190,6 +190,36 @@ namespace System
       return(Find(key) >= 0);
       }
 
+    bool Hashtable::ContainsValue(Object* value)
+      {
+      int32 size = (int32)_table.Length();
+      if (value == nullptr) 
+        {
+        for(int32 i = 0; i < size; i++) 
+          {
+          Slot entry = _table[i];
+          if (entry.key.Get() != nullptr && entry.key.Get() != Removed.Get()
+            && entry.value.Get() == nullptr) 
+            {
+            return true;
+            }
+          }
+        } 
+      else 
+        { 
+        for(int32 i = 0; i < size; i++) 
+          {
+          Slot entry = _table [i];
+          if (entry.key.Get() != nullptr && entry.key.Get() != Removed.Get()
+            && value->Equals(entry.value.Get())) 
+            {
+            return true;
+            }
+          }
+        }
+      return false;
+      }
+
     void Hashtable::Clear()
       {
       for(sizet i = 0; i < _table.Length(); i++)
@@ -222,7 +252,7 @@ namespace System
         if(k.Get() == nullptr)
           break;
 
-        if(k.Get() == key || ((hashMix & Int32::MaxValue) == h
+        if(k.Get()->Equals(key) || ((hashMix & Int32::MaxValue) == h
           && KeyEquals(key, k)))
           {
           return entry.value.Get();
@@ -255,6 +285,7 @@ namespace System
         ++_modificationCount;
         }
       }
+
     IDictionaryEnumerator* Hashtable::GetEnumerator()
       {
       return new Enumerator(*this, EnumeratorMode::ENTRY_MODE);
@@ -285,6 +316,7 @@ namespace System
       if(_threshold >= size)
         _threshold = size-1;
       }
+
     void Hashtable::SetTable(Array<Slot>& table, IntArray& hashes)
       {
       _table = table;
@@ -349,7 +381,7 @@ namespace System
 
         if(freeIndx == -1) 
           {
-          _hashes[indx] |= CHAIN_MARKER;
+          _hashes[indx] = _hashes[indx] | CHAIN_MARKER;
           }
 
         spot+= step;
@@ -360,7 +392,7 @@ namespace System
         {
         _table[freeIndx].key = key;
         _table[freeIndx].value = value;
-        _hashes[freeIndx] |= h;
+        _hashes[freeIndx] = _hashes[freeIndx] | h;
 
         ++_inUse;
         ++_modificationCount;
@@ -378,18 +410,17 @@ namespace System
       //   than twice the current number of Hashtable buckets
       uint32 newSize = (uint32)HashPrimeNumbers::ToPrime((oldSize<<1)|1);
 
-
       Array<Slot> newTable(newSize);
-      Array<Slot> table = _table;
       IntArray newHashes(newSize);
-      IntArray hashes = _hashes;
+      for(sizet z = 0; z < newHashes.Length(); ++z)
+        newHashes[z] = 0;
 
       for(int32 i = 0; i < oldSize; i++) 
         {
-        Slot s = table[i];
+        Slot s = _table[i];
         if(s.key.Get() != nullptr)
           {
-          int h = hashes[i] & Int32::MaxValue;
+          int32 h = _hashes[i] & Int32::MaxValue;
           uint32 spot = (uint32)h;
           uint32 step = ((uint32)(h>>5)+1)% (newSize-1)+1;
           for(uint32 j = spot%newSize;;spot+= step, j = spot%newSize) 
@@ -400,12 +431,12 @@ namespace System
               {
               newTable[j].key = s.key;
               newTable[j].value = s.value;
-              newHashes[j] |= h;
+              newHashes[j] = newHashes[j] | h;
               break;
               } 
             else
               {
-              newHashes[j] |= CHAIN_MARKER;
+              newHashes[j] = newHashes[j] | CHAIN_MARKER;
               }
             }
           }
@@ -458,7 +489,7 @@ namespace System
         if(k.Get() == nullptr)
           break;
 
-        if(k.Get() == key || ((hashMix & Int32::MaxValue) == h
+        if(k.Get()->Equals(key) || ((hashMix & Int32::MaxValue) == h
           && KeyEquals(key, k)))
           {
           return (int)indx;

@@ -75,17 +75,18 @@ namespace System
         Hashtable(IDictionary* d, float loadFactor = 1, IHashCodeProvider* hcp = nullptr, IComparer* comparer = nullptr);
         virtual ~Hashtable();
         virtual IDictionaryEnumerator* GetEnumerator() override;
-        Object* Get(Object* key);
+        Object* Get(Object* /*key*/);
         // From ICollection
         virtual int32 Count() override;
         virtual bool IsSynchronized() override;
         // From IDictionary
         virtual bool IsFixedSize() override;
         virtual bool IsReadOnly() override;
-        virtual void Add(Object* key, Object* value) override;
-        virtual bool Contains(Object* key) override;
+        virtual void Add(Object* /*key*/, Object* /*value*/) override;
+        virtual bool Contains(Object* /*key*/) override;
+        virtual bool ContainsValue(Object* /*value*/);
         virtual void Clear() override;
-        virtual void Remove(Object* key) override;
+        virtual void Remove(Object* /*key*/) override;
       protected:
         virtual int GetHash(Object* key);
         virtual bool KeyEquals(Object* item, GCObject& key);
