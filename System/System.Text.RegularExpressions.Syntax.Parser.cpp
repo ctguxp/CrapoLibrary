@@ -6,6 +6,7 @@
 #include "System.Text.RegularExpressions.Syntax.CharacterClass.h"
 #include "System.Text.RegularExpressions.Category.h"
 #include "System.Text.RegularExpressions.Syntax.Literal.h"
+#include "System.Text.RegularExpressions.Syntax.CapturingGroup.h"
 
 using namespace Global;
 
@@ -438,28 +439,43 @@ char_recognized:
           }
         void Parser::ResolveReferences()
           {
-          //int gid = 1;
-          //Hashtable dict = new Hashtable ();
-          //ArrayList explicit_numeric_groups = null;
+          using namespace Collections;
+          int32 gid = 1;
+          Hashtable dict;
+          ArrayList explicit_numeric_groups;
 
           //// number unnamed groups
-
-          //foreach (CapturingGroup group in caps) {
-          //  if (group.Name != null)
-          //    continue;
-
-          //  dict.Add (gid.ToString (), group);
-          //  group.Index = gid ++;
-          //  ++ num_groups;
-          //  }
+          IEnumerator* caps = _caps.GetEnumerator();
+          while(caps->MoveNext())
+            {
+            GCObject group = caps->Current();
+            CapturingGroup& cg = static_cast<CapturingGroup&>((*group)); 
+            Int32 g(gid);
+            String gstr = g.ToString();
+            dict.Add(&gstr, group.Get());
+            cg.Index(gid++);
+            ++_numGroups;
+            }
+          caps->Reset();
 
           //// number named groups
-
-          //foreach (CapturingGroup group in caps) {
+          while(caps->MoveNext())
+            {
+            GCObject group = caps->Current();
+            CapturingGroup& cg = static_cast<CapturingGroup&>((*group));
+            if(dict.Contains(cg.Name()))
+              {
+              }
+            }
+          delete caps;
+          caps = nullptr;
+          //foreach (CapturingGroup group in caps) 
+          //  {
           //  if (group.Name == null)
           //    continue;
 
-          //  if (dict.Contains (group.Name)) {
+          //  if (dict.Contains (group.Name)) 
+          //    {
           //    CapturingGroup prev = (CapturingGroup) dict [group.Name];
           //    group.Index = prev.Index;
 
@@ -470,21 +486,26 @@ char_recognized:
           //    continue;
           //    }
 
-          //  if (Char.IsDigit (group.Name [0])) {
+          //  if (Char.IsDigit (group.Name [0])) 
+          //    {
           //    int ptr = 0;
           //    int group_gid = ParseDecimal (group.Name, ref ptr);
-          //    if (ptr == group.Name.Length) {
+          //    if (ptr == group.Name.Length) 
+          //      {
           //      group.Index = group_gid;
           //      dict.Add (group.Name, group);
           //      ++ num_groups;
 
-          //      if (group_gid == gid) {
+          //      if (group_gid == gid) 
+          //        {
           //        gid ++;
-          //        } else {
-          //          // all numbers before 'gid' are already in the dictionary.  So, we know group_gid > gid
-          //          if (explicit_numeric_groups == null)
-          //            explicit_numeric_groups = new ArrayList (4);
-          //          explicit_numeric_groups.Add (group);
+          //        } 
+          //      else 
+          //        {
+          //        // all numbers before 'gid' are already in the dictionary.  So, we know group_gid > gid
+          //        if (explicit_numeric_groups == null)
+          //          explicit_numeric_groups = new ArrayList (4);
+          //        explicit_numeric_groups.Add (group);
           //        }
 
           //      continue;
@@ -501,16 +522,18 @@ char_recognized:
           //  ++ num_groups;
           //  }
 
-          //gap = gid; // == 1 + num_groups, if explicit_numeric_groups == null
+          _gap = gid; // == 1 + num_groups, if explicit_numeric_groups == null
 
           //if (explicit_numeric_groups != null)
           //  HandleExplicitNumericGroups (explicit_numeric_groups);
 
           //// resolve references
 
-          //foreach (Expression expr in refs.Keys) {
+          //foreach (Expression expr in refs.Keys) 
+          //  {
           //  string name = (string) refs [expr];
-          //  if (!dict.Contains (name)) {
+          //  if (!dict.Contains (name)) 
+          //    {
           //    if (expr is CaptureAssertion && !Char.IsDigit (name [0]))
           //      continue;
           //    BackslashNumber bn = expr as BackslashNumber;
@@ -530,6 +553,7 @@ char_recognized:
           //    ((BalancingGroup)expr).Balance = group;
           //  }
           }
+
         void Parser::ConsumeWhitespace(bool ignore)
           {
           while(_ptr < _pattern.Length()) 

@@ -124,7 +124,7 @@
       <Filter>Header Files\System.Text.RegularExpressions</Filter>
     </ClInclude>
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Literal.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -207,7 +207,7 @@
       <Filter>Source Files\System.Text.RegularExpressions</Filter>
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Literal.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
