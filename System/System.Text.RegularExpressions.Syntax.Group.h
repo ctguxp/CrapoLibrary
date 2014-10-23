@@ -16,7 +16,7 @@ namespace System
           public:
             Group();
             ~Group();
-            void AppendExpression(SharedPtr<Expression> e);
+            void AppendExpression(GCExpression& e);
             virtual void Compile(ICompiler* cmp, bool reverse) override;
             virtual void GetWidth(int& min, int& max) override;
           };

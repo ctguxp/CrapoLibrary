@@ -17,7 +17,7 @@ namespace System
         Group::~Group()
           {
           }
-        void Group::AppendExpression(SharedPtr<Expression> e)
+        void Group::AppendExpression(GCExpression& e)
           {
           Expressions().Add(e);
           }

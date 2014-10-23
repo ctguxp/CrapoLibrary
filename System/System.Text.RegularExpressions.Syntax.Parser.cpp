@@ -5,6 +5,7 @@
 #include "System.Text.RegularExpressions.Syntax.PositionAssertion.h"
 #include "System.Text.RegularExpressions.Syntax.CharacterClass.h"
 #include "System.Text.RegularExpressions.Category.h"
+#include "System.Text.RegularExpressions.Syntax.Literal.h"
 
 using namespace Global;
 
@@ -302,8 +303,11 @@ EndOfGroup:
 
           // clean up literals and alternations
 
-          if(lit.Length() == 0){}
-          //current->AppendExpression(new Literal (lit, IsIgnoreCase (options)));
+          if(lit.Length() == 0)
+            {
+            GCExpression lit(new Literal(lit, IsIgnoreCase(options)));
+            current->AppendExpression(lit);
+            }
 
           if (assertion.Get() != nullptr) 
             {
@@ -312,15 +316,20 @@ EndOfGroup:
             else
             assertion->FalseExpression = current;*/
 
-            group->AppendExpression(assertion);
+            GCExpression a = assertion;
+            group->AppendExpression(a);
             }
           else if(alternation.Get() != nullptr) 
             {
             //alternation->AddAlternative (current);
-            group->AppendExpression(alternation);
+            GCExpression a = alternation;
+            group->AppendExpression(a);
             }
           else
-            group->AppendExpression(current);
+            {
+            GCExpression e = current;
+            group->AppendExpression(e);
+            }
           }
         SharedPtr<Expression> Parser::ParseCharacterClass(RegexOptions options) 
           {
@@ -370,7 +379,7 @@ EndOfGroup:
               // didn't recognize escape
               c = _pattern[_ptr ++];
               switch (c) 
-{
+                {
                 case L'b':
                   c = L'\b';
                   goto char_recognized;
@@ -565,12 +574,12 @@ char_recognized:
           }
         bool Parser::IsMultiline(RegexOptions options) 
           {
-			    return((intptr)options & (intptr)RegexOptions::Multiline) != 0;
-		      }
+          return((intptr)options & (intptr)RegexOptions::Multiline) != 0;
+          }
         bool Parser::IsSingleline(RegexOptions options) 
           {
-			    return((intptr)options & (intptr)RegexOptions::Singleline) != 0;
-		      }
+          return((intptr)options & (intptr)RegexOptions::Singleline) != 0;
+          }
         }
       }
     }

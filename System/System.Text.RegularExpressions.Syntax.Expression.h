@@ -5,6 +5,9 @@
 #include "System.Object.h"
 #include "System.Text.RegularExpressions.ICompiler.h"
 #include "System.Text.RegularExpressions.Syntax.AnchorInfo.h"
+#include "Global.Memory.h"
+
+using namespace Global;
 
 namespace System
   {
@@ -26,6 +29,7 @@ namespace System
           protected:
             Expression();
           };
+        typedef SharedPtr<Expression> GCExpression;
         }
       }
     }
