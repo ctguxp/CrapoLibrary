@@ -80,9 +80,6 @@
     <ClCompile Include="UnitTestDouble.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UnitTestHashTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DictionaryTest.cpp">
       <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
@@ -112,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="Int64Test.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="HashTableTest.cpp">
+      <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

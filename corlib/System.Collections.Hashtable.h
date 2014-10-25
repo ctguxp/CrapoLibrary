@@ -16,9 +16,9 @@ namespace System
       {
       enum class EnumeratorMode : int32
         {
-          KEY_MODE = 0,
-          VALUE_MODE,
-          ENTRY_MODE
+        KEY_MODE = 0,
+        VALUE_MODE,
+        ENTRY_MODE
         };
       enum
         {
@@ -28,21 +28,21 @@ namespace System
         struct Slot
           {
           Slot()
-          :key()
-          ,value()
-          {
-          }
+            :key()
+            ,value()
+            {
+            }
           GCObject key;
           GCObject value;
           };
-       public:
+      public:
         class CRAPOCOREDLL_API KeyMarker : public Object
           {
           public:
             KeyMarker(){}
           };
-        protected:
-         class Enumerator : public IDictionaryEnumerator
+      protected:
+        class Enumerator : public IDictionaryEnumerator
           {
           private:
             int32          _pos;
@@ -68,14 +68,31 @@ namespace System
           private:
             void FailFast();
           };
+      private:
+        class HashKeys : public ICollection
+          {
+          private:
+            Hashtable& _host;
+          private:
+            HashKeys(HashKeys const&);
+            HashKeys& operator=(HashKeys const&);
+          public:
+            HashKeys(Hashtable& host);
+            virtual int32 Count() override;
+            virtual bool IsSynchronized() override;
+            virtual IEnumerator* GetEnumerator() override; 
+          };
       protected:
         static GCObject Removed;
       public:
         Hashtable(sizet capacity = 0, float loadFactor = 1, IHashCodeProvider* hcp = nullptr, IComparer* comparer = nullptr);
         Hashtable(IDictionary* d, float loadFactor = 1, IHashCodeProvider* hcp = nullptr, IComparer* comparer = nullptr);
+        Hashtable(Hashtable const&);
+        Hashtable& operator=(Hashtable const&);
         virtual ~Hashtable();
         virtual IDictionaryEnumerator* GetEnumerator() override;
         Object* Get(Object* /*key*/);
+        virtual ICollection* Keys();
         // From ICollection
         virtual int32 Count() override;
         virtual bool IsSynchronized() override;
@@ -86,6 +103,7 @@ namespace System
         virtual bool Contains(Object* /*key*/) override;
         virtual bool ContainsValue(Object* /*value*/);
         virtual void Clear() override;
+        virtual void Set(Object* key, Object* value);
         virtual void Remove(Object* /*key*/) override;
       protected:
         virtual int GetHash(Object* key);
@@ -105,10 +123,12 @@ namespace System
         IHashCodeProvider* _hcpRef;
         IComparer*         _comparerRef;
         IEqualityComparer* _equalityComparer;
+        HashKeys           _hashKeys;
 #pragma warning(disable:4251)
         Array<Slot>        _table;
         IntArray           _hashes;
 #pragma warning(default:4251)
       };
+    typedef SharedPtr<Hashtable> GCHashtable;
     }
   }

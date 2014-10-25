@@ -117,6 +117,30 @@ namespace System
         }
       }
 
+    Hashtable::HashKeys::HashKeys(Hashtable& host)
+      :_host(host)
+      {
+      if(&host == nullptr)
+        throw ArgumentNullException ();
+      }
+
+    int32 Hashtable::HashKeys::Count()
+      {
+      return _host.Count();
+      }
+
+    bool Hashtable::HashKeys::IsSynchronized()
+      {
+      return _host.IsSynchronized();
+      }
+
+    IEnumerator* Hashtable::HashKeys::GetEnumerator()
+			{
+				throw NotImplementedException();
+        //return new Hashtable.Enumerator (host, EnumeratorMode.KEY_MODE);
+			}
+
+#pragma warning(disable:4355)
     Hashtable::Hashtable(sizet capacity, float loadFactor, IHashCodeProvider* hcp, IComparer* comparer)
       :_inUse(0)
       ,_modificationCount(0)
@@ -127,6 +151,7 @@ namespace System
       ,_equalityComparer(nullptr)
       ,_table()
       ,_hashes()
+      ,_hashKeys(*this)
       {
       Init(capacity, loadFactor);
       }
@@ -141,11 +166,13 @@ namespace System
       ,_equalityComparer(nullptr)
       ,_table()
       ,_hashes()
+      ,_hashKeys(*this)
       {
       Init((d == nullptr) ? 0 : d->Count(), loadFactor);
       if(d == nullptr)
         throw ArgumentException(L"dictionary");
       }
+#pragma warning(default:4355)
 
     Hashtable::~Hashtable()
       {
@@ -183,6 +210,13 @@ namespace System
       GCObject k(key);
       GCObject v(value);
       PutImpl(k, v, false);
+      }
+
+    void Hashtable::Set(Object* key, Object* value)
+      {
+      GCObject k(key);
+      GCObject v(value);
+      PutImpl(k, v, true);
       }
 
     bool Hashtable::Contains(Object* key)
@@ -265,6 +299,11 @@ namespace System
         }
 
       return nullptr;
+      }
+
+    ICollection* Hashtable::Keys()
+      {
+      return &_hashKeys;
       }
 
     void Hashtable::Remove(Object* key)
