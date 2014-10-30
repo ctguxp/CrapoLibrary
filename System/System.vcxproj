@@ -35,6 +35,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System.Net.Sockets.AddressFamily.h" />
+    <ClInclude Include="System.Net.Sockets.ProtocolType.h" />
+    <ClInclude Include="System.Net.Sockets.SocketType.h" />
     <ClInclude Include="System.Text.RegularExpressions.BaseMachine.h" />
     <ClInclude Include="System.Text.RegularExpressions.Capture.h" />
     <ClInclude Include="System.Text.RegularExpressions.CaptureCollection.h" />

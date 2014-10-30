@@ -25,6 +25,9 @@
     <Filter Include="Source Files\System.Text.RegularExpressions.Syntax">
       <UniqueIdentifier>{744852cd-54cb-4238-943a-622a7545a01b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\System.Net.Sockets">
+      <UniqueIdentifier>{86b8a6ac-b2a2-4b4b-8648-ede327c3fac7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -125,6 +128,15 @@
     </ClInclude>
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Literal.h">
       <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Net.Sockets.AddressFamily.h">
+      <Filter>Header Files\System.Net.Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Net.Sockets.SocketType.h">
+      <Filter>Header Files\System.Net.Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Net.Sockets.ProtocolType.h">
+      <Filter>Header Files\System.Net.Sockets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
