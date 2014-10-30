@@ -537,6 +537,12 @@
     <ClInclude Include="Global.SharedPtrCountedBase.h">
       <Filter>Header Files\Global</Filter>
     </ClInclude>
+    <ClInclude Include="System.Console.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.Queue.h">
+      <Filter>Header Files\System.Collections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -841,6 +847,12 @@
     </ClCompile>
     <ClCompile Include="Global.SharedCount.cpp">
       <Filter>Source Files\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Console.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Collections.Queue.cpp">
+      <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

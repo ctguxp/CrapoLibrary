@@ -113,5 +113,8 @@
     <ClCompile Include="HashTableTest.cpp">
       <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
+    <ClCompile Include="QueueTest.cpp">
+      <Filter>Source Files\System.Collections</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
