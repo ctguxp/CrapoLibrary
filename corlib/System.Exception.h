@@ -1,6 +1,7 @@
 // Perch Lake Computer System
 
 #pragma once
+#include "Global.Memory.h"
 #include "System.String.h"
 
 namespace System
@@ -30,6 +31,8 @@ namespace System
       String     _message;
       Exception* _innerException;
     };
+
+  typedef SharedPtr<Exception> GCException;
 
   // SystemException class
   class CRAPOCOREDLL_API SystemException : public Exception
