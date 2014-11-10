@@ -211,7 +211,7 @@ namespace System
       return -1;
     }
 
-  bool Int32::JumpOverWhite(int32& pos, String s, bool reportError, bool tryParse, Exception& exc)
+  bool Int32::JumpOverWhite(int32& pos, String s, bool reportError, bool tryParse, GCException& exc)
     {
     while(pos < s.Length() && Char::IsWhiteSpace(s[pos]))
       pos++;
@@ -219,14 +219,14 @@ namespace System
     if(reportError && pos >= s.Length()) 
       {
       if(!tryParse)
-        exc = GetFormatException();
+        exc.Reset(new Exception(GetFormatException()));
       return false;
       }
 
     return true;
     }
 
-  bool Int32::CheckStyle(Globalization::NumberStyles style, bool tryParse, Exception& exc)
+  bool Int32::CheckStyle(Globalization::NumberStyles style, bool tryParse, GCException& exc)
     {
     using namespace Globalization;
     if(((intptr)style & (intptr)NumberStyles::AllowHexSpecifier) != 0)
@@ -239,14 +239,14 @@ namespace System
       if(ne != NumberStyles::None) 
         {
         if(!tryParse)
-          exc = ArgumentException(L"With AllowHexSpecifier only AllowLeadingWhite and AllowTrailingWhite are permitted.");
+          exc.Reset(new ArgumentException(L"With AllowHexSpecifier only AllowLeadingWhite and AllowTrailingWhite are permitted."));
         return false;
         }
       } 
     else if((uintptr) style > (uintptr) NumberStyles::Any)
       {
       if(!tryParse)
-        exc = ArgumentException(L"Not a valid number style");
+        exc.Reset(new ArgumentException(L"Not a valid number style"));
       return false;
       }
 
@@ -295,6 +295,65 @@ namespace System
       return Char::IsDigit(e) || (e >= L'A' && e <= L'F') || (e >= L'a' && e <= L'f');
 
     return Char::IsDigit(e);
+    }
+
+  bool Int32::FindExponent(int32 pos, String s, int32 exponent, bool tryParse, GCException& exc)
+    {
+    exponent = 0;
+
+    if(pos >= s.Length() || (s[pos] != L'e' && s[pos] != L'E')) 
+      {
+      exc.Reset();
+      return false;
+      }
+
+    auto i = pos + 1;
+    if(i == s.Length()) 
+      {
+      exc.Reset(tryParse ? nullptr : new Exception(GetFormatException()));
+      return true;
+      }
+
+    // negative exponent not valid for Int32
+    if(s[i] == L'-') 
+      {
+      //exc = tryParse ? null : new OverflowException ("Value too large or too small.");
+      exc.Reset(tryParse ? nullptr : new SystemException(L"Value too large or too small."));
+      return true;
+      }
+
+    if(s[i] == L'+' && ++i == s.Length()) 
+      {
+      exc.Reset(tryParse ? nullptr : new Exception(GetFormatException()));
+      return true;
+      }
+
+    int64 exp = 0; // temp long value
+    for(; i < s.Length(); i++) 
+      {
+      if(!Char::IsDigit(s[i]))  
+        {
+        exc.Reset(tryParse ? nullptr : new Exception(GetFormatException()));
+        return true;
+        }
+
+      // Reduce the risk of throwing an overflow exc
+      exp = exp * 10 - (int32)(s [i] - L'0');
+      if(exp < Int32::MinValue || exp > Int32::MaxValue) 
+        {
+        //exc = tryParse ? nullptr : new OverflowException ("Value too large or too small.");
+        exc.Reset(tryParse ? nullptr : new SystemException(L"Value too large or too small."));
+        return true;
+        }
+      }
+
+    // exp value saved as negative
+    exp = -exp;
+
+    exc.Reset();
+    exponent = (int32)exp;
+    pos = i;
+    return true;
     }
 
   }

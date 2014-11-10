@@ -31,12 +31,13 @@ namespace System
       static Exception GetFormatException();
       virtual bool Equals(Object* /*obj*/) override;
       static int Parse(String /*s*/);
-      static bool CheckStyle(Globalization::NumberStyles style, bool tryParse, Exception& exc);
+      static bool CheckStyle(Globalization::NumberStyles style, bool tryParse, GCException& exc);
       static void FindCurrency(int32& pos, String s, Globalization::NumberFormatInfo* nfi, bool& foundCurrency);
+      static bool FindExponent(int32 pos, String s, int32 exponent, bool tryParse, GCException& exc);
       static void FindSign(int32& pos, String s, Globalization::NumberFormatInfo* nfi, bool& foundSign, bool& negative);
       static bool FindOther(int32 pos, String s, String other);
       static bool ValidDigit(wchar_t e, bool allowHex);
-      static bool JumpOverWhite(int32& pos, String s, bool reportError, bool tryParse, Exception& exc); 
+      static bool JumpOverWhite(int32& pos, String s, bool reportError, bool tryParse, GCException& exc); 
     private:
       static bool Parse(String /*s*/, bool /*tryParse*/, int& /*result*/, Exception& /*exc*/);
       static bool ProcessTrailingWhitespace(bool /*tryParse*/, String /*s*/, int /*position*/, Exception& /*exc*/);
