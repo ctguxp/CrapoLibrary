@@ -2,6 +2,8 @@
 #include "System.Object.h"
 #include "System.IComparable.h"
 #include "System.IFormatProvider.h"
+#include "System.Globalization.NumberStyles.h"
+#include "System.Exception.h"
 
 namespace System
   {
@@ -26,5 +28,8 @@ namespace System
       virtual String ToString() override;
       String ToString(IFormatProvider* /*provider*/);
       virtual uint32 GetHashCode() override;
+      static bool TryParse(String s, Globalization::NumberStyles style, IFormatProvider* provider, int64& result);
+    protected:
+      static bool Parse(String s, Globalization::NumberStyles style, IFormatProvider* fp, bool tryParse, int64& result, GCException& exc);
     };
   }
