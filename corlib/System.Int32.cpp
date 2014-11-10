@@ -61,15 +61,15 @@ namespace System
     return FormatException(L"Input string was not in the correct format");
     }
   int Int32::Parse(String s)
-		{
-			Exception exc;
-			int res;
+    {
+    Exception exc;
+    int res;
 
-			if(!Parse(s, false, res, exc))
-				throw exc;
+    if(!Parse(s, false, res, exc))
+      throw exc;
 
-			return res;
-		}
+    return res;
+    }
   bool Int32::ProcessTrailingWhitespace(bool tryParse, String s, int position, Exception& exc)
     {
     int len = s.Length();
@@ -193,22 +193,108 @@ namespace System
     return true;
     }
 
-    int Int32::CompareTo(Object& value)
-      {
-      if(&value == nullptr)
-				return 1;
-			
-			Int32 test;
-      if(!(Object::IsInstance(test, value)))
-				throw ArgumentException(L"Value is not a System.Int32");
+  int Int32::CompareTo(Object& value)
+    {
+    if(&value == nullptr)
+      return 1;
 
-			Int32& xv = static_cast<Int32&>(value);
-			if(_value == xv)
-				return 0;
-			if(_value > xv)
-				return 1;
-			else
-				return -1;
+    Int32 test;
+    if(!(Object::IsInstance(test, value)))
+      throw ArgumentException(L"Value is not a System.Int32");
+
+    Int32& xv = static_cast<Int32&>(value);
+    if(_value == xv)
+      return 0;
+    if(_value > xv)
+      return 1;
+    else
+      return -1;
+    }
+
+  bool Int32::JumpOverWhite(int32& pos, String s, bool reportError, bool tryParse, Exception& exc)
+    {
+    while(pos < s.Length() && Char::IsWhiteSpace(s[pos]))
+      pos++;
+
+    if(reportError && pos >= s.Length()) 
+      {
+      if(!tryParse)
+        exc = GetFormatException();
+      return false;
       }
+
+    return true;
+    }
+
+  bool Int32::CheckStyle(Globalization::NumberStyles style, bool tryParse, Exception& exc)
+    {
+    using namespace Globalization;
+    if(((intptr)style & (intptr)NumberStyles::AllowHexSpecifier) != 0)
+      {
+      NumberStyles ne = (NumberStyles)((intptr)style ^ (intptr)NumberStyles::AllowHexSpecifier);
+      if(((intptr)ne & (intptr)NumberStyles::AllowLeadingWhite) != 0)
+        ne = (NumberStyles)((intptr)ne ^ (intptr)NumberStyles::AllowLeadingWhite);
+      if(((intptr)ne & (intptr)NumberStyles::AllowTrailingWhite) != 0)
+        ne = (NumberStyles)((intptr)ne ^ (intptr)NumberStyles::AllowTrailingWhite);
+      if(ne != NumberStyles::None) 
+        {
+        if(!tryParse)
+          exc = ArgumentException(L"With AllowHexSpecifier only AllowLeadingWhite and AllowTrailingWhite are permitted.");
+        return false;
+        }
+      } 
+    else if((uintptr) style > (uintptr) NumberStyles::Any)
+      {
+      if(!tryParse)
+        exc = ArgumentException(L"Not a valid number style");
+      return false;
+      }
+
+    return true;
+    }
+
+  void Int32::FindSign(int32& pos, String s, Globalization::NumberFormatInfo* nfi, bool& foundSign, bool& negative)
+    {
+    if((pos + nfi->NegativeSign().Length()) <= s.Length() && s.IndexOfOrdinalUnchecked(nfi->NegativeSign(), pos, nfi->NegativeSign().Length()) == pos) 
+      {
+      negative = true;
+      foundSign = true;
+      pos += nfi->NegativeSign().Length();
+      } 
+    else if((pos + nfi->PositiveSign().Length()) <= s.Length() && s.IndexOfOrdinalUnchecked(nfi->PositiveSign(), pos, nfi->PositiveSign().Length()) == pos) 
+      {
+      negative = false;
+      pos += nfi->PositiveSign().Length();
+      foundSign = true;
+      } 
+    }
+
+  void Int32::FindCurrency(int32& pos, String s, Globalization::NumberFormatInfo* nfi, bool& foundCurrency)
+    {
+    if((pos + nfi->CurrencySymbol().Length()) <= s.Length() && s.Substring(pos, nfi->CurrencySymbol().Length()) == nfi->CurrencySymbol())
+      {
+      foundCurrency = true;
+      pos += nfi->CurrencySymbol().Length();
+      } 
+    }
+
+  bool Int32::FindOther(int32 pos, String s, String other)
+    {
+    if((pos + other.Length()) <= s.Length() && s.Substring(pos, other.Length()) == other) 
+      {
+      pos += other.Length();
+      return true;
+      } 
+
+    return false;
+    }
+
+  bool Int32::ValidDigit(wchar_t e, bool allowHex)
+    {
+    if(allowHex)
+      return Char::IsDigit(e) || (e >= L'A' && e <= L'F') || (e >= L'a' && e <= L'f');
+
+    return Char::IsDigit(e);
+    }
 
   }
