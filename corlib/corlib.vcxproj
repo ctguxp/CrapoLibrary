@@ -63,6 +63,7 @@
     <ClInclude Include="System.Collections.Stack.h" />
     <ClInclude Include="System.Console.h" />
     <ClInclude Include="System.FormatException.h" />
+    <ClInclude Include="System.Globalization.h" />
     <ClInclude Include="System.Globalization.NumberStyles.h" />
     <ClInclude Include="System.IO.BinaryReader.h" />
     <ClInclude Include="System.IO.BinaryWriter.h" />
