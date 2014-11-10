@@ -24,6 +24,7 @@ namespace System
       virtual bool Equals(Char) override;
       static bool IsLowSurrogate(wchar_t);
       static bool IsHighSurrogate(wchar_t);
+      static bool IsLower(wchar_t c);
       static bool IsSurrogate(wchar_t);
       static bool IsWhiteSpace(wchar_t);
       static bool IsDigit(wchar_t c);

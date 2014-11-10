@@ -56,6 +56,13 @@ namespace System
     {
     return c >= 0xD800 && c <= 0xDBFF;
     }
+
+  bool Char::IsLower(wchar_t c)
+		{
+    using namespace Globalization;
+		return (CategoryData_v4[c] == (byte)UnicodeCategory::LowercaseLetter);
+		}
+
   // Is surrogate
   bool Char::IsSurrogate(wchar_t c)
     {
