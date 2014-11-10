@@ -11,10 +11,13 @@ namespace System
     public:
       Math();
       ~Math();
+      static int32 DivRem(int32 a, int32 b, int32& result);
+      static int64 DivRem(int64 a, int64 b, int64& result);
       static byte Max(byte, byte);
-      static int Max(int32, int32);
+      static int32 Max(int32, int32);
       static uintptr Max(uintptr, uintptr);
-      static int Min(int, int);
+      static int32 Min(int, int);
+      static double Pow(double x, double y);
       static double Sqrt(double d);
       static double Round(double a);
     };
