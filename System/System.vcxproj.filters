@@ -28,6 +28,15 @@
     <Filter Include="Header Files\System.Net.Sockets">
       <UniqueIdentifier>{86b8a6ac-b2a2-4b4b-8648-ede327c3fac7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\System.Net.Sockets">
+      <UniqueIdentifier>{cca0c25d-af2c-40db-b571-74c59658b74a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System.Net">
+      <UniqueIdentifier>{faa2beff-dc19-4a53-b3e7-8b073b801c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Net">
+      <UniqueIdentifier>{a51d5b47-bb8b-4f65-a224-b907cdc70fa1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -138,6 +147,30 @@
     <ClInclude Include="System.Net.Sockets.ProtocolType.h">
       <Filter>Header Files\System.Net.Sockets</Filter>
     </ClInclude>
+    <ClInclude Include="System.Net.Sockets.h">
+      <Filter>Header Files\System.Net.Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Net.Sockets.Socket.h">
+      <Filter>Header Files\System.Net.Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Net.Sockets.WinSock2.h">
+      <Filter>Header Files\System.Net.Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Net.IPAddress.h">
+      <Filter>Header Files\System.Net</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Net.EndPoint.h">
+      <Filter>Header Files\System.Net</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Net.SocketAddress.h">
+      <Filter>Header Files\System.Net</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Net.IPEndPoint.h">
+      <Filter>Header Files\System.Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -220,6 +253,24 @@
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Literal.cpp">
       <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Net.Sockets.Socket.cpp">
+      <Filter>Source Files\System.Net.Sockets</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Net.Sockets.WinSock2.cpp">
+      <Filter>Source Files\System.Net.Sockets</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Net.IPAddress.cpp">
+      <Filter>Source Files\System.Net</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Net.EndPoint.cpp">
+      <Filter>Source Files\System.Net</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Net.SocketAddress.cpp">
+      <Filter>Source Files\System.Net</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Net.IPEndPoint.cpp">
+      <Filter>Source Files\System.Net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

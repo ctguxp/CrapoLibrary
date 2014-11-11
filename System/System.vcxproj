@@ -35,9 +35,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System.Net.EndPoint.h" />
+    <ClInclude Include="System.Net.IPAddress.h" />
+    <ClInclude Include="System.Net.IPEndPoint.h" />
+    <ClInclude Include="System.Net.SocketAddress.h" />
+    <ClInclude Include="SystemLib.h" />
     <ClInclude Include="System.Net.Sockets.AddressFamily.h" />
+    <ClInclude Include="System.Net.Sockets.h" />
     <ClInclude Include="System.Net.Sockets.ProtocolType.h" />
+    <ClInclude Include="System.Net.Sockets.Socket.h" />
     <ClInclude Include="System.Net.Sockets.SocketType.h" />
+    <ClInclude Include="System.Net.Sockets.WinSock2.h" />
     <ClInclude Include="System.Text.RegularExpressions.BaseMachine.h" />
     <ClInclude Include="System.Text.RegularExpressions.Capture.h" />
     <ClInclude Include="System.Text.RegularExpressions.CaptureCollection.h" />
@@ -83,6 +91,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicDebug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DynamicRelease|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="System.Net.EndPoint.cpp" />
+    <ClCompile Include="System.Net.IPAddress.cpp" />
+    <ClCompile Include="System.Net.IPEndPoint.cpp" />
+    <ClCompile Include="System.Net.SocketAddress.cpp" />
+    <ClCompile Include="System.Net.Sockets.Socket.cpp" />
+    <ClCompile Include="System.Net.Sockets.WinSock2.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.BaseMachine.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Capture.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.CaptureCollection.cpp" />
