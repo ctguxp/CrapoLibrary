@@ -33,6 +33,7 @@ typedef int32  intptr;
 typedef uint32 uintptr;
 #endif
 
+#define _WINSOCKAPI_
 #include <windows.h>
 #include <commctrl.h>
 

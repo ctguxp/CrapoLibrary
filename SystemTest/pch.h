@@ -10,5 +10,5 @@
 // Headers for CppUnitTest
 #include "CppUnitTest.h"
 
-#include "corlib.h"
-#include "System.Text.RegularExpressions.h"
+#include <corlib.h>
+#include <SystemLib.h>

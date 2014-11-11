@@ -39,6 +39,7 @@ typedef uint32 uintptr;
 
 const int16 max_lib_buffer_size = 32767;  // Default buffer size
 
+#define _WINSOCKAPI_
 #include <windows.h>
 #include <commctrl.h>
 

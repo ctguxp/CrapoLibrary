@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\System.Net.Sockets">
+      <UniqueIdentifier>{ed66ba36-1ca8-49f1-b342-b06426747843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System.Net">
+      <UniqueIdentifier>{322e0752-d20c-4960-8461-749e33f82a87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -28,6 +34,12 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketTest.cpp">
+      <Filter>Source Files\System.Net.Sockets</Filter>
+    </ClCompile>
+    <ClCompile Include="IPAddressTest.cpp">
+      <Filter>Source Files\System.Net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

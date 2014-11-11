@@ -58,7 +58,7 @@ namespace System
         IPv6DestinationOptions,
         /// <summary>IPv6 Hop by Hop Options header.</summary>
         IPv6HopByHopOptions = 0
-        }
+        };
       }
     }
   }
