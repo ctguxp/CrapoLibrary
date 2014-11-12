@@ -7,7 +7,7 @@ namespace System
   namespace ServiceProcess
     {
     class ServiceInstaller;
-    class ServiceController
+    class ServiceController : public Object
       {
       private:
         class ServiceHandle

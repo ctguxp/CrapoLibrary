@@ -5,6 +5,13 @@ namespace System
   {
   namespace ServiceProcess
     {
+    class ServiceTableEntry : public Object
+      {
+      public:
+        LPWSTR                      lpServiceName;
+        LPSERVICE_MAIN_FUNCTIONW    lpServiceProc;
+      };
+
     class ServiceBase
       {
       static bool share_process;

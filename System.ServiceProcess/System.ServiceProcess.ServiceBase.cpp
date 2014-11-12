@@ -207,9 +207,9 @@ namespace System
       }
     void ServiceBase::Win32RunService(Array<ServiceBase*>& services)
       {
-      Array<SERVICE_TABLE_ENTRY> table(services.Length() + 1);
+      Array<ServiceTableEntry> table(services.Length() + 1);
 
-      sizet i = 0;
+      int32 i = 0;
       for(; i < services.Length(); ++i)
         {
         table[i].lpServiceName = (LPWSTR)(LPCWSTR)services[i]->ServiceName();
@@ -222,7 +222,7 @@ namespace System
 
       share_process = (services.Length() > 1);
 
-      if(!StartServiceCtrlDispatcher(table.ToPtr()))
+      if(!StartServiceCtrlDispatcher((SERVICE_TABLE_ENTRYW*)table.ToPtr()))
         //throw new Win32Exception ();
           throw WinException(L"StartServiceCtrlDispatcher Failed");
       }
