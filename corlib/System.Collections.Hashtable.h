@@ -25,8 +25,9 @@ namespace System
         CHAIN_MARKER  = ~Int32::MaxValue
         };
       protected:
-        struct Slot
+        class Slot : public Object
           {
+          public:
           Slot()
             :key()
             ,value()

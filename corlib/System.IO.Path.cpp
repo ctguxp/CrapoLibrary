@@ -440,7 +440,7 @@ namespace System
 
         if(dirs[i] == String(L".") || (i != 0 && dirs[i].Length() == 0))
           continue;
-        else if (dirs[i] == "..") 
+        else if (dirs[i] == String(L"..")) 
           {
           // don't overwrite path segments below the limit
           if(target > limit)
@@ -451,7 +451,7 @@ namespace System
         }
 
       // STEP 5: Combine everything.
-      if(target == 0 || (target == 1 && dirs[0] == ""))
+      if(target == 0 || (target == 1 && dirs[0] == String::Empty()))
         return root;
       else 
         {

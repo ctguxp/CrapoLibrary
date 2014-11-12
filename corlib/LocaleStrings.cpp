@@ -21,11 +21,11 @@ System::String MakeLocaleString(int32 idx)
   return str.ToString();
   }
 
-System::IntArray MakeLocaleArray(const int32* gs, sizet len)
+System::IntArray MakeLocaleArray(const int32* gs, int32 len)
   {
   using namespace System;
-  sizet i = 0;
-  sizet length = 0;
+  int32 i = 0;
+  int32 length = 0;
   for(;i < len; ++i)
     {
     if(gs[i] == -1)

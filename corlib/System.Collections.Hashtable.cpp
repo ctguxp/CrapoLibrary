@@ -176,7 +176,7 @@ namespace System
 
     Hashtable::~Hashtable()
       {
-      for(sizet i = 0; i < _table.Length(); ++i)
+      for(int32 i = 0; i < (int32)_table.Length(); ++i)
         {
         if(_table[i].key.Get() != nullptr)
           _table[i].key.Reset();
@@ -256,7 +256,7 @@ namespace System
 
     void Hashtable::Clear()
       {
-      for(sizet i = 0; i < _table.Length(); i++)
+      for(int32 i = 0; i < (int32)_table.Length(); i++)
         {
         _table[i].key.Reset();
         _table[i].value.Reset();
@@ -451,7 +451,7 @@ namespace System
 
       Array<Slot> newTable(newSize);
       IntArray newHashes(newSize);
-      for(sizet z = 0; z < newHashes.Length(); ++z)
+      for(int32 z = 0; z < (int32)newHashes.Length(); ++z)
         newHashes[z] = 0;
 
       for(int32 i = 0; i < oldSize; i++) 

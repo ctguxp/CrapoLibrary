@@ -6,6 +6,7 @@
 #include "System.Array.hpp"
 #include "System.Exception.h"
 #include "System.NotImplementedException.h"
+#include "System.NotSupportedException.h"
 #include "System.Collections.Generic.EqualityComparer.h"
 
 namespace System
@@ -99,7 +100,7 @@ namespace System
   // ------------------------------------------------------------------------
   /// Constant subscript operator
   template<class T>
-  const T& Array<T>::operator[] (sizet idx) const
+  const T& Array<T>::operator[](int32 idx) const
     {
     sizet const offset = idx - _base;
     if(offset >= _len)
@@ -111,7 +112,7 @@ namespace System
   // ------------------------------------------------------------------------
   /// Subscript operator
   template<class T>
-  T& Array<T>::operator[] (sizet idx)
+  T& Array<T>::operator[] (const int32 idx)
     {
     sizet const offset = idx - _base;
     if(offset >= _len)
@@ -159,6 +160,99 @@ namespace System
     _base = 0;
     }
   // ------------------------------------------------------------------------
+
+  template<class T>
+  int32 Array<T>::Count()
+    {
+    return (int32)_len;
+    }
+
+  template<class T>
+  bool Array<T>::IsSynchronized() 
+    {
+    return false;
+    }
+
+  template<class T>
+  Collections::Generic::IEnumerator<T>* Array<T>::GetEnumerator()
+    {
+    return nullptr;
+    }
+
+  template<class T>
+  bool Array<T>::IsFixedSize()
+    {
+    return true;
+    }
+
+  template<class T>
+  bool Array<T>::IsReadOnly()
+    {
+    return false;
+    }
+
+  template<class T>
+  sizet Array<T>::Add(T& /*value*/)
+    {
+    throw NotSupportedException();
+    }
+
+  template<class T>
+  void Array<T>::Clear()
+    {
+    Array<T>::Clear(*this, (int32)GetLowerBound(), (int32)Length());
+    }
+
+  template<class T>
+  int32 Array<T>::Rank()
+    {
+    return 1;
+    }
+
+  template<class T>
+  bool Array<T>::Contains(T& value)
+    {
+    int32 length = (int32)Length();
+    for(int32 i = 0; i < length; i++) 
+      {
+      if(value == _ptr[i])
+        return true;
+      }
+    return false;
+    }
+
+  template<class T>
+  int32 Array<T>::IndexOf(T& value)
+    {
+    int32 length = (int32)Length();
+    for(int32 i = 0; i < length; i++) 
+      {
+      // array index may not be zero-based.  use lower bound
+      if(value == _ptr[i])
+        return i + (int32)GetLowerBound();
+      }
+
+    // lower bound may be MinValue
+    return (int32)GetLowerBound() - 1;
+    }
+
+  template<class T>
+  void Array<T>::Insert(int32 /*index*/, T& /*value*/)
+    {
+    throw NotSupportedException();
+    }
+
+  template<class T>
+  void Array<T>::Remove(T& /*value*/)
+    {
+    throw NotSupportedException();
+    }
+
+  template<class T>
+  void Array<T>::RemoveAt(int32 /*index*/)
+    {
+    throw NotSupportedException();
+    }
 
   // ------------------------------------------------------------------------
   // Set all items in the array to same value
@@ -230,6 +324,29 @@ namespace System
 
     return (int)Generic::EqualityComparer<T>::Default()->IndexOf(arr, value, (int)startIndex, (int)(startIndex + count) );
     }
+
+  template<class T>
+  void Array<T>::Clear(Array<T>& arr, int32 index, int32 length)
+		{
+			if(&arr == nullptr)
+				throw ArgumentNullException(L"arr");
+			if(length < 0)
+				//TODO : throw IndexOutOfRangeException(L"length < 0");
+        throw SystemException(L"Index of of range, length < 0");
+
+			int32 low = (int32)arr.GetLowerBound();
+			if(index < low)
+				//throw IndexOutOfRangeException(L"index < lower bound");
+        throw SystemException(L"Index of of range, index < lower bound");
+			index = index - low;
+
+			// re-ordered to avoid possible integer overflow
+			if(index > (int32)arr.Length() - length)
+				//throw IndexOutOfRangeException(L"index + length > size");
+        throw SystemException(L"Index of of range, index + length > size");
+
+			//TODO ClearInternal(arr, index, length);
+		}
 
   template<class T>
   Array2D<T>::Array2D(sizet r, sizet c)

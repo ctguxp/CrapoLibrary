@@ -690,8 +690,8 @@ namespace System
         _currencyGroupSizes.Length(0);
         return;
         }
-      sizet num = value.Length() - 1;
-      for(sizet i = 0; i < num; i++)
+      int32 num = (int32)value.Length() - 1;
+      for(int32 i = 0; i < num; i++)
         {
         if(value[i] < 1 || value[i] > 9)
           {
@@ -723,8 +723,8 @@ namespace System
         _numberGroupSizes.Length(0);
         return;
         }
-      sizet num = value.Length() - 1;
-      for(sizet i = 0; i < num; i++)
+      int32 num = (int32)value.Length() - 1;
+      for(int32 i = 0; i < num; i++)
         {
         if(value[i] < 1 || value[i] > 9)
           {
@@ -756,8 +756,8 @@ namespace System
         _percentGroupSizes.Length(0);
         return;
         }
-      sizet num = value.Length() - 1;
-      for(sizet i = 0; i < num; i++)
+      int32 num = (int32)value.Length() - 1;
+      for(int32 i = 0; i < num; i++)
         {
         if(value[i] < 1 || value[i] > 9)
           {

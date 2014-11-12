@@ -54,7 +54,7 @@ namespace System
       throw ArgumentOutOfRangeException(L"offsetOut + cOutArr.Length > outArray.Length");
 
     outArray.Base(offsetOut);
-    for(sizet i = 0; i < cOutArr.Length(); ++i)
+    for(int32 i = 0; i < (int32)cOutArr.Length(); ++i)
       outArray[i] = cOutArr[i];
     outArray.Base(0);
 

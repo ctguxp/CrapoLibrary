@@ -1,7 +1,6 @@
 // Perch Lake Computer System
 
 #pragma once
-#include "AutoPtr.h"
 #include "System.Array.h"
 #include "System.Ownership.h"
 #include "Global.Memory.h"
@@ -42,16 +41,26 @@ namespace System
     public:
       ObjectArray(uint32 len = 0);
       ~ObjectArray();
-      const Object& operator [] (uint32) const;
+      /* const Object& operator [] (uint32) const;*/
       Object& operator [] (uint32);
       bool IsNull();
       void Add(uint32, Object&);
       uint32 Length();
     private:
-#pragma warning(disable:4251)
+      //#pragma warning(disable:4251)
       Array<Object*> _array;
-#pragma warning(default:4251)
+      //#pragma warning(default:4251)
     };
+
+  inline bool operator == (Object& left, Object& right)
+    {
+    return left.Equals(&right);
+    }
+
+  inline bool operator == (GCObject& left, GCObject& right)
+    {
+    return left->Equals(right.Get());
+    }
 
   }
 

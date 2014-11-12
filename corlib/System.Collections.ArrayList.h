@@ -37,12 +37,15 @@ namespace System
           };
       public:
         ArrayList();
-        ArrayList(int32 capacity);
+        ArrayList(int32 /*capacity*/);
+        ArrayList(ICollection* /*collection*/);
         virtual ~ArrayList();
         virtual GCObject& operator[](const int32 item) override { return _items[item]; }
         virtual sizet Capacity();
         void Set(int32 /*index*/, GCObject& /*obj*/);
-        virtual void Capacity(int32 value);
+        virtual void Capacity(int32 /*value*/);
+        virtual void AddRange(ICollection* /*collection*/);
+        virtual void InsertRange(int32 index, ICollection* collection);
         //virtual int IndexOf(GCObject& /*value*/, int /*startIndex*/);
         //virtual int IndexOf(GCObject& value, sizet startIndex, sizet count);
         // From IEnumerable

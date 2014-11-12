@@ -15,7 +15,7 @@ namespace System
       static int64 DivRem(int64 a, int64 b, int64& result);
       static byte Max(byte, byte);
       static int32 Max(int32, int32);
-      static uintptr Max(uintptr, uintptr);
+      static uint64 Max(uint64, uint64);
       static int32 Min(int, int);
       static double Pow(double x, double y);
       static double Sqrt(double d);

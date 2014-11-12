@@ -40,8 +40,7 @@ namespace System
     {
     return (val1 > val2)? val1: val2;
     }
-
-  uintptr Math::Max(uintptr val1, uintptr val2)
+  uint64 Math::Max(uint64 val1, uint64 val2)
     {
     return (val1 > val2)? val1: val2;
     }

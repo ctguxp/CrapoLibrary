@@ -13,11 +13,12 @@
 // The purpose of this class is combining the above descriptions for the Crapo project
 
 #pragma once
+#include "System.Collections.Generic.IList.h"
 
 namespace System
   {
   template<class T>
-  class Array
+  class Array : public System::Collections::Generic::IList<T>
     {
     private:
       sizet _len;  // Current length
@@ -30,10 +31,10 @@ namespace System
       Array(const Array<T>& arr);
 
       // Destructor
-      ~Array();
-      Array<T>& operator = (const Array<T>& arr);
-      const T& operator [] (sizet idx) const;
-      T& operator [] (sizet idx);
+      virtual ~Array();
+      Array<T>& operator = (const Array<T>& /*arr*/);
+      const T& operator [] (int32 /*idx*/) const;
+      virtual T& operator[](const int32 /*idx*/) override;
 
       bool IsNull() { return _ptr != nullptr ? false : true; }
       bool IsNull() const { return _ptr != nullptr ? false : true; }
@@ -43,11 +44,25 @@ namespace System
       
       sizet Base() const { return _base; }
       void Base(sizet new_base);
+      virtual int32 Count() override;
+      virtual bool IsSynchronized() override;
+      virtual Collections::Generic::IEnumerator<T>* GetEnumerator() override;
+      virtual bool IsFixedSize() override;
+      virtual bool IsReadOnly() override;
+      virtual sizet Add(T& value) override;
+      virtual void Clear() override;
+      virtual bool Contains(T& value) override;
+      virtual int32 IndexOf(T& value) override;
+      virtual void Insert(int32 index, T& value) override;
+      virtual void Remove(T& value) override;
+      virtual void RemoveAt(int32 index) override;
+      int Rank();
       sizet GetLowerBound();
       sizet GetUpperBound();
       sizet Length() const { return _len; }
       void Length(sizet new_len);
 
+      static void Clear(Array<T>& arr, int32 index, int32 length);
       static void Copy(T*, sizet, T*, sizet, sizet);
       static void CopyByRef(Array<T>& /*src*/, sizet /*srcIndex*/, Array<T>&, sizet, sizet);
       static int IndexOf(Array<T*>& arr, T& value);

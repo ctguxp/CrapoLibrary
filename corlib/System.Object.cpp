@@ -86,10 +86,10 @@ namespace System
     _array[idx] = &obj;
     }
 
-  const Object& ObjectArray::operator [] (uint32 idx) const
+ /* const Object& ObjectArray::operator [] (uint32 idx) const
     {
     return *_array[idx];
-    }
+    }*/
 
   Object& ObjectArray::operator [] (uint32 idx)
     {

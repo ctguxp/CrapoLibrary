@@ -2035,10 +2035,10 @@ namespace System
     return sb.ToString();
     }
 
-  bool operator==(const String& s1, const String& s2)
+ /* bool operator==(const String& s1, const String& s2)
     {
     return String::Equals(s1, s2);
-    }
+    }*/
 
   bool operator!=(const String& s1, const String& s2)
     {

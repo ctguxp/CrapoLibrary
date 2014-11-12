@@ -77,8 +77,8 @@ namespace System
       ,_modCount(0)
       ,_contents(_capacity)
       {
-      sizet s = _contents.Length();
-      for(sizet i = 0; i < s; ++i)
+      int32 s = (int32)_contents.Length();
+      for(int32 i = 0; i < s; ++i)
         _contents[i].Reset();  
       }
     Stack::Stack(int32 initialCapacity)
@@ -88,8 +88,8 @@ namespace System
       ,_modCount(0)
       ,_contents(_capacity)
       {
-      sizet s = _contents.Length();
-      for(sizet i = 0; i < s; ++i)
+      int32 s = (int32)_contents.Length();
+      for(int32 i = 0; i < s; ++i)
         _contents[i].Reset();  
       }
     Stack::~Stack()
@@ -199,8 +199,8 @@ namespace System
       {
       ncapacity = Math::Max(ncapacity, default_capacity);
       Array<GCObject> ncontents(ncapacity);
-      sizet s = ncontents.Length();
-      for(sizet i = 0; i < s; ++i)
+      int32 s = (int32)ncontents.Length();
+      for(int32 i = 0; i < s; ++i)
         ncontents[i].Reset(); 
 
       Array<GCObject>::CopyByRef(_contents, 0, ncontents, 0, _count);		

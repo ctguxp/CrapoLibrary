@@ -5677,4 +5677,4 @@ static const char locale_strings[] = {
 };
 
 System::String MakeLocaleString(int32 idx);
-System::IntArray MakeLocaleArray(const int32* gs, sizet len);
+System::IntArray MakeLocaleArray(const int32* gs, int32 len);

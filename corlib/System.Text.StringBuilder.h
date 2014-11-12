@@ -40,7 +40,7 @@ namespace System
         virtual String ToString() override;
       private:
         void Initialize(String& value, int startIndex, int length, int capacity);
-        void InternalEnsureCapacity(uint32); 
+        void InternalEnsureCapacity(uint32);
 
       private:
         uint32   _length;

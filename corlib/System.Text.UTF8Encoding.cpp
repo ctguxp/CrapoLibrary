@@ -241,7 +241,7 @@ namespace System
 
       CharArray fallback_chars(buffer->Remaining());
       for(uint32 i = 0; i < fallback_chars.Length(); i++)
-        fallback_chars[i] = buffer->GetNextChar ();
+        fallback_chars[i] = buffer->GetNextChar();
 
       buffer->Reset();
 

@@ -63,24 +63,66 @@ namespace System
       _index = -1;
       }
 
+
     ArrayList::ArrayList()
       :_size(0)
       ,_version(0)
       ,_items()
       {
       }
+
     ArrayList::ArrayList(int32 capacity)
-      :_size(capacity != 0 ? capacity : 4)
+      :_size(0)
       ,_version(0)
-      ,_items(_size)
+      ,_items(0)
       {
-      for(sizet i = 0; i < _items.Length(); ++i)
+
+      if(capacity < 0) 
+			{
+				Int32 cap(capacity);
+        ThrowNewArgumentOutOfRangeException(L"capacity", &cap, L"The initial capacity can't be smaller than zero.");
+			}
+      
+      if(capacity == 0)
+      {
+      _size = DefaultInitialCapacity;
+      _items.Length(DefaultInitialCapacity);
+      }
+      
+      for(int32 i = 0; i < (int32)_items.Length(); ++i)
         _items[i] = GCObject();
       }
+
+    ArrayList::ArrayList(ICollection* collection)
+      :_size(collection != nullptr ? collection->Count() : 0)
+      ,_version(0)
+      ,_items()
+      {
+      //Array array;
+
+			if(collection == nullptr) 
+			{
+				throw ArgumentNullException(L"c");
+			}
+						
+			//array = c as Array;
+
+			//if (array != null && array.Rank != 1) 
+			//{
+				//throw new RankException();
+			//}
+
+			//_items = new object[c.Count];
+      _items.Length(collection->Count());
+
+			AddRange(collection);
+      }
+
     ArrayList::~ArrayList()
       {
       Free();
       }
+
     void ArrayList::Set(int32 index, GCObject& obj)
       {
       if(index >= _size) 
@@ -90,15 +132,16 @@ namespace System
 				_items[index] = obj;
 				_version++;
       }
+
     int32 ArrayList::Count()
       {
       return _size;
       }
+
     sizet ArrayList::Capacity()
       {
       return _items.Length();
       }
-
     void ArrayList::Capacity(int32 value) 
       {
       if(value < _size)
@@ -109,18 +152,22 @@ namespace System
 
       _items.Length(value);
       }
+
     bool ArrayList::IsSynchronized()
       {
       return false;
       }
+
     bool ArrayList::IsFixedSize()
       {
       return false;
       }
+
     bool ArrayList::IsReadOnly()
       {
       return false;
       }
+
     sizet ArrayList::Add(GCObject& value)
       {
       if((int32)_items.Length() <= _size /* same as _items.Length < _size + 1) */) 
@@ -132,6 +179,12 @@ namespace System
 
       return (int)_size++;
       }
+
+    void ArrayList::AddRange(ICollection* collection) 
+		{
+			InsertRange(_size, collection);
+		}
+
     void ArrayList::Insert(int32 index, GCObject& value)
       {
       if(index > _size) 
@@ -146,6 +199,55 @@ namespace System
       _size++;
       _version++;
       }
+
+    void ArrayList::InsertRange(int32 index, ICollection* collection) 
+		{
+			if (collection == nullptr) 
+			{
+				throw ArgumentNullException(L"c");
+			}
+
+			if(index < 0 || index > _size) 
+			{
+				Int32 idx(index);
+        ThrowNewArgumentOutOfRangeException(L"index", &idx, L"Index must be >= 0 and <= Count.");
+			}
+
+			int32 i = collection->Count();
+			
+			// Do a check here in case EnsureCapacity isn't inlined.
+
+			if((int32)_items.Length() < _size + i) 
+			{
+				EnsureCapacity(_size + i);
+			}
+
+			if (index < _size) 
+			{
+				Array<GCObject>::Copy(_items.ToPtr(), index, _items.ToPtr(), index + i, _size - index);
+			}
+		
+			// Handle inserting a range from a list to itself specially.
+
+			//if(this == c->SyncRoot()) 
+			//{
+			//	// Copy range before the insert point.
+
+			//	Array::Copy(_items, 0, _items, index, index);
+
+			//	// Copy range after the insert point.
+
+			//	Array::Copy(_items, index + i, _items, index << 1, _size - index);
+			//}
+			//else 
+			//{
+			//	collection->CopyTo(_items, index);
+			//}
+		
+			_size += collection->Count();
+			_version++;
+		}
+
     void ArrayList::Remove(GCObject& value) 
       {
       int x = IndexOf(value);
@@ -157,11 +259,13 @@ namespace System
 
       _version++;
       }
+
     bool ArrayList::Contains(GCObject& /*item*/)
       {
       //TODO: return IndexOf(item, 0, _size) > -1;
       return false;
       }
+
     void ArrayList::Clear()
       {
       Free();
@@ -169,6 +273,7 @@ namespace System
       _size = 0;
       _version++;
       }
+
     void ArrayList::RemoveAt(int32 index)
       {
       if(index >= _size) 
@@ -185,11 +290,13 @@ namespace System
       _size--;
       _version++;
       }
+
     int ArrayList::IndexOf(GCObject& /*value*/)
       {
       //return IndexOf(value, 0);
       return 0;
       }
+
     //int ArrayList::IndexOf(GCObject& value, int startIndex)
     //  {
     //  return IndexOf(value, startIndex, _size - startIndex);

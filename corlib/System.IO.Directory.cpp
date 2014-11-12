@@ -45,7 +45,7 @@ namespace System
         
       // LAMESPEC: with .net 1.0 version this throw NotSupportedException and msdn says so too
       // but v1.1 throws ArgumentException.
-      if(Environment::IsRunningOnWindows() && path == ":")
+      if(Environment::IsRunningOnWindows() && path == String(L":"))
         throw ArgumentException(L"Only ':' In path");
 
       return CreateDirectoriesInternal(path);
@@ -202,10 +202,10 @@ namespace System
     void Directory::RecursiveDelete(String& path)
       {
       ulong error;
-      sizet i = 0;
+      int32 i = 0;
 
       StringArray df = GetDirectories(path);
-      for(; i < df.Length(); ++i)
+      for(; i < (int32)df.Length(); ++i)
         {
         if(CrapoIO::ExistsSymlink(df[i], error))
           CrapoIO::DeleteFile(df[i], error);
@@ -214,7 +214,7 @@ namespace System
         }
 
       df = GetFiles(path);
-      for(i = 0; i < df.Length(); ++i)
+      for(i = 0; i < (int32)df.Length(); ++i)
         File::Delete(df[i]);
       
       Directory::Delete(path);

@@ -10,8 +10,9 @@ namespace System
     namespace Generic
       {
 
-      struct Link
+      class Link : public Object
         {
+        public:
         int HashCode;
         int Next;
         };

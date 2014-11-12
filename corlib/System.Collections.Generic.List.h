@@ -16,24 +16,24 @@ namespace System
           };
         private:
           Array<T> _items;
-		      uintptr  _size;
-		      int      _version;
+		      int32    _size;
+		      int32    _version;
         public:
           List();
-          List(uintptr);
+          List(int32);
 
-          const T& operator [] (sizet idx) const;
-          T& operator [] (sizet idx);
+          const T& operator [] (int32 idx) const;
+          T& operator [] (int32 idx);
   
           void Add(T);
-          uintptr Capacity();
-          void Capacity(uintptr);
-          uintptr Count();
+          int32 Capacity();
+          void Capacity(int32);
+          int32 Count();
 
            Array<T> ToArray();
 
         private:
-          void GrowIfNeeded(uintptr);
+          void GrowIfNeeded(int32);
 
         };
       }
