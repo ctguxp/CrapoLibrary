@@ -19,7 +19,7 @@ namespace corlibtest
         :_testStreamData(new ByteArray(100))
         {
 
-        for(sizet i = 0; i < _testStreamData->Length(); i++)
+        for(int32 i = 0; i < (int32)_testStreamData->Length(); i++)
           (*_testStreamData)[i] = (byte)(100 - i);
 
         _testStream.Reset(new IO::MemoryStream(_testStreamData));

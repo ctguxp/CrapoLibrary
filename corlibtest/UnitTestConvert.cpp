@@ -21,7 +21,7 @@ namespace corlibtest
         ByteArray in((byte*)byteArr, 6);
         Convert::ToBase64CharArray(in, 0, (int)in.Length(), result, 0);
 
-        for(sizet i = 0; i < 8; i++)
+        for(int32 i = 0; i < 8; i++)
           {
           String msg(L"#S0");
           Int32 d((int)i);
@@ -37,7 +37,7 @@ namespace corlibtest
         CharArray in((wstring)charArr, 8);
         ByteArray fromCharArr = Convert::FromBase64CharArray(in, 0, 8);			
 
-        for(sizet i = 0; i < (int)fromCharArr.Length(); i++)
+        for(int32 i = 0; i < (int)fromCharArr.Length(); i++)
           {
           String msg(L"#U0{0}");
           Int32 d((int)i);
