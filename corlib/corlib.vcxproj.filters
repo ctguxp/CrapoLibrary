@@ -543,6 +543,18 @@
     <ClInclude Include="System.Collections.Queue.h">
       <Filter>Header Files\System.Collections</Filter>
     </ClInclude>
+    <ClInclude Include="System.Collections.Generic.IEnumerator.h">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.Generic.IEnumerable.h">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.Generic.ICollection.h">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="System.Collections.Generic.IList.h">
+      <Filter>Header Files\System.Collections.Generic</Filter>
+    </ClInclude>
     <ClInclude Include="System.Globalization.h">
       <Filter>Header Files\System.Globalization</Filter>
     </ClInclude>

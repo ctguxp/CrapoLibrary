@@ -44,6 +44,10 @@
     <ClInclude Include="System.Collections.CollectionBase.h" />
     <ClInclude Include="System.Collections.DictionaryEntry.h" />
     <ClInclude Include="System.Collections.Generic.h" />
+    <ClInclude Include="System.Collections.Generic.ICollection.h" />
+    <ClInclude Include="System.Collections.Generic.IEnumerable.h" />
+    <ClInclude Include="System.Collections.Generic.IEnumerator.h" />
+    <ClInclude Include="System.Collections.Generic.IList.h" />
     <ClInclude Include="System.Collections.IDictionaryEnumerator.h" />
     <ClInclude Include="System.Collections.IEnumerable.h" />
     <ClInclude Include="System.Collections.IEnumerator.h" />
