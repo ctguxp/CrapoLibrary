@@ -26,7 +26,7 @@ namespace System
 		    {
 			    return nullptr;
 		    }
-      void CaptureCollection::SetValue(Capture* cap, sizet i)
+      void CaptureCollection::SetValue(Capture* cap, int32 i)
 		    {
         _list[i] = cap;
 		    }

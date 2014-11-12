@@ -6,7 +6,7 @@ namespace System
     {
     namespace RegularExpressions
       {
-      class Mark
+      class Mark : public Object
         {
         public:
            int Start;

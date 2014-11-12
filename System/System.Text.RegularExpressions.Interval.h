@@ -39,7 +39,7 @@ namespace System
           ~IntervalCollection();
           void Add(Interval*);
           void Normalize();
-          IntervalCollection* GetMetaCollection(CostDelegate cost_del);
+          IntervalCollection* GetMetaCollection(CostDelegate* cost_del);
         };
       }
     }

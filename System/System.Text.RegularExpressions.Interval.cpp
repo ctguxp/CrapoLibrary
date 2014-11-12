@@ -82,7 +82,7 @@ namespace System
           }*/
         }
 
-      IntervalCollection* IntervalCollection::GetMetaCollection (CostDelegate /*cost_del*/) 
+      IntervalCollection* IntervalCollection::GetMetaCollection(CostDelegate* /*cost_del*/) 
         {
         IntervalCollection* meta = new IntervalCollection();
 

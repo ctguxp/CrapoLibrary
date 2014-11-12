@@ -20,13 +20,13 @@ namespace System
           {
           private:
             IntArray _values;
-			      sizet     _count;
+			      int32     _count;
           public:
             IntStack();
-            int Pop();
-            void Push(int value);
-            sizet Count();
-            void Count(sizet value);
+            int32 Pop();
+            void Push(int32 value);
+            int32 Count();
+            void Count(int32 value);
           };
           class RepeatContext
           {

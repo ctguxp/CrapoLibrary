@@ -414,22 +414,23 @@ EndOfGroup:
               }
 
 char_recognized:
-            if (range) 
+            if(range) 
               {
               // if 'range' is true, we know that 'last >= 0'
-              if (c < last){}
-              //throw NewParseException ("[" + last + "-" + c + "] range in reverse order.");
-              //cls.AddRange ((char)last, (char)c);
+              if(c < last)
+                //throw NewParseException ("[" + last + "-" + c + "] range in reverse order.");
+                throw SystemException(L"Range in reverse order");
+              cls->AddRange((wchar_t)last, (wchar_t)c);
               last = -1;
               range = false;
               continue;
               }
 
-            //cls.AddCharacter ((char)c);
+            cls->AddCharacter((wchar_t)c);
             last = c;
             }
 
-          if (!closed){}
+          if(!closed){}
           //throw NewParseException ("Unterminated [] set.");
 
           if(range)

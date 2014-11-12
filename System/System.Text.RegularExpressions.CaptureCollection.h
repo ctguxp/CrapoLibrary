@@ -17,7 +17,7 @@ namespace System
           virtual int32 Count() override;
           virtual bool IsSynchronized() override;
           virtual Collections::IEnumerator* GetEnumerator() override;
-          void SetValue(Capture* cap, sizet i);
+          void SetValue(Capture* cap, int32 i);
         };
       }
     }

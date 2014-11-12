@@ -27,20 +27,20 @@ namespace System
           {
           _values.Length(8);
           } 
-        else if(_count == _values.Length())
+        else if(_count == (int32)_values.Length())
           {
-          sizet new_size = _values.Length();
+          int32 new_size = (int32)_values.Length();
           new_size += new_size >> 1;
           _values.Length(new_size);
           }
         _values[_count++] = value;
         }
 
-      sizet RxInterpreter::IntStack::Count()
+      int32 RxInterpreter::IntStack::Count()
         {
         return _count;
         }
-      void RxInterpreter::IntStack::Count(sizet value)
+      void RxInterpreter::IntStack::Count(int32 value)
         {
         if(value > _count)
           throw SystemException(L"can only truncate the stack");
@@ -161,13 +161,13 @@ namespace System
 
       void RxInterpreter::ResetGroups()
         {
-        sizet n = _groups.Length();
+        int32 n = (int32)_groups.Length();
         if(_marks.IsNull())
           _marks.Length(n);
 
-        for(sizet i = 0; i < n; ++ i) 
+        for(int32 i = 0; i < n; ++ i) 
           {
-          _groups[i] = (int)i;
+          _groups[i] = i;
 
           _marks[i].Start = -1;
           _marks[i].End = -1;
@@ -189,11 +189,11 @@ namespace System
       // capture management
       void RxInterpreter::Open(int gid, int ptr) 
         {
-        sizet m = _groups[gid];
-        if (m < _mark_start || _marks[m].IsDefined()) 
+        int32 m = _groups[gid];
+        if (m < (int32)_mark_start || _marks[m].IsDefined()) 
           {
-          m = CreateMark((int)m);
-          _groups[gid] = (int)m;
+          m = CreateMark(m);
+          _groups[gid] = m;
           }
 
         _marks[m].Start = ptr;
@@ -252,9 +252,9 @@ namespace System
 
       void RxInterpreter::Backtrack(int cp) 
         {
-        for(sizet i = 0; i < _groups.Length(); ++ i) 
+        for(int32 i = 0; i < (int32)_groups.Length(); ++ i) 
           {
-          int m = _groups[i];
+          int32 m = _groups[i];
           while(cp <= m)
             m = _marks[m].Previous;
           _groups[i] = m;
@@ -2296,7 +2296,7 @@ namespace System
                 } 
               else 
                 {
-                sizet stack_size = _stack.Count();
+                int32 stack_size = _stack.Count();
 
                 // match greedily as much as possible
                 while (!current->IsMaximum()) {
@@ -2342,7 +2342,7 @@ namespace System
                     _stack.Count(stack_size);
                     goto Pass;
                     }
-                  if(_stack.Count() == stack_size) {
+                  if(_stack.Count() == (int32)stack_size) {
                     _repeat.Set(current);
                     goto Fail;
                     }
@@ -2407,7 +2407,7 @@ namespace System
                 {
                 // Then match as many items as possible, recording
                 // backtracking information
-                sizet old_stack_size = _stack.Count();
+                int32 old_stack_size = _stack.Count();
                 while (length < end) {
                   int cp = Checkpoint ();
                   if (!EvalByteCode (pc + 11, strpos, res))
@@ -2433,7 +2433,7 @@ namespace System
                     _stack.Count(old_stack_size);
                     goto repeat_success;
                     }
-                  if(_stack.Count() == old_stack_size)
+                  if(_stack.Count() == (int32)old_stack_size)
                     return false;
 
                   // Backtrack
