@@ -116,5 +116,8 @@
     <ClCompile Include="QueueTest.cpp">
       <Filter>Source Files\System.Collections</Filter>
     </ClCompile>
+    <ClCompile Include="ArrayListTest.cpp">
+      <Filter>Source Files\System.Collections</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

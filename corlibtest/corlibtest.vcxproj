@@ -327,6 +327,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArrayListTest.cpp" />
     <ClCompile Include="BinaryWriterTest.cpp" />
     <ClCompile Include="BitArrayTest.cpp" />
     <ClCompile Include="DictionaryTest.cpp" />
