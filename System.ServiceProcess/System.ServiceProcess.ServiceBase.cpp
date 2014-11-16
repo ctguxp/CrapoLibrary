@@ -210,7 +210,7 @@ namespace System
       Array<ServiceTableEntry> table(services.Length() + 1);
 
       int32 i = 0;
-      for(; i < services.Length(); ++i)
+      for(; i < (int32)services.Length(); ++i)
         {
         table[i].lpServiceName = (LPWSTR)(LPCWSTR)services[i]->ServiceName();
         table[i].lpServiceProc = services[i]->ServiceMain();
