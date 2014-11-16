@@ -46,6 +46,7 @@ namespace System
         virtual void Capacity(int32 /*value*/);
         virtual void AddRange(ICollection* /*collection*/);
         virtual void InsertRange(int32 index, ICollection* collection);
+        virtual void Sort();
         //virtual int IndexOf(GCObject& /*value*/, int /*startIndex*/);
         //virtual int IndexOf(GCObject& value, sizet startIndex, sizet count);
         // From IEnumerable

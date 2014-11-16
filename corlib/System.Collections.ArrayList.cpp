@@ -274,6 +274,13 @@ namespace System
       _version++;
       }
 
+    void ArrayList::Sort() 
+		{
+			Array<GCObject>::Sort(_items, 0, _size);
+
+			_version++;
+		}
+
     void ArrayList::RemoveAt(int32 index)
       {
       if(index >= _size) 
