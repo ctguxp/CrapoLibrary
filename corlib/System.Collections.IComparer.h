@@ -9,7 +9,7 @@ namespace System
     class IComparer
       {
       public:
-        virtual bool Compare(Object*, Object*) = 0;
+        virtual int32 Compare(Object*, Object*) = 0;
       };
     }
   }
