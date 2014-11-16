@@ -558,6 +558,9 @@
     <ClInclude Include="System.Globalization.h">
       <Filter>Header Files\System.Globalization</Filter>
     </ClInclude>
+    <ClInclude Include="Global.TypeFunctions.h">
+      <Filter>Header Files\Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

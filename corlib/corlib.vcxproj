@@ -39,6 +39,7 @@
     <ClInclude Include="Global.Memory.h" />
     <ClInclude Include="Global.SharedCount.h" />
     <ClInclude Include="Global.SharedPtrCountedBase.h" />
+    <ClInclude Include="Global.TypeFunctions.h" />
     <ClInclude Include="Global.Utility.h" />
     <ClInclude Include="System.Collections.BitArray.h" />
     <ClInclude Include="System.Collections.CollectionBase.h" />
