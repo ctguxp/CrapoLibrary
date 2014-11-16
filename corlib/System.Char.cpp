@@ -35,6 +35,25 @@ namespace System
     return _datum;
     }
 
+  int Char::CompareTo(Char& c)
+    {
+    if(_datum == c._datum)
+      return 0;
+    if(_datum > c._datum)
+      return 1;
+    return -1;
+    }
+
+  int Char::CompareTo(Object& obj)
+    {
+    Char& c = static_cast<Char&>(obj);
+    if(_datum == c._datum)
+      return 0;
+    if(_datum > c._datum)
+      return 1;
+    return -1;
+    }
+
   bool Char::Equals(Object* obj)
     {
     Char* arg = dynamic_cast<Char*>(obj);
@@ -58,10 +77,10 @@ namespace System
     }
 
   bool Char::IsLower(wchar_t c)
-		{
+    {
     using namespace Globalization;
-		return (CategoryData_v4[c] == (byte)UnicodeCategory::LowercaseLetter);
-		}
+    return (CategoryData_v4[c] == (byte)UnicodeCategory::LowercaseLetter);
+    }
 
   // Is surrogate
   bool Char::IsSurrogate(wchar_t c)

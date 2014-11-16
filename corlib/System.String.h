@@ -33,7 +33,7 @@ namespace System
   class Int32;
   class String;
   typedef Array<String> StringArray;
-  class CRAPOCOREDLL_API String : public Object, public IComparableT<String>, public IEquatable<String>
+  class CRAPOCOREDLL_API String : public Object, public IComparable, public IComparableT<String>, public IEquatable<String>
     {
     private:
       uint32   _length;
@@ -63,6 +63,7 @@ namespace System
 
       // Methods
       virtual int CompareTo(String&) override;
+      virtual int CompareTo(Object& obj) override;
       static int Compare(String&, String&);
       static int CompareOrdinal(String& strA, int indexA, String& strB, int indexB, int length);
       static String Concat(String str0, String str1, String str2);

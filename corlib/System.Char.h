@@ -8,7 +8,7 @@
 
 namespace System
   {
-  class CRAPOCOREDLL_API Char : public Object, public IEquatable<Char>
+  class CRAPOCOREDLL_API Char : public Object, public IComparable, public IComparableT<Char>, public IEquatable<Char>
     {
     private:
       wchar_t _datum;
@@ -20,6 +20,8 @@ namespace System
       ~Char();
       Char& operator = (wchar_t const&);
       operator wchar_t const& () const;
+      virtual int CompareTo(Char&) override;
+      virtual int CompareTo(Object& obj) override;
       virtual bool Equals(Object* obj) override;
       virtual bool Equals(Char) override;
       static bool IsLowSurrogate(wchar_t);

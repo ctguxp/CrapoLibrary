@@ -246,6 +246,12 @@ namespace System
     }
   // ------------------------------------------------------------------------
 
+  int String::CompareTo(Object& obj)
+    {
+    String& s = static_cast<String&>(obj);
+    return String::Compare(*this, s);
+    }
+
   // ------------------------------------------------------------------------
   /// Compares two specified String objects and returns an integer that indicates their relative position in the sort order.
   int String::Compare(String& strA, String& strB)
