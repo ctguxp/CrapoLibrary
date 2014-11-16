@@ -671,7 +671,7 @@ namespace System
     }
 
   template<class T>
-  Array2D<T>::Array2D(sizet r, sizet c)
+  Array2D<T>::Array2D(int32 r, int32 c)
     :_numberOfRows(r)
     ,_numberOfColumns(c)
     ,_array(r * c)
@@ -679,7 +679,7 @@ namespace System
     }
 
   template<class T>
-  T& Array2D<T>::Select(sizet i, sizet j)
+  T& Array2D<T>::Select(int32 i, int32 j)
     {
     if(i >= _numberOfRows)
       throw ArgumentOutOfRangeException(L"Invalid Row");
@@ -689,7 +689,7 @@ namespace System
     }
 
   template<class T>
-  typename Array2D<T>::Row Array2D<T>::operator [] (sizet row)
+  typename Array2D<T>::Row Array2D<T>::operator [] (int32 row)
     {
     return Row(*this, row);
     }

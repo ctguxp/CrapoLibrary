@@ -93,29 +93,29 @@ namespace System
   class Array2D
   {
   protected:
-    sizet    _numberOfRows;
-    sizet    _numberOfColumns;
+    int32    _numberOfRows;
+    int32    _numberOfColumns;
     Array<T> _array;
   public:
     class Row
     {
     private:
       Array2D& _array2D;
-      sizet    _row;
+      int32    _row;
     public:
-      Row(Array2D& array2D, sizet row)
+      Row(Array2D& array2D, int32 row)
         :_array2D(array2D)
         ,_row(row)
         {
         }
-      T& operator [] (sizet column) const
+      T& operator [] (int32 column) const
         {
         return _array2D.Select(_row, column);
         }
     };
-    Array2D(sizet, sizet);
-    T& Select(sizet, sizet);
-    Row operator [] (sizet);
+    Array2D(int32, int32);
+    T& Select(int32, int32);
+    Row operator [] (int32);
   };
 
   typedef Array<bool>    BoolArray;
