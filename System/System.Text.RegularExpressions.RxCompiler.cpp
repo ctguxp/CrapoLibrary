@@ -323,6 +323,15 @@ namespace System
         Emit(min);
         Emit(max);
         }
+
+      void RxCompiler::EmitIn(LinkRef* tail)
+        {
+        // emitted for things like [\dabcfh]
+        BeginLink (tail);
+        Emit(RxOp::TestCharGroup);
+        EmitLink(tail);
+        }
+
       void RxCompiler::EmitAnchor(bool reverse, int offset, LinkRef* tail)
         {
         BeginLink(tail);

@@ -61,6 +61,7 @@ namespace System
           virtual void EmitBalance() override;
           virtual void EmitReference(int gid, bool ignore, bool reverse) override;
           virtual void EmitIfDefined(int gid, LinkRef* tail) override;
+          virtual void EmitIn(LinkRef* tail) override;
           virtual void EmitSub(LinkRef* tail) override;
           virtual void EmitTest(LinkRef* yes, LinkRef* tail) override;
           virtual void EmitBranch(LinkRef* next) override;

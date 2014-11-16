@@ -31,6 +31,8 @@ namespace System
             virtual void Compile(ICompiler* /*cmp*/, bool /*reverse*/) override;
             virtual void GetWidth(int& /*min*/, int& /*max*/) override;
             virtual bool IsComplex() override;
+          private:
+            static double GetIntervalCost(Interval* i); 
           };
         }
       }

@@ -46,7 +46,7 @@ namespace System
             ParseGroup((Group*)re, options, assert);
             ResolveReferences();
 
-            //re->GroupCount(num_groups);
+            re->GroupCount(_numGroups);
 
             return re;
             }
@@ -304,10 +304,10 @@ EndOfGroup:
 
           // clean up literals and alternations
 
-          if(lit.Length() == 0)
+          if(lit.Length() != 0)
             {
-            GCExpression lit(new Literal(lit, IsIgnoreCase(options)));
-            current->AppendExpression(lit);
+            GCExpression l(new Literal(lit, IsIgnoreCase(options)));
+            current->AppendExpression(l);
             }
 
           if (assertion.Get() != nullptr) 

@@ -42,7 +42,7 @@ namespace System
           virtual void EmitJump(LinkRef* target) = 0;
           virtual void EmitRepeat(int min, int max, bool lazy, LinkRef* until) = 0;
           // TODO void EmitUntil(LinkRef* repeat);
-          // TODO void EmitIn(LinkRef* tail);
+          virtual void EmitIn(LinkRef* tail) = 0;
           virtual void EmitInfo(int count, int min, int max) = 0;
           // TODO void EmitFastRepeat(int min, int max, bool lazy, LinkRef* tail);
           virtual void EmitAnchor(bool reverse, int offset, LinkRef* tail) = 0;
