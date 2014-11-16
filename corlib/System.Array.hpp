@@ -1,13 +1,23 @@
 // Perch Lake Computer System
 
 #pragma once
+#pragma warning(disable:4127)
 
 #include "System.Array.h"
 #include "System.Array.hpp"
+#include "System.Object.h"
 #include "System.Exception.h"
 #include "System.NotImplementedException.h"
 #include "System.NotSupportedException.h"
 #include "System.Collections.Generic.EqualityComparer.h"
+#include "System.Collections.IComparer.h"
+#include "Global.TypeFunctions.h"
+
+struct QSortStack 
+  {
+  int32 high;
+  int32 low;
+  };
 
 namespace System
   {
@@ -327,26 +337,338 @@ namespace System
 
   template<class T>
   void Array<T>::Clear(Array<T>& arr, int32 index, int32 length)
-		{
-			if(&arr == nullptr)
-				throw ArgumentNullException(L"arr");
-			if(length < 0)
-				//TODO : throw IndexOutOfRangeException(L"length < 0");
+    {
+    if(&arr == nullptr)
+      throw ArgumentNullException(L"arr");
+    if(length < 0)
+      //TODO : throw IndexOutOfRangeException(L"length < 0");
         throw SystemException(L"Index of of range, length < 0");
 
-			int32 low = (int32)arr.GetLowerBound();
-			if(index < low)
-				//throw IndexOutOfRangeException(L"index < lower bound");
+    int32 low = (int32)arr.GetLowerBound();
+    if(index < low)
+      //throw IndexOutOfRangeException(L"index < lower bound");
         throw SystemException(L"Index of of range, index < lower bound");
-			index = index - low;
+    index = index - low;
 
-			// re-ordered to avoid possible integer overflow
-			if(index > (int32)arr.Length() - length)
-				//throw IndexOutOfRangeException(L"index + length > size");
+    // re-ordered to avoid possible integer overflow
+    if(index > (int32)arr.Length() - length)
+      //throw IndexOutOfRangeException(L"index + length > size");
         throw SystemException(L"Index of of range, index + length > size");
 
-			//TODO ClearInternal(arr, index, length);
-		}
+    //TODO ClearInternal(arr, index, length);
+    }
+
+  template<class T>
+  void Array<T>::CheckComparerAvailable(Array<T>& keys, int32 low, int32 high)
+    {
+    // move null keys to beginning of array,
+    // ensure that non-null keys implement IComparable
+    for(int32 i = low; i < high; i++) {
+      T key = keys[i];
+      if(&key != nullptr) 
+        {
+        if(!::IsComparable(key))
+          {
+          throw SystemException(L"No IComparable interface found for type");
+          }
+        /*if(!(key is IComparable<K>) && !(key is IComparable))
+        {
+        string msg = Locale.GetText ("No IComparable<T> or IComparable interface found for type '{0}'.");
+        throw new InvalidOperationException (String.Format (msg, key.GetType ()));
+        }*/  
+        }
+      }
+    }
+
+  template<class T>
+  GCObject Array<T>::GetValueImpl(int32 idx)
+    {
+    return GetNewObject(_ptr[idx]);
+    }
+
+  template<class T>
+  void Array<T>::SetValueImpl(Object* obj, int32 idx)
+    {
+    Char* c = ::GetCharType(obj);
+    if(c != nullptr)
+      {
+      SetCharArrayValue((wchar_t*)(_ptr + idx), *c);
+      return;
+      }
+    String* s = ::GetStringType(obj);
+    if(s != nullptr)
+      {
+      SetStringArray((String*)_ptr + idx, *s);
+      return;
+      }
+    throw NotImplementedException();
+    }
+
+  template<class T>
+  void Array<T>::Sort(Array<T>& arr, int32 index, int32 length)
+    {
+    Sort(arr, index, length, nullptr);
+    }
+
+  template<class T>
+  void Array<T>::Sort(Array<T>& arr, int32 index, int32 length, Collections::IComparer* comparer)
+    {
+    if(&arr == nullptr)
+      throw ArgumentNullException(L"array");
+
+    /*if (array.Rank > 1)
+    throw new RankException (Locale.GetText ("Only single dimension arrays are supported."));*/
+
+    if(index < (int32)arr.GetLowerBound())
+      throw ArgumentOutOfRangeException(L"index");
+
+    if(length < 0)
+      throw ArgumentOutOfRangeException(L"length", L"Value has to be >= 0.");
+
+    if((int32)arr.Length() - ((int32)arr.GetLowerBound() + index) < length)
+      throw ArgumentException ();
+
+    SortImpl(arr, nullptr, index, length, comparer);
+    }
+
+  template<class T>
+  void Array<T>::SortImpl(Array<T>& keys, Array<Object>* items, int32 index, int32 length, Collections::IComparer* comparer)
+    {
+    if(length <= 1)
+      return;
+
+    int32 low = index;
+    int32 high = index + length - 1;
+
+    if(comparer == nullptr)
+      CheckComparerAvailable(keys, low, high);
+
+    try 
+      {
+      qsort(keys, items, low, high, comparer);
+      } 
+    catch(Exception& ex) 
+      {
+      //throw InvalidOperationException(L"The comparer threw an exception."), e);
+      throw SystemException(L"The comparer threw an exception.", ex);
+      }				
+    }
+
+  template<class T>
+  void Array<T>::qsort(Array<T>& keys, Array<Object>* items, int32 low0, int32 high0, Collections::IComparer* comparer)
+    {
+    QSortStack stack[32];
+    const int QSORT_THRESHOLD = 7;
+    int32 high, low, mid, i, k;
+    GCObject key;
+    GCObject hi;
+    GCObject lo;
+    IComparable* cmp = nullptr;
+    int32 sp = 1;
+
+    // initialize our stack
+    stack[0].high = high0;
+    stack[0].low = low0;
+
+    do 
+      {
+      // pop the stack
+      sp--;
+      high = stack[sp].high;
+      low = stack[sp].low;
+
+      if((low + QSORT_THRESHOLD) > high) 
+        {
+        // switch to insertion sort
+        for(i = low + 1; i <= high; i++) 
+          {
+          for(k = i; k > low; k--) 
+            {
+            lo = keys.GetValueImpl(k - 1);
+            hi = keys.GetValueImpl(k);
+            if(comparer != nullptr) 
+              {
+              if(comparer->Compare(hi.Get(), lo.Get()) >= 0)
+                break;
+              } 
+            else 
+              {
+              if(lo.Get() == nullptr)
+                break;
+
+              if(hi.Get() != nullptr) 
+                {
+                cmp = dynamic_cast<IComparable*>(hi.Get());
+                if(cmp->CompareTo(*lo) >= 0)
+                  break;
+                }
+              }
+
+            swap(keys, items, k - 1, k);
+            }
+          }
+
+        continue;
+        }
+
+      // calculate the middle element
+      mid = low + ((high - low) / 2);
+
+      // get the 3 keys
+      key = keys.GetValueImpl(mid);
+      hi = keys.GetValueImpl(high);
+      lo = keys.GetValueImpl(low);
+
+      // once we re-order the low, mid, and high elements to be in
+      // ascending order, we'll use mid as our pivot.
+      QSortArrange(keys, items, low, lo, mid, key, comparer);
+      if(QSortArrange (keys, items, mid, key, high, hi, comparer))
+        QSortArrange (keys, items, low, lo, mid, key, comparer);
+
+      cmp = dynamic_cast<IComparable*>(hi.Get());
+
+      // since we've already guaranteed that lo <= mid and mid <= hi,
+      // we can skip comparing them again.
+      k = high - 1;
+      i = low + 1;
+
+      do 
+        {
+        // Move the walls in
+        if(comparer != nullptr) 
+          {
+          // find the first element with a value >= pivot value
+          GCObject k1(keys.GetValueImpl(i));
+          while(i < k && comparer->Compare(key.Get(), k1.Get()) > 0)
+            i++;
+
+          // find the last element with a value <= pivot value
+          k1 = keys.GetValueImpl(k);
+          while(k > i && comparer->Compare(key.Get(), k1.Get()) < 0)
+            k--;
+          } 
+        else if (cmp != nullptr)
+          {
+          // find the first element with a value >= pivot value
+          GCObject k1(keys.GetValueImpl(i));
+          while(i < k && cmp->CompareTo(*k1) > 0)
+            i++;
+
+          // find the last element with a value <= pivot value
+          k1 = keys.GetValueImpl(k);
+          while (k > i && cmp->CompareTo(*k1) < 0)
+            k--;
+          } 
+        else 
+          {
+          // This has the effect of moving the null values to the front if comparer is null
+          GCObject k1(keys.GetValueImpl(i));
+          while(i < k && k1.Get() == nullptr)
+            i++;
+
+          k1 = keys.GetValueImpl(k);
+          while(k > i && k1.Get() != nullptr)
+            k--;
+          }
+
+        if (k <= i)
+          break;
+
+        swap(keys, items, i, k);
+
+        i++;
+        k--;
+        }while(true);
+
+        // push our partitions onto the stack, largest first
+        // (to make sure we don't run out of stack space)
+        if((high - k) >= (k - low)) 
+          {
+          if ((k + 1) < high) 
+            {
+            stack[sp].high = high;
+            stack[sp].low = k;
+            sp++;
+            }
+
+          if ((k - 1) > low) 
+            {
+            stack[sp].high = k;
+            stack[sp].low = low;
+            sp++;
+            }
+          } 
+        else 
+          {
+          if ((k - 1) > low) 
+            {
+            stack[sp].high = k;
+            stack[sp].low = low;
+            sp++;
+            }
+
+          if ((k + 1) < high) 
+            {
+            stack[sp].high = high;
+            stack[sp].low = k;
+            sp++;
+            }
+          }
+      } while (sp > 0);
+    }
+
+  template<class T>
+  bool Array<T>::QSortArrange(Array<T>& keys, Array<Object>* items, int32 lo, GCObject& v0, int32 hi, GCObject& v1, Collections::IComparer* comparer)
+    {
+    IComparable* cmp;
+    GCObject tmp;
+
+    if(comparer != nullptr) 
+      {
+      if(comparer->Compare(v1.Get(), v0.Get()) < 0) 
+        {
+        swap(keys, items, lo, hi);
+        tmp = v0;
+        v0 = v1;
+        v1 = tmp;
+
+        return true;
+        }
+      } 
+    else if(v0.Get() != nullptr)
+      {
+      cmp = dynamic_cast<IComparable*>(v1.Get());
+
+      if (v1.Get() == nullptr || cmp->CompareTo(*v0) < 0) 
+        {
+        swap(keys, items, lo, hi);
+        tmp = v0;
+        v0 = v1;
+        v1 = tmp;
+
+        return true;
+        }
+      }
+
+    return false;
+    }
+
+  template<class T>
+  void Array<T>::swap(Array<T>& keys, Array<Object>* items, int32 i, int32 j)
+    {
+    GCObject tmp1(keys.GetValueImpl(i));
+    GCObject tmp2(keys.GetValueImpl(j));
+    keys.SetValueImpl(tmp2.Get(), i);
+    keys.SetValueImpl(tmp1.Get(), j);
+
+    if(items != nullptr) 
+      {
+      /*tmp = items.GetValueImpl (i);
+      items.SetValueImpl (items.GetValueImpl (j), i);
+      items.SetValueImpl (tmp, j);*/
+      throw NotImplementedException();
+      }
+    }
 
   template<class T>
   Array2D<T>::Array2D(sizet r, sizet c)

@@ -14,9 +14,16 @@
 
 #pragma once
 #include "System.Collections.Generic.IList.h"
+#include "Global.Memory.h"
 
 namespace System
   {
+  class Object;
+  typedef SharedPtr<Object> GCObject;
+  namespace Collections
+    {
+    class IComparer;
+    }
   template<class T>
   class Array : public System::Collections::Generic::IList<T>
     {
@@ -45,6 +52,8 @@ namespace System
       sizet Base() const { return _base; }
       void Base(sizet new_base);
       virtual int32 Count() override;
+      GCObject GetValueImpl(int32 idx);
+      void SetValueImpl(Object* obj, int32 idx);
       virtual bool IsSynchronized() override;
       virtual Collections::Generic::IEnumerator<T>* GetEnumerator() override;
       virtual bool IsFixedSize() override;
@@ -68,9 +77,16 @@ namespace System
       static int IndexOf(Array<T*>& arr, T& value);
       static int IndexOf(Array<T*>& arr, T& value, sizet startIndex);
       static int IndexOf(Array<T*>& arr, T& value, sizet startIndex, sizet count);
+      static void Sort(Array<T>& arr, int32 index, int32 length);
+      static void Sort(Array<T>& arr, int32 index, int32 length, Collections::IComparer* comparer);
 
     private:
       void Free();
+      static void CheckComparerAvailable(Array<T>& keys, int32 low, int32 high);
+      static void SortImpl(Array<T>& keys, Array<Object>* items, int32 index, int32 length, Collections::IComparer* comparer);
+      static bool QSortArrange(Array<T>& keys, Array<Object>* items, int32 lo, GCObject& v0, int32 hi, GCObject& v1, Collections::IComparer* comparer);
+      static void qsort(Array<T>& keys, Array<Object>* items, int32 low0, int32 high0, Collections::IComparer* comparer);
+      static void swap(Array<T>& keys, Array<Object>* items, int32 i, int32 j);
     };
 
   template <class T>
