@@ -1,6 +1,8 @@
 #pragma once
 #include "System.Text.RegularExpressions.RegexOptions.h"
 #include "System.Text.RegularExpressions.Cache.h"
+#include "System.Text.RegularExpressions.IMachineFactory.h"
+#include "System.Text.RegularExpressions.Match.h"
 
 namespace System
   {
@@ -8,24 +10,29 @@ namespace System
     {
     namespace RegularExpressions
       {
-      class Match;
-      class IMachine;
       class Regex
         {
         static FactoryCache cache;
         public:
-          Regex(String, RegexOptions);
+          Regex(String&, RegexOptions);
           ~Regex();
-          RegularExpressions::Match* Match(String input, int startat);
+          GCMatch Match(cstring input, int startat);
+          GCMatch Match(String& input, int startat);
           int32 Gap() { return _gap; }
+          bool IsMatch(String& input);
+          bool IsMatch(String& input, int32 startat);
+          static bool IsMatch(String& input, String& pattern);
+          static bool IsMatch(String& input, String& pattern, RegexOptions options);
+          bool RightToLeft();
         protected:
           Regex();
           static void ValidateOptions(RegexOptions);  
         private:
-          IMachine* CreateMachine(); 
+          GCIMachine CreateMachine(); 
           void Init();
           void InitNewRegex();
-          static IMachineFactory* CreateMachineFactory(String pattern, RegexOptions options);
+          int DefaultStartat(String& input);
+          static IMachineFactory* CreateMachineFactory(String& pattern, RegexOptions options);
           static StringArray GetGroupNamesArray(int groupCount, Collections::IDictionary* mapping);
         protected:
           int                       _groupCount;

@@ -68,9 +68,9 @@ namespace System
         {
         _mapping = value;
         }
-      IMachine* RxInterpreterFactory::NewInstance()
+      GCIMachine RxInterpreterFactory::NewInstance()
         {
-        return new RxInterpreter(_program, _eval_del);
+        return GCIMachine(new RxInterpreter(_program, _eval_del));
         }
 
       RxCompiler::RxCompiler()

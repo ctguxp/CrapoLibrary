@@ -72,9 +72,9 @@ namespace System
         public:
           RxInterpreter(ByteArray /*program*/, EvalDelegate eval_del = nullptr);
           ~RxInterpreter();
-          Match* Scan(Regex* regex, String text, int start, int end) override;
+          GCMatch Scan(Regex* regex, String text, int start, int end) override;
         private:
-          Match* GenerateMatch (Regex* regex);
+          GCMatch GenerateMatch (Regex* regex);
           bool EvalByteCode(int pc, int strpos, int& strpos_result);
           void GetGroupInfo(int gid, int& first_mark_index, int& n_caps);
           void PopulateGroup(Group* g, int first_mark_index, int n_caps);

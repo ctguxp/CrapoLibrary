@@ -26,7 +26,7 @@ namespace System
         {
         }
 
-      Regex::Regex(String pattern, RegexOptions options)
+      Regex::Regex(String& pattern, RegexOptions options)
         :_groupCount(0)
         ,_gap(0)
         ,_pattern(pattern)
@@ -43,7 +43,13 @@ namespace System
         {
         }
 
-      RegularExpressions::Match* Regex::Match(String input, int startat)
+      GCMatch Regex::Match(cstring input, int startat)
+        {
+        String i(input);
+        return Match(i, startat);
+        }
+
+      GCMatch Regex::Match(String& input, int startat)
         {
         if(startat < 0 || startat > input.Length())
           throw ArgumentOutOfRangeException(L"startat");
@@ -51,7 +57,7 @@ namespace System
         return CreateMachine()->Scan(this, input, startat, input.Length());
         }
 
-      IMachine* Regex::CreateMachine()
+      GCIMachine Regex::CreateMachine()
         {
         return _machineFactory->NewInstance();
         }
@@ -107,7 +113,33 @@ namespace System
         _groupNames = _machineFactory->NamesMapping();
         }
 
-      IMachineFactory* Regex::CreateMachineFactory(String pattern, RegexOptions options)
+      int Regex::DefaultStartat(String& input)
+        {
+        return (RightToLeft()) ? input.Length() : 0;
+        }
+
+      bool Regex::IsMatch(String& input)
+        {
+        return IsMatch(input, DefaultStartat(input));
+        }
+
+      bool Regex::IsMatch(String& input, int32 startat)
+        {
+        return Match(input, startat)->Success();
+        }
+
+      bool Regex::IsMatch(String& input, String& pattern)
+        {
+        return IsMatch (input, pattern, RegexOptions::None);
+        }
+
+      bool Regex::IsMatch(String& input, String& pattern, RegexOptions options)
+        {
+        Regex re(pattern, options);
+        return re.IsMatch(input);
+        }
+
+      IMachineFactory* Regex::CreateMachineFactory(String& pattern, RegexOptions options)
         {
         using namespace Syntax;
         Parser parser;
@@ -125,7 +157,7 @@ namespace System
             compiler = new RxCompiler();
             }
           }
-          else
+        else
           {
           //compiler = new PatternCompiler();
           }
@@ -149,6 +181,11 @@ namespace System
           group_names[(int32)i] = s;
           }
         return group_names;
+        }
+
+      bool Regex::RightToLeft()
+        { 
+        return((intptr)_roptions & (intptr)RegexOptions::RightToLeft) != 0;
         }
 
       }

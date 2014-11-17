@@ -13,7 +13,7 @@ namespace System
       class Match : public Group
         {
         private:
-          static AutoPtr<Match> _empty;
+          static SharedPtr<Match> _empty;
         private:
           Regex*          _regex;
 		      IMachine*       _machine;
@@ -24,9 +24,10 @@ namespace System
           Match(Regex* /*regex*/, IMachine* /*machine*/, String /*text*/, int /*text_length*/, int /*index*/, int /*length*/);
           Match(Regex* /*regex*/, IMachine* /*machine*/, String /*text*/, int /*text_length*/, int /*n_groups*/, int /*index*/, int /*length*/, int /*n_caps*/);
           ~Match();
-          static Match* Empty();
+          static GCMatch Empty();
           GroupCollection& Groups() { return _groups; }
         };
+      typedef SharedPtr<Match> GCMatch;
       }
     }
   }

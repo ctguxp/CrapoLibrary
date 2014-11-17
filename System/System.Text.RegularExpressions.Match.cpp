@@ -9,7 +9,7 @@ namespace System
     namespace RegularExpressions
       {
 
-      AutoPtr<Match> Match::_empty = new Match();
+      SharedPtr<Match> Match::_empty(new Match());
 
       Match::Match()
         :_regex(nullptr)
@@ -42,9 +42,9 @@ namespace System
         {
         }
 
-      Match* Match::Empty()
+      GCMatch Match::Empty()
         {
-        return _empty.Get();
+        return _empty;
         }
       }
     }

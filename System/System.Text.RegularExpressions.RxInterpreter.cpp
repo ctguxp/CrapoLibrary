@@ -73,7 +73,7 @@ namespace System
       RxInterpreter::~RxInterpreter()
         {
         }
-      Match* RxInterpreter::Scan(Regex* regex, String text, int start, int end)
+      GCMatch RxInterpreter::Scan(Regex* regex, String text, int start, int end)
         {
         _str = text;
         _string_start = start;
@@ -124,7 +124,7 @@ namespace System
           }
         }
 
-      Match* RxInterpreter::GenerateMatch(Regex* regex)
+      GCMatch RxInterpreter::GenerateMatch(Regex* regex)
         {
         int n_caps = 0;
         int first_mark_index = 0;
@@ -133,13 +133,13 @@ namespace System
 
         // Avoid fully populating the Match instance if not needed
         if(!_needs_groups_or_captures)
-          return new Match(regex, this, _str, _string_end
-          ,_marks[first_mark_index].Index(), _marks[first_mark_index].Length());
+          return GCMatch(new Match(regex, this, _str, _string_end
+          ,_marks[first_mark_index].Index(), _marks[first_mark_index].Length()));
 
-        Match* retval = new Match(regex, this, _str, _string_end, (int)_groups.Length() 
-          ,_marks[first_mark_index].Index(), _marks[first_mark_index].Length(), n_caps);
+        GCMatch retval(new Match(regex, this, _str, _string_end, (int)_groups.Length() 
+          ,_marks[first_mark_index].Index(), _marks[first_mark_index].Length(), n_caps));
 
-        PopulateGroup(retval, first_mark_index, n_caps);
+        PopulateGroup(retval.Get(), first_mark_index, n_caps);
 
         for(sizet gid = 1; gid < _groups.Length(); ++ gid)
           {

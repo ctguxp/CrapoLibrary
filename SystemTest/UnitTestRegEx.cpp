@@ -17,9 +17,10 @@ namespace SystemTest
           try
             {
             using namespace RegularExpressions;
-            Regex regex(L"[A-Z]", RegexOptions::None);
-            Match* m = regex.Match(L"the TEST", 0);
-            if(m == nullptr)
+            String pattern(L"[A-Z]");
+            Regex regex(pattern, RegexOptions::None);
+            GCMatch m = regex.Match(L"the TEST", 0);
+            if(m.Get() == nullptr)
               {
               throw SystemException(L"null ptr");
               }
@@ -27,13 +28,21 @@ namespace SystemTest
               {
               Assert::AreEqual(L"T", (cstring)m->Value());
               }
-            delete m;
             }
           catch(Exception& ex)
             {
             Assert::Fail(ex.Message());
             }
           }
+        }
+
+      TEST_METHOD(Simple)
+        {
+        using namespace Text;
+        wchar_t c1[] = { (wchar_t)32, (wchar_t)8212, (wchar_t)32 };
+        CharArray c(c1, 3);
+        String s(c);
+         Assert::IsTrue(RegularExpressions::Regex::IsMatch(s, s), L"char");
         }
     };
   }

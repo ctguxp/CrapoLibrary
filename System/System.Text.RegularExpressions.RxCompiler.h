@@ -39,7 +39,7 @@ namespace System
           virtual void Mapping(Collections::IDictionary* value) override;
           virtual StringArray& NamesMapping() override;
           virtual void NamesMapping(StringArray&) override;
-          virtual IMachine* NewInstance() override; 
+          virtual GCIMachine NewInstance() override; 
         };
 
       class RxCompiler : public ICompiler
