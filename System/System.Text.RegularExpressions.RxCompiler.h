@@ -67,7 +67,9 @@ namespace System
           virtual void EmitBranch(LinkRef* next) override;
           virtual void EmitJump(LinkRef* target) override;
           virtual void EmitRepeat(int min, int max, bool lazy, LinkRef* until) override;
+          virtual void EmitUntil(LinkRef* repeat) override;
           virtual void EmitInfo(int32 count, int32 min, int32 max) override;
+          virtual void EmitFastRepeat(int min, int max, bool lazy, LinkRef* tail) override;
           virtual void EmitAnchor(bool reverse, int offset, LinkRef* tail) override;
           virtual void EmitBranchEnd() override;
           virtual void EmitAlternationEnd() override;

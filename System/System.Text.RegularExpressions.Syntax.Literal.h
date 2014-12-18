@@ -26,6 +26,7 @@ namespace System
             virtual bool IsComplex() override;
             static void CompileLiteral(System::String str, ICompiler* cmp, bool ignore, bool reverse);
           };
+        typedef SharedPtr<Literal> GCLiteral;
         }
       }
     }

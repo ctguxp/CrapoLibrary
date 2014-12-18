@@ -20,7 +20,7 @@ namespace System
             ExpressionCollection& Expressions() { return _expressions; }
             virtual void GetWidth(int& /*min*/, int& /*max*/) override {}
             void GetWidth(int32& /*min*/, int32& /*max*/, int32 /*count*/);
-          private:
+          protected:
             ExpressionCollection _expressions;
           };
         }

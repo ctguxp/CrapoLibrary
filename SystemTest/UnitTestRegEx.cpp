@@ -17,7 +17,7 @@ namespace SystemTest
           try
             {
             using namespace RegularExpressions;
-            String pattern(L"[A-Z]");
+            String pattern(L"[A-Z]+");
             Regex regex(pattern, RegexOptions::None);
             GCMatch m = regex.Match(L"the TEST", 0);
             if(m.Get() == nullptr)
@@ -26,7 +26,7 @@ namespace SystemTest
               }
             if(m->Success())
               {
-              Assert::AreEqual(L"T", (cstring)m->Value());
+              Assert::AreEqual(L"TEST", (cstring)m->Value());
               }
             }
           catch(Exception& ex)

@@ -311,6 +311,13 @@ namespace System
         Emit(min);
         Emit(max);
         }
+
+      void RxCompiler::EmitUntil(LinkRef* repeat)
+        {
+        ResolveLink(repeat);
+        Emit(RxOp::Until);
+        }
+
       void RxCompiler::EmitInfo(int32 count, int32 min, int32 max)
         {
         Emit(RxOp::Info);
@@ -320,6 +327,15 @@ namespace System
           throw SystemException(L"Not Supported");
           }
         Emit((uint16)count);
+        Emit(min);
+        Emit(max);
+        }
+
+      void RxCompiler::EmitFastRepeat(int min, int max, bool lazy, LinkRef* tail)
+        {
+        BeginLink(tail);
+        Emit(lazy ? RxOp::FastRepeatLazy : RxOp::FastRepeat);
+        EmitLink(tail);
         Emit(min);
         Emit(max);
         }

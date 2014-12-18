@@ -171,6 +171,9 @@
     <ClInclude Include="System.Net.IPEndPoint.h">
       <Filter>Header Files\System.Net</Filter>
     </ClInclude>
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Repetition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -271,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="System.Net.IPEndPoint.cpp">
       <Filter>Source Files\System.Net</Filter>
+    </ClCompile>
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Repetition.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

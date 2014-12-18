@@ -7,6 +7,7 @@
 #include "System.Text.RegularExpressions.Category.h"
 #include "System.Text.RegularExpressions.Syntax.Literal.h"
 #include "System.Text.RegularExpressions.Syntax.CapturingGroup.h"
+#include "System.Text.RegularExpressions.Syntax.Repetition.h"
 
 using namespace Global;
 
@@ -257,14 +258,20 @@ namespace System
 
                 if(!ignore_repetition) 
                   {
-                  //    Repetition repetition = new Repetition (min, max, lazy);
+                  GCRepetition repetition(new Repetition(min, max, lazy));
 
-                  //    if (expr == null)
-                  //      repetition.Expression = new Literal (ch.ToString (), IsIgnoreCase (options));
-                  //    else
-                  //      repetition.Expression = expr;
+                  if(expr.Get() == nullptr)
+                    {
+                    Char c(ch);
+                    GCExpression lit(new Literal(c.ToString (), IsIgnoreCase(options)));
+                    repetition->Expression(lit);
+                    }
+                  else
+                    {
+                    repetition->Expression(expr);
+                    }
 
-                  //    expr = repetition;
+                  expr = repetition;
                   }
                 }
               }
@@ -419,7 +426,7 @@ char_recognized:
               // if 'range' is true, we know that 'last >= 0'
               if(c < last)
                 //throw NewParseException ("[" + last + "-" + c + "] range in reverse order.");
-                throw SystemException(L"Range in reverse order");
+                  throw SystemException(L"Range in reverse order");
               cls->AddRange((wchar_t)last, (wchar_t)c);
               last = -1;
               range = false;

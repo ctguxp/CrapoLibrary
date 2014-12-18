@@ -39,6 +39,7 @@
     <ClInclude Include="System.Net.IPAddress.h" />
     <ClInclude Include="System.Net.IPEndPoint.h" />
     <ClInclude Include="System.Net.SocketAddress.h" />
+    <ClInclude Include="System.Text.RegularExpressions.Syntax.Repetition.h" />
     <ClInclude Include="SystemLib.h" />
     <ClInclude Include="System.Net.Sockets.AddressFamily.h" />
     <ClInclude Include="System.Net.Sockets.h" />
@@ -123,6 +124,7 @@
     <ClCompile Include="System.Text.RegularExpressions.Cache.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Regex.cpp" />
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Parser.cpp" />
+    <ClCompile Include="System.Text.RegularExpressions.Syntax.Repetition.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{633152D1-6793-4DD8-9083-F22F24D13D6D}</ProjectGuid>
