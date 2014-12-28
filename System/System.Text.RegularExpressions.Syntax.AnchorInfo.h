@@ -14,10 +14,13 @@ namespace System
           {
           public:
             AnchorInfo(Expression& expr, int width);
+            AnchorInfo(Expression& expr, int offset, int width, RegularExpressions::Position pos);
+            AnchorInfo(Expression& expr, int offset, int width, String str, bool ignore);
             AnchorInfo(const AnchorInfo& anchor);
             ~AnchorInfo();
             AnchorInfo& operator=(const AnchorInfo& anchor);
             Expression& Expression();
+            bool IsComplete(); 
             bool IsPosition();
             int Offset();
             int Width();
@@ -30,10 +33,11 @@ namespace System
             Syntax::Expression*           _expr;
             RegularExpressions::Position  _pos;
             int                           _offset;
-            String*                       _str;
+            GCString                      _str;
             int                           _width;
             bool                          _ignore;
           };
+        typedef SharedPtr<AnchorInfo> GCAnchorInfo;
         }
       }
     }

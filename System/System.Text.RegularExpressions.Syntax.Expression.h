@@ -24,7 +24,7 @@ namespace System
             virtual void Compile(ICompiler* cmp, bool reverse) = 0;
 		        virtual void GetWidth(int& min, int& max) = 0;
             int GetFixedWidth();
-            AnchorInfo GetAnchorInfo(bool reverse);
+            virtual GCAnchorInfo GetAnchorInfo(bool reverse);
             virtual bool IsComplex() = 0;
           protected:
             Expression();

@@ -9,15 +9,37 @@ namespace System
       {
       namespace Syntax
         {
+
         AnchorInfo::AnchorInfo(Syntax::Expression& expr, int width)
           :_expr(&expr)
           ,_pos(Position::Any)
           ,_offset(0)
-          ,_str(nullptr)
+          ,_str()
           ,_width(width)
           ,_ignore(false)
           {
           }
+
+        AnchorInfo::AnchorInfo(Syntax::Expression& expr, int offset, int width, String str, bool ignore)
+          :_expr(&expr)
+          ,_pos(Position::Any)
+          ,_offset(offset)
+          ,_str(ignore ? new String(str.ToLower()) : new String(str))
+          ,_width(width)
+          ,_ignore(ignore) 
+          {
+          }
+
+        AnchorInfo::AnchorInfo(Syntax::Expression& expr, int offset, int width, RegularExpressions::Position pos)
+          :_expr(&expr)
+          ,_pos(pos)
+          ,_offset(offset)
+          ,_str()
+          ,_width(width)
+          ,_ignore(false)
+          {
+          }
+
         AnchorInfo::AnchorInfo(const AnchorInfo& anchor)
           :_expr(anchor._expr)
           ,_pos(anchor._pos)
@@ -27,9 +49,11 @@ namespace System
           ,_ignore(anchor._ignore)
           {
           }
+
         AnchorInfo::~AnchorInfo()
           {
           }
+
         AnchorInfo& AnchorInfo::operator=(const AnchorInfo& anchor)
           {
           if(this == &anchor)
@@ -48,6 +72,12 @@ namespace System
           {
           return *_expr;
           }
+
+        bool AnchorInfo::IsComplete() 
+          {
+          return Length() == _width;
+          }
+
         bool AnchorInfo::IsPosition()
           {
           return _pos != Position::Any; 
@@ -62,7 +92,7 @@ namespace System
           }
         int AnchorInfo::Length()
           { 
-          return (_str != nullptr) ? _str->Length() : 0;
+          return (_str.Get() != nullptr) ? _str->Length() : 0;
           }
         RegularExpressions::Position AnchorInfo::Position()
           {
@@ -74,11 +104,11 @@ namespace System
           }
         bool AnchorInfo::IsSubstring()
           {
-          return _str != nullptr;
+          return _str.Get() != nullptr;
           }
         String& AnchorInfo::Substring()
           {
-          return *_str;
+          return *_str.Get();
           }
         }
       }

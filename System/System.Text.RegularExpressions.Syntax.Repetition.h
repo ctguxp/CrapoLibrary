@@ -18,6 +18,12 @@ namespace System
             virtual void Compile(ICompiler* cmp, bool reverse) override;
             Expression* Expression();
             void Expression(GCExpression& value);
+            int Maximum();
+            void Maximum(int value);
+            int Minimum();
+            void Minimum(int value);
+            virtual void GetWidth(int& min, int& max) override;
+            virtual GCAnchorInfo GetAnchorInfo(bool reverse) override;
           private:
             int _min;
             int _max;

@@ -27,7 +27,7 @@ namespace System
           }
         void CapturingGroup::Name(String* value)
           {
-          _name.Set(value);
+          _name.Reset(value);
           }
         void CapturingGroup::Index(int32 value)
           { 

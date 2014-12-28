@@ -172,7 +172,7 @@
       <Filter>Header Files\System.Net</Filter>
     </ClInclude>
     <ClInclude Include="System.Text.RegularExpressions.Syntax.Repetition.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -276,7 +276,7 @@
       <Filter>Source Files\System.Net</Filter>
     </ClCompile>
     <ClCompile Include="System.Text.RegularExpressions.Syntax.Repetition.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System.Text.RegularExpressions.Syntax</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

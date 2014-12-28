@@ -30,18 +30,18 @@ namespace System
           int max;
           GetWidth(min, max);
           cmp->EmitInfo(_group_count, min, max);
-          AnchorInfo anchorInfo = GetAnchorInfo(reverse);
+          GCAnchorInfo anchorInfo = GetAnchorInfo(reverse);
           LinkRef* linkRef = cmp->NewLink();
-          cmp->EmitAnchor(reverse, anchorInfo.Offset(), linkRef);
-          if(anchorInfo.IsPosition())
+          cmp->EmitAnchor(reverse, anchorInfo->Offset(), linkRef);
+          if(anchorInfo->IsPosition())
             {
-            cmp->EmitPosition(anchorInfo.Position());
+            cmp->EmitPosition(anchorInfo->Position());
             }
           else
             {
-            if(anchorInfo.IsSubstring())
+            if(anchorInfo->IsSubstring())
               {
-              cmp->EmitString(anchorInfo.Substring(), anchorInfo.IgnoreCase(), reverse);
+              cmp->EmitString(anchorInfo->Substring(), anchorInfo->IgnoreCase(), reverse);
               }
             }
           cmp->EmitTrue();

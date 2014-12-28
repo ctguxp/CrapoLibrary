@@ -24,9 +24,14 @@ namespace System
           _neg_cats.SetAll(false);
           }
         CharacterClass::CharacterClass(Category cat, bool negate)
-          :_negate(false)
+          :_distance_between_upper_and_lower_case(32)
+          ,_negate(false)
           ,_ignore(false)
+          ,_pos_cats((int32)Category::LastValue)
+          ,_neg_cats((int32)Category::LastValue)
           {
+          _pos_cats.SetAll(false);
+          _neg_cats.SetAll(false);
           AddCategory(cat, negate);
           }
         CharacterClass::~CharacterClass()
@@ -127,7 +132,7 @@ namespace System
                   }
                 }
 
-              //cmp->EmitSet((wchar_t)a->low, bits, negate, ignore, reverse);
+              cmp->EmitSet((wchar_t)a->Low(), bits, _negate, _ignore, reverse);
               }
             else if (a->IsSingleton())				// Character
               cmp->EmitCharacter ((wchar_t)a->Low(), _negate, _ignore, reverse);
@@ -135,19 +140,21 @@ namespace System
               cmp->EmitRange((wchar_t)a->Low(), (wchar_t)a->High(), _negate, _ignore, reverse);
             }
 
-          //// emit categories
-          //for (int i = 0; i < pos_cats.Length; ++ i) 
-          //  {
-          //  if (pos_cats[i]) {
-          //    if (neg_cats [i])
-          //      cmp.EmitCategory (Category.AnySingleline, negate, reverse);
-          //    else
-          //      cmp.EmitCategory ((Category)i, negate, reverse);
-          //    } 
-          //  else if (neg_cats[i]) {
-          //    cmp.EmitNotCategory ((Category)i, negate, reverse);
-          //    }
-          //  }
+          // emit categories
+          for(int i = 0; i < _pos_cats.Length(); ++ i) 
+            {
+            if(_pos_cats[i]) 
+              {
+              if(_neg_cats[i])
+                cmp->EmitCategory (Category::AnySingleline, _negate, reverse);
+              else
+                cmp->EmitCategory ((Category)i, _negate, reverse);
+              } 
+            else if (_neg_cats[i]) 
+              {
+              cmp->EmitNotCategory ((Category)i, _negate, reverse);
+              }
+            }
 
           // finish up
           if(count > 1) 

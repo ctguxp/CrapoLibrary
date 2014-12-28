@@ -3,6 +3,7 @@
 #include "System.Text.RegularExpressions.IMachineFactory.h"
 #include "System.Text.RegularExpressions.RxOp.h"
 #include "System.Text.RegularExpressions.RxInterpreter.h"
+#include "System.Globalization.UnicodeCategory.h"
 
 namespace System
   {
@@ -52,7 +53,10 @@ namespace System
           virtual void EmitFalse() override;
           virtual void EmitTrue() override;
           virtual void EmitCharacter(wchar_t c, bool negate, bool ignore, bool reverse) override;
+          virtual void EmitCategory(Category cat, bool negate, bool reverse) override;
+          virtual void EmitNotCategory(Category cat, bool negate, bool reverse) override;
           virtual void EmitRange(wchar_t lo, wchar_t hi, bool negate, bool ignore, bool reverse) override;
+          virtual void EmitSet(wchar_t lo, Collections::BitArray& set, bool negate, bool ignore, bool reverse) override;
           virtual void EmitString(String str, bool ignore, bool reverse) override;
           virtual void EmitPosition(Position pos) override;
           virtual void EmitOpen(int gid) override;
@@ -71,13 +75,14 @@ namespace System
           virtual void EmitInfo(int32 count, int32 min, int32 max) override;
           virtual void EmitFastRepeat(int min, int max, bool lazy, LinkRef* tail) override;
           virtual void EmitAnchor(bool reverse, int offset, LinkRef* tail) override;
-          virtual void EmitBranchEnd() override;
-          virtual void EmitAlternationEnd() override;
+          //virtual void EmitBranchEnd() override;
+          //virtual void EmitAlternationEnd() override;
           virtual LinkRef* NewLink() override;
           virtual void ResolveLink(LinkRef* link) override;
 
           virtual void EmitOp(RxOp op, bool negate, bool ignore, bool reverse);
           virtual void EmitOpIgnoreReverse(RxOp op, bool ignore, bool reverse);
+          virtual void EmitOpNegateReverse(RxOp op, bool negate, bool reverse);
         private:
           void BeginLink(LinkRef* lref);
           void EmitLink(LinkRef* lref);
@@ -85,6 +90,7 @@ namespace System
           void Emit(uint16 val);
           void Emit(int32 val);
           void Emit(RxOp opcode);
+          void EmitUniCat(Globalization::UnicodeCategory cat, bool negate, bool reverse);
           void MakeRoom(int bytes);
         protected:
           int       _curpos;

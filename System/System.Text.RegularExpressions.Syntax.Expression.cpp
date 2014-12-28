@@ -29,9 +29,9 @@ namespace System
             }
           return -1;
           }
-        AnchorInfo Expression::GetAnchorInfo(bool)
+        GCAnchorInfo Expression::GetAnchorInfo(bool)
 		      {
-			    return AnchorInfo(*this, GetFixedWidth());
+			    return GCAnchorInfo(new AnchorInfo(*this, GetFixedWidth()));
 		      }
         }
       }

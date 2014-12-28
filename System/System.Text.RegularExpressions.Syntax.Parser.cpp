@@ -125,16 +125,16 @@ namespace System
 
               case L'\\': 
                 {
-                //int c = ParseEscape(false);
-                //if (c >= 0)
-                //  ch = (wchar_t)c;
-                //else 
-                //  {
-                //  expr = ParseSpecial(options);
+                int c = ParseEscape(false);
+                if (c >= 0)
+                  ch = (wchar_t)c;
+                else 
+                  {
+                  expr = ParseSpecial(options);
 
-                if(expr.Get() == nullptr)
-                  ch = _pattern[_ptr ++];		// default escape
-                //}
+                  if(expr.Get() == nullptr)
+                    ch = _pattern[_ptr ++];		// default escape
+                  }
                 break;
                 }
 
@@ -339,6 +339,188 @@ EndOfGroup:
             group->AppendExpression(e);
             }
           }
+
+        SharedPtr<Expression> Parser::ParseSpecial(RegexOptions options) 
+          {
+          int p = _ptr;
+          bool ecma = IsECMAScript(options);
+          SharedPtr<Expression> expr;
+
+          switch(_pattern[_ptr++]) 
+            {
+
+            // categories
+
+            case L'd':
+              expr.Reset(new CharacterClass (ecma ? Category::EcmaDigit : Category::Digit, false));
+              break;
+
+            case L'w':
+              expr.Reset(new CharacterClass (ecma ? Category::EcmaWord : Category::Word, false));
+              break;
+
+            case L's':
+              expr.Reset(new CharacterClass (ecma ? Category::EcmaWhiteSpace : Category::WhiteSpace, false));
+              break;
+
+            //case L'p':
+              // this is odd - ECMAScript isn't supposed to support Unicode,
+              // yet \p{..} compiles and runs under the MS implementation
+              // identically to canonical mode. That's why I'm ignoring the
+              // value of ecma here.
+
+              //expr.Reset(new CharacterClass(ParseUnicodeCategory (), false));
+              //break;
+
+            case L'D':
+              expr.Reset(new CharacterClass (ecma ? Category::EcmaDigit : Category::Digit, true));
+              break;
+
+            case L'W':
+              expr.Reset(new CharacterClass (ecma ? Category::EcmaWord : Category::Word, true));
+              break;
+
+            case L'S':
+              expr.Reset(new CharacterClass (ecma ? Category::EcmaWhiteSpace : Category::WhiteSpace, true));
+              break;
+
+            //case L'P':
+              //expr.Reset(new CharacterClass(ParseUnicodeCategory (), true));
+              //break;
+
+              // positions
+
+            case L'A': expr.Reset(new PositionAssertion (Position::StartOfString)); break;
+            case L'Z': expr.Reset(new PositionAssertion (Position::End)); break;
+            case L'z': expr.Reset(new PositionAssertion (Position::EndOfString)); break;
+            case L'G': expr.Reset(new PositionAssertion (Position::StartOfScan)); break;
+            case L'b': expr.Reset(new PositionAssertion (Position::Boundary)); break;
+            case L'B': expr.Reset(new PositionAssertion (Position::NonBoundary)); break;
+
+              // references
+
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9': 
+              {
+              _ptr--;
+              int n = ParseNumber(10, 1, 0);
+              if (n < 0) 
+                {
+                _ptr = p;
+                expr.Reset();
+                return expr;
+                }
+
+              // FIXME test if number is within number of assigned groups
+              // this may present a problem for right-to-left matching
+
+              /*Reference reference = new BackslashNumber (IsIgnoreCase (options), ecma);
+              refs.Add (reference, n.ToString ());
+              expr = reference;
+              break;*/
+              }
+
+            /*case 'k': 
+              {
+              char delim = pattern[ptr ++];
+              if (delim == '<')
+                delim = '>';
+              else if (delim != '\'')
+                throw NewParseException ("Malformed \\k<...> named backreference.");
+
+              string name = ParseName ();
+              if (name == null || pattern[ptr] != delim)
+                throw NewParseException ("Malformed \\k<...> named backreference.");
+
+              ++ ptr;
+              Reference reference = new Reference (IsIgnoreCase (options));
+              refs.Add (reference, name);
+              expr = reference;
+              break;
+              }*/
+
+            default:
+              expr.Reset();
+              break;
+            }
+
+          if (expr.Get() == nullptr)
+            _ptr = p;
+
+          return expr;
+          }
+
+        int Parser::ParseOctal(String str, int& ptr) 
+          {
+          return ParseNumber(str, ptr, 8, 1, 3);
+          }
+
+        int Parser::ParseHex(String str, int& ptr, int digits) 
+          {
+          return ParseNumber(str, ptr, 16, digits, digits);
+          }
+
+        int Parser::ParseDigit(wchar_t c, int b, int /*n*/) 
+          {
+          switch(b) 
+            {
+            case 8:
+              if (c >= L'0' && c <= L'7')
+                return c - L'0';
+              else
+                return -1;
+            case 10:
+              if (c >= L'0' && c <= L'9')
+                return c - L'0';
+              else
+                return -1;
+            case 16:
+              if (c >= L'0' && c <= L'9')
+                return c - L'0';
+              else if (c >= L'a' && c <= L'f')
+                return 10 + c - L'a';
+              else if (c >= L'A' && c <= L'F')
+                return 10 + c - L'A';
+              else
+                return -1;
+            default:
+              return -1;
+            }
+          }
+
+        int Parser::ParseNumber(String str, int& ptr, int b, int min, int max)
+          {
+          int p = ptr, n = 0, digits = 0, d;
+          if (max < min)
+            max = Int32::MaxValue;
+
+          while (digits < max && p < str.Length()) 
+            {
+            d = ParseDigit(str[p ++], b, digits);
+            if (d < 0) 
+              {
+              -- p;
+              break;
+              }
+
+            n = n * b + d;
+            ++ digits;
+            }
+
+          if (digits < min)
+            return -1;
+
+          ptr = p;
+          return n;
+          }
+
         SharedPtr<Expression> Parser::ParseCharacterClass(RegexOptions options) 
           {
           bool negate = false;
@@ -592,6 +774,110 @@ char_recognized:
               return;
             }
           }
+
+        int Parser::ParseNumber(int b, int min, int max) 
+          {
+          return Parser::ParseNumber(_pattern, _ptr, b, min, max);
+          }
+
+        int Parser::ParseEscape(bool inCharacterClass) 
+          {
+          int p = _ptr;
+          int c;
+
+          if(p >= _pattern.Length())
+            throw ArgumentException(L"Parsing - Illegal at end of");
+          /*throw new ArgumentException (
+          String.Format ("Parsing \"{0}\" - Illegal \\ at end of " + 
+          "pattern.", pattern), pattern);*/
+
+          switch(_pattern[_ptr++]) 
+            {
+
+            // standard escapes (except \b)
+
+            case L'a': return 0x0007;
+            case L't': return 0x0009;
+            case L'r': return 0x000d;
+            case L'v': return 0x000b;
+            case L'f': return 0x000c;
+            case L'n': return 0x000a;
+            case L'e': return 0x001b;
+            case L'\\': return L'\\';
+
+              // character codes
+
+            case L'0':
+              {
+              //
+              // Turns out that octal values can be specified
+              // without a leading zero.   But also the limit
+              // of three character should include this first
+              // one.  
+              //
+              _ptr--;
+              int prevptr = _ptr;
+              int result = ParseOctal(_pattern, _ptr);
+              if (result == -1 && prevptr == _ptr)
+                return 0;
+
+              return result;
+              }
+
+            case L'1': 
+            case L'2':
+            case L'3':
+            case L'4':
+            case L'5':
+            case L'6':
+            case L'7':
+              {
+              if (inCharacterClass)
+                {
+                _ptr--;
+                return ParseOctal(_pattern, _ptr);
+                }
+              break;
+              }
+
+            case L'x':
+              {
+              c = ParseHex(_pattern, _ptr, 2);
+              if (c < 0)
+                //throw NewParseException ("Insufficient hex digits");
+                  throw Exception(L"Insufficient hex digits");
+
+              return c;
+              }
+
+            case L'u':
+              {
+              c = ParseHex(_pattern, _ptr, 4);
+              if (c < 0)
+                //throw NewParseException ("Insufficient hex digits");
+                  throw Exception(L"Insufficient hex digits");
+
+              return c;
+              }
+
+              // control characters
+
+            case L'c':
+              {
+              c = _pattern[_ptr ++];
+              if (c >= '@' && c <= '_')
+                return c - '@';
+              else
+                //throw NewParseException ("Unrecognized control character.");
+                throw Exception(L"Unrecognized control character.");
+              }
+            }
+
+          // unknown escape
+          _ptr = p;
+          return -1;
+          }
+
         bool Parser::IsIgnorePatternWhitespace(RegexOptions options)
           {
           return((intptr)options & (intptr)RegexOptions::IgnorePatternWhitespace) != 0;
