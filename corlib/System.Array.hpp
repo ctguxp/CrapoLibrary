@@ -140,9 +140,9 @@ namespace System
   template<class T>
   sizet Array<T>::GetLowerBound()
     {
-    assert(_ptr != nullptr);
     if(_ptr == nullptr)
-      throw SystemException(L"Array has not been initialized");
+      return 0;
+
     return _base;
     }
 
