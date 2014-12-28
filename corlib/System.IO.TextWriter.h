@@ -31,7 +31,9 @@ namespace System
         TextWriter();
         TextWriter(IFormatProvider* /*formatProvider*/);
       protected:
+#pragma warning(disable:4251)
         CharArray        _coreNewLine;
+#pragma warning(default:4251)
         String           _newLine;
         IFormatProvider* _internalFormatProvider;
       };

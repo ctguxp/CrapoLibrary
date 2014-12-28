@@ -13,6 +13,10 @@ namespace System
       public:
         DictionaryEntry(GCObject& key, GCObject& value);
         ~DictionaryEntry();
+        GCObject Key();
+        void Key(GCObject value);
+		    GCObject Value();
+        void Value(GCObject value);
       };
     }
   }

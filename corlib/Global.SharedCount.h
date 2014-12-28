@@ -3,7 +3,7 @@
 
 namespace Global
   {
-  class SharedCount
+  class CRAPOCOREDLL_API SharedCount
     {
     private:
       SharedPtrCountedBase* _pi;

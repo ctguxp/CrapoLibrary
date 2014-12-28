@@ -84,7 +84,9 @@ namespace System
             virtual IEnumerator* GetEnumerator() override; 
           };
       protected:
+#pragma warning(disable:4251)
         static GCObject Removed;
+#pragma warning(default:4251)
       public:
         Hashtable(sizet capacity = 0, float loadFactor = 1, IHashCodeProvider* hcp = nullptr, IComparer* comparer = nullptr);
         Hashtable(IDictionary* d, float loadFactor = 1, IHashCodeProvider* hcp = nullptr, IComparer* comparer = nullptr);
@@ -124,8 +126,8 @@ namespace System
         IHashCodeProvider* _hcpRef;
         IComparer*         _comparerRef;
         IEqualityComparer* _equalityComparer;
-        HashKeys           _hashKeys;
 #pragma warning(disable:4251)
+        HashKeys           _hashKeys;
         Array<Slot>        _table;
         IntArray           _hashes;
 #pragma warning(default:4251)

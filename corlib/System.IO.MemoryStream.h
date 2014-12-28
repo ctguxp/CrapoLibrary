@@ -8,7 +8,7 @@ namespace System
   {
   namespace IO
     {
-    class MemoryStream : public Stream
+    class CRAPOCOREDLL_API MemoryStream : public Stream
       {
       private:
         bool      _canWrite;
@@ -20,7 +20,9 @@ namespace System
         int32     _dirty_bytes;
         int32     _capacity;
         int32     _length;
+#pragma warning(disable:4251)
         SharedPtr<ByteArray> _internalBuffer;
+#pragma warning(default:4251)
       public:
         MemoryStream(int32 capacity = 0);
         MemoryStream(const SharedPtr<ByteArray>& /*buffer*/);

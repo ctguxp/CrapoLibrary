@@ -2,7 +2,7 @@
 
 namespace Global
   {
-  class SharedPtrCountedBase
+  class CRAPOCOREDLL_API SharedPtrCountedBase
     {
     private:
       long _useCount;

@@ -13,5 +13,21 @@ namespace System
     DictionaryEntry::~DictionaryEntry()
       {
       }
+    GCObject DictionaryEntry::Key()
+      {
+      return _key;
+      }
+    void DictionaryEntry::Key(GCObject value)
+      {
+      _key = value;
+      }
+		GCObject DictionaryEntry::Value()
+      {
+      return _value;
+      }
+    void DictionaryEntry::Value(GCObject value)
+      {
+      _value = value;
+      }
     }
   }

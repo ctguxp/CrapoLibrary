@@ -173,7 +173,7 @@ namespace System
       static void memcpy2(byte*, byte*, int);
 
       // Friend operator append
-      friend String operator+(const String&, const String&);
+      // friend String operator+(const String&, const String&);
       friend System::Int32;
       friend System::Text::StringBuilder;
       friend System::Text::UnicodeEncoding;
@@ -183,9 +183,9 @@ namespace System
     };
 
   // Operator append
-  String operator+(const String& s1, const String& s2);
+  CRAPOCOREDLL_API String operator+(const String& s1, const String& s2);
   //CRAPOCOREDLL_API bool operator==(const String& s1, const String& s2);
   CRAPOCOREDLL_API bool operator!=(const String& s1, const String& s2);
 
-  typedef AutoPtr<String> GCString;
+  typedef SharedPtr<String> GCString;
   }

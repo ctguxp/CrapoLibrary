@@ -47,9 +47,9 @@ namespace System
       void Add(uint32, Object&);
       uint32 Length();
     private:
-      //#pragma warning(disable:4251)
+#pragma warning(disable:4251)
       Array<Object*> _array;
-      //#pragma warning(default:4251)
+#pragma warning(default:4251)
     };
 
   inline bool operator == (Object& left, Object& right)

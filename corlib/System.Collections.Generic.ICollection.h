@@ -8,7 +8,7 @@ namespace System
     namespace Generic
       {
       template <class T>
-      class CRAPOCOREDLL_API ICollection : public IEnumerable<T>
+      class ICollection : public IEnumerable<T>
         {
         public:
           virtual int32 Count() = 0;

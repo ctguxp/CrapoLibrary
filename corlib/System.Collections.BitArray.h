@@ -5,12 +5,14 @@ namespace System
   {
   namespace Collections
     {
-    class BitArray : public ICollection
+    class CRAPOCOREDLL_API BitArray : public ICollection
       {
       private:
         int32     _length;
         int32     _version;
+#pragma warning(disable:4251)
         IntArray  _array;
+#pragma warning(default:4251)
       public:
         BitArray(int32 length = 0);
         BitArray(BoolArray& /*values*/);

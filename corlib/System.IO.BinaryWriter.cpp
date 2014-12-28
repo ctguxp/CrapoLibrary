@@ -2,6 +2,7 @@
 #include "System.IO.BinaryWriter.h"
 #include "System.Text.UTF8Encoding.h"
 #include "Crapo.Security.BitConverterLE.h"
+#include "System.Exception.h"
 
 using namespace Crapo;
 

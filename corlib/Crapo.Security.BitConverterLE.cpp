@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Crapo.Security.BitConverterLE.h"
-#include "System.h"
+#include "System.Array.hpp"
+#include "System.BitConverter.h"
 
 using namespace System;
 
