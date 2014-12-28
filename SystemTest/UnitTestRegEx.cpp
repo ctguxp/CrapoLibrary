@@ -17,16 +17,23 @@ namespace SystemTest
           try
             {
             using namespace RegularExpressions;
+            //String pattern(L"\\d+");
             String pattern(L"[A-Z]+");
             Regex regex(pattern, RegexOptions::None);
-            GCMatch m = regex.Match(L"the TEST", 0);
+            //GCMatch m = regex.Match(L"Dot 55 Perls", 0);
+            GCMatch m = regex.Match(L"this is a TEST of the", 0);
             if(m.Get() == nullptr)
               {
               throw SystemException(L"null ptr");
               }
             if(m->Success())
               {
+              //Assert::AreEqual(L"55", (cstring)m->Value());
               Assert::AreEqual(L"TEST", (cstring)m->Value());
+              }
+            else
+              {
+              Assert::Fail(L"Success Failed");
               }
             }
           catch(Exception& ex)
