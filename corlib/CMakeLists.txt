@@ -1,5 +1,3 @@
-# Store *.cpp in src files
-
 #Need Unicode definitions
 add_definitions(-D_UNICODE -DUNICODE -D_LIB -Wall -WX -EHa -nologo -Yupch.h)
 
@@ -12,3 +10,7 @@ set_source_files_properties(pch.cpp PROPERTIES COMPILE_FLAGS "-Ycpch.h")
 
 # Library project
 add_library(corlib ${SRC_FILES} ${INC_FILES} ${INC_HPP_FILES} )
+
+install(TARGETS corlib ARCHIVE DESTINATION static/lib)
+install(FILES ${INC_FILES} DESTINATION include)
+install(FILES ${INC_HPP_FILES} DESTINATION include)

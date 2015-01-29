@@ -11,3 +11,6 @@ set_source_files_properties(pch.cpp PROPERTIES COMPILE_FLAGS "-Ycpch.h")
 
 # Library project
 add_library(System.ServiceProcess ${SRC_FILES} ${INC_FILES} ${INC_HPP_FILES} )
+
+install(TARGETS System.ServiceProcess ARCHIVE DESTINATION static/lib)
+install(FILES ${INC_FILES} DESTINATION include)
