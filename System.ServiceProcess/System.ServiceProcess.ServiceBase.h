@@ -18,7 +18,7 @@ namespace System
       public:
         ServiceBase();
         ServiceBase(ServiceBase const& sb);
-        ~ServiceBase();
+        virtual ~ServiceBase();
         ServiceBase& operator=(const ServiceBase& sb);
         bool AutoLog();
         void AutoLog(bool value);

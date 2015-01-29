@@ -185,7 +185,7 @@ namespace System
         _status = GetServiceStatus(ServiceName(), _machineName);
       return (ServiceControllerStatus)_status.dwCurrentState;
       }
-    SERVICE_STATUS_PROCESS ServiceController::GetServiceStatus(String& serviceName, String& machineName)
+    SERVICE_STATUS_PROCESS ServiceController::GetServiceStatus(String serviceName, String machineName)
       {
       SERVICE_STATUS_PROCESS serviceStatus;
       ZeroMemory(&serviceStatus, sizeof(SERVICE_STATUS_PROCESS));
@@ -228,7 +228,7 @@ namespace System
       String machineName(L".");
       return sc.GetServices(machineName, SERVICE_WIN32);
       }
-    String ServiceController::GetServiceDisplayName(ServiceManager& scHandle, String& serviceName, String& machineName)
+    String ServiceController::GetServiceDisplayName(ServiceManager& scHandle, String& serviceName, String& /*machineName*/)
       {
       CharArray buffer;
       DWORD bufferSize = (DWORD)buffer.Length();

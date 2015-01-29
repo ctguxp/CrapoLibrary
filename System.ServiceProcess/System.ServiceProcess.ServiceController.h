@@ -37,7 +37,7 @@ namespace System
       protected:
         String Name();
       private:
-        static SERVICE_STATUS_PROCESS GetServiceStatus(String& serviceName, String& machineName);
+        static SERVICE_STATUS_PROCESS GetServiceStatus(String serviceName, String machineName);
         static String GetServiceName(ServiceManager& scHandle, String& displayName);
         static String GetServiceDisplayName(ServiceManager& scHandle, String& serviceName, String& machineName);
         static void ValidateServiceName(String& serviceName);

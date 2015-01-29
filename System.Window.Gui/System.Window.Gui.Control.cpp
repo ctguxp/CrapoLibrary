@@ -38,13 +38,13 @@ namespace System
         {
         intptr buflen = _hwnd.SendMessage(WM_GETTEXTLENGTH);
         CharArray buffer(buflen + 1);
-        intptr retval = _hwnd.SendMessage(WM_GETTEXT, (WPARAM)buflen + 1, (LPARAM)buffer.ToPtr());
+        /*intptr retval = */_hwnd.SendMessage(WM_GETTEXT, (WPARAM)buflen + 1, (LPARAM)buffer.ToPtr());
         String s(buffer.ToConstPtr());
         return s;
         }
       void Control::Text(String value)
         {
-        intptr retval = _hwnd.SendMessage(WM_SETTEXT, 0, (LPARAM)(cstring)value);
+        /*intptr retval = */_hwnd.SendMessage(WM_SETTEXT, 0, (LPARAM)(cstring)value);
         }
       }
     }

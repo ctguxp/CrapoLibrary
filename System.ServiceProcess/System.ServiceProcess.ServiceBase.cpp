@@ -136,7 +136,7 @@ namespace System
       else
         OnStop();
       }
-    void ServiceBase::OnStart(StringArray& args)
+    void ServiceBase::OnStart(StringArray& /*args*/)
       {
       }
     void ServiceBase::OnStop()
@@ -169,7 +169,7 @@ namespace System
       //else
       //Console.Error.WriteLine("Use mono-service to start service processes");
       }
-    void ServiceBase::ServiceMainCallback(DWORD argCount, LPWSTR* argPointer)
+    void ServiceBase::ServiceMainCallback(DWORD argCount, LPWSTR* /*argPointer*/)
       {
       // handler needs to last until the service stops
       _service_handle = ::RegisterServiceCtrlHandlerEx(_service_name, (LPHANDLER_FUNCTION_EX)Win32HandlerFn, this);
@@ -226,7 +226,7 @@ namespace System
         //throw new Win32Exception ();
           throw WinException(L"StartServiceCtrlDispatcher Failed");
       }
-    int WINAPI ServiceBase::Win32HandlerFn(DWORD control, DWORD eventType, LPVOID eventData, LPVOID context)
+    int WINAPI ServiceBase::Win32HandlerFn(DWORD control, DWORD /*eventType*/, LPVOID /*eventData*/, LPVOID context)
       {
       ServiceBase* obj = reinterpret_cast<ServiceBase*>(context);
       if(obj == nullptr)
