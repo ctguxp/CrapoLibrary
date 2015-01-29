@@ -1,3 +1,15 @@
+#Need Correct Visual Studio Version
+
+set(msver ${MSVC11})
+
+if(NOT msver)
+set(msver ${MSVC12})
+endif(NOT msver)
+
+if( NOT msver )
+MESSAGE( FATAL_ERROR "Incompatible Visual Studio Version requires 2012 or 2013")
+endif(NOT msver)
+
 #Need Unicode definitions
 add_definitions(-D_UNICODE -DUNICODE -D_LIB -Wall -WX -EHa -nologo -Yupch.h)
 
