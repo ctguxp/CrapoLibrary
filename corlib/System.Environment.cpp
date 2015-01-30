@@ -105,6 +105,7 @@ namespace System
     return _os.Get();
     }
 
+#pragma warning(disable:4996)
   String Environment::GetOSVersionString()
     {
     OSVERSIONINFOEX verinfo;
@@ -122,6 +123,7 @@ namespace System
       }
     return String(L"0.0.0.0");
     }
+#pragma warning(default:4996)
 
   String Environment::GetNewLine()
     {
