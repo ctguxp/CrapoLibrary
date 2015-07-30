@@ -12,7 +12,7 @@ namespace System
       ,_nativeObject(nullptr)
       {
       void* out;
-      int status = GDIPlus::GdipCreatePen1(color.ToArgb(), width, (int)GraphicsUnit::World, &out);
+      /*int status = */GDIPlus::GdipCreatePen1(color.ToArgb(), width, (int)GraphicsUnit::World, &out);
       //GDIPlus.CheckStatus(status);
       _nativeObject = out;
       }
@@ -20,7 +20,7 @@ namespace System
       {
       if(_nativeObject != nullptr)
         {
-        int status = GDIPlus::GdipDeletePen(_nativeObject);
+        /*int status = */GDIPlus::GdipDeletePen(_nativeObject);
         _nativeObject = nullptr;
         //GDIPlus.CheckStatus(status);
         }

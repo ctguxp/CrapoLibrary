@@ -11,7 +11,7 @@ namespace System
     Bitmap::Bitmap(int width, int height, Imaging::PixelFormat format)
       {
       void* bmp;
-      int status = GDIPlus::GdipCreateBitmapFromScan0(width, height, 0, (INT)format, nullptr, &bmp);
+      /*int status = */GDIPlus::GdipCreateBitmapFromScan0(width, height, 0, (INT)format, nullptr, &bmp);
       //GDIPlus.CheckStatus(s);
       _nativeObject = bmp;
       }
@@ -24,7 +24,7 @@ namespace System
         height = original->Height();
 
       void* bmp;
-      int status = GDIPlus::GdipCreateBitmapFromScan0(width, height, 0, (INT)format, nullptr, &bmp);
+      /*int status = */GDIPlus::GdipCreateBitmapFromScan0(width, height, 0, (INT)format, nullptr, &bmp);
       //GDIPlus.CheckStatus(s);
       _nativeObject = bmp;
 
@@ -32,15 +32,15 @@ namespace System
 
       graphics->DrawImage(original, 0, 0, width, height);
       }
-    Bitmap::Bitmap(String filename, bool useIcm)
+    Bitmap::Bitmap(String filename, bool /*useIcm*/)
       {
       void* imagePtr;
-      int st;
+      /*int st;*/
 
       //if(useIcm)
       //st = GDIPlus::GdipCreateBitmapFromFileICM(filename, &imagePtr);
       //else
-      st = GDIPlus::GdipCreateBitmapFromFile(filename, &imagePtr);
+      /*st = */GDIPlus::GdipCreateBitmapFromFile(filename, &imagePtr);
 
       //GDIPlus.CheckStatus (st);
       _nativeObject = imagePtr;
@@ -52,7 +52,7 @@ namespace System
       {	
       DWORD argb;				
 
-      int s = GDIPlus::GdipBitmapGetPixel(_nativeObject, x, y, &argb);
+      /*int s = */GDIPlus::GdipBitmapGetPixel(_nativeObject, x, y, &argb);
       //GDIPlus.CheckStatus (s);
 
       return Color::FromArgb((int)argb);		

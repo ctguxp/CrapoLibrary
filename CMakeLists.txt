@@ -7,5 +7,6 @@ project(CrapoLibrary)
 # Corlib project
 add_subdirectory(corlib)
 add_subdirectory(System)
+add_subdirectory(System.Drawing)
 add_subdirectory(System.Window.Gui)
 add_subdirectory(System.ServiceProcess)

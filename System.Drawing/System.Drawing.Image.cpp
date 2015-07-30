@@ -14,7 +14,7 @@ namespace System
       {
       if (GDIPlus::GdiPlusToken() != 0 && _nativeObject != nullptr)
         {
-        int status = GDIPlus::GdipDisposeImage(_nativeObject);
+        /*int status = */GDIPlus::GdipDisposeImage(_nativeObject);
         // dispose the stream (set under Win32 only if SD owns the stream) and ...
         /*if (stream != null)
         {
@@ -29,21 +29,21 @@ namespace System
     Imaging::PixelFormat Image::PixelFormat()
       {
       INT result;
-      int status = GDIPlus::GdipGetImagePixelFormat(_nativeObject, &result);
+      /*int status = */GDIPlus::GdipGetImagePixelFormat(_nativeObject, &result);
       //GDIPlus.CheckStatus (status);
       return (Imaging::PixelFormat)result;
       }
     int Image::Height()
       {
       UINT height;			
-      int status = GDIPlus::GdipGetImageWidth(_nativeObject, &height);		
+      /*int status = */GDIPlus::GdipGetImageWidth(_nativeObject, &height);		
       //GDIPlus.CheckStatus (status);			
       return (int)height;
       }
     int Image::Width()
       {
       UINT width;			
-      int status = GDIPlus::GdipGetImageWidth(_nativeObject, &width);		
+      /*int status = */GDIPlus::GdipGetImageWidth(_nativeObject, &width);		
       //GDIPlus.CheckStatus (status);			
       return (int)width;
       }
